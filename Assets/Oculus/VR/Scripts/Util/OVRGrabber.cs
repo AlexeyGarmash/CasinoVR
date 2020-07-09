@@ -232,7 +232,7 @@ public class OVRGrabber : MonoBehaviour
         }
     }
 
-    protected virtual void GrabBegin()
+    public virtual void GrabBegin()
     {
         float closestMagSq = float.MaxValue;
 		OVRGrabbable closestGrabbable = null;
@@ -322,7 +322,7 @@ public class OVRGrabber : MonoBehaviour
         }
     }
 
-    protected virtual void MoveGrabbedObject(Vector3 pos, Quaternion rot, bool forceTeleport = false)
+    public virtual void MoveGrabbedObject(Vector3 pos, Quaternion rot, bool forceTeleport = false)
     {
         if (m_grabbedObj == null)
         {

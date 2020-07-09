@@ -19,10 +19,12 @@ using UnityEngine.SceneManagement;
 
 namespace OVRTouchSample
 {
+
     // Animated hand visuals for a user of a Touch controller.
     [RequireComponent(typeof(OVRGrabber))]
     public class Hand : MonoBehaviour
     {
+      
         public const string ANIM_LAYER_NAME_POINT = "Point Layer";
         public const string ANIM_LAYER_NAME_THUMB = "Thumb Layer";
         public const string ANIM_PARAM_NAME_FLEX = "Flex";

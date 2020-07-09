@@ -14,13 +14,19 @@ permissions and limitations under the License.
 
 using System;
 using UnityEngine;
-
 /// <summary>
 /// Controls the player's movement in virtual reality.
 /// </summary>
+/// 
+
+
 [RequireComponent(typeof(CharacterController))]
 public class OVRPlayerController : MonoBehaviour
 {
+	MovementState m_state;
+	HandActionState lh_state;
+	HandActionState rh_state;
+
 	/// <summary>
 	/// The rate acceleration during movement.
 	/// </summary>
@@ -132,28 +138,34 @@ public class OVRPlayerController : MonoBehaviour
 	/// </summary>
 	public bool RotationEitherThumbstick = false;
 
-	protected CharacterController Controller = null;
-	protected OVRCameraRig CameraRig = null;
+	public CharacterController Controller { get; set; } = null;
+	public OVRCameraRig CameraRig { get; set; } = null;
 
-	private float MoveScale = 1.0f;
-	private Vector3 MoveThrottle = Vector3.zero;
-	private float FallSpeed = 0.0f;
-	private OVRPose? InitialPose;
+	public float MoveScale { get; set; } = 1.0f;
+	public Vector3 MoveThrottle = Vector3.zero;
+	public float FallSpeed { get; set; } = 0.0f;
+	public OVRPose? InitialPose { get; set; }
 	public float InitialYRotation { get; private set; }
-	private float MoveScaleMultiplier = 1.0f;
-	private float RotationScaleMultiplier = 1.0f;
-	private bool SkipMouseRotation = true; // It is rare to want to use mouse movement in VR, so ignore the mouse by default.
-	private bool HaltUpdateMovement = false;
-	private bool prevHatLeft = false;
-	private bool prevHatRight = false;
-	private float SimulationRate = 60f;
-	private float buttonRotation = 0f;
-	private bool ReadyToSnapTurn; // Set to true when a snap turn has occurred, code requires one frame of centered thumbstick to enable another snap turn.
-	private bool playerControllerEnabled = false;
+	public float MoveScaleMultiplier { get; set; } = 1.0f;
+	public float RotationScaleMultiplier { get; set; } = 1.0f;
+	public bool SkipMouseRotation { get; set; } = true; // It is rare to want to use mouse movement in VR, so ignore the mouse by default.
+	public bool HaltUpdateMovement { get; set; } = false;
+	public bool prevHatLeft { get; set; } = false;
+	public bool prevHatRight { get; set; } = false;
+	public float SimulationRate { get; set; } = 60f;
+	public float buttonRotation { get; set; } = 0f;
+	public bool ReadyToSnapTurn { get; set; } // Set to true when a snap turn has occurred, code requires one frame of centered thumbstick to enable another snap turn.
+	public bool playerControllerEnabled { get; set; } = false;
 
 	void Start()
 	{
 		// Add eye-depth as a camera offset from the player controller
+
+		//Стартовые стстояния
+		m_state = new MotionState(this);
+		lh_state = null;
+		rh_state = null;
+
 		var p = CameraRig.transform.localPosition;
 		p.z = OVRManager.profile.eyeDepth;
 		CameraRig.transform.localPosition = p;
@@ -182,6 +194,7 @@ public class OVRPlayerController : MonoBehaviour
 
 	void OnEnable()
 	{
+
 	}
 
 	void OnDisable()
@@ -317,93 +330,17 @@ public class OVRPlayerController : MonoBehaviour
 		if (HaltUpdateMovement)
 			return;
 
-		if (EnableLinearMovement)
+		//если в состоянии ходьбы
+		if (EnableLinearMovement && m_state is MotionState)
 		{
-			bool moveForward = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
-			bool moveLeft = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
-			bool moveRight = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
-			bool moveBack = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
-
-			bool dpad_move = false;
-
-			if (OVRInput.Get(OVRInput.Button.DpadUp))
-			{
-				moveForward = true;
-				dpad_move = true;
-
-			}
-
-			if (OVRInput.Get(OVRInput.Button.DpadDown))
-			{
-				moveBack = true;
-				dpad_move = true;
-			}
-
-			MoveScale = 1.0f;
-
-			if ((moveForward && moveLeft) || (moveForward && moveRight) ||
-				(moveBack && moveLeft) || (moveBack && moveRight))
-				MoveScale = 0.70710678f;
-
-			// No positional movement if we are in the air
-			if (!Controller.isGrounded)
-				MoveScale = 0.0f;
-
-			MoveScale *= SimulationRate * Time.deltaTime;
-
-			// Compute this for key movement
-			float moveInfluence = Acceleration * 0.1f * MoveScale * MoveScaleMultiplier;
-
-			// Run!
-			if (dpad_move || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-				moveInfluence *= 2.0f;
-
-			Quaternion ort = transform.rotation;
-			Vector3 ortEuler = ort.eulerAngles;
-			ortEuler.z = ortEuler.x = 0f;
-			ort = Quaternion.Euler(ortEuler);
-
-			if (moveForward)
-				MoveThrottle += ort * (transform.lossyScale.z * moveInfluence * Vector3.forward);
-			if (moveBack)
-				MoveThrottle += ort * (transform.lossyScale.z * moveInfluence * BackAndSideDampen * Vector3.back);
-			if (moveLeft)
-				MoveThrottle += ort * (transform.lossyScale.x * moveInfluence * BackAndSideDampen * Vector3.left);
-			if (moveRight)
-				MoveThrottle += ort * (transform.lossyScale.x * moveInfluence * BackAndSideDampen * Vector3.right);
-
-
-
-			moveInfluence = Acceleration * 0.1f * MoveScale * MoveScaleMultiplier;
-
-#if !UNITY_ANDROID // LeftTrigger not avail on Android game pad
-			moveInfluence *= 1.0f + OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger);
-#endif
-
-			Vector2 primaryAxis = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
-
-			// If speed quantization is enabled, adjust the input to the number of fixed speed steps.
-			if (FixedSpeedSteps > 0)
-			{
-				primaryAxis.y = Mathf.Round(primaryAxis.y * FixedSpeedSteps) / FixedSpeedSteps;
-				primaryAxis.x = Mathf.Round(primaryAxis.x * FixedSpeedSteps) / FixedSpeedSteps;
-			}
-
-			if (primaryAxis.y > 0.0f)
-				MoveThrottle += ort * (primaryAxis.y * transform.lossyScale.z * moveInfluence * Vector3.forward);
-
-			if (primaryAxis.y < 0.0f)
-				MoveThrottle += ort * (Mathf.Abs(primaryAxis.y) * transform.lossyScale.z * moveInfluence *
-									   BackAndSideDampen * Vector3.back);
-
-			if (primaryAxis.x < 0.0f)
-				MoveThrottle += ort * (Mathf.Abs(primaryAxis.x) * transform.lossyScale.x * moveInfluence *
-									   BackAndSideDampen * Vector3.left);
-
-			if (primaryAxis.x > 0.0f)
-				MoveThrottle += ort * (primaryAxis.x * transform.lossyScale.x * moveInfluence * BackAndSideDampen *
-									   Vector3.right);
+			m_state.Movement();
 		}
+		else if (m_state is SittingState)
+		{
+			m_state.Movement();
+		}
+
+
 
 		if (EnableRotation)
 		{

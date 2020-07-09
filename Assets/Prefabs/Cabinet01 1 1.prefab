@@ -290,7 +290,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 461573619091026942}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cd61160279dbb44ba0abd3851766846, type: 3}
+  m_Script: {fileID: 11500000, guid: 42a8c833f5b7fb542ac46749df0bcc87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ReelNumber: 1
@@ -1146,7 +1146,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1344420069205938042}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1200,7 +1200,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1344420069205938042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75dba6311b9fc8946a43eb94ee1857e0, type: 3}
+  m_Script: {fileID: 11500000, guid: ebd2a2979a1ead84382b4ad01330a860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1344420069214819031
@@ -1215,7 +1215,6 @@ GameObject:
   - component: {fileID: 1344420070716894213}
   - component: {fileID: 1344420070716894212}
   - component: {fileID: 7574367587400424450}
-  - component: {fileID: 1344420069818221710}
   m_Layer: 0
   m_Name: Slotmachine01
   m_TagString: Untagged
@@ -1272,19 +1271,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1344420069214819031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71ce6a2c15e403f4393ae79ccd6835a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a80761f7af5e8a4b8024eda4dff7a99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reels:
-  - {fileID: 1344420070543870851}
-  - {fileID: 4364787500195778267}
-  - {fileID: 8127573204493845605}
-  slotMachine: {fileID: 1344420070716894212}
-  force: 5000
-  targetVelocity: 1
-  minRellSpeed: 400
-  deceleration: 300
-  freeSpin: 1
 --- !u!114 &1344420070716894212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1294,9 +1283,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1344420069214819031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad3ce3f46ef0e3f4e94848470119c5ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 03ff77f9d69c1e6468a84e799e374f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reels: []
+  slotMachine: {fileID: 1344420070716894213}
+  force: 5000
+  targetVelocity: 1
+  minRellSpeed: 400
+  deceleration: 300
+  freeSpin: 1
 --- !u!114 &7574367587400424450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1306,19 +1302,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1344420069214819031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d429b4d59eae72b4f9e35455498d0697, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1344420069818221710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1344420069214819031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee7e871b84edc4f46afd67ae70f98dda, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cf5991954043e1478daef23b890ecd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Jackpot: {fileID: 1344420068975853436}
@@ -1966,10 +1950,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1344420069618390915}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da2513834c30f7a438c38cee742845f1, type: 3}
+  m_Script: {fileID: 11500000, guid: e2b4a0d2efc8a3b47878acfd8867a800, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotMachineManager: {fileID: 1344420070716894213}
+  slotMachineManager: {fileID: 1344420070716894212}
 --- !u!1 &1344420069635432457
 GameObject:
   m_ObjectHideFlags: 0
@@ -4801,19 +4785,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5410008581732655297}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42bc4aba3d4f6b44385a177c130337e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f703136677caf74297ec6ae4173c87f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnPoints:
-  - {fileID: 8302389096681448991}
-  - {fileID: 685970242337388443}
-  - {fileID: 9091824938807169400}
-  - {fileID: 671243960099194500}
-  - {fileID: 7464774851726530599}
-  - {fileID: 2891739666437941695}
-  - {fileID: 3130276168461084044}
-  - {fileID: 931830856118711477}
-  - {fileID: 4277191830691142807}
+  SpawnPoints: []
   SpawnCoin: {fileID: 4518625576394843755, guid: a207145fb14536c47a8d09656676d6a7,
     type: 3}
   MaxCoins: 5000
@@ -5188,7 +5163,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6029180578972780423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bad99c1d016f054195f7c4fa36b674e, type: 3}
+  m_Script: {fileID: 11500000, guid: c7133f92b721f37408e8966c355e195d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ReelNumber: 2
@@ -5482,7 +5457,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6234933783496483649}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b60dcdab187e92f4c914d27b955d47bb, type: 3}
+  m_Script: {fileID: 11500000, guid: c11081ddb8c153e40a25aefa7bc05277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ReelNumber: 3
@@ -6512,10 +6487,49 @@ MonoBehaviour:
   m_GameObject: {fileID: 8194263788127831100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b60ee6355076a143ab6182e7e7ab587, type: 3}
+  m_Script: {fileID: 11500000, guid: 2258f32b442da7f4fb2909af5bb0415d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Lamps: []
+  Lamps:
+  - {fileID: 8380139441486791927}
+  - {fileID: 8380139441380062943}
+  - {fileID: 8380139442373810709}
+  - {fileID: 8380139443024748467}
+  - {fileID: 8380139441319960018}
+  - {fileID: 8380139441210722543}
+  - {fileID: 8380139442032882310}
+  - {fileID: 8380139443068645341}
+  - {fileID: 8380139442804128222}
+  - {fileID: 8380139441540867511}
+  - {fileID: 8380139442353655201}
+  - {fileID: 8380139441691359348}
+  - {fileID: 8380139442039058940}
+  - {fileID: 8380139441892746845}
+  - {fileID: 8380139442103099391}
+  - {fileID: 8380139443065889874}
+  - {fileID: 8380139443154129864}
+  - {fileID: 8380139441369555044}
+  - {fileID: 8380139441579005781}
+  - {fileID: 8380139443268254162}
+  - {fileID: 8380139441636005306}
+  - {fileID: 8380139442992442754}
+  - {fileID: 8380139441275214779}
+  - {fileID: 8380139441732838642}
+  - {fileID: 8380139442795737926}
+  - {fileID: 8380139441805846597}
+  - {fileID: 8380139442777572387}
+  - {fileID: 8380139441607412991}
+  - {fileID: 8380139441400794621}
+  - {fileID: 8380139441689122767}
+  - {fileID: 8380139441190528213}
+  - {fileID: 8380139441221254776}
+  - {fileID: 8380139442262641545}
+  - {fileID: 8380139442956832557}
+  - {fileID: 8380139441210290008}
+  - {fileID: 8380139441622072818}
+  - {fileID: 8380139442640242108}
+  - {fileID: 8380139442178609546}
+  - {fileID: 8380139441357811793}
   HaloColors:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0.19215687, g: 0, b: 1, a: 1}
@@ -8097,11 +8111,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8380139441232103764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94551496bffb7f04a8a53f321ced8d13, type: 3}
+  m_Script: {fileID: 11500000, guid: b4ae1b0117ebf5e4cbc3a5a7395d7390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressLength: 0.0075
+  pressLength: 0
   pressed: 0
+  ButtonEvent: 0
 --- !u!1 &8380139441275214779
 GameObject:
   m_ObjectHideFlags: 0
@@ -8732,11 +8747,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8380139441450874835}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94551496bffb7f04a8a53f321ced8d13, type: 3}
+  m_Script: {fileID: 11500000, guid: b4ae1b0117ebf5e4cbc3a5a7395d7390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressLength: 0.0075
+  pressLength: 0
   pressed: 0
+  ButtonEvent: 0
 --- !u!1 &8380139441483061090
 GameObject:
   m_ObjectHideFlags: 0
@@ -8857,7 +8873,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8380139441483061090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5683fa6465d15d54a87f88b90cec7572, type: 3}
+  m_Script: {fileID: 11500000, guid: b77b13bf1573cd5488964d3048c67d32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_allowOffhandGrab: 1
@@ -9496,11 +9512,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8380139441652899029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94551496bffb7f04a8a53f321ced8d13, type: 3}
+  m_Script: {fileID: 11500000, guid: b4ae1b0117ebf5e4cbc3a5a7395d7390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressLength: 0.0075
+  pressLength: 0
   pressed: 0
+  ButtonEvent: 0
 --- !u!1 &8380139441689122767
 GameObject:
   m_ObjectHideFlags: 0
@@ -10244,7 +10261,7 @@ GameObject:
   - component: {fileID: 8380139442228857984}
   - component: {fileID: 8380139442228857995}
   - component: {fileID: 8380139442228857988}
-  - component: {fileID: 8380139442228857994}
+  - component: {fileID: 9145160059049198105}
   m_Layer: 0
   m_Name: HandleGrabbale
   m_TagString: lever
@@ -10357,7 +10374,7 @@ FixedJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!114 &8380139442228857994
+--- !u!114 &9145160059049198105
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10366,7 +10383,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8380139442228857985}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a2930d6f3200b44e9e64ad14fd43bb9, type: 3}
+  m_Script: {fileID: 11500000, guid: 14d66d7db5396df479a6795d0e26c1f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 8380139441483061089}
@@ -10838,11 +10855,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8380139442697752714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94551496bffb7f04a8a53f321ced8d13, type: 3}
+  m_Script: {fileID: 11500000, guid: b4ae1b0117ebf5e4cbc3a5a7395d7390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressLength: 0.0075
+  pressLength: 0
   pressed: 0
+  ButtonEvent: 0
 --- !u!1 &8380139442777572387
 GameObject:
   m_ObjectHideFlags: 0
