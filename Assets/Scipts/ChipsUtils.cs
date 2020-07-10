@@ -26,7 +26,7 @@ class ChipsUtils : Singleton<ChipsUtils>
     }
    
           
-    public bool MagnetizeChip(GameObject chip, StackData[] stacks)
+    public bool MagnetizeChip(GameObject chip, params StackData[] stacks)
     {
         
         var chipData = chip.GetComponent<ChipData>();
@@ -47,8 +47,7 @@ class ChipsUtils : Singleton<ChipsUtils>
 
                     if (rb.isKinematic != true)
                     {
-                        if (stacks[i].Chips.Count == 0)
-                            stacks[i].startY = transform.position.y;
+                                                  
                         rb.isKinematic = true;
 
                         var currOffsetX = Random.Range(-xOffset, xOffset);
@@ -60,7 +59,7 @@ class ChipsUtils : Singleton<ChipsUtils>
 
                         stackData.Chips.Add(chip);
 
-
+                        UpdateStack(stacks[i]);
                         return true;
                     }
                 }               
@@ -71,7 +70,7 @@ class ChipsUtils : Singleton<ChipsUtils>
         return false;
     }
 
-    public bool ExtractionChip(GameObject chip, StackData[] stacks)
+    public bool ExtractionChip(GameObject chip, params StackData[] stacks)
     {
         for (var i = 0; i < stacks.Length; i++)
         {
@@ -98,7 +97,7 @@ class ChipsUtils : Singleton<ChipsUtils>
 
             stack.Chips[i].transform.position = new Vector3(
                 pos.x + currOffsetX,
-                stack.startY + stack.currentY,
+                stack.transform.position.y + stack.currentY,
                 pos.z + currOffsetZ
             );
             stack.Chips[i].transform.rotation = stack.gameObject.transform.rotation;

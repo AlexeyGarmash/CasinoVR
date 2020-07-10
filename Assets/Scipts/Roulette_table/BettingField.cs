@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
-{
-
+{  
    
-    [SerializeField]
-    StackData[] BetStacks;
+    private BetStackData[] BetStacks;
 
     private TableCell tableCell;
     EventManager<ROULETTE_EVENT> EventManager;
@@ -15,6 +13,7 @@ public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
     bool canBet = true;
     private void Awake()
     {
+        BetStacks = GetComponentsInChildren<BetStackData>();
         tableCell = GetComponent<TableCell>();
     }
 
@@ -90,7 +89,7 @@ public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
             {
                 if (ChipsUtils.Instance.MagnetizeChip(other.gameObject, BetStacks))
                 {
-                    tableCell.ReceiveBetData(new BetData(new PlayerStats(chip.player), chip.Cost));
+                    tableCell.ReceiveBetData(new BetData(new PlayerStats(chip.player), (int)chip.Cost));
                 }
             }
         }
@@ -105,7 +104,7 @@ public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
             {
                 if (ChipsUtils.Instance.ExtractionChip(other.gameObject, BetStacks))
                 {
-                    tableCell.RemoveBetData(new BetData(new PlayerStats(chip.player), chip.Cost));
+                    tableCell.RemoveBetData(new BetData(new PlayerStats(chip.player), (int)chip.Cost));
                 }
             }
         }

@@ -7,7 +7,7 @@ using UnityEngine;
 
     class ChipData : MonoBehaviour
     {
-        public int Cost;
+        public Chips Cost;
         public string player;
 
     }
