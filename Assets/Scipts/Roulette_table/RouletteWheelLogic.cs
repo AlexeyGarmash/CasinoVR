@@ -9,6 +9,7 @@ public class RouletteWheelLogic
 
 
     public bool IsPossibleStartGame { get => !_isWheelStarted; }
+    public WheelCellData WheelCellData { get => _wheelCellData; set => _wheelCellData = value; }
 
     public void StartWheel()
     {

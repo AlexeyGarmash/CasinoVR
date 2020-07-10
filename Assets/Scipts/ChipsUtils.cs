@@ -26,7 +26,7 @@ class ChipsUtils : Singleton<ChipsUtils>
     }
    
           
-    public void MagnetizeChip(GameObject chip, StackData[] stacks)
+    public bool MagnetizeChip(GameObject chip, StackData[] stacks)
     {
         
         var chipData = chip.GetComponent<ChipData>();
@@ -41,7 +41,7 @@ class ChipsUtils : Singleton<ChipsUtils>
 
                 var stackData = stacks[i];
                 var transform = stackData.gameObject.transform;
-                if (stackData.playerName == chipData.player)
+                if (stackData.playerName.Equals(chipData.player))
                 {
                     if (rb.isKinematic != true)
                     {
@@ -59,16 +59,20 @@ class ChipsUtils : Singleton<ChipsUtils>
                         stackData.Chips.Add(chip);
 
 
-                        return;
+                        return true;
                     }
+                }
+                else {
+                    return false;
                 }
             }
 
 
         }
+        return false;
     }
 
-    public void ExtractionChip(GameObject chip, StackData[] stacks)
+    public bool ExtractionChip(GameObject chip, StackData[] stacks)
     {
         for (var i = 0; i < stacks.Length; i++)
         {
@@ -76,8 +80,10 @@ class ChipsUtils : Singleton<ChipsUtils>
             {
                 stacks[i].Chips.Remove(chip);
                 UpdateStack(stacks[i]);
+                return true;
             }
         }
+        return false;
     }
 
     private void UpdateStack(StackData stack)

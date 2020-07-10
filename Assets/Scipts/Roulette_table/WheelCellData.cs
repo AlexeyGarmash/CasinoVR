@@ -7,8 +7,10 @@ public class WheelCellData
     private int _num;
     public int Number { get => _num; }
 
-    public WheelCellData(int num)
+    public BetColor BetColor { get; set; }
+    public WheelCellData(int num, BetColor betColor)
     {
-        this._num = num;
+        _num = num;
+        BetColor = betColor;
     }
 }

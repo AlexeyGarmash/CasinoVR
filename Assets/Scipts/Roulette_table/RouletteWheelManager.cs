@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RouletteWheelManager : MonoBehaviour
 {
+    public event Action<WheelCellData> OnRouletteWheelFinish;
+
     [SerializeField] private RouletteSpin RouletteSpin;
     [SerializeField] private RouletteBallSpawner RouletteBallSpawner;
     [SerializeField] private Transform BallCenterRotateTransform;
@@ -24,13 +27,7 @@ public class RouletteWheelManager : MonoBehaviour
         
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            StartSpin();
-        }
-    }
+    
 
     public void StartSpin()
     {
@@ -56,9 +53,11 @@ public class RouletteWheelManager : MonoBehaviour
 
         if(BallSpin != null && RouletteSpin != null && BallTrigger != null)
         {
+            BallTrigger.OnBallInCell -= BallTrigger_OnBallInCell;
             BallTrigger.OnBallInCell += BallTrigger_OnBallInCell;
             BallSpin.SetCenterMass(BallCenterRotateTransform);
             BallSpin.StartSpin();
+            RouletteSpin.OnRouletteSpinEnd -= RouletteSpin_OnRouletteSpinEnd;
             RouletteSpin.OnRouletteSpinEnd += RouletteSpin_OnRouletteSpinEnd;
             RouletteSpin.StartSpin();
         }
@@ -74,5 +73,6 @@ public class RouletteWheelManager : MonoBehaviour
     {
         print(obj);
         RouletteWheelLogic.StopWheel();
+        OnRouletteWheelFinish.Invoke(RouletteWheelLogic.WheelCellData);
     }
 }
