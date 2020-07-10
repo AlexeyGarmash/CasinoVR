@@ -1,39 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using UnityEngine;
 
 
 class ChipsUtils : Singleton<ChipsUtils>
 {
-    GameObject yellowChipPrefab;
-    GameObject redChipPrefab;
-    GameObject blueChipPrefab;
-    GameObject greenChipPrefab;
-    GameObject blackChipPrefab;
-    GameObject purpleChipPrefab;
+    public GameObject yellowChipPrefab;
+    public GameObject redChipPrefab;
+    public GameObject blueChipPrefab;
+    public GameObject greenChipPrefab;
+    public GameObject blackChipPrefab;
+    public GameObject purpleChipPrefab;
 
-    private float yPosYellow;
-    private float yPosRed;
-    private float yPosBlue;
-    private float yPosGreen;
-    private float yPosBlack;
-    private float yPosPurple;
+    public float yOffset = 0.0073f;
+    private float xOffset = 0.004f;
+    private float zOffset = 0.004f;
 
-    int money;
-
-    const float yOffset = 0.009f;
-    void ReloadYPos()
-    {
-        yPosYellow = 0;
-        yPosRed = 0;
-        yPosBlue = 0;
-        yPosGreen = 0;
-        yPosBlack = 0;
-        yPosPurple = 0;
-    }
     private void Awake()
     {
         yellowChipPrefab = Resources.Load("Chips/Casino_Chip_Y") as GameObject;
@@ -44,52 +25,7 @@ class ChipsUtils : Singleton<ChipsUtils>
         purpleChipPrefab = Resources.Load("Chips/Casino_Chip_P") as GameObject;
     }
    
-        
-    public void InstantiateStackOfChips(int money, Transform yellowSpawnPos, Transform redSpawnPos,
-        Transform blueSpawnPos, Transform greenSpawnPos, Transform blackSpawnPos, Transform purpleSpawnPos)
-    {
-        if (money > 0)
-        {
-            ReloadYPos();
-
-            var starmoney = money;
-
-            while (money > 0)
-            {
-                if (starmoney / 2 < money)
-                {
-                    InstantiatePrefab(purpleChipPrefab, purpleSpawnPos, ref yPosPurple, (int)Chips.PURPLE, ref money);
-                    
-                }
-                else if (starmoney / 4 < money)
-                {
-                    InstantiatePrefab(blackChipPrefab, blackSpawnPos, ref yPosBlack, (int)Chips.BLACK, ref money);
-                }
-                else if (starmoney / 8 < money)
-                {
-                    InstantiatePrefab(greenChipPrefab, greenSpawnPos, ref yPosGreen, (int)Chips.GREEN, ref money);
-                }
-                else if (starmoney / 16 < money)
-                {
-                    InstantiatePrefab(blueChipPrefab, blueSpawnPos, ref yPosBlue, (int)Chips.BLUE, ref money);
-                }
-                else if (starmoney / 32 < money)
-                {
-                    InstantiatePrefab(redChipPrefab, redSpawnPos, ref yPosRed, (int)Chips.RED, ref money);
-                }
-                else
-                    InstantiatePrefab(yellowChipPrefab, yellowSpawnPos, ref yPosYellow, (int)Chips.YELLOW, ref money);
-            }
-        }
-    }
-    private void InstantiatePrefab(GameObject chip, Transform spawn, ref float yPos, int cost, ref int money)
-    {
-        var createdChip = Instantiate(chip, new Vector3(spawn.position.x, spawn.position.y + yPos, spawn.position.z), new Quaternion(0,0,0,0));
-        yPos+= yOffset;
-        createdChip.transform.parent = spawn;
-        createdChip.transform.rotation = new Quaternion(0, 0, 0, 0);
-        money -= cost;
-    }
+          
     public void MagnetizeChip(GameObject chip, StackData[] stacks)
     {
         
@@ -109,10 +45,20 @@ class ChipsUtils : Singleton<ChipsUtils>
                 {
                     if (rb.isKinematic != true)
                     {
+                        if (stacks[i].Chips.Count == 0)
+                            stacks[i].startY = transform.position.y;
                         rb.isKinematic = true;
-                        chip.transform.position = new Vector3(transform.position.x, transform.position.y + stackData.currentY, transform.position.z);
+
+                        var currOffsetX = Random.Range(-xOffset, xOffset);
+                        var currOffsetZ = Random.Range(-zOffset, zOffset);
+
+                        chip.transform.position = new Vector3(transform.position.x + currOffsetX, transform.position.y + stackData.currentY, transform.position.z + currOffsetZ);
                         chip.transform.rotation = transform.rotation;
                         stackData.currentY += yOffset;
+
+                        stackData.Chips.Add(chip);
+
+
                         return;
                     }
                 }
@@ -121,6 +67,40 @@ class ChipsUtils : Singleton<ChipsUtils>
 
         }
     }
-    
+
+    public void ExtractionChip(GameObject chip, StackData[] stacks)
+    {
+        for (var i = 0; i < stacks.Length; i++)
+        {
+            if (stacks[i].Chips.Contains(chip) && chip.GetComponent<OVRGrabbable>().grabbedBy != null)
+            {
+                stacks[i].Chips.Remove(chip);
+                UpdateStack(stacks[i]);
+            }
+        }
+    }
+
+    private void UpdateStack(StackData stack)
+    {
+       
+        stack.currentY = 0;
+        for (var i = 0; i < stack.Chips.Count; i++)
+        {
+            var currOffsetX = Random.Range(-xOffset, xOffset);
+            var currOffsetZ = Random.Range(-zOffset, zOffset);
+
+            var pos = stack.gameObject.transform.position;
+
+            stack.Chips[i].transform.position = new Vector3(
+                pos.x + currOffsetX,
+                stack.startY + stack.currentY,
+                pos.z + currOffsetZ
+            );
+            stack.Chips[i].transform.rotation = stack.gameObject.transform.rotation;
+            stack.currentY += yOffset;
+        }
+    }
+
+
  }
 
