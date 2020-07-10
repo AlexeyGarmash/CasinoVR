@@ -10,8 +10,17 @@ public class StackData : MonoBehaviour
     public float startY = 0;
     public List<GameObject> Chips = new List<GameObject>();
 
-    private void Start()
+
+    public void ClearData()
     {
+        foreach (var chip in Chips)       
+            Destroy(chip);
+        
+        Chips.Clear();
+        playerName = "";
+        currentY = 0;
+        bet = 0;
         
     }
+
 }

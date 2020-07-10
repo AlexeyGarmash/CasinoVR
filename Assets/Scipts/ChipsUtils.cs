@@ -38,11 +38,13 @@ class ChipsUtils : Singleton<ChipsUtils>
             for (int i = 0;  i < stacks.GetLength(0); i++)
             {
 
-
                 var stackData = stacks[i];
                 var transform = stackData.gameObject.transform;
-                if (stackData.playerName.Equals(chipData.player))
+                if (stackData.playerName.Equals(chipData.player) || stackData.playerName == "")
                 {
+                    if (stackData.playerName == "")
+                        stackData.playerName = chipData.player;
+
                     if (rb.isKinematic != true)
                     {
                         if (stacks[i].Chips.Count == 0)
@@ -61,10 +63,7 @@ class ChipsUtils : Singleton<ChipsUtils>
 
                         return true;
                     }
-                }
-                else {
-                    return false;
-                }
+                }               
             }
 
 
@@ -86,7 +85,7 @@ class ChipsUtils : Singleton<ChipsUtils>
         return false;
     }
 
-    private void UpdateStack(StackData stack)
+    public void UpdateStack(StackData stack)
     {
        
         stack.currentY = 0;

@@ -6,9 +6,10 @@ public abstract class TableCell : MonoBehaviour
 {
     [SerializeField] private int WinKoeff;
     public List<BetData> BetsData { get; private set; }
-
+    EventManager<ROULETTE_EVENT> EventManager;
     private void Awake()
     {
+        EventManager = transform.parent.parent.gameObject.GetComponent<TableBetsManager>().rouletteEventManager;
         BetsData = new List<BetData>();
     }
 
@@ -51,12 +52,20 @@ public abstract class TableCell : MonoBehaviour
 
     public void NotifyWinnersOfCell(WheelCellData wheelCellData)
     {
-        if(CheckIsWinCell(wheelCellData))
+        if (CheckIsWinCell(wheelCellData))
         {
             foreach (var betData in BetsData)
             {
+                EventManager.PostNotification(ROULETTE_EVENT.BET_WIN, this, betData);
                 betData.AddWinnedMoney(WinKoeff);
                 print(string.Format("Player {0} win {1}", betData.PlayerStat.PlayerNick, betData.BetValue * WinKoeff));
+            }
+        }
+        else {
+            foreach (var betData in BetsData)
+            {
+                EventManager.PostNotification(ROULETTE_EVENT.BET_LOST, this, betData);               
+                //print(string.Format("Player {0} win {1}", betData.PlayerStat.PlayerNick, betData.BetValue * WinKoeff));
             }
         }
     }

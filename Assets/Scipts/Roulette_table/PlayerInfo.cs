@@ -7,7 +7,7 @@ public enum Chips { YELLOW = 1, RED = 5, BLUE = 10, GREEN = 25, BLACK = 100, PUR
 
 public class PlayerInfo : MonoBehaviour
 {
-    public int money;
+    PlayerStats ps;
 
     public Transform yellowSpawnPos;
     public Transform redSpawnPos;
@@ -39,7 +39,7 @@ public class PlayerInfo : MonoBehaviour
         blackChipPrefab = ChipsUtils.Instance.blackChipPrefab;
         purpleChipPrefab = ChipsUtils.Instance.purpleChipPrefab;
 
-        InstantiateStackOfChips();
+       
     }
 
     void ReloadYPos()
@@ -54,37 +54,37 @@ public class PlayerInfo : MonoBehaviour
 
     public void InstantiateStackOfChips()
     {
-        if (money > 0)
+        if (ps.AllMoney > 0)
         {
             ReloadYPos();
 
-            var starmoney = money;
+            var starmoney = ps.AllMoney;
 
-            while (money > 0)
+            while (ps.AllMoney > 0)
             {
-                if (starmoney / 2 < money)
+                if (starmoney / 2 < ps.AllMoney)
                 {
-                    InstantiatePrefab(purpleChipPrefab, purpleSpawnPos, ref yPosPurple, (int)Chips.PURPLE, ref money);
+                    InstantiatePrefab(purpleChipPrefab, purpleSpawnPos, ref yPosPurple, (int)Chips.PURPLE, ref ps.AllMoney);
 
                 }
-                else if (starmoney / 4 < money)
+                else if (starmoney / 4 < ps.AllMoney)
                 {
-                    InstantiatePrefab(blackChipPrefab, blackSpawnPos, ref yPosBlack, (int)Chips.BLACK, ref money);
+                    InstantiatePrefab(blackChipPrefab, blackSpawnPos, ref yPosBlack, (int)Chips.BLACK, ref ps.AllMoney);
                 }
-                else if (starmoney / 8 < money)
+                else if (starmoney / 8 < ps.AllMoney)
                 {
-                    InstantiatePrefab(greenChipPrefab, greenSpawnPos, ref yPosGreen, (int)Chips.GREEN, ref money);
+                    InstantiatePrefab(greenChipPrefab, greenSpawnPos, ref yPosGreen, (int)Chips.GREEN, ref ps.AllMoney);
                 }
-                else if (starmoney / 16 < money)
+                else if (starmoney / 16 < ps.AllMoney)
                 {
-                    InstantiatePrefab(blueChipPrefab, blueSpawnPos, ref yPosBlue, (int)Chips.BLUE, ref money);
+                    InstantiatePrefab(blueChipPrefab, blueSpawnPos, ref yPosBlue, (int)Chips.BLUE, ref ps.AllMoney);
                 }
-                else if (starmoney / 32 < money)
+                else if (starmoney / 32 < ps.AllMoney)
                 {
-                    InstantiatePrefab(redChipPrefab, redSpawnPos, ref yPosRed, (int)Chips.RED, ref money);
+                    InstantiatePrefab(redChipPrefab, redSpawnPos, ref yPosRed, (int)Chips.RED, ref ps.AllMoney);
                 }
                 else
-                    InstantiatePrefab(yellowChipPrefab, yellowSpawnPos, ref yPosYellow, (int)Chips.YELLOW, ref money);
+                    InstantiatePrefab(yellowChipPrefab, yellowSpawnPos, ref yPosYellow, (int)Chips.YELLOW, ref ps.AllMoney);
             }
         }
     }
@@ -95,8 +95,23 @@ public class PlayerInfo : MonoBehaviour
         createdChip.transform.parent = spawn;
         createdChip.transform.rotation = new Quaternion(0, 0, 0, 0);
         money -= cost;
-        //createdChip.GetComponent<Rigidbody>().isKinematic = true;
+        
     }
-   
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            
+
+            if (OVRInput.Get(OVRInput.Button.Three))
+            {
+                if (ps == null)
+                {
+                    ps = other.gameObject.GetComponent<PlayerStats>();
+                    InstantiateStackOfChips();
+                }
+            }
+        }
+    }
 
 }

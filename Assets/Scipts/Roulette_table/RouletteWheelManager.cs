@@ -16,9 +16,10 @@ public class RouletteWheelManager : MonoBehaviour
     private BallTrigger BallTrigger;
     private RouletteWheelLogic RouletteWheelLogic;
 
-
+    EventManager<ROULETTE_EVENT> eventManager;
     private void Awake()
     {
+        eventManager = GetComponent<TableBetsManager>().rouletteEventManager;
         RouletteWheelLogic = new RouletteWheelLogic();
     }
 
@@ -71,6 +72,7 @@ public class RouletteWheelManager : MonoBehaviour
 
     private void RouletteSpin_OnRouletteSpinEnd(string obj)
     {
+        eventManager.PostNotification(ROULETTE_EVENT.ROULETTE_GAME_END, this, RouletteWheelLogic.WheelCellData);
         print(obj);
         RouletteWheelLogic.StopWheel();
         OnRouletteWheelFinish.Invoke(RouletteWheelLogic.WheelCellData);
