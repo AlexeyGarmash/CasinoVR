@@ -191,11 +191,11 @@ namespace OculusSampleFramework
             }
         }
 
-        public override void MoveGrabbedObject(Vector3 pos, Quaternion rot, bool forceTeleport = false)
+        public override void MoveGrabbedObject(Vector3 pos, Quaternion rot, OVRGrabbable m_grabbedObj, bool forceTeleport = false)
         {
             if (m_grabbedObj == null)
             {
-                return;
+                    return;
             }
 
             Rigidbody grabbedRigidbody = m_grabbedObj.grabbedRigidbody;

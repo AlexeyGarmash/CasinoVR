@@ -106,7 +106,7 @@ namespace OVRTouchSample
 
             float flex = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller);
 
-            bool collisionEnabled = m_grabber.grabbedObject == null && flex >= THRESH_COLLISION_FLEX;
+            bool collisionEnabled = m_grabber.lastGrabbedObject == null && flex >= THRESH_COLLISION_FLEX;
             CollisionEnable(collisionEnabled);
 
             UpdateAnimStates();
@@ -185,11 +185,11 @@ namespace OVRTouchSample
 
         private void UpdateAnimStates()
         {
-            bool grabbing = m_grabber.grabbedObject != null;
+            bool grabbing = m_grabber.lastGrabbedObject != null;
             HandPose grabPose = m_defaultGrabPose;
             if (grabbing)
             {
-                HandPose customPose = m_grabber.grabbedObject.GetComponent<HandPose>();
+                HandPose customPose = m_grabber.lastGrabbedObject.GetComponent<HandPose>();
                 if (customPose != null) grabPose = customPose;
             }
             // Pose
