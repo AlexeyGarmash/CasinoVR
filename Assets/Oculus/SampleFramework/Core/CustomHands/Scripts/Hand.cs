@@ -198,8 +198,8 @@ namespace OVRTouchSample
 
             // Flex
             // blend between open hand and fully closed fist
-            float flex = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller);
-            m_animator.SetFloat(m_animParamIndexFlex, flex);
+            //float flex = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller);
+            //m_animator.SetFloat(m_animParamIndexFlex, flex);
 
             // Point
             bool canPoint = !grabbing || grabPose.AllowPointing;

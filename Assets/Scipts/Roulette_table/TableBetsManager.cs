@@ -26,11 +26,11 @@ public class TableBetsManager : MonoBehaviour
 
     private void Update()
     {
-        if (OVRInput.GetDown(OVRInput.Button.One))
-        {
-            RouletteWheelManager.StartSpin();
-            rouletteEventManager.PostNotification(ROULETTE_EVENT.ROULETTE_GAME_START, this, null);
-        }
+        //if (OVRInput.GetDown(OVRInput.Button.One))
+        //{
+        //    RouletteWheelManager.StartSpin();
+        //    rouletteEventManager.PostNotification(ROULETTE_EVENT.ROULETTE_GAME_START, this, null);
+        //}
     }
 
     private void RouletteWheelManager_OnRouletteWheelFinish(WheelCellData obj)
