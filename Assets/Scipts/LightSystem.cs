@@ -7,7 +7,7 @@ using System;
 
 namespace SlotMachine
 {
-    public enum SLOT_MACHINE_LAMP_MODS { IDLE, FAST,  ALL_LAMP_RANDOM_SINGLE_COLOR_ONCE, ALL_LAMP_RANDOM_SINGLE_COLOR, STOP, ALL_LAMP_RANDOM_ONCE, ALL_LAMP_RANDOM, NONE, MIXED }
+    /*public enum SLOT_MACHINE_LAMP_MODS { IDLE, FAST,  ALL_LAMP_RANDOM_SINGLE_COLOR_ONCE, ALL_LAMP_RANDOM_SINGLE_COLOR, STOP, ALL_LAMP_RANDOM_ONCE, ALL_LAMP_RANDOM, NONE, MIXED }
     public class LightSystem : MonoBehaviour, IListener<EVENT_TYPE>
     {
 
@@ -292,6 +292,6 @@ namespace SlotMachine
                     break;
             }
         }
-    }
+    }*/
 
 }

@@ -2458,6 +2458,7 @@ GameObject:
   - component: {fileID: 921756762}
   - component: {fileID: 921756761}
   - component: {fileID: 921756763}
+  - component: {fileID: 921756764}
   m_Layer: 5
   m_Name: CreateJoinRoomPanel
   m_TagString: Untagged
@@ -2543,6 +2544,20 @@ MonoBehaviour:
   SrollViewTransformContent: {fileID: 461763553}
   RoomItem: {fileID: 2593781522173403655, guid: 3f60df93177a20f4591499390a142f7e,
     type: 3}
+--- !u!114 &921756764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921756759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf970a8e98375944c847494dea827719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnTransform: {fileID: 1523372940}
+  Input: {fileID: 817420014}
 --- !u!1001 &922179197
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2618,6 +2633,7 @@ GameObject:
   - component: {fileID: 949548500}
   - component: {fileID: 949548499}
   - component: {fileID: 949548501}
+  - component: {fileID: 949548502}
   m_Layer: 5
   m_Name: CreatePlayerPanel
   m_TagString: Untagged
@@ -2697,6 +2713,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InputFieldNickName: {fileID: 574523990}
+--- !u!114 &949548502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949548497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf970a8e98375944c847494dea827719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnTransform: {fileID: 1523372940}
+  Input: {fileID: 574523990}
 --- !u!1 &1054794899
 GameObject:
   m_ObjectHideFlags: 0
@@ -4271,6 +4301,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1405176685}
   m_CullTransparentMesh: 0
+--- !u!1 &1523372939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1523372940}
+  m_Layer: 5
+  m_Name: KeyboardSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1523372940
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523372939}
+  m_LocalRotation: {x: 0.38382822, y: -0, z: -0, w: 0.9234045}
+  m_LocalPosition: {x: 0, y: 0, z: -50}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 1832985013}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 45.142002, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -300}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1596804161
 GameObject:
   m_ObjectHideFlags: 0
@@ -4574,6 +4639,7 @@ RectTransform:
   - {fileID: 949548498}
   - {fileID: 921756760}
   - {fileID: 1188624801}
+  - {fileID: 1523372940}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

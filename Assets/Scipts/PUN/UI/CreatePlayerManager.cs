@@ -4,11 +4,14 @@ using UnityEngine;
 using Photon;
 using TMPro;
 using Photon.Pun;
+using UnityEngine.Events;
+using System;
+using TalesFromTheRift;
 
 public class CreatePlayerManager : MonoBehaviour
 {
     [SerializeField] private TMP_InputField InputFieldNickName;
-
+    
     public void ChangeNickName()
     {
         if(InputFieldNickName.text.Length != 0)

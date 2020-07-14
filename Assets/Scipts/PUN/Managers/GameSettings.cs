@@ -32,5 +32,4 @@ public class GameSettings : ScriptableObject
             return roomOptions;
         }
     }
-
 }

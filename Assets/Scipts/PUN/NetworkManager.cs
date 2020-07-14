@@ -17,10 +17,22 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonNetwork.GameVersion = MasterManager.GameSettings.GameVersion;
-        PhotonNetwork.NickName = MasterManager.GameSettings.NickName;
+        PhotonNetwork.GameVersion = "0.1";//MasterManager.GameSettings.GameVersion;
+        PhotonNetwork.NickName = "rand";//MasterManager.GameSettings.NickName;
         print("Try connect to master...");
         PhotonNetwork.ConnectUsingSettings();
+    }
+
+    public RoomOptions DefaultRoomOptions
+    {
+        get
+        {
+            RoomOptions roomOptions = new RoomOptions();
+            roomOptions.MaxPlayers = 4;
+            roomOptions.IsOpen = true;
+            roomOptions.IsVisible = true;
+            return roomOptions;
+        }
     }
 
     public override void OnJoinedLobby()
@@ -44,7 +56,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsConnected && !PhotonNetwork.InRoom)
         {
-            PhotonNetwork.CreateRoom(roomName, MasterManager.GameSettings.DefaultRoomOptions, TypedLobby.Default);
+            PhotonNetwork.CreateRoom(roomName, DefaultRoomOptions, TypedLobby.Default);
         }
         else
         {

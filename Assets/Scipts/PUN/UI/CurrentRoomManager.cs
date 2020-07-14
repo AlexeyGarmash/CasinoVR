@@ -16,6 +16,7 @@ public class CurrentRoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
+
     
     private void InstatiatePlayer(Player playerInfo)
     {
@@ -24,6 +25,14 @@ public class CurrentRoomManager : MonoBehaviourPunCallbacks
         {
             newPlayerItem.SetPlayerInfo(playerInfo);
             _playerItems.Add(newPlayerItem);
+        }
+    }
+
+    private void InstantiateStartPlayers()
+    {
+        foreach (var punPlayer in PhotonNetwork.CurrentRoom.Players)
+        {
+            InstatiatePlayer(punPlayer.Value);
         }
     }
 
@@ -39,7 +48,8 @@ public class CurrentRoomManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         print("Hi local player");
-        InstatiatePlayer(PhotonNetwork.LocalPlayer);
+        //InstatiatePlayer(PhotonNetwork.LocalPlayer);
+        InstantiateStartPlayers();
     }
 
     public override void OnLeftRoom()
@@ -59,7 +69,7 @@ public class CurrentRoomManager : MonoBehaviourPunCallbacks
         int indexPlayer = _playerItems.FindIndex(p => p.PlayerInfo.NickName.Equals(otherPlayer.NickName));
         if(indexPlayer != -1)
         {
-            Destroy(_playerItems[indexPlayer]);
+            Destroy(_playerItems[indexPlayer].gameObject);
             _playerItems.RemoveAt(indexPlayer);
         }
     }

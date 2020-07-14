@@ -34,18 +34,21 @@ public class CreateJoinRoomManager : MonoBehaviourPunCallbacks
     {
         foreach (var roomInfo in roomList)
         {
+            int roomIndex = _roomsList.FindIndex(room => room.RoomInfo.Name.Equals(roomInfo.Name));
             if (roomInfo.RemovedFromList)
             {
-                int roomIndex = _roomsList.FindIndex(room => room.RoomInfo.Name.Equals(roomInfo.Name));
-
                 if (roomIndex != -1)
                 {
-                    Destroy(_roomsList[roomIndex]);
+                    Destroy(_roomsList[roomIndex].gameObject);
                     _roomsList.RemoveAt(roomIndex);
                 }
             }
             else
             {
+                if(roomIndex != -1)
+                {
+                    continue;
+                }
                 RoomItem newRoomItem = Instantiate(RoomItem, SrollViewTransformContent);
                 if (newRoomItem != null)
                 {
