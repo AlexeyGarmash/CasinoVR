@@ -16,7 +16,6 @@ permissions and limitations under the License.
 
 using System.Collections.Generic;
 using UnityEngine;
-
 /// <summary>
 /// Allows grabbing and throwing of objects with the OVRGrabbable component on them.
 /// </summary>
@@ -29,6 +28,8 @@ public class OVRGrabber : MonoBehaviour
 
     [SerializeField]
     int max_grabbed_obj = 5;
+
+    StackData stack = new StackData();
     // Grip trigger thresholds for picking up objects, with some hysteresis.
     public float grabBegin = 0.55f;
     public float grabEnd = 0.35f;
@@ -83,8 +84,8 @@ public class OVRGrabber : MonoBehaviour
     protected Vector3 m_anchorOffsetPosition;
     protected float m_prevFlex;
     //extended Volik Segey
-    protected bool m_thumb;
-    protected float add_chip;
+    protected float m_thumb;
+    protected bool add_chip;
     //
     protected List<OVRGrabbable> m_grabbedObjs = new List<OVRGrabbable>();
     protected OVRGrabbable m_grabbedObj = null;
@@ -105,6 +106,21 @@ public class OVRGrabber : MonoBehaviour
         get { return m_grabbedObjs; }
     }
 
+    #region extentions
+
+    private List<GameObject> GameObjectsFromGrabbable()
+    {
+        var gameObjs = new List<GameObject>();
+
+        for (var i = 0; i < m_grabbedObjs.Count; i++)
+            gameObjs.Add(m_grabbedObjs[i].gameObject);
+
+        return gameObjs;
+
+
+    }
+
+    #endregion
     public void ForceRelease(OVRGrabbable grabbable)
     {
         bool canRelease = false;
@@ -149,6 +165,7 @@ public class OVRGrabber : MonoBehaviour
     {
         m_lastPos = transform.position;
         m_lastRot = transform.rotation;
+
         if(m_parentTransform == null)
         {
 			m_parentTransform = gameObject.transform;
@@ -180,6 +197,7 @@ public class OVRGrabber : MonoBehaviour
         if (alreadyUpdated) return;
         alreadyUpdated = true;
 
+
         Vector3 destPos = m_parentTransform.TransformPoint(m_anchorOffsetPosition);
         Quaternion destRot = m_parentTransform.rotation * m_anchorOffsetRotation;
 
@@ -191,8 +209,8 @@ public class OVRGrabber : MonoBehaviour
 
         if (!m_parentHeldObject)
         {
-            for(var i = 0; i < m_grabbedObjs.Count; i++)
-             MoveGrabbedObject(destPos, destRot, m_grabbedObjs[i]);
+            //for (var i = 0; i < m_grabbedObjs.Count; i++)
+            //    MoveGrabbedObject(destPos, destRot, m_grabbedObjs[i]);
         }
 
         m_lastPos = transform.position;
@@ -202,8 +220,8 @@ public class OVRGrabber : MonoBehaviour
         // Update values from inputs
         
         m_prevFlex = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller);
-        m_thumb = OVRInput.Get(OVRInput.Button.One, m_controller);
-        add_chip = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller);
+        add_chip = OVRInput.GetDown(OVRInput.Button.One, m_controller);
+      
 
         CheckForGrabOrRelease(prevFlex);
     }
@@ -260,11 +278,11 @@ public class OVRGrabber : MonoBehaviour
     protected void CheckForGrabOrRelease(float prevFlex)
     {
 
-        if ((m_prevFlex >= grabBegin) && m_thumb && add_chip != 0 && max_grabbed_obj > m_grabbedObjs.Count)
+        if ((m_prevFlex >= grabBegin) && add_chip && max_grabbed_obj > m_grabbedObjs.Count)
         {
             GrabBegin();
         }
-        else if ((m_prevFlex <= grabEnd) || !m_thumb)
+        else if ((m_prevFlex <= grabEnd))
         {
             GrabEnd();
         }
@@ -361,9 +379,41 @@ public class OVRGrabber : MonoBehaviour
             // Note: force teleport on grab, to avoid high-speed travel to dest which hits a lot of other objects at high
             // speed and sends them flying. The grabbed object may still teleport inside of other objects, but fixing that
             // is beyond the scope of this demo.
+
+            var oldROt = m_parentTransform.rotation;
+            m_parentTransform.rotation = new Quaternion();
+            var pos = m_parentTransform.position;
+            var parent = m_parentTransform.parent;
+            m_parentTransform.parent = null;
+
             
-            for(var i = 0; i < m_grabbedObjs.Count; i++)
-                MoveGrabbedObject(m_lastPos, m_lastRot, m_grabbedObjs[i],  true);
+            
+
+
+            ystart = 0;
+            
+            for (var i = 0; i < m_grabbedObjs.Count; i++)
+            {
+                
+                m_grabbedObjs[i].transform.rotation = new Quaternion();
+                m_grabbedObjs[i].transform.parent = m_parentTransform;
+                //MoveGrabbedObject(m_parentTransform.position, new Quaternion(0,0,0,0), m_grabbedObjs[i], true);
+                m_grabbedObjs[i].transform.localPosition = new Vector3(
+                   0,
+                   0,
+                   ystart
+                );
+                
+                ystart -= yOffset;
+
+            }
+
+            m_parentTransform.parent = parent;
+            m_parentTransform.rotation = oldROt;
+
+
+            m_lastPos = m_parentTransform.position;
+            m_lastRot = m_parentTransform.rotation;
 
             SetPlayerIgnoreCollision(m_grabbedObj.gameObject, true);
 
@@ -373,7 +423,8 @@ public class OVRGrabber : MonoBehaviour
             }
         }
     }
-    
+    float ystart = 0;
+    float yOffset = 0.0075f;
     public virtual void MoveGrabbedObject(Vector3 pos, Quaternion rot, OVRGrabbable m_grabbedObj, bool forceTeleport = false)
     {
         if (m_grabbedObj == null)
@@ -381,6 +432,7 @@ public class OVRGrabber : MonoBehaviour
             return;
         }
 
+       
         Rigidbody grabbedRigidbody = m_grabbedObj.grabbedRigidbody;
         Vector3 grabbablePosition = pos + rot * m_grabbedObjectPosOff;
         Quaternion grabbableRotation = rot * m_grabbedObjectRotOff;

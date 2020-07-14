@@ -19,7 +19,6 @@ using UnityEngine;
 /// </summary>
 /// 
 
-
 [RequireComponent(typeof(CharacterController))]
 public class OVRPlayerController : MonoBehaviour
 {

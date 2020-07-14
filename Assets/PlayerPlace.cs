@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerPlase : MonoBehaviour
+public class PlayerPlace : MonoBehaviour
 {
 
     private void OnTriggerStay(Collider other)

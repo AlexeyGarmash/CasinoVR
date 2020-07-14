@@ -8,7 +8,7 @@ CONDITIONS OF ANY KIND, either express or implied.  See the license for specific
 language governing permissions and limitations under the license.
 
 ************************************************************************************/
-
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -24,7 +24,7 @@ namespace OVRTouchSample
     [RequireComponent(typeof(OVRGrabber))]
     public class Hand : MonoBehaviour
     {
-      
+       
         public const string ANIM_LAYER_NAME_POINT = "Point Layer";
         public const string ANIM_LAYER_NAME_THUMB = "Thumb Layer";
         public const string ANIM_PARAM_NAME_FLEX = "Flex";
@@ -102,7 +102,7 @@ namespace OVRTouchSample
             UpdateCapTouchStates();
 
             m_pointBlend = InputValueRateChange(m_isPointing, m_pointBlend);
-            m_thumbsUpBlend = InputValueRateChange(m_isGivingThumbsUp, m_thumbsUpBlend);
+            m_thumbsUpBlend = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller);
 
             float flex = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller);
 
@@ -117,7 +117,7 @@ namespace OVRTouchSample
         private void UpdateCapTouchStates()
         {
             m_isPointing = !OVRInput.Get(OVRInput.NearTouch.PrimaryIndexTrigger, m_controller);
-            m_isGivingThumbsUp = !OVRInput.Get(OVRInput.NearTouch.PrimaryThumbButtons, m_controller);
+            
         }
 
         private void LateUpdate()
@@ -208,13 +208,33 @@ namespace OVRTouchSample
 
             // Thumbs up
             bool canThumbsUp = !grabbing || grabPose.AllowThumbsUp;
-            float thumbsUp = canThumbsUp ? m_thumbsUpBlend : 0.0f;
+            float thumbsUp = m_thumbsUpBlend;
             m_animator.SetLayerWeight(m_animLayerIndexThumb, thumbsUp);
 
-            float pinch = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller);
+
+            float pinch = GetPinch();
+
+
             m_animator.SetFloat("Pinch", pinch);
         }
 
+        float GetPinch()
+        {
+            var numberOfChips = m_grabber.grabbedObjects.Count;
+           
+            if (numberOfChips == 1)
+                return 0.9f;
+            else if (numberOfChips == 2)
+                return 0.7f;
+            else if (numberOfChips == 3)
+                return 0.5f;
+            else if (numberOfChips == 4)
+                return 0.3f;
+            else if (numberOfChips == 5)
+                return 0.1f;
+            else
+                return OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller); ;
+        }
         private float m_collisionScaleCurrent = 0.0f;
 
         private void CollisionEnable(bool enabled)

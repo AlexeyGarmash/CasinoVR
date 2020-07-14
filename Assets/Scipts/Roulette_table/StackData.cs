@@ -8,7 +8,7 @@ public class StackData : MonoBehaviour
     public string playerName = "";
     public float currentY;   
     public List<GameObject> Chips = new List<GameObject>();
-
+    
     public virtual void ClearData()
     {
         foreach (var chip in Chips)       
@@ -18,6 +18,17 @@ public class StackData : MonoBehaviour
         playerName = "";
         currentY = 0;      
         
+    }
+
+    private List<OVRGrabbable> GetAllGrabbleCom()
+    {
+        var grabbleChipsComp = new List<OVRGrabbable>();
+        foreach (var chip in Chips)
+        {
+            grabbleChipsComp.Add(chip.GetComponent<OVRGrabbable>());
+        }
+
+        return grabbleChipsComp;
     }
 
 }
