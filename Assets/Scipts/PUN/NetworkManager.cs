@@ -17,6 +17,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.GameVersion = "0.1";//MasterManager.GameSettings.GameVersion;
         PhotonNetwork.NickName = "rand";//MasterManager.GameSettings.NickName;
         print("Try connect to master...");
