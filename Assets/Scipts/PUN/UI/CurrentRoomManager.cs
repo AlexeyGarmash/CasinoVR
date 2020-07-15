@@ -4,20 +4,48 @@ using UnityEngine;
 using Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
+using TMPro;
 
 public class CurrentRoomManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private Transform Content;
     [SerializeField] private PlayerItem PlayerItem;
+    [SerializeField] private Button ButtonReady;
+    [SerializeField] private TMP_Text ButtonReadyText;
+    [SerializeField] private Button ButtonStartGame;
+
     private List<PlayerItem> _playerItems = new List<PlayerItem>();
+    private bool _isReady = false;
+    private ExitGames.Client.Photon.Hashtable customProps;
+
+    private void Awake()
+    {
+        customProps = new ExitGames.Client.Photon.Hashtable();
+        ButtonReady.onClick.AddListener(OnButtonReady_Clicked);
+        ButtonStartGame.onClick.AddListener(OnButtonStartGame_Clicked);
+    }
+
+    private void OnButtonReady_Clicked()
+    {
+        _isReady = !_isReady;
+        UpdateCustomProps();
+    }
+
+    private void UpdateCustomProps()
+    {
+        customProps[PlayerItem.KEY_PLAYER_READY] = _isReady;
+        PhotonNetwork.SetPlayerCustomProperties(customProps);
+        ButtonReadyText.text = _isReady ? "Ready" : "Not ready";
+    }
 
     public void LeaveRoom()
     {
+        _isReady = false; 
+        UpdateCustomProps();
         PhotonNetwork.LeaveRoom();
     }
 
-
-    
     private void InstatiatePlayer(Player playerInfo)
     {
         PlayerItem newPlayerItem = Instantiate(PlayerItem, Content);
@@ -72,6 +100,39 @@ public class CurrentRoomManager : MonoBehaviourPunCallbacks
             Destroy(_playerItems[indexPlayer].gameObject);
             _playerItems.RemoveAt(indexPlayer);
         }
+    }
+
+    private void OnButtonStartGame_Clicked()
+    {
+        StartGame();
+    }
+
+    public void StartGame()
+    {
+        if(PhotonNetwork.IsMasterClient)
+        {
+            if (RoomPlayersReady())
+            {
+                PhotonNetwork.LoadLevel(1);
+            }
+            else
+            {
+                print("Not all users are ready");
+            }
+        }
+    }
+
+    private bool RoomPlayersReady()
+    {
+        foreach (var playerKV in PhotonNetwork.CurrentRoom.Players)
+        {
+            Player player = playerKV.Value;
+            if(!player.IsReady())
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

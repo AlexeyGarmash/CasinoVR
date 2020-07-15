@@ -31,6 +31,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             roomOptions.MaxPlayers = 4;
             roomOptions.IsOpen = true;
             roomOptions.IsVisible = true;
+            roomOptions.BroadcastPropsChangeToAll = true;
             return roomOptions;
         }
     }
