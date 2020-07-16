@@ -17,6 +17,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        ConnectToServer();
+    }
+
+    public void ConnectToServer()
+    {
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.GameVersion = "0.1";//MasterManager.GameSettings.GameVersion;
         PhotonNetwork.NickName = "rand";//MasterManager.GameSettings.NickName;

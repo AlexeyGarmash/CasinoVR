@@ -76,4 +76,13 @@ public class MainMenuManager : MonoBehaviourPunCallbacks
     {
         print(string.Format("Create room failed. Cause: {0}", message));
     }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        LoadingServerPanel.SetScale(fullScale);
+        CreatePlayerPanel.SetScale(removeScale);
+        JoinOrCreateRoomPanel.SetScale(removeScale);
+        CurrentRoomPanel.SetScale(removeScale);
+        NetworkManager.Instance.ConnectToServer();
+    }
 }
