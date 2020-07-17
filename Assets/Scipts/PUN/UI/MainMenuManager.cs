@@ -4,15 +4,19 @@ using UnityEngine;
 using Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 
 public class MainMenuManager : MonoBehaviourPunCallbacks
 {
     public static MainMenuManager Instance;
 
+
+
     [SerializeField] private GameObject LoadingServerPanel;
     [SerializeField] private GameObject CreatePlayerPanel;
     [SerializeField] private GameObject JoinOrCreateRoomPanel;
     [SerializeField] private GameObject CurrentRoomPanel;
+    [SerializeField] private LoadingWithProgressManager LoadingWithProgressManager;
 
     private Vector3 fullScale = new Vector3(1, 1, 1);
     private Vector3 removeScale = new Vector3(0, 0, 0);
@@ -22,14 +26,19 @@ public class MainMenuManager : MonoBehaviourPunCallbacks
         Instance = this;
     }
 
+
+
     private void Start()
     {
+        LoadingWithProgressManager.gameObject.SetScale(removeScale);
         LoadingServerPanel.SetScale(fullScale);
 
         CreatePlayerPanel.SetScale(removeScale);
         JoinOrCreateRoomPanel.SetScale(removeScale);
         CurrentRoomPanel.SetScale(removeScale);
     }
+
+    
 
     public override void OnConnectedToMaster()
     {
@@ -84,5 +93,22 @@ public class MainMenuManager : MonoBehaviourPunCallbacks
         JoinOrCreateRoomPanel.SetScale(removeScale);
         CurrentRoomPanel.SetScale(removeScale);
         NetworkManager.Instance.ConnectToServer();
+    }
+
+    public void StartGame()
+    {
+        LoadingWithProgressManager.gameObject.SetScale(fullScale);
+        LoadingWithProgressManager.transform.SetAsLastSibling();
+        StartCoroutine(_startGame());
+    }
+
+    private IEnumerator _startGame()
+    {
+        PhotonNetwork.LoadLevel(1);
+        while(PhotonNetwork.LevelLoadingProgress < 1)
+        {
+            LoadingWithProgressManager.SetProgress(PhotonNetwork.LevelLoadingProgress);
+            yield return new WaitForEndOfFrame();
+        }
     }
 }

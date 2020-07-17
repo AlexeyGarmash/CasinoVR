@@ -6,8 +6,9 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
-public class CurrentRoomManager : MonoBehaviourPunCallbacks
+public class CurrentRoomManager : BaseMenuPanel
 {
     [SerializeField] private Transform Content;
     [SerializeField] private PlayerItem PlayerItem;
@@ -107,32 +108,8 @@ public class CurrentRoomManager : MonoBehaviourPunCallbacks
         StartGame();
     }
 
-    public void StartGame()
+    private void StartGame()
     {
-        if(PhotonNetwork.IsMasterClient)
-        {
-            if (RoomPlayersReady())
-            {
-                PhotonNetwork.LoadLevel(1);
-            }
-            else
-            {
-                print("Not all users are ready");
-            }
-        }
+        NetworkManager.Instance.StartGame();
     }
-
-    private bool RoomPlayersReady()
-    {
-        foreach (var playerKV in PhotonNetwork.CurrentRoom.Players)
-        {
-            Player player = playerKV.Value;
-            if(!player.IsReady())
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
 }

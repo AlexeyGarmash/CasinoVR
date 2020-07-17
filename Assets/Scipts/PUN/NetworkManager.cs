@@ -87,4 +87,41 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LocalPlayer.NickName = newNick;
     }
+
+
+    public void StartGame()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (RoomPlayersReady())
+            {
+                StartGameLoading();
+            }
+            else
+            {
+                print("Not all users are ready");
+            }
+        }
+    }
+
+    
+
+    private bool RoomPlayersReady()
+    {
+        foreach (var playerKV in PhotonNetwork.CurrentRoom.Players)
+        {
+            Player player = playerKV.Value;
+            if (!player.IsReady())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void StartGameLoading()
+    {
+        MainMenuManager.Instance.StartGame();
+    }
+
 }

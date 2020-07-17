@@ -5,7 +5,7 @@ using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class CreateJoinRoomManager : MonoBehaviourPunCallbacks
+public class CreateJoinRoomManager : BaseMenuPanel
 {
     [SerializeField] private TMP_InputField InputFieldRoomName;
     [SerializeField] private TMP_Text TextCurrentNickName;

@@ -8,7 +8,7 @@ using UnityEngine.Events;
 using System;
 using TalesFromTheRift;
 
-public class CreatePlayerManager : MonoBehaviour
+public class CreatePlayerManager : BaseMenuPanel
 {
     [SerializeField] private TMP_InputField InputFieldNickName;
     
