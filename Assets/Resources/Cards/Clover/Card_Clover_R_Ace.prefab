@@ -11,12 +11,14 @@ GameObject:
   - component: {fileID: 444490}
   - component: {fileID: 3331396}
   - component: {fileID: 2370068}
-  - component: {fileID: 4892164364823876212}
   - component: {fileID: 1231001490675483863}
   - component: {fileID: 5338710889099357556}
+  - component: {fileID: 3415453597086689782}
+  - component: {fileID: -2635496379453248430}
+  - component: {fileID: 6238011364560623481}
   m_Layer: 12
   m_Name: Card_Clover_R_Ace
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 123820}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -82,23 +84,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &4892164364823876212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 123820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_allowOffhandGrab: 1
-  m_snapPosition: 0
-  m_snapOrientation: 0
-  m_snapOffset: {fileID: 0}
-  m_grabPoints: []
 --- !u!54 &1231001490675483863
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -128,3 +113,61 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.11129394, y: 0, z: 0.16127858}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3415453597086689782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e06eedf570f357640ba147a9882414e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sign: 0
+  Face: 9
+--- !u!114 &-2635496379453248430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779d364a07090ab4dbb6fa8ea3692b04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
+  handCardsRotation: {x: 0, y: 0, z: 0, w: 0}
+  handCardsPos: {x: -0.0277, y: -0.0049, z: 0.0085}
+  cardRotationFace: {x: -41.744, y: 14.602, z: 176.382, w: 0}
+  handPos: {fileID: 7723645442114614947, guid: b0bebda1db8c6664bbcd447a44cac9de, type: 3}
+  cardRotation1: {x: 0, y: 0, z: 0, w: 0}
+  cardRotation2: {x: 0, y: 0, z: 0, w: 0}
+  cardRotation3: {x: 0, y: 0, z: 0, w: 0}
+  cardRotation4: {x: 0, y: 0, z: 0, w: 0}
+  cardRotation5: {x: 0, y: 0, z: 0, w: 0}
+  cardPosotion1: {x: 0, y: 0, z: 0}
+  cardPosotion2: {x: 0, y: 0, z: 0}
+  cardPosotion3: {x: 0, y: 0, z: 0}
+  cardPosotion4: {x: 0, y: 0, z: 0}
+  cardPosotion5: {x: 0, y: 0, z: 0}
+--- !u!65 &6238011364560623481
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123820}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.11129394, y: 0.0021683346, z: 0.16127862}
+  m_Center: {x: 0, y: -0.000109601766, z: -1.7718829e-19}

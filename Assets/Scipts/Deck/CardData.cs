@@ -9,7 +9,7 @@ namespace Cards
 
     public enum Card_Sign { Clover, Diamond, Heart, Spades }
     public enum Card_Face { Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Ace, Jack, King, Queen }
-    class CardData : MonoBehaviour
+    public class CardData : MonoBehaviour
     {
         public Card_Sign Sign;
         public Card_Face Face;

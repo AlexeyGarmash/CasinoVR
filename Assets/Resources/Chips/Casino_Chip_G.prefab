@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 3359670}
   - component: {fileID: 2325708}
   - component: {fileID: -6438812727898000409}
-  - component: {fileID: 8639793789488104519}
   - component: {fileID: 812416642149738027}
   - component: {fileID: 4736910778359392998}
+  - component: {fileID: 826903926256348457}
   m_Layer: 12
   m_Name: Casino_Chip_G
-  m_TagString: Untagged
+  m_TagString: Chip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,23 +99,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8639793789488104519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 167068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_allowOffhandGrab: 1
-  m_snapPosition: 0
-  m_snapOrientation: 0
-  m_snapOffset: {fileID: 0}
-  m_grabPoints: []
 --- !u!65 &812416642149738027
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -143,3 +126,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cost: 25
   player: 
+--- !u!114 &826903926256348457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dfa0323fe62695488609c8e2ea1b5b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
+  GrabPos1ChipLeft: {fileID: 0}
+  GrabPos2ChipLeft: {fileID: 0}
+  GrabPos3ChipLeft: {fileID: 0}
+  GrabPos4ChipLeft: {fileID: 0}
+  GrabPos5ChipLeft: {fileID: 0}
+  GrabPos1ChipRight: {fileID: 1508160704919437606, guid: d6e0f96db6c9dd4448cc8f97549d01fb,
+    type: 3}
+  GrabPos2ChipRight: {fileID: 7387025156831206046, guid: d7bf671c55bd68541b1a0e9f7caae629,
+    type: 3}
+  GrabPos3ChipRight: {fileID: 4238083361538116213, guid: 2dadebd252242ad4f88e65d2e4681a72,
+    type: 3}
+  GrabPos4ChipRight: {fileID: 4965761515864636972, guid: 164e76de5ee8efd4383d49e1542b4983,
+    type: 3}
+  GrabPos5ChipRight: {fileID: 7738174793567135488, guid: 42f9189dfe8a53b42a2167c95a7a546d,
+    type: 3}
+  offsetPosR: {x: 0.0047, y: -0.0021, z: 0.0077}
+  offsetRotR: {x: 16.427, y: 0, z: 0, w: 0}
+  offsetPosL: {x: 0, y: 0, z: 0}
+  offsetRotL: {x: 0, y: 0, z: 0, w: 0}

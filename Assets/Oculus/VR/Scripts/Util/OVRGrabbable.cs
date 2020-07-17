@@ -36,7 +36,7 @@ public class OVRGrabbable : MonoBehaviour
     protected bool m_grabbedKinematic = false;
     protected Collider m_grabbedCollider = null;
     protected OVRGrabber m_grabbedBy = null;
-
+    
 	/// <summary>
 	/// If true, the object can currently be grabbed.
 	/// </summary>
@@ -118,29 +118,18 @@ public class OVRGrabbable : MonoBehaviour
         m_grabbedCollider = grabPoint;
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
     }
-    virtual public void GrabBegin(OVRGrabber hand, Collider grabPoint, Transform spawnPos)
-    {
-        m_grabbedBy = hand;
-        m_grabbedCollider = grabPoint;       
-        transform.parent = spawnPos;
 
-        gameObject.GetComponent<Rigidbody>().isKinematic = true;
-    }
-
-    /// <summary>
-    /// Notifies the object that it has been released.
-    /// </summary>
-    virtual public void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
+	/// <summary>
+	/// Notifies the object that it has been released.
+	/// </summary>
+	virtual public void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-
-        //rb.isKinematic = m_grabbedKinematic;
-        rb.isKinematic = false;
+        rb.isKinematic = m_grabbedKinematic;
         rb.velocity = linearVelocity;
         rb.angularVelocity = angularVelocity;
         m_grabbedBy = null;
         m_grabbedCollider = null;
-        transform.parent = null;
     }
 
     void Awake()

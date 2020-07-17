@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using Exceptions;
 using Unity;
 namespace Cards
 {
@@ -12,73 +11,17 @@ namespace Cards
     class DeckData : MonoBehaviour
     {
         [SerializeField]
-        private int numberOfDecks = 2;
+        private int numberOfDecks = 10;
         public Stack<CardData> Deck;
 
-        IReadOnlyCollection<CardData> AllCardsInDeck = new List<CardData>()
+        private void Start()
         {
-            //Clover
-            new CardData(Card_Sign.Clover, Card_Face.Two),
-            new CardData(Card_Sign.Clover, Card_Face.Three),
-            new CardData(Card_Sign.Clover, Card_Face.Four),
-            new CardData(Card_Sign.Clover, Card_Face.Five),
-            new CardData(Card_Sign.Clover, Card_Face.Six),
-            new CardData(Card_Sign.Clover, Card_Face.Seven),
-            new CardData(Card_Sign.Clover, Card_Face.Eight),
-            new CardData(Card_Sign.Clover, Card_Face.Nine),
-            new CardData(Card_Sign.Clover, Card_Face.Ten),
-            new CardData(Card_Sign.Clover, Card_Face.Ace),
-            new CardData(Card_Sign.Clover, Card_Face.Jack),
-            new CardData(Card_Sign.Clover, Card_Face.King),
-            new CardData(Card_Sign.Clover, Card_Face.Queen),
+            Deck = new Stack<CardData>();
 
-            //Diamond
-            new CardData(Card_Sign.Diamond, Card_Face.Two),
-            new CardData(Card_Sign.Diamond, Card_Face.Three),
-            new CardData(Card_Sign.Diamond, Card_Face.Four),
-            new CardData(Card_Sign.Diamond, Card_Face.Five),
-            new CardData(Card_Sign.Diamond, Card_Face.Six),
-            new CardData(Card_Sign.Diamond, Card_Face.Seven),
-            new CardData(Card_Sign.Diamond, Card_Face.Eight),
-            new CardData(Card_Sign.Diamond, Card_Face.Nine),
-            new CardData(Card_Sign.Diamond, Card_Face.Ten),
-            new CardData(Card_Sign.Diamond, Card_Face.Ace),
-            new CardData(Card_Sign.Diamond, Card_Face.Jack),
-            new CardData(Card_Sign.Diamond, Card_Face.King),
-            new CardData(Card_Sign.Diamond, Card_Face.Queen),
+            GenerateDeck();
 
-
-            //hearts
-            new CardData(Card_Sign.Heart, Card_Face.Two),
-            new CardData(Card_Sign.Heart, Card_Face.Three),
-            new CardData(Card_Sign.Heart, Card_Face.Four),
-            new CardData(Card_Sign.Heart, Card_Face.Five),
-            new CardData(Card_Sign.Heart, Card_Face.Six),
-            new CardData(Card_Sign.Heart, Card_Face.Seven),
-            new CardData(Card_Sign.Heart, Card_Face.Eight),
-            new CardData(Card_Sign.Heart, Card_Face.Nine),
-            new CardData(Card_Sign.Heart, Card_Face.Ten),
-            new CardData(Card_Sign.Heart, Card_Face.Ace),
-            new CardData(Card_Sign.Heart, Card_Face.Jack),
-            new CardData(Card_Sign.Heart, Card_Face.King),
-            new CardData(Card_Sign.Heart, Card_Face.Queen),
-
-            //Spades
-            new CardData(Card_Sign.Spades, Card_Face.Two),
-            new CardData(Card_Sign.Spades, Card_Face.Three),
-            new CardData(Card_Sign.Spades, Card_Face.Four),
-            new CardData(Card_Sign.Spades, Card_Face.Five),
-            new CardData(Card_Sign.Spades, Card_Face.Six),
-            new CardData(Card_Sign.Spades, Card_Face.Seven),
-            new CardData(Card_Sign.Spades, Card_Face.Eight),
-            new CardData(Card_Sign.Spades, Card_Face.Nine),
-            new CardData(Card_Sign.Spades, Card_Face.Ten),
-            new CardData(Card_Sign.Spades, Card_Face.Ace),
-            new CardData(Card_Sign.Spades, Card_Face.Jack),
-            new CardData(Card_Sign.Spades, Card_Face.King),
-            new CardData(Card_Sign.Spades, Card_Face.Queen),
-
-        };
+            CardUtils.Instance.InstantiateDeck(Deck, transform);
+        }
         private void GenerateDeck()
         {
             var listOfCards = new List<CardData>();
@@ -86,8 +29,8 @@ namespace Cards
 
             for (var i = 0; i < numberOfDecks; i++)
             {
-                var copied = AllCardsInDeck.DeepClone<CardData>();
-                listOfCards.AddRange(copied);
+                var newDeck = CardUtils.Instance.CreateDefaultDeck();
+                listOfCards.AddRange(newDeck);
             }
 
             Deck = new Stack<CardData>();

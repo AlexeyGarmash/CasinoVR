@@ -20,12 +20,12 @@ public class StackData : MonoBehaviour
         
     }
 
-    private List<OVRGrabbable> GetAllGrabbleCom()
+    private List<OVRGrabbableCustom> GetAllGrabbleCom()
     {
-        var grabbleChipsComp = new List<OVRGrabbable>();
+        var grabbleChipsComp = new List<OVRGrabbableCustom>();
         foreach (var chip in Chips)
         {
-            grabbleChipsComp.Add(chip.GetComponent<OVRGrabbable>());
+            grabbleChipsComp.Add(chip.GetComponent<OVRGrabbableCustom>());
         }
 
         return grabbleChipsComp;
