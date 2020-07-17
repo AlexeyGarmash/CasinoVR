@@ -29,8 +29,12 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
                 SetHeadAvatar();
                 SetHand(LeftHand, LeftHandAnchor);
                 SetHand(RightHand, RightHandAnchor);
-                TextNickName.text = PhotonNetwork.LocalPlayer.NickName;
             }
+        }
+
+        if (!photonView.IsMine)
+        {
+            TextNickName.text = photonView.Owner.NickName;
         }
     }
 
