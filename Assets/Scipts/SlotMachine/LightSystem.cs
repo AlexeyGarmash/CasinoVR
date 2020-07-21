@@ -7,8 +7,8 @@ using System;
 
 namespace SlotMachine
 {
-    public enum SLOT_MACHINE_LAMP_MODS { IDLE, FAST,  ALL_LAMP_RANDOM_SINGLE_COLOR_ONCE, ALL_LAMP_RANDOM_SINGLE_COLOR, STOP, ALL_LAMP_RANDOM_ONCE, ALL_LAMP_RANDOM, NONE, MIXED }
-    public class LightSystem : MonoBehaviour, IListener<SLOT_MACHINE_EVENT>
+    /*public enum SLOT_MACHINE_LAMP_MODS { IDLE, FAST,  ALL_LAMP_RANDOM_SINGLE_COLOR_ONCE, ALL_LAMP_RANDOM_SINGLE_COLOR, STOP, ALL_LAMP_RANDOM_ONCE, ALL_LAMP_RANDOM, NONE, MIXED }
+    public class LightSystem : MonoBehaviour, IListener<EVENT_TYPE>
     {
 
         SLOT_MACHINE_LAMP_MODS prev = SLOT_MACHINE_LAMP_MODS.NONE;
@@ -23,10 +23,10 @@ namespace SlotMachine
         public Color[] HaloColors;
         public Color[] MaterialColors;
 
-        EventManager<SLOT_MACHINE_EVENT> em;
+        EventManager em;
         void Start()
         {
-            em = gameObject.transform.parent.GetComponent<SlotMachineManager>().em;
+            em = gameObject.transform.parent.GetComponent<EventManager>();
 
             AddListeners();
             GetLamps();
@@ -43,15 +43,15 @@ namespace SlotMachine
         }
         private void AddListeners()
         {
-            em.AddListener(SLOT_MACHINE_EVENT.REEL_ROTATION_START, this);
-            em.AddListener(SLOT_MACHINE_EVENT.REEL_ROTATION_END, this);
-            em.AddListener(SLOT_MACHINE_EVENT.REELSTOP1, this);
-            em.AddListener(SLOT_MACHINE_EVENT.REELSTOP2, this);
-            em.AddListener(SLOT_MACHINE_EVENT.REELSTOP3, this);
-            em.AddListener(SLOT_MACHINE_EVENT.NO_JACKPOT, this);
-            em.AddListener(SLOT_MACHINE_EVENT.JACKPOT_IS_POSSIBLE, this);
-            em.AddListener(SLOT_MACHINE_EVENT.JACKPOT_START, this);
-            em.AddListener(SLOT_MACHINE_EVENT.JACKPOT_END, this);
+            em.AddListener(EVENT_TYPE.REEL_ROTATION_START, this);
+            em.AddListener(EVENT_TYPE.REEL_ROTATION_END, this);
+            em.AddListener(EVENT_TYPE.REELSTOP1, this);
+            em.AddListener(EVENT_TYPE.REELSTOP2, this);
+            em.AddListener(EVENT_TYPE.REELSTOP3, this);
+            em.AddListener(EVENT_TYPE.NO_JACKPOT, this);
+            em.AddListener(EVENT_TYPE.JACKPOT_IS_POSSIBLE, this);
+            em.AddListener(EVENT_TYPE.JACKPOT_START, this);
+            em.AddListener(EVENT_TYPE.JACKPOT_END, this);
         }
 
 
@@ -262,36 +262,36 @@ namespace SlotMachine
         }
 
 
-        public void OnEvent(SLOT_MACHINE_EVENT Event_type, Component Sender, params object[] Param)
+        public void OnEvent(EVENT_TYPE Event_type, Component Sender, params object[] Param)
         {
 
             switch (Event_type)
             {
-                case SLOT_MACHINE_EVENT.REEL_ROTATION_START:
+                case EVENT_TYPE.REEL_ROTATION_START:
                     ModChanger(SLOT_MACHINE_LAMP_MODS.FAST);                   
                     break;
-                case SLOT_MACHINE_EVENT.REEL_ROTATION_END:
+                case EVENT_TYPE.REEL_ROTATION_END:
                     ModChanger(SLOT_MACHINE_LAMP_MODS.IDLE);                    
                     break;
-                case SLOT_MACHINE_EVENT.REELSTOP1:
+                case EVENT_TYPE.REELSTOP1:
                     ModChanger(SLOT_MACHINE_LAMP_MODS.ALL_LAMP_RANDOM_SINGLE_COLOR_ONCE);
                     break;
                                 
-                case SLOT_MACHINE_EVENT.JACKPOT_IS_POSSIBLE:
+                case EVENT_TYPE.JACKPOT_IS_POSSIBLE:
                     ModChanger(SLOT_MACHINE_LAMP_MODS.ALL_LAMP_RANDOM_SINGLE_COLOR);
                     break;
-                case SLOT_MACHINE_EVENT.NO_JACKPOT:
+                case EVENT_TYPE.NO_JACKPOT:
                     ModChanger(SLOT_MACHINE_LAMP_MODS.STOP);
                     break;
-                case SLOT_MACHINE_EVENT.JACKPOT_START:
+                case EVENT_TYPE.JACKPOT_START:
                     ModChanger(SLOT_MACHINE_LAMP_MODS.MIXED);
 
                     break;
-                case SLOT_MACHINE_EVENT.JACKPOT_END:
+                case EVENT_TYPE.JACKPOT_END:
                     ModChanger(SLOT_MACHINE_LAMP_MODS.IDLE);
                     break;
             }
         }
-    }
+    }*/
 
 }
