@@ -14,7 +14,7 @@ public class PlayerStackData : StackData
         base.ClearData();
     }
 
-    public void InstantiatePrefab(GameObject chip, Chips chipsCost, ref int money)
+    public GameObject InstantiatePrefab(GameObject chip, Chips chipsCost, ref int money)
     {
         var spawnTransform = transform;
         var createdChip = Instantiate(chip, 
@@ -25,13 +25,12 @@ public class PlayerStackData : StackData
             ), new Quaternion(0, 0, 0, 0)
         );
         
-        createdChip.transform.parent = spawnTransform;
+       
         createdChip.transform.rotation = new Quaternion(0, 0, 0, 0);
         money -= (int)chipsCost;
-        createdChip.GetComponent<Rigidbody>().isKinematic = true;
-
-        Chips.Add(createdChip);
-        ChipsUtils.Instance.UpdateStack(this);
+        
+        return createdChip;
+        
     }
 
     public void UpdateChips()

@@ -8,6 +8,7 @@ public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
     private BetStackData[] BetStacks;
 
     private TableCell tableCell;
+    public float yOffset = 0.0073f;
     EventManager<ROULETTE_EVENT> EventManager;
 
     bool canBet = true;
@@ -19,10 +20,9 @@ public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
 
     void Start()
     {
-        EventManager = transform.parent.parent.gameObject.GetComponent<TableBetsManager>().rouletteEventManager;
+        EventManager = GetComponentInParent<TableBetsManager>().rouletteEventManager;
 
-        EventManager.AddListener(ROULETTE_EVENT.BET_LOST, this);
-        EventManager.AddListener(ROULETTE_EVENT.BET_WIN, this);
+      
         EventManager.AddListener(ROULETTE_EVENT.ROULETTE_GAME_START, this);
         EventManager.AddListener(ROULETTE_EVENT.ROULETTE_GAME_END, this);
 
@@ -31,20 +31,10 @@ public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
     {
                
         switch (Event_type)
-        {
-            case ROULETTE_EVENT.BET_LOST:
-                BetData bd = (BetData)Param[0];
-                ClearBettingField(bd.PlayerStat.PlayerNick);
-                Debug.Log("BET_LOST");
-                break;
-
-            case ROULETTE_EVENT.BET_WIN:
-                bd = (BetData)Param[0];
-                ClearBettingField(bd.PlayerStat.PlayerNick);
-                Debug.Log("BET_WIN");
-                break;
+        {           
+               
             case ROULETTE_EVENT.ROULETTE_GAME_END:
-                LockUnlockChips();
+                ClearBettingFields();
                 canBet = true;
                 break;
             case ROULETTE_EVENT.ROULETTE_GAME_START:
@@ -53,31 +43,20 @@ public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
                 break;
         }
     }
-    private void ClearBettingField(string playerName)
+    private void ClearBettingFields()
     {
         for (var i = 0; i < BetStacks.Length; i++)
         {
-            if (BetStacks[i].playerName == playerName)
-            {
-                BetStacks[i].ClearData();
-                ChipsUtils.Instance.UpdateStack(BetStacks[i]);
-            }
+            foreach (Transform child in transform)
+                foreach (Transform child1 in child)
+                    Destroy(child1.gameObject);
+                        
+            BetStacks[i].ClearData();
+      
         }
     }
     
-    void LockUnlockChips()
-    {
-        
-        for (var i = 0; i < BetStacks.Length; i++)
-        {
-            for (var j = 0; j < BetStacks[i].Chips.Count; j++)
-            {
-                BetStacks[i].Chips[j].GetComponent<OVRGrabbable>().enabled = false;
-                
-            }
-        }
-    }
-   
+  
     
     private void OnTriggerEnter(Collider other)
     {
@@ -85,12 +64,16 @@ public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
         if (canBet)
         {
             var chip = other.gameObject.GetComponent<ChipData>();
+            
+
             if (chip != null && tableCell != null)
             {
-                if (ChipsUtils.Instance.MagnetizeChip(other.gameObject, BetStacks))
-                {
-                    tableCell.ReceiveBetData(new BetData(new PlayerStats(chip.player), (int)chip.Cost));
-                }
+                var grabbadBy = other.gameObject.GetComponent<GrabbableChip>().grabbedBy;
+                if(grabbadBy == null)
+                    if (StackUtils.Instance.MagnetizeObject(other.gameObject, chip.player, yOffset, BetStacks))
+                    {
+                        tableCell.ReceiveBetData(new BetData(new PlayerStats(chip.player), (int)chip.Cost));
+                    }
             }
         }
     }
@@ -100,9 +83,12 @@ public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
         if (canBet)
         {
             var chip = other.gameObject.GetComponent<ChipData>();
+           
             if (chip != null && tableCell != null)
             {
-                if (ChipsUtils.Instance.ExtractionChip(other.gameObject, BetStacks))
+                var grabbadBy = other.gameObject.GetComponent<GrabbableChip>().grabbedBy;
+                if (grabbadBy != null)
+                    if (StackUtils.Instance.ExtractionObject(other.gameObject, yOffset, BetStacks))
                 {
                     tableCell.RemoveBetData(new BetData(new PlayerStats(chip.player), (int)chip.Cost));
                 }

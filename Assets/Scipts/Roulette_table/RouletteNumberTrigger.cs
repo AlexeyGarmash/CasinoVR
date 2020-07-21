@@ -9,7 +9,7 @@ public class RouletteNumberTrigger : MonoBehaviour
     {
         if (other.tag == "Roulette_Ball")
         {
-            
+            other.transform.parent = transform.parent;
         }
     }
 }

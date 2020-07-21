@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+
 namespace Cards 
 {
 
@@ -13,6 +14,8 @@ namespace Cards
     {
         public Card_Sign Sign;
         public Card_Face Face;
+
+        public string playerName;
 
         public CardData(Card_Sign sign, Card_Face face)
         {

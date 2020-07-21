@@ -24,7 +24,9 @@ public class RouletteSpin : MonoBehaviour, ISpinableTransform
 
     #region Public Props
 
-    public event Action<string> OnRouletteSpinEnd;
+   
+
+    EventManager<ROULETTE_EVENT> eventManager;
 
     #endregion
 
@@ -36,6 +38,7 @@ public class RouletteSpin : MonoBehaviour, ISpinableTransform
     private void Start()
     {
         //StartSpin();
+        eventManager = GetComponentInParent<TableBetsManager>().rouletteEventManager;
     }
 
     private void Update()
@@ -63,7 +66,9 @@ public class RouletteSpin : MonoBehaviour, ISpinableTransform
         {
             IncreaseRotateSpeed = 0;
             _isRotation = false;
-            OnRouletteSpinEnd.Invoke("Roulette spin end!");
+            //OnRouletteSpinEnd.Invoke("Roulette spin end!");
+            Debug.Log("ROULETTE_SPIN_END");
+            eventManager.PostNotification(ROULETTE_EVENT.ROULETTE_SPIN_END, this);
         }
     }
 

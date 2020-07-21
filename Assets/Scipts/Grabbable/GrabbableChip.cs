@@ -185,7 +185,11 @@ class GrabbableChip : OVRGrabbableCustom
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
         base.GrabEnd(linearVelocity, angularVelocity);
-       
+
+        var rb = GetComponent<Rigidbody>();
+        rb.isKinematic = false;
+        rb.useGravity = true;
+
         transform.parent = null;         
         avatar.RightHandCustomPose = null;     
         avatar.LeftHandCustomPose = null;

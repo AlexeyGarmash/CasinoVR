@@ -310,7 +310,7 @@ public class OVRGrabberCustom : MonoBehaviour
         if(m_grabbedObjs.Count == max_grabbed_obj)
             GrabVolumeEnable(false);
 
-       
+        Debug.Log(m_grabbedObjs.Count);
         if (closestGrabbable != null)
         {
             //условие для искоренение возможности единовременно брать разные предметы в руку 
@@ -407,7 +407,7 @@ public class OVRGrabberCustom : MonoBehaviour
 
     protected void GrabEnd()
     {
-        if (m_grabbedObj != null)
+        if (m_grabbedObjs.Count != 0)
         {
             OVRPose localPose = new OVRPose { position = OVRInput.GetLocalControllerPosition(m_controller), orientation = OVRInput.GetLocalControllerRotation(m_controller) };
             OVRPose offsetPose = new OVRPose { position = m_anchorOffsetPosition, orientation = m_anchorOffsetRotation };
@@ -443,8 +443,9 @@ public class OVRGrabberCustom : MonoBehaviour
             m_grabbedObjs[i].GrabEnd(linearVelocity, angularVelocity);
             if (m_parentHeldObject) m_grabbedObjs[i].transform.parent = null;
             SetPlayerIgnoreCollision(m_grabbedObjs[i].gameObject, false);
-            m_grabbedObjs[i] = null;
+            
         }
+
         m_grabbedObjs.Clear();
 
 

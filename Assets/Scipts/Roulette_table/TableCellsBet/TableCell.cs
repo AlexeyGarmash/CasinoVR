@@ -4,13 +4,16 @@ using UnityEngine;
 
 public abstract class TableCell : MonoBehaviour
 {
-    [SerializeField] private int WinKoeff;
+    [SerializeField] public int WinKoeff;
     public List<BetData> BetsData { get; private set; }
-    EventManager<ROULETTE_EVENT> EventManager;
+
+   
     private void Awake()
     {
-        EventManager = transform.parent.parent.gameObject.GetComponent<TableBetsManager>().rouletteEventManager;
+        
         BetsData = new List<BetData>();
+
+       
     }
 
     public void ReceiveBetData(BetData betData)
@@ -50,25 +53,9 @@ public abstract class TableCell : MonoBehaviour
     }
     private int FindBetDataIndex(BetData betData) => BetsData.FindIndex(data => data.PlayerStat.PlayerNick.Equals(betData.PlayerStat.PlayerNick));
 
-    public void NotifyWinnersOfCell(WheelCellData wheelCellData)
-    {
-        if (CheckIsWinCell(wheelCellData))
-        {
-            foreach (var betData in BetsData)
-            {
-                EventManager.PostNotification(ROULETTE_EVENT.BET_WIN, this, betData);
-                betData.AddWinnedMoney(WinKoeff);
-                print(string.Format("Player {0} win {1}", betData.PlayerStat.PlayerNick, betData.BetValue * WinKoeff));
-            }
-        }
-        else {
-            foreach (var betData in BetsData)
-            {
-                EventManager.PostNotification(ROULETTE_EVENT.BET_LOST, this, betData);               
-                //print(string.Format("Player {0} win {1}", betData.PlayerStat.PlayerNick, betData.BetValue * WinKoeff));
-            }
-        }
-    }
+    
+    //}
 
     public abstract bool CheckIsWinCell(WheelCellData wheelCellData);
+   
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RouletteWheelManager : MonoBehaviour
+public class RouletteWheelManager : MonoBehaviour, IListener<ROULETTE_EVENT>
 {
     public event Action<WheelCellData> OnRouletteWheelFinish;
 
@@ -25,7 +25,8 @@ public class RouletteWheelManager : MonoBehaviour
 
     private void Start()
     {
-        
+        eventManager = GetComponentInParent<TableBetsManager>().rouletteEventManager;
+        eventManager.AddListener(ROULETTE_EVENT.ROULETTE_SPIN_END, this);
     }
 
     
@@ -58,8 +59,7 @@ public class RouletteWheelManager : MonoBehaviour
             BallTrigger.OnBallInCell += BallTrigger_OnBallInCell;
             BallSpin.SetCenterMass(BallCenterRotateTransform);
             BallSpin.StartSpin();
-            RouletteSpin.OnRouletteSpinEnd -= RouletteSpin_OnRouletteSpinEnd;
-            RouletteSpin.OnRouletteSpinEnd += RouletteSpin_OnRouletteSpinEnd;
+            
             RouletteSpin.StartSpin();
         }
     }
@@ -70,11 +70,24 @@ public class RouletteWheelManager : MonoBehaviour
         RouletteWheelLogic.ReceiveWheelCellData(obj);
     }
 
-    private void RouletteSpin_OnRouletteSpinEnd(string obj)
+    //private void RouletteSpin_OnRouletteSpinEnd(string obj)
+    //{
+    //    eventManager.PostNotification(ROULETTE_EVENT.ROULETTE_GAME_END, this, RouletteWheelLogic.WheelCellData);
+    //    print(obj);
+    //    RouletteWheelLogic.StopWheel();
+    //    OnRouletteWheelFinish.Invoke(RouletteWheelLogic.WheelCellData);
+    //}
+
+    public void OnEvent(ROULETTE_EVENT Event_type, Component Sender, params object[] Param)
     {
-        eventManager.PostNotification(ROULETTE_EVENT.ROULETTE_GAME_END, this, RouletteWheelLogic.WheelCellData);
-        print(obj);
-        RouletteWheelLogic.StopWheel();
-        OnRouletteWheelFinish.Invoke(RouletteWheelLogic.WheelCellData);
+        switch (Event_type)
+        {
+            case ROULETTE_EVENT.ROULETTE_SPIN_END:
+               
+                RouletteWheelLogic.StopWheel();
+                Debug.Log("CHECK_WINNERS");
+                eventManager.PostNotification(ROULETTE_EVENT.CHECK_WINNERS, this, RouletteWheelLogic.WheelCellData);
+                 break;
+        }
     }
 }

@@ -5,22 +5,28 @@ using UnityEngine;
 
 
 
-public class PlayerInfo : MonoBehaviour
+public class PlayerPlace : MonoBehaviour
 {
-    PlayerStats ps;
-    PlayerStackField sf;
+    public PlayerStats ps;
+    PlayerChipsField sf;
 
+    EventManager<ROULETTE_EVENT> rouletteManager;
+
+    
     private void Start()
     {
-        sf = GetComponentInChildren<PlayerStackField>();
+        rouletteManager = GetComponentInParent<TableBetsManager>().rouletteEventManager;
+     
+        sf = GetComponentInChildren<PlayerChipsField>();
     }
-    private void OnTriggerStay(Collider other)
+
+     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
             
 
-            if (OVRInput.GetDown(OVRInput.Button.Three))
+            if (OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.RTouch))
             {
                 if (ps == null)
                 {
@@ -29,7 +35,7 @@ public class PlayerInfo : MonoBehaviour
                 }
                 else {
                     ps = null;
-                    sf.Clear();
+                    sf.ClearPlace();
 
                 }
             }
@@ -38,6 +44,7 @@ public class PlayerInfo : MonoBehaviour
 
     public void PreparePlayerPlace()
     {
+        Debug.Log(sf);
         int money = ps.AllMoney;
         if (money > 0)
         {
@@ -77,4 +84,6 @@ public class PlayerInfo : MonoBehaviour
         }
     }
 
+   
+    
 }
