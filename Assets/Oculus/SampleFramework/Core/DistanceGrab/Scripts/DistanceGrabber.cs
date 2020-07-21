@@ -195,7 +195,7 @@ namespace OculusSampleFramework
         {
             if (m_grabbedObj == null)
             {
-                return;
+                    return;
             }
 
             Rigidbody grabbedRigidbody = m_grabbedObj.grabbedRigidbody;
