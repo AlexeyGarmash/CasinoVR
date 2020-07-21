@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 8746428770082194314}
   - component: {fileID: 6955462846687958206}
   - component: {fileID: 3513015853726151575}
+  - component: {fileID: 7558905207265130597}
+  - component: {fileID: -1908901484349032612}
   m_Layer: 0
   m_Name: RemoteAvatar
   m_TagString: Untagged
@@ -126,6 +128,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 3513015853726151575}
+  - {fileID: 7558905207265130597}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -141,3 +144,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eecd2c1d08788834699f83a399c1dac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7558905207265130597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746428770093451530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+--- !u!114 &-1908901484349032612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8746428770093451530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35685ee511888a747beaa029c6b6f3ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ovrControllerName: OVRPlayerController
