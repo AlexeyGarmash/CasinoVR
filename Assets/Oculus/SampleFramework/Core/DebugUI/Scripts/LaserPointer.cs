@@ -144,7 +144,7 @@ public class LaserPointer : OVRCursor
         if (gameObject && gameObject.activeInHierarchy)
         {
             m_restoreOnInputAcquired = true;
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
 
