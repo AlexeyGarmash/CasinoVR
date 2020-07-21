@@ -6,7 +6,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(PhotonView))]
 [RequireComponent(typeof(OvrAvatar))]
-[RequireComponent(typeof(OvrAvatarRemoteDriver))]
 public class PhotonAvatarView : MonoBehaviour, IPunObservable
 {
     
@@ -89,7 +88,7 @@ public class PhotonAvatarView : MonoBehaviour, IPunObservable
     {
         if (stream.IsWriting)
         {
-            if (packetData == null || packetData.Count == 0)  //公式から変更(null時）
+            if (packetData == null || packetData.Count == 0) 
             {
                 return;
             }
