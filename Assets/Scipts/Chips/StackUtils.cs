@@ -51,7 +51,7 @@ class StackUtils : Singleton<StackUtils>
                     chip.transform.position = new Vector3(transform.position.x + currOffsetX, transform.position.y + stackData.currentY, transform.position.z + currOffsetZ);
                     chip.transform.rotation = transform.rotation;
                     stackData.currentY += yOffset;
-
+                    chip.transform.parent = stacks[i].transform;
                     stackData.Objects.Add(chip);
 
                    

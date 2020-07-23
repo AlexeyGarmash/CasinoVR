@@ -110,8 +110,8 @@ class GrabbableChip : OVRGrabbableCustom
 
 
         //берем аватар с игрока и задаем ему анимацию бля коректного отображения фишек в руке
-        avatar = gameObject.transform.parent.parent.parent.GetComponentInChildren<OvrAvatar>();
-        SetPose(hand);
+        //avatar = gameObject.transform.parent.parent.parent.GetComponentInChildren<OvrAvatar>();
+        //SetPose(hand);
        
     }
 
@@ -191,8 +191,8 @@ class GrabbableChip : OVRGrabbableCustom
         rb.useGravity = true;
 
         transform.parent = null;         
-        avatar.RightHandCustomPose = null;     
-        avatar.LeftHandCustomPose = null;
+        //avatar.RightHandCustomPose = null;     
+        //avatar.LeftHandCustomPose = null;
         
     }
 }

@@ -29,12 +29,15 @@ public class RouletteWheelManager : MonoBehaviour, IListener<ROULETTE_EVENT>
         eventManager.AddListener(ROULETTE_EVENT.ROULETTE_SPIN_END, this);
     }
 
-    
 
-    public void StartSpin()
+    int winNumber;
+    public void StartSpin(int winNumber)
     {
+      
         if (RouletteWheelLogic.IsPossibleStartGame)
         {
+            Debug.Log("Wining numebr" + winNumber);
+            this.winNumber = winNumber;
             RouletteWheelLogic.StartWheel();
             StartSpinAll();
         }
@@ -48,7 +51,7 @@ public class RouletteWheelManager : MonoBehaviour, IListener<ROULETTE_EVENT>
     {
         if(RouletteBallSpawner != null)
         {
-            RouletteBallSpawner.SpawnBall();
+            RouletteBallSpawner.SpawnBall(winNumber);
             BallSpin = RouletteBallSpawner.CreatedBallPrefab.GetComponent<BallSpin>();
             BallTrigger = RouletteBallSpawner.CreatedBallPrefab.GetComponent<BallTrigger>();
         }
@@ -66,8 +69,10 @@ public class RouletteWheelManager : MonoBehaviour, IListener<ROULETTE_EVENT>
 
     private void BallTrigger_OnBallInCell(WheelCellData obj)
     {
-        print(obj.Number);
-        RouletteWheelLogic.ReceiveWheelCellData(obj);
+       
+
+        if(obj.Number == winNumber)
+            RouletteWheelLogic.ReceiveWheelCellData(obj);
     }
 
     //private void RouletteSpin_OnRouletteSpinEnd(string obj)

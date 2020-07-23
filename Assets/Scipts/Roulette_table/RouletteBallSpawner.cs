@@ -11,7 +11,7 @@ public class RouletteBallSpawner : MonoBehaviour
 
     public GameObject CreatedBallPrefab { get => _createdBallPrefab; }
 
-    public void SpawnBall()
+    public void SpawnBall(int winNumber)
     {
         if(_createdBallPrefab != null)
         {
@@ -23,6 +23,7 @@ public class RouletteBallSpawner : MonoBehaviour
         {
             Vector3 spawnPos = BallSpawnPoints[Random.Range(0, BallSpawnPoints.Length)].position;
             _createdBallPrefab = Instantiate(BallPrefab, spawnPos, Quaternion.identity);
+            _createdBallPrefab.GetComponent<BallTrigger>().winingNumber = winNumber;
         }
         else
         {

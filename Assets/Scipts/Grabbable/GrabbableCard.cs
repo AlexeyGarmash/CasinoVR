@@ -9,7 +9,7 @@ using UnityEngine;
 class GrabbableCard : OVRGrabbableCustom
 {
 
-    private OvrAvatar avatar;
+    //private OvrAvatar avatar;
        
        
     [SerializeField]

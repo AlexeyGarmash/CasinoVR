@@ -5,7 +5,7 @@ using UnityEngine;
 public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
 {  
    
-    private BetStackData[] BetStacks;
+    public BetStackData[] BetStacks;
 
     private TableCell tableCell;
     public float yOffset = 0.0073f;
@@ -64,9 +64,9 @@ public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
         if (canBet)
         {
             var chip = other.gameObject.GetComponent<ChipData>();
-            
+            var bettingController = other.gameObject.GetComponentInParent<BetPositionController>();
 
-            if (chip != null && tableCell != null)
+            if (chip != null && tableCell != null && bettingController == null)
             {
                 var grabbadBy = other.gameObject.GetComponent<GrabbableChip>().grabbedBy;
                 if(grabbadBy == null)
@@ -84,6 +84,7 @@ public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
         {
             var chip = other.gameObject.GetComponent<ChipData>();
            
+
             if (chip != null && tableCell != null)
             {
                 var grabbadBy = other.gameObject.GetComponent<GrabbableChip>().grabbedBy;

@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 7517153624741983970}
   - component: {fileID: -8204172588966435149}
   - component: {fileID: 1072734599034445618}
+  - component: {fileID: -7900760981876626657}
+  - component: {fileID: 6155996899857581409}
   m_Layer: 12
   m_Name: Card_Spades_R_03
   m_TagString: Card
@@ -127,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sign: 3
   Face: 1
+  playerName: 
 --- !u!114 &-8204172588966435149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,20 +147,9 @@ MonoBehaviour:
   m_snapOrientation: 0
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
-  handCardsRotation: {x: 0, y: 0, z: 0, w: 0}
   handCardsPos: {x: -0.0277, y: -0.0049, z: 0.0085}
   cardRotationFace: {x: -41.744, y: 14.602, z: 176.382, w: 0}
   handPos: {fileID: 7723645442114614947, guid: b0bebda1db8c6664bbcd447a44cac9de, type: 3}
-  cardRotation1: {x: 0, y: 0, z: 0, w: 0}
-  cardRotation2: {x: 0, y: 0, z: 0, w: 0}
-  cardRotation3: {x: 0, y: 0, z: 0, w: 0}
-  cardRotation4: {x: 0, y: 0, z: 0, w: 0}
-  cardRotation5: {x: 0, y: 0, z: 0, w: 0}
-  cardPosotion1: {x: 0, y: 0, z: 0}
-  cardPosotion2: {x: 0, y: 0, z: 0}
-  cardPosotion3: {x: 0, y: 0, z: 0}
-  cardPosotion4: {x: 0, y: 0, z: 0}
-  cardPosotion5: {x: 0, y: 0, z: 0}
 --- !u!65 &1072734599034445618
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -171,3 +163,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.11129394, y: 0.0021683346, z: 0.16127862}
   m_Center: {x: 0, y: -0.000109601766, z: -1.7718829e-19}
+--- !u!114 &-7900760981876626657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.0046724924, g: 0.990566, b: 0.98219615, a: 1}
+  outlineWidth: 6
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &6155996899857581409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 665c685bce4599f42b7d3d9693c5583f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

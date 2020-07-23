@@ -11,12 +11,12 @@ public class PlayerChipsField : MonoBehaviour
     GameObject blackChipPrefab;
     GameObject purpleChipPrefab;
 
-    PlayerStackData yellowStack;
-    PlayerStackData redStack;
-    PlayerStackData greenStack;
-    PlayerStackData blackStack;
-    PlayerStackData purpleStack;
-    PlayerStackData blueStack;
+    public PlayerStackData yellowStack;
+    public PlayerStackData redStack;
+    public PlayerStackData greenStack;
+    public PlayerStackData blackStack;
+    public PlayerStackData purpleStack;
+    public PlayerStackData blueStack;
 
     public float yOffset = 0.0073f;
     private void Start()
@@ -38,30 +38,35 @@ public class PlayerChipsField : MonoBehaviour
 
         var gameObj = other.gameObject;
         var chip = other.gameObject.GetComponent<ChipData>();
-        if (chip != null)
+        if (chip != null && chip.transform.parent == null)
         {
             switch (chip.Cost)
             {
                 case Chips.BLACK:                   
                     
                     StackUtils.Instance.MagnetizeObject(gameObj, chip.player, yOffset, blackStack);
+                    chip.transform.parent = blackStack.transform;
                     break;
                 case Chips.BLUE:
                     
                     StackUtils.Instance.MagnetizeObject(gameObj, chip.player, yOffset, blueStack);
-                   
+                    chip.transform.parent = blueStack.transform;
                     break;
                 case Chips.GREEN:
                     StackUtils.Instance.MagnetizeObject(gameObj, chip.player, yOffset, greenStack);
+                    chip.transform.parent = greenStack.transform;
                     break;
                 case Chips.PURPLE:
                     StackUtils.Instance.MagnetizeObject(gameObj, chip.player, yOffset, purpleStack);
+                    chip.transform.parent = purpleStack.transform;
                     break;
                 case Chips.RED:
                     StackUtils.Instance.MagnetizeObject(gameObj, chip.player, yOffset, redStack);
+                    chip.transform.parent = redStack.transform;
                     break;
                 case Chips.YELLOW:
                     StackUtils.Instance.MagnetizeObject(gameObj, chip.player, yOffset, yellowStack);
+                    chip.transform.parent = yellowStack.transform;
                     break;
             }
         }
