@@ -154,6 +154,7 @@ public class LaserPointer : OVRCursor
         {
             m_restoreOnInputAcquired = false;
             gameObject.SetActive(true);
+            
         }
     }
 
@@ -161,5 +162,10 @@ public class LaserPointer : OVRCursor
     {
         OVRManager.InputFocusAcquired -= OnInputFocusAcquired;
         OVRManager.InputFocusLost -= OnInputFocusLost;
+    }
+
+    public override void Vibrate(OVRInput.Controller controller)
+    {
+        VibrationManager.Instance.VibrateController(40, 2, 255, controller);
     }
 }

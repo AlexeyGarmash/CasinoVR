@@ -1,42 +1,32 @@
-﻿using Photon.Pun;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
+using System.IO;
+using Photon.Pun;
 
-[RequireComponent(typeof(PhotonView))]
-[RequireComponent(typeof(OvrAvatar))]
-public class PhotonAvatarView : MonoBehaviour, IPunObservable
+public class PhotonAvatarView : MonoBehaviourPun, IPunObservable
 {
-    
+
     private PhotonView photonView;
     private OvrAvatar ovrAvatar;
     private OvrAvatarRemoteDriver remoteDriver;
 
     private List<byte[]> packetData;
 
-    public void Awake()
+    public void Start()
     {
         photonView = GetComponent<PhotonView>();
+
         if (photonView.IsMine)
         {
             ovrAvatar = GetComponent<OvrAvatar>();
-
             packetData = new List<byte[]>();
+            ovrAvatar.RecordPackets = true;
+            ovrAvatar.PacketRecorded += OnLocalAvatarPacketRecorded;
         }
         else
         {
             remoteDriver = GetComponent<OvrAvatarRemoteDriver>();
-        }
-
-    }
-
-    public void OnEnable()
-    {
-        if (photonView.IsMine)
-        {
-            ovrAvatar.RecordPackets = true;
-            ovrAvatar.PacketRecorded += OnLocalAvatarPacketRecorded;
         }
     }
 
@@ -88,7 +78,7 @@ public class PhotonAvatarView : MonoBehaviour, IPunObservable
     {
         if (stream.IsWriting)
         {
-            if (packetData == null || packetData.Count == 0) 
+            if (packetData.Count == 0)
             {
                 return;
             }
@@ -116,4 +106,5 @@ public class PhotonAvatarView : MonoBehaviour, IPunObservable
         }
     }
 
+    
 }

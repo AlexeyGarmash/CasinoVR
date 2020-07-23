@@ -7,7 +7,7 @@ public class PlayerAvatarChoiceManager : MonoBehaviour
 {
     [SerializeField] private PlayerAvatar[] _playerAvatars;
     [SerializeField] private Transform _avatarPreviewSpawnPoint;
-
+    
     private void Start()
     {
         foreach (var avatar in _playerAvatars)
@@ -21,6 +21,15 @@ public class PlayerAvatarChoiceManager : MonoBehaviour
         ChooseUiAvatar(avatar);
         ClearNotSelectedSelection(avatar);
         SpawnPreviewAvatar(avatar);
+        SetPlayerAvatarResourcePath(avatar);
+    }
+
+    private void SetPlayerAvatarResourcePath(PlayerAvatar avatar)
+    {
+        if(PhotonPlayerSettings.Instance != null)
+        {
+            PhotonPlayerSettings.Instance.PrefabResourceName = avatar.AvatarResoucePathName;
+        }
     }
 
     private void ChooseUiAvatar(PlayerAvatar avatar)

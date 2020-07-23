@@ -66,7 +66,7 @@ namespace VRTK
 
                 if (!currentSymbols.SequenceEqual(newSymbols))
                 {
-                    PlayerSettings.SetScriptingDefineSymbolsForGroup(targetGroup, string.Join(";", newSymbols));
+                    UnityEditor.PlayerSettings.SetScriptingDefineSymbolsForGroup(targetGroup, string.Join(";", newSymbols));
                 }
             }
         }

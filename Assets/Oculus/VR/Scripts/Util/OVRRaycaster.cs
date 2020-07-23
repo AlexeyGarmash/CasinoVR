@@ -177,6 +177,7 @@ public class OVRRaycaster : GraphicRaycaster, IPointerEnterHandler
         if (eventData.IsVRPointer())
         {
             Raycast(eventData, resultAppendList, eventData.GetRay(), true);
+            
         }
     }
     /// <summary>

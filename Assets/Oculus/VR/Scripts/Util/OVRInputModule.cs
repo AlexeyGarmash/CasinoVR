@@ -16,6 +16,7 @@ permissions and limitations under the License.
 
 using System;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace UnityEngine.EventSystems
 {
@@ -26,6 +27,8 @@ namespace UnityEngine.EventSystems
     {
         [Tooltip("Object which points with Z axis. E.g. CentreEyeAnchor from OVRCameraRig")]
         public Transform rayTransform;
+
+        public OVRInput.Controller currentController;
 
         public OVRCursor m_Cursor;
 
@@ -631,6 +634,9 @@ namespace UnityEngine.EventSystems
                     Vector3 worldPos = raycast.worldPosition;
                     Vector3 normal = GetRectTransformNormal(graphicRect);
                     m_Cursor.SetCursorStartDest(rayTransform.position, worldPos, normal);
+
+                     
+                    
                 }
             }
 

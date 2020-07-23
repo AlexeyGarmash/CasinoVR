@@ -710,6 +710,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd425c2d06f39bf4899d07c05d0f10eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GrabButton: 32768
+  GrabAxis: 4
+  m_grabbedObjs: []
   grabbleObjSpawnPoint: {fileID: 0}
   max_grabbed_obj: 5
   grabBegin: 0.55
@@ -722,7 +725,7 @@ MonoBehaviour:
   - {fileID: 13646154}
   - {fileID: 13646584}
   m_controller: 1
-  m_parentTransform: {fileID: 414912}
+  m_parentTransform: {fileID: 0}
   m_player: {fileID: 0}
 --- !u!114 &11427812
 MonoBehaviour:

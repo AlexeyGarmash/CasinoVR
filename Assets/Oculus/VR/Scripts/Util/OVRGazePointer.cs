@@ -274,4 +274,8 @@ public class OVRGazePointer : OVRCursor {
         hidden = false;
     }
 
+    public override void Vibrate(OVRInput.Controller controller)
+    {
+        
+    }
 }

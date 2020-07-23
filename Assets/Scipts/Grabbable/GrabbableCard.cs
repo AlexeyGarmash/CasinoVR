@@ -96,12 +96,14 @@ class GrabbableCard : OVRGrabbableCustom
                 cardRotationFace.z
             )
         );
+        //grabbleObjSpawnPoint.transform.rotation = Quaternion.Euler(cardRotationFace.x, cardRotationFace.y, cardRotationFace.z);
+
 
 
 
         //установка позы для ударжания карт в руке
-        avatar = gameObject.transform.parent.parent.parent.GetComponentInChildren<OvrAvatar>();
-        avatar.RightHandCustomPose = handPos;
+        //avatar = gameObject.transform.parent.parent.parent.GetComponentInChildren<OvrAvatar>();
+        //avatar.RightHandCustomPose = handPos;
 
     }
 
@@ -114,8 +116,8 @@ class GrabbableCard : OVRGrabbableCustom
         rb.isKinematic = false;
         rb.useGravity = true;
 
-        avatar.RightHandCustomPose = null;
-        avatar.LeftHandCustomPose = null;
+        //avatar.RightHandCustomPose = null;
+        //avatar.LeftHandCustomPose = null;
     }
 
 }
