@@ -112,6 +112,9 @@ public class OVRGrabberCustom : MonoBehaviour
     protected bool m_operatingWithoutOVRCameraRig = true;
 
 
+    float closestMagSq = float.MaxValue;
+    OVRGrabbableCustom closestGrabbable = null;
+    Collider closestGrabbableCollider = null;
 
     /// <summary>
     /// The currently grabbed object.
@@ -210,8 +213,8 @@ public class OVRGrabberCustom : MonoBehaviour
         m_prevFlex = OVRInput.Get(GrabAxis, m_controller);
         add_chip = OVRInput.GetDown(GrabButton, m_controller);
 
-
-        SetOutlineForClosest();
+        if(m_grabCandidates.Count != 0)
+            SetOutlineForClosest();
         CheckForGrabOrRelease(prevFlex);
     }
 
@@ -300,15 +303,8 @@ public class OVRGrabberCustom : MonoBehaviour
     }
     private void SetOutlineForClosest()
     {
-        float closestMagSq = float.MaxValue;
-        OVRGrabbableCustom closestGrabbable = null;
-        Collider closestGrabbableCollider = null;
 
-        
-
-
-
-        FindClosestGrabbableCandidate(out closestMagSq, out closestGrabbable, out closestGrabbableCollider);
+        FindClosestGrabbableCandidate();
 
         if (closestGrabbable != null && closestGrabbable.GetComponent<Outline>() != null)
         {
@@ -319,7 +315,7 @@ public class OVRGrabberCustom : MonoBehaviour
         }
         DisableOutline(closestGrabbable);
     }
-    private void FindClosestGrabbableCandidate(out float closestMagSq, out OVRGrabbableCustom closestGrabbable, out Collider closestGrabbableCollider)
+    private void FindClosestGrabbableCandidate()
     {
         closestMagSq = float.MaxValue;
         closestGrabbable = null;
@@ -358,38 +354,7 @@ public class OVRGrabberCustom : MonoBehaviour
     /// </summary>
     protected virtual void GrabBegin()
     {
-        float closestMagSq = float.MaxValue;
-        OVRGrabbableCustom closestGrabbable = null;
-        Collider closestGrabbableCollider = null;
-
-        FindClosestGrabbableCandidate(out closestMagSq, out closestGrabbable, out closestGrabbableCollider);
-        // Iterate grab candidates and find the closest grabbable candidate
-        //foreach (OVRGrabbableCustom grabbable in m_grabCandidates.Keys)
-        //{
-        //    // если этот предмет уже есть продолжить 
-        //    if (m_grabbedObjs.Contains(grabbable))
-        //        continue;
-
-        //    bool canGrab = !(grabbable.isGrabbed && !grabbable.allowOffhandGrab);
-        //    if (!canGrab)
-        //    {
-        //        continue;
-        //    }
-
-        //    for (int j = 0; j < grabbable.grabPoints.Length; ++j)
-        //    {
-        //        Collider grabbableCollider = grabbable.grabPoints[j];
-        //        // Store the closest grabbable
-        //        Vector3 closestPointOnBounds = grabbableCollider.ClosestPointOnBounds(m_gripTransform.position);
-        //        float grabbableMagSq = (m_gripTransform.position - closestPointOnBounds).sqrMagnitude;
-        //        if (grabbableMagSq < closestMagSq)
-        //        {
-        //            closestMagSq = grabbableMagSq;
-        //            closestGrabbable = grabbable;
-        //            closestGrabbableCollider = grabbableCollider;
-        //        }
-        //    }
-        //}
+            
 
         //если взято макс кол предметов
         if (m_grabbedObjs.Count == max_grabbed_obj)
@@ -518,6 +483,7 @@ public class OVRGrabberCustom : MonoBehaviour
         m_grabbedObj.GrabEnd(linearVelocity, angularVelocity);
         if (m_parentHeldObject) m_grabbedObj.transform.parent = null;
         SetPlayerIgnoreCollision(m_grabbedObj.gameObject, false);
+        m_grabbedObjs.Remove(m_grabbedObj);
         m_grabbedObj = null;
     }
     protected void GrabbableReleaseAll(Vector3 linearVelocity, Vector3 angularVelocity)
@@ -530,8 +496,9 @@ public class OVRGrabberCustom : MonoBehaviour
             SetPlayerIgnoreCollision(m_grabbedObjs[i].gameObject, false);
             
         }
-
+       
         m_grabbedObjs.Clear();
+        m_grabbedObj = null;
 
 
     }
@@ -558,7 +525,7 @@ public class OVRGrabberCustom : MonoBehaviour
 
     protected virtual void OffhandGrabbed(OVRGrabbableCustom grabbable)
     {
-        if (m_grabbedObj == grabbable)
+        if (m_grabbedObjs.Contains(grabbable))
         {
             GrabbableRelease(Vector3.zero, Vector3.zero);
         }

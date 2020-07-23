@@ -10,8 +10,8 @@ class GrabbableCard : OVRGrabbableCustom
 {
 
     //private OvrAvatar avatar;
-       
-       
+
+
     [SerializeField]
     public Vector3 handCardsPos;
 
@@ -21,7 +21,7 @@ class GrabbableCard : OVRGrabbableCustom
     [SerializeField]
     public Transform handPos;
 
-     
+
     float xOffset = 0.01f;
     float yOffset = -0.001f;
     float zOffset = -0.006f;
@@ -31,16 +31,16 @@ class GrabbableCard : OVRGrabbableCustom
     public override void GrabBegin(OVRGrabberCustom hand, Collider grabPoint)
     {
         base.GrabBegin(hand, grabPoint);
-            
-           
-        var grabbleObjSpawnPoint = hand.grabbleObjSpawnPoint;          
+
+
+        var grabbleObjSpawnPoint = hand.grabbleObjSpawnPoint;
         transform.parent = hand.grabbleObjSpawnPoint;
 
-           
-         
+
+
         //запоминаем родителя холдера ,обнуляем его обнуляем поворот холдера(необходимо для коректного задания позиции карт)
-        var parent = grabbleObjSpawnPoint.parent;          
-        grabbleObjSpawnPoint.parent = null;                
+        var parent = grabbleObjSpawnPoint.parent;
+        grabbleObjSpawnPoint.parent = null;
         grabbleObjSpawnPoint.rotation = new Quaternion();
 
 
@@ -53,7 +53,7 @@ class GrabbableCard : OVRGrabbableCustom
         float startX = xOffset * cardNumer / 2;
         float startZ = 0f;
 
-            
+
         float startRot = cardNumer / 2 * yRotStep;
 
         for (var i = 0; i < m_grabbedObjs.Count; i++)
@@ -65,7 +65,7 @@ class GrabbableCard : OVRGrabbableCustom
                 startY,
                 startZ
             );
-               
+
             //вычисление следующей позиции
             if (startX <= 0)
                 startZ += zOffset;
@@ -74,9 +74,9 @@ class GrabbableCard : OVRGrabbableCustom
 
             //изменение поворота по Y
             UnityEditor.TransformUtils.SetInspectorRotation(
-                    m_grabbedObjs[i].transform, 
+                    m_grabbedObjs[i].transform,
                 new Vector3(0, startRot, 0)
-            );              
+            );
 
             startRot -= yRotStep;
         }
@@ -86,13 +86,13 @@ class GrabbableCard : OVRGrabbableCustom
         grabbleObjSpawnPoint.parent = parent;
         grabbleObjSpawnPoint.localPosition = handCardsPos;
 
-            
+
         //установка корректного поворота холдера
         UnityEditor.TransformUtils.SetInspectorRotation(
             grabbleObjSpawnPoint.transform,
             new Vector3(
                 cardRotationFace.x,
-                cardRotationFace.y, 
+                cardRotationFace.y,
                 cardRotationFace.z
             )
         );
@@ -113,10 +113,5 @@ class GrabbableCard : OVRGrabbableCustom
         var rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.useGravity = true;
-
-        //avatar.RightHandCustomPose = null;
-        //avatar.LeftHandCustomPose = null;
     }
-
 }
-
