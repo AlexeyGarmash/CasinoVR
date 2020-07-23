@@ -22,7 +22,7 @@ class PlayerBettingChipsField : MonoBehaviour
         var chip = other.gameObject.GetComponent<ChipData>();
         if (chip != null && chip.transform.parent == null)
         {
-            
+            chip.GetComponent<Collider>().isTrigger = true;
             StackUtils.Instance.MagnetizeObject(gameObj, chip.player, yOffset, playerBettingStack);
             chip.transform.parent = playerBettingStack.transform;
             
