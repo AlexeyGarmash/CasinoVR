@@ -658,8 +658,6 @@ GameObject:
   m_Component:
   - component: {fileID: 414912}
   - component: {fileID: 5460176}
-  - component: {fileID: 11438496}
-  - component: {fileID: 11427812}
   m_Layer: 0
   m_Name: CustomHandLeft
   m_TagString: Untagged
@@ -698,47 +696,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &11438496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd425c2d06f39bf4899d07c05d0f10eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grabbleObjSpawnPoint: {fileID: 0}
-  max_grabbed_obj: 5
-  grabBegin: 0.55
-  grabEnd: 0.35
-  throwForce: 1
-  m_parentHeldObject: 0
-  m_moveHandPosition: 0
-  m_gripTransform: {fileID: 479836}
-  m_grabVolumes:
-  - {fileID: 13646154}
-  - {fileID: 13646584}
-  m_controller: 1
-  m_parentTransform: {fileID: 414912}
-  m_player: {fileID: 0}
---- !u!114 &11427812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79b7e65854ace8f44b05c52c6e824354, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_controller: 1
-  m_animator: {fileID: 95022414942611548}
-  m_defaultGrabPose: {fileID: 11437176, guid: 35525acb4c3b75c4a8c4dc2c117427be, type: 3}
 --- !u!1 &144252
 GameObject:
   m_ObjectHideFlags: 0

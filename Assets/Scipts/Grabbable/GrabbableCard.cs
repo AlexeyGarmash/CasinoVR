@@ -9,7 +9,7 @@ using UnityEngine;
 class GrabbableCard : OVRGrabbableCustom
 {
 
-    private OvrAvatar avatar;
+    //private OvrAvatar avatar;
        
        
     [SerializeField]
@@ -100,8 +100,8 @@ class GrabbableCard : OVRGrabbableCustom
 
 
         //установка позы для ударжания карт в руке
-        avatar = gameObject.transform.parent.parent.parent.GetComponentInChildren<OvrAvatar>();
-        avatar.RightHandCustomPose = handPos;
+        //avatar = gameObject.transform.parent.parent.parent.GetComponentInChildren<OvrAvatar>();
+        //avatar.RightHandCustomPose = handPos;
 
     }
 
@@ -114,8 +114,8 @@ class GrabbableCard : OVRGrabbableCustom
         rb.isKinematic = false;
         rb.useGravity = true;
 
-        avatar.RightHandCustomPose = null;
-        avatar.LeftHandCustomPose = null;
+        //avatar.RightHandCustomPose = null;
+        //avatar.LeftHandCustomPose = null;
     }
 
 }

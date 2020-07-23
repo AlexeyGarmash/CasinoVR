@@ -12,13 +12,20 @@ public enum ROULETTE_EVENT {
     PLAYER_CONNECTED,
     PLAYER_DISCONNCTED
 }
+public class RouletteRandom {
 
+    public int RndNext()
+    {
+        return Random.Range(0, 36);
+    }
+}
 public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
 {
     [SerializeField] private TableCell[] TableCells;
     [SerializeField] private RouletteWheelManager RouletteWheelManager;
     [SerializeField] private PlayerPlace[] plyers;
 
+    private RouletteRandom random = new RouletteRandom();
     public EventManager<ROULETTE_EVENT> rouletteEventManager = new EventManager<ROULETTE_EVENT>();
     
     private void Awake()
@@ -30,7 +37,7 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
     {
         if (OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.LTouch))
         {
-            RouletteWheelManager.StartSpin();
+            RouletteWheelManager.StartSpin(random.RndNext());
             Debug.Log("ROULETTE_GAME_START");
             rouletteEventManager.PostNotification(ROULETTE_EVENT.ROULETTE_GAME_START, this, null);
         }

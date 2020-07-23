@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8705238784718215552}
   - component: {fileID: 1288919915010071696}
-  - component: {fileID: 1288919915010071727}
+  - component: {fileID: 3941251842865039669}
   m_Layer: 0
   m_Name: PlayerCardsField
   m_TagString: Untagged
@@ -46,7 +46,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.489255, y: 0.11737248, z: 0.23723406}
   m_Center: {x: -0.07783306, y: -0.00068093836, z: 0.001060158}
---- !u!114 &1288919915010071727
+--- !u!114 &3941251842865039669
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,9 +55,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1026640587615269258}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 121e5f9c6da63cd42bf33addcea3e37f, type: 3}
+  m_Script: {fileID: 11500000, guid: 920229ffa66418c42b2059c353637e85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cards: {fileID: 0}
+  yOffset: -0.001
 --- !u!1 &4801241501911844006
 GameObject:
   m_ObjectHideFlags: 0
@@ -67,7 +69,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3636431798340475114}
-  - component: {fileID: 130793004346438272}
+  - component: {fileID: 8803429180865575961}
   m_Layer: 0
   m_Name: Cards
   m_TagString: Untagged
@@ -82,14 +84,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4801241501911844006}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.054, y: 0.018, z: -0.137}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8705238784718215552}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &130793004346438272
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &8803429180865575961
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,10 +100,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4801241501911844006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adc4d0a5e6e6a65409ee910aba63717b, type: 3}
+  m_Script: {fileID: 11500000, guid: 10621328992f5aa4f9d07142086ebac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
   currentY: 0
   Objects: []
-  StackOfChipColor: 100
