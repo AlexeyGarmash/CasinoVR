@@ -448,9 +448,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4394870786829990352, guid: ca1fcdea5b3a3d34da36bb79fa2f1763,
         type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -4394870786829990352, guid: ca1fcdea5b3a3d34da36bb79fa2f1763,
+        type: 3}
       propertyPath: viewIdField
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: -4394870786829990352, guid: ca1fcdea5b3a3d34da36bb79fa2f1763,
+        type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 23730652}
     - target: {fileID: 151180, guid: ca1fcdea5b3a3d34da36bb79fa2f1763, type: 3}
       propertyPath: m_Name
       value: Card_Clover_B_02 (2)
@@ -501,6 +511,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca1fcdea5b3a3d34da36bb79fa2f1763, type: 3}
+--- !u!1 &23730651 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 151180, guid: ca1fcdea5b3a3d34da36bb79fa2f1763,
+    type: 3}
+  m_PrefabInstance: {fileID: 23730650}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &23730652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23730651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &27198226
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,9 +1205,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -5277152710354807488, guid: 08c5f4669c6e7524fb2fc6fde1f12239,
         type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -5277152710354807488, guid: 08c5f4669c6e7524fb2fc6fde1f12239,
+        type: 3}
       propertyPath: viewIdField
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -5277152710354807488, guid: 08c5f4669c6e7524fb2fc6fde1f12239,
+        type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 65753727}
     - target: {fileID: 125756, guid: 08c5f4669c6e7524fb2fc6fde1f12239, type: 3}
       propertyPath: m_Name
       value: Card_Clover_R_08
@@ -1226,6 +1268,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08c5f4669c6e7524fb2fc6fde1f12239, type: 3}
+--- !u!1 &65753726 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 125756, guid: 08c5f4669c6e7524fb2fc6fde1f12239,
+    type: 3}
+  m_PrefabInstance: {fileID: 65753725}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &65753727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65753726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1001 &67353167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2390,9 +2454,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -5366747457177067716, guid: 1f6f49df937b54c408b0b6e6de2e77fe,
         type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -5366747457177067716, guid: 1f6f49df937b54c408b0b6e6de2e77fe,
+        type: 3}
       propertyPath: viewIdField
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: -5366747457177067716, guid: 1f6f49df937b54c408b0b6e6de2e77fe,
+        type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 133687815}
     - target: {fileID: 116200, guid: 1f6f49df937b54c408b0b6e6de2e77fe, type: 3}
       propertyPath: m_Name
       value: Card_Clover_B_07
@@ -2443,6 +2517,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f6f49df937b54c408b0b6e6de2e77fe, type: 3}
+--- !u!1 &133687814 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 116200, guid: 1f6f49df937b54c408b0b6e6de2e77fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 133687813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &133687815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133687814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1001 &134154545
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3844,9 +3940,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7354162503190530097, guid: b1e55ae9addaf17449f93d11df7645e5,
         type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7354162503190530097, guid: b1e55ae9addaf17449f93d11df7645e5,
+        type: 3}
       propertyPath: viewIdField
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: -7354162503190530097, guid: b1e55ae9addaf17449f93d11df7645e5,
+        type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 187397719}
     - target: {fileID: 126880, guid: b1e55ae9addaf17449f93d11df7645e5, type: 3}
       propertyPath: m_Name
       value: Card_Clover_R_07 (1)
@@ -3897,6 +4003,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1e55ae9addaf17449f93d11df7645e5, type: 3}
+--- !u!1 &187397718 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 126880, guid: b1e55ae9addaf17449f93d11df7645e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 187397717}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &187397719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187397718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1001 &199816470
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17222,9 +17350,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -425599378956294818, guid: 0752efd01c4d53e46b35310aa751f403,
         type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -425599378956294818, guid: 0752efd01c4d53e46b35310aa751f403,
+        type: 3}
       propertyPath: viewIdField
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -425599378956294818, guid: 0752efd01c4d53e46b35310aa751f403,
+        type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 535112301}
     - target: {fileID: 152754, guid: 0752efd01c4d53e46b35310aa751f403, type: 3}
       propertyPath: m_Name
       value: Card_Clover_R_King
@@ -17275,6 +17413,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0752efd01c4d53e46b35310aa751f403, type: 3}
+--- !u!1 &535112300 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 152754, guid: 0752efd01c4d53e46b35310aa751f403,
+    type: 3}
+  m_PrefabInstance: {fileID: 535112299}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &535112301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535112300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1001 &552054393
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18222,9 +18382,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7817493369136043192, guid: 5eadcbd6a5256c24986c1ca4dc3e8957,
         type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7817493369136043192, guid: 5eadcbd6a5256c24986c1ca4dc3e8957,
+        type: 3}
       propertyPath: viewIdField
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: -7817493369136043192, guid: 5eadcbd6a5256c24986c1ca4dc3e8957,
+        type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 585281142}
     - target: {fileID: 123820, guid: 5eadcbd6a5256c24986c1ca4dc3e8957, type: 3}
       propertyPath: m_Name
       value: Card_Clover_R_Ace
@@ -18275,6 +18445,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5eadcbd6a5256c24986c1ca4dc3e8957, type: 3}
+--- !u!1 &585281141 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 123820, guid: 5eadcbd6a5256c24986c1ca4dc3e8957,
+    type: 3}
+  m_PrefabInstance: {fileID: 585281140}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &585281142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585281141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1001 &586884752
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24299,11 +24491,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485382881994594710, guid: 5334e8663f722c044ad02f346e5d203f,
         type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1485382881994594710, guid: 5334e8663f722c044ad02f346e5d203f,
+        type: 3}
       propertyPath: viewIdField
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1485382881994594710, guid: 5334e8663f722c044ad02f346e5d203f,
+        type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 655583137}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5334e8663f722c044ad02f346e5d203f, type: 3}
+--- !u!1 &655583136 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 153266, guid: 5334e8663f722c044ad02f346e5d203f,
+    type: 3}
+  m_PrefabInstance: {fileID: 655583135}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &655583137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655583136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1001 &657299743
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25159,9 +25383,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8140518607020499558, guid: be6967abe8751f64db858ff3b9889628,
         type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8140518607020499558, guid: be6967abe8751f64db858ff3b9889628,
+        type: 3}
       propertyPath: viewIdField
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: -8140518607020499558, guid: be6967abe8751f64db858ff3b9889628,
+        type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 725303779}
     - target: {fileID: 140996, guid: be6967abe8751f64db858ff3b9889628, type: 3}
       propertyPath: m_Name
       value: Card_Clover_B_03
@@ -25212,6 +25446,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be6967abe8751f64db858ff3b9889628, type: 3}
+--- !u!1 &725303778 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 140996, guid: be6967abe8751f64db858ff3b9889628,
+    type: 3}
+  m_PrefabInstance: {fileID: 725303777}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &725303779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725303778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1001 &730457612
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49513,9 +49769,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7354162503190530097, guid: b1e55ae9addaf17449f93d11df7645e5,
         type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7354162503190530097, guid: b1e55ae9addaf17449f93d11df7645e5,
+        type: 3}
       propertyPath: viewIdField
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: -7354162503190530097, guid: b1e55ae9addaf17449f93d11df7645e5,
+        type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 1544370638}
     - target: {fileID: 126880, guid: b1e55ae9addaf17449f93d11df7645e5, type: 3}
       propertyPath: m_Name
       value: Card_Clover_R_07
@@ -49566,6 +49832,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1e55ae9addaf17449f93d11df7645e5, type: 3}
+--- !u!1 &1544370637 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 126880, guid: b1e55ae9addaf17449f93d11df7645e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 1544370636}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1544370638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544370637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1001 &1545799005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50403,11 +50691,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3991239059156184198, guid: ecbb337ff26ba544e85e05b405292527,
         type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991239059156184198, guid: ecbb337ff26ba544e85e05b405292527,
+        type: 3}
       propertyPath: viewIdField
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3991239059156184198, guid: ecbb337ff26ba544e85e05b405292527,
+        type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 1574170584}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecbb337ff26ba544e85e05b405292527, type: 3}
+--- !u!1 &1574170583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 139270, guid: ecbb337ff26ba544e85e05b405292527,
+    type: 3}
+  m_PrefabInstance: {fileID: 1574170582}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1574170584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574170583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1001 &1575218230
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63198,11 +63518,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7917422365797801786, guid: a1fddefa036cc8a49ad917299a13d6fe,
         type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7917422365797801786, guid: a1fddefa036cc8a49ad917299a13d6fe,
+        type: 3}
       propertyPath: viewIdField
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 7917422365797801786, guid: a1fddefa036cc8a49ad917299a13d6fe,
+        type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 1991414160}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1fddefa036cc8a49ad917299a13d6fe, type: 3}
+--- !u!1 &1991414159 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 103210, guid: a1fddefa036cc8a49ad917299a13d6fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 1991414158}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1991414160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991414159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1001 &1997176129
 PrefabInstance:
   m_ObjectHideFlags: 0
