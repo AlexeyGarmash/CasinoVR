@@ -85,8 +85,7 @@ class GrabbableCard : OVRGrabbableCustom
         //возврат родителя и корректних локальних координат холдера для удержания карт
         grabbleObjSpawnPoint.parent = parent;
         grabbleObjSpawnPoint.localPosition = handCardsPos;
-
-            
+  
         //установка корректного поворота холдера
         UnityEditor.TransformUtils.SetInspectorRotation(
             grabbleObjSpawnPoint.transform,

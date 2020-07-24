@@ -11,6 +11,7 @@ public class PhotonPlayerSettings : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this);
-        Instance = this;
+        if(Instance == null)
+            Instance = this;
     }
 }

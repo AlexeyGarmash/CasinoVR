@@ -14,7 +14,9 @@ public class CreatePlayerManager : BaseMenuPanel
     
     public void ChangeNickName()
     {
-        if(InputFieldNickName.text.Length != 0)
+        if(InputFieldNickName.text.Length != 0 
+            && PhotonPlayerSettings.Instance != null
+            && PhotonPlayerSettings.Instance.PrefabResourceName != null)
         {
             NetworkManager.Instance.ChangePlayerNick(InputFieldNickName.text);
             InputFieldNickName.text = "";

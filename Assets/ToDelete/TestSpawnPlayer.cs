@@ -10,12 +10,11 @@ public class TestSpawnPlayer : MonoBehaviourPun
 
     private void Start()
     {
-        if (HeadPlayerPrefabPath_Remote != null && HeadPlayerPrefabPath_Remote != string.Empty)
+        if (PhotonPlayerSettings.Instance != null)
         {
-            if(photonView.IsMine)
-                PhotonNetwork.Instantiate(HeadPlayerPrefabPath_Local, new Vector3(0, 0, 0), Quaternion.identity);
-            else
-                PhotonNetwork.Instantiate(HeadPlayerPrefabPath_Remote, new Vector3(0, 0, 0), Quaternion.identity);
+            if(PhotonPlayerSettings.Instance.PrefabResourceName != null)
+                PhotonNetwork.Instantiate(PhotonPlayerSettings.Instance.PrefabResourceName, new Vector3(0, 0, 0), Quaternion.identity);
+            
 
         }
         else

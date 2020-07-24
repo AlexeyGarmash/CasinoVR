@@ -532,6 +532,7 @@ public class OVRGrabberCustom : MonoBehaviour
         }
 
         m_grabbedObjs.Clear();
+        m_grabbedObj = null;
 
 
     }

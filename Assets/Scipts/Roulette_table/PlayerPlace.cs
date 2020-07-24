@@ -24,8 +24,6 @@ public class PlayerPlace : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            
-
             if (OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.RTouch))
             {
                 if (ps == null)

@@ -27,8 +27,8 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
                 RightHandAnchor = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/RightHandAnchor").transform;
                 LeftHandAnchor = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/LeftHandAnchor").transform;
                 SetHeadAvatar();
-                SetHand(LeftHand, LeftHandAnchor);
-                SetHand(RightHand, RightHandAnchor);
+                SetHand(LeftHand, LeftHandAnchor, 180f, 90f);
+                SetHand(RightHand, RightHandAnchor, -180f, -90f);
             }
         }
 
@@ -38,16 +38,33 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         }
     }
 
+
+    private void LoadAvatar()
+    {
+        if(PhotonPlayerSettings.Instance != null)
+        {
+
+        }
+    }
     private void SetHeadAvatar()
     {
         transform.SetParent(CenterEye);
         transform.localPosition = Vector3.zero;
     }
 
-    private void SetHand(GameObject hand, Transform anchor)
+    private void SetHand(GameObject hand, Transform anchor, float yRot, float zRotation)
     {
         hand.transform.SetParent(anchor);
         hand.transform.localPosition = Vector3.zero;
-        hand.transform.localRotation = anchor.localRotation;
+        hand.transform.rotation = Quaternion.Euler(0f, yRot, zRotation);
+        OVRGrabberCustom grabberCustom = hand.GetComponent<OVRGrabberCustom>();
+        if(grabberCustom != null)
+        {
+            Transform spawnPoint = anchor.Find("Spawn");
+            if (spawnPoint != null)
+            {
+                grabberCustom.grabbleObjSpawnPoint = spawnPoint;
+            }
+        }
     }
 }
