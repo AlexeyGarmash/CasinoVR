@@ -14,13 +14,14 @@ ANY KIND, either express or implied. See the License for the specific language g
 permissions and limitations under the License.
 ************************************************************************************/
 
+using Photon.Pun;
 using System;
 using UnityEngine;
 
 /// <summary>
 /// An object that can be grabbed and thrown by OVRGrabber.
 /// </summary>
-public class OVRGrabbableCustom : MonoBehaviour
+public class OVRGrabbableCustom : MonoBehaviourPun
 {
 
     [SerializeField]
@@ -115,6 +116,10 @@ public class OVRGrabbableCustom : MonoBehaviour
     /// </summary>
     virtual public void GrabBegin(OVRGrabberCustom hand, Collider grabPoint)
     {
+        if(photonView != null)
+        {
+            photonView.RequestOwnership();
+        }
         grabPoint.transform.parent = hand.transform;
         m_grabbedBy = hand;
         m_grabbedCollider = grabPoint;
