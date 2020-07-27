@@ -465,6 +465,10 @@ public class OVRGrabberCustom : MonoBehaviour
                 m_grabbedObj.transform.parent = transform;
             }
         }
+        else
+        {
+            print("Grabbable collider not found!");
+        }
     }
 
     protected virtual void MoveGrabbedObject(Vector3 pos, Quaternion rot, bool forceTeleport = false)
