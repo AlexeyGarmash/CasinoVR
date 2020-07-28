@@ -74,6 +74,7 @@ public class StackAnimator : MonoBehaviour
     }
     public void StartAnim(GameObject chip)
     {
+        StopAllCoroutines();
         StartCoroutine(
                 WaitForLastChips(chip)
             );

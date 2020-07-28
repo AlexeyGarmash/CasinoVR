@@ -50,13 +50,13 @@ public class PlayerPlace : MonoBehaviour
         {
 
             var starmoney = money;
-
+            
             while (money > 0)
             {
                 if (starmoney / 2 < money)
                 {
                     sf.InstantiateToStackWithColor(Chips.PURPLE, ref money);
-
+                   
                 }
                 else if (starmoney / 4 < money)
                 {
@@ -80,6 +80,7 @@ public class PlayerPlace : MonoBehaviour
                 }
                 else sf.InstantiateToStackWithColor(Chips.YELLOW, ref money);
 
+               
             }
         }
     }
