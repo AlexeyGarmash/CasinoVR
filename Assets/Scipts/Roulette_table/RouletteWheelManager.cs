@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RouletteWheelManager : MonoBehaviour, IListener<ROULETTE_EVENT>
+public class RouletteWheelManager : MonoBehaviourPun, IListener<ROULETTE_EVENT>
 {
     public event Action<WheelCellData> OnRouletteWheelFinish;
 
@@ -36,15 +37,22 @@ public class RouletteWheelManager : MonoBehaviour, IListener<ROULETTE_EVENT>
       
         if (RouletteWheelLogic.IsPossibleStartGame)
         {
-            Debug.Log("Wining numebr" + winNumber);
-            this.winNumber = winNumber;
-            RouletteWheelLogic.StartWheel();
-            StartSpinAll();
+            //
+            photonView.RPC("StartSpin_RPC", RpcTarget.All, winNumber);
         }
         else
         {
             print("Wheel spin now, impossible spin now!!");
         }
+    }
+
+    [PunRPC]
+    private void StartSpin_RPC(int winNumber)
+    {
+        Debug.Log("Wining numebr" + winNumber);
+        this.winNumber = winNumber;
+        RouletteWheelLogic.StartWheel();
+        StartSpinAll();
     }
 
     private void StartSpinAll()
