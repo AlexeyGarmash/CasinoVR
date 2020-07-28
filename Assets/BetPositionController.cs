@@ -53,19 +53,20 @@ public class BetPositionController : MonoBehaviour
            
             Debug.Log(StartBettingPos);
             Debug.Log(CurrentBettingPos);
-            if (StartBettingPos == CurrentBettingPos)
+            if (IsEqualPoses(StartBettingPos, CurrentBettingPos))
             {
                
                 List<ChipData> chips = GetAllChips(GetComponent<PlayerBettingChipsField>());
-                Debug.Log(chips.Count);
+                
                 foreach (ChipData chip in chips)
                 {
                     chip.gameObject.transform.parent = null;
-                    chip.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-                    StackUtils.Instance.MagnetizeObject(chip.gameObject, chip.player, currentField.yOffset, currentField.BetStacks);
+                    //chip.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                    currentField.MagnetizeObject(chip.gameObject, currentField.Stacks[0]);
+                    
                     
                 }
-               
+                GetComponent<PlayerBettingChipsField>().Stacks[0].Objects.Clear();
                 transform.position = StartPos;
                 break;
             }
@@ -97,7 +98,7 @@ public class BetPositionController : MonoBehaviour
     {
         List<ChipData> chips = new List<ChipData>();
 
-        chips.AddRange(GetChipsFromStack(pf.playerBettingStack.transform));
+        chips.AddRange(GetChipsFromStack(pf.Stacks[0].transform));
         
 
         return chips;

@@ -35,7 +35,7 @@ public class PlayerPlace : MonoBehaviour
                 }
                 else {
                     ps = null;
-                    sf.ClearPlace();
+                    //sf.ClearPlace();
 
                 }
             }
