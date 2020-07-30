@@ -59,19 +59,19 @@ public class LongClickProgress : MonoBehaviourPun
     private void InvokeClickGoOutFromPlace()
     {
         _onLongClickLeavePlace?.Invoke();
-        /*inGame = false;
+        inGame = false;
         _imageReady.texture = _notReadyTexture;
-        _textReady.text = "Not ready";*/
-        photonView?.RPC("LeaveTable_RPC", RpcTarget.All);
+        _textReady.text = "Not ready";
+        photonView?.RPC("LeaveTable_RPC", RpcTarget.Others);
     }
 
     private void InvokeClickTakePlace()
     {
         _onLongClickTalePlace?.Invoke();
-        /*inGame = true;
+        inGame = true;
         _imageReady.texture = _readyTexture;
-        _textReady.text = PhotonNetwork.LocalPlayer.NickName;*/
-        photonView?.RPC("JoinTable_RPC", RpcTarget.All, PhotonNetwork.LocalPlayer.NickName);
+        _textReady.text = PhotonNetwork.LocalPlayer.NickName;
+        photonView?.RPC("JoinTable_RPC", RpcTarget.Others, PhotonNetwork.LocalPlayer.NickName);
     }
 
     private void ResetProgress()
