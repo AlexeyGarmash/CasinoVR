@@ -58,30 +58,30 @@ public class LongClickProgress : MonoBehaviourPun
 
     private void InvokeClickGoOutFromPlace()
     {
-        photonView?.RequestOwnership();
+        //photonView?.RequestOwnership();
         //_onLongClickLeavePlace?.Invoke();
         inGame = false;
         _imageReady.texture = _notReadyTexture;
         _textReady.text = "Not ready";
-        if (photonView.IsMine)
-        {
-            print("FUCKING <ESSAGE");
+        //if (photonView.IsMine)
+        //{
+            print("FUCKING GO OUT <ESSAGE");
             photonView?.RPC("LeaveTable_RPC", RpcTarget.Others);
-        }
+        //}
     }
 
     private void InvokeClickTakePlace()
     {
-        photonView?.RequestOwnership();
+        //photonView?.RequestOwnership();
         //_onLongClickTalePlace?.Invoke();
         inGame = true;
         _imageReady.texture = _readyTexture;
         _textReady.text = PhotonNetwork.LocalPlayer.NickName;
-        if (photonView.IsMine)
-        {
-            print("FUCKING <ESSAGE");
+        //if (photonView.IsMine)
+        //{
+            print("FUCKING TAKE PLACE <ESSAGE");
             photonView?.RPC("JoinTable_RPC", RpcTarget.Others, PhotonNetwork.LocalPlayer.NickName);
-        }
+        //}
     }
 
     private void ResetProgress()
