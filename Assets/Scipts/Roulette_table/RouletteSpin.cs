@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RouletteSpin : MonoBehaviour, ISpinableTransform
+public class RouletteSpin : MonoBehaviourPun, ISpinableTransform
 {
     #region Serialize Fields
 
@@ -54,6 +55,7 @@ public class RouletteSpin : MonoBehaviour, ISpinableTransform
 
     public void StartSpin()
     {
+        photonView.RequestOwnership();
         StartCoroutine(_RotateRouletteBase());
     }
 

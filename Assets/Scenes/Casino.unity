@@ -71138,6 +71138,11 @@ PrefabInstance:
       propertyPath: viewIdField
       value: 66
       objectReference: {fileID: 0}
+    - target: {fileID: 2171686728485096119, guid: 573e65b08c7d9da489dd654c7c6d0555,
+        type: 3}
+      propertyPath: OwnershipTransfer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2563703367208606437, guid: 573e65b08c7d9da489dd654c7c6d0555,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -71296,7 +71301,7 @@ PrefabInstance:
     - target: {fileID: 9128662136657761580, guid: 573e65b08c7d9da489dd654c7c6d0555,
         type: 3}
       propertyPath: plyers.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9128662136657761580, guid: 573e65b08c7d9da489dd654c7c6d0555,
         type: 3}
@@ -71308,6 +71313,11 @@ PrefabInstance:
       propertyPath: _playerInformer
       value: 
       objectReference: {fileID: 2001475347}
+    - target: {fileID: 9128662136657761580, guid: 573e65b08c7d9da489dd654c7c6d0555,
+        type: 3}
+      propertyPath: plyers.Array.data[1]
+      value: 
+      objectReference: {fileID: 1170222327}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 573e65b08c7d9da489dd654c7c6d0555, type: 3}
 --- !u!1 &2090097506 stripped
@@ -72719,7 +72729,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 2
   ObservedComponents:
   - {fileID: 2090097607}
   viewIdField: 68

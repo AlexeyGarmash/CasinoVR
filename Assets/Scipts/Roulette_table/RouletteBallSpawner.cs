@@ -14,6 +14,7 @@ public class RouletteBallSpawner : MonoBehaviourPun
 
     public void SpawnBall(int winNumber)
     {
+        photonView.RequestOwnership();
         if(_createdBallPrefab != null)
         {
             //
