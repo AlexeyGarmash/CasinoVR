@@ -39,6 +39,7 @@ public class RouletteWheelManager : MonoBehaviourPun, IListener<ROULETTE_EVENT>
         {
             //
             photonView.RPC("StartSpin_RPC", RpcTarget.All, winNumber);
+            StartSpinAll();
         }
         else
         {
@@ -52,7 +53,7 @@ public class RouletteWheelManager : MonoBehaviourPun, IListener<ROULETTE_EVENT>
         Debug.Log("Wining numebr" + winNumber);
         this.winNumber = winNumber;
         RouletteWheelLogic.StartWheel();
-        StartSpinAll();
+        
     }
 
     private void StartSpinAll()
