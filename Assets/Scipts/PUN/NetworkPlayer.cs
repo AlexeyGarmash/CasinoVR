@@ -14,6 +14,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject RightHand;
     [SerializeField] private GameObject LeftHand;
     [SerializeField] private TextMeshPro TextNickName;
+    [SerializeField] private Component[] ComponentsToDisable;
     
     void Start()
     {
@@ -35,6 +36,10 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         if (!photonView.IsMine)
         {
             TextNickName.text = photonView.Owner.NickName;
+            foreach (var component in ComponentsToDisable)
+            {
+                Destroy(component);
+            }
         }
     }
 
