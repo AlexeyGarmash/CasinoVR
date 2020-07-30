@@ -50,7 +50,7 @@ public class PlayerPlace : MonoBehaviourPun
         if (ps == null && !placeTaken)
         {
             print("Button clikced ps == null");
-            photonView?.RPC("TakePlace_RPC", RpcTarget.All);
+            photonView?.RPC("TakePlace_RPC", RpcTarget.All, PhotonNetwork.LocalPlayer.NickName);
             ps = new PlayerStats(PhotonNetwork.LocalPlayer.NickName);
             //PreparePlayerPlace();
         }
@@ -68,10 +68,10 @@ public class PlayerPlace : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void TakePlace_RPC()
+    public void TakePlace_RPC(string nickname)
     {
         placeTaken = true;
-        ps = new PlayerStats(PhotonNetwork.LocalPlayer.NickName);
+        ps = new PlayerStats(nickname);
         print("RPC TAKE PLACE!!!");
     }
 

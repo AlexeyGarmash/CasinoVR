@@ -71,7 +71,7 @@ public class LongClickProgress : MonoBehaviourPun
         /*inGame = true;
         _imageReady.texture = _readyTexture;
         _textReady.text = PhotonNetwork.LocalPlayer.NickName;*/
-        photonView?.RPC("JoinTable_RPC", RpcTarget.All);
+        photonView?.RPC("JoinTable_RPC", RpcTarget.All, PhotonNetwork.LocalPlayer.NickName);
     }
 
     private void ResetProgress()
@@ -114,11 +114,11 @@ public class LongClickProgress : MonoBehaviourPun
 
 
     [PunRPC]
-    public void JoinTable_RPC()
+    public void JoinTable_RPC(string nickname)
     {
         inGame = true;
         _imageReady.texture = _readyTexture;
-        _textReady.text = PhotonNetwork.LocalPlayer.NickName;
+        _textReady.text = nickname;
     }
 
 
