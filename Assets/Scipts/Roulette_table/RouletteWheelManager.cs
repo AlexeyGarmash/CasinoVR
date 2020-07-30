@@ -34,7 +34,7 @@ public class RouletteWheelManager : MonoBehaviourPun, IListener<ROULETTE_EVENT>
     int winNumber;
     public void StartSpin(int winNumber)
     {
-      
+        photonView.RequestOwnership();
         if (RouletteWheelLogic.IsPossibleStartGame)
         {
             //

@@ -61,7 +61,7 @@ public class LongClickProgress : MonoBehaviourPun
     private void InvokeClickGoOutFromPlace()
     {
         photonView?.RequestOwnership();
-        //_onLongClickLeavePlace?.Invoke();
+        _onLongClickLeavePlace?.Invoke();
         inGame = false;
         _imageReady.texture = _notReadyTexture;
         _textReady.text = "Not ready";
@@ -75,7 +75,7 @@ public class LongClickProgress : MonoBehaviourPun
     private void InvokeClickTakePlace()
     {
         photonView?.RequestOwnership();
-        //_onLongClickTalePlace?.Invoke();
+        _onLongClickTalePlace?.Invoke();
         inGame = true;
         _imageReady.texture = _readyTexture;
         _textReady.text = PhotonNetwork.LocalPlayer.NickName;
