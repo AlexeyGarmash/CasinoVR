@@ -60,7 +60,7 @@ public class LongClickProgress : MonoBehaviourPun
 
     private void InvokeClickGoOutFromPlace()
     {
-        //photonView?.RequestOwnership();
+        photonView?.RequestOwnership();
         //_onLongClickLeavePlace?.Invoke();
         inGame = false;
         _imageReady.texture = _notReadyTexture;
@@ -74,7 +74,7 @@ public class LongClickProgress : MonoBehaviourPun
 
     private void InvokeClickTakePlace()
     {
-        //photonView?.RequestOwnership();
+        photonView?.RequestOwnership();
         //_onLongClickTalePlace?.Invoke();
         inGame = true;
         _imageReady.texture = _readyTexture;
@@ -102,7 +102,7 @@ public class LongClickProgress : MonoBehaviourPun
     {
         if (other.gameObject.GetComponent<LongClickHand>() != null)
         {
-            if (!photonView.IsMine) return;
+            //if (!photonView.IsMine) return;
             inProgress = true;
         }
     }
@@ -111,7 +111,7 @@ public class LongClickProgress : MonoBehaviourPun
     {
         if (other.gameObject.GetComponent<LongClickHand>() != null)
         {
-            if (!photonView.IsMine) return;
+            //if (!photonView.IsMine) return;
             ResetProgress();
         }
     }
