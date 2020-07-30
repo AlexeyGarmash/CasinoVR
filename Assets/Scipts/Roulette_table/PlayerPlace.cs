@@ -1,13 +1,15 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 
 
-public class PlayerPlace : MonoBehaviour
+public class PlayerPlace : MonoBehaviourPun
 {
     public PlayerStats ps;
+    private bool placeTaken = false;
     PlayerChipsField sf;
 
     EventManager<ROULETTE_EVENT> rouletteManager;
@@ -15,6 +17,7 @@ public class PlayerPlace : MonoBehaviour
     
     private void Start()
     {
+        ps = null;
         rouletteManager = GetComponentInParent<TableBetsManager>().rouletteEventManager;
      
         sf = GetComponentInChildren<PlayerChipsField>();
@@ -22,22 +25,62 @@ public class PlayerPlace : MonoBehaviour
 
      private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        /*if (other.gameObject.tag == "Player")
         {
             if (OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.RTouch))
             {
-                if (ps == null)
+                if (ps == null && !placeTaken)
                 {
+                    photonView.RPC("TakePlace_RPC", RpcTarget.All);
                     ps = other.gameObject.GetComponent<PlayerStats>();
                     PreparePlayerPlace();
                 }
                 else {
+                    photonView.RPC("GoOutPlace_RPC", RpcTarget.All);
                     ps = null;
                     sf.ClearPlace();
-
                 }
             }
+        }*/
+    }
+
+    public void TakePlace()
+    {
+        print("Button clikced");
+        if (ps == null && !placeTaken)
+        {
+            print("Button clikced ps == null");
+            photonView?.RPC("TakePlace_RPC", RpcTarget.All);
+            ps = new PlayerStats(PhotonNetwork.LocalPlayer.NickName);
+            //PreparePlayerPlace();
         }
+    }
+
+    public void GoOutFromPlace()
+    {
+        if (ps != null && placeTaken)
+        {
+            print("Button clikced ps != null");
+            photonView?.RPC("GoOutPlace_RPC", RpcTarget.All);
+            ps = null;
+            //sf.ClearPlace();
+        }
+    }
+
+    [PunRPC]
+    public void TakePlace_RPC()
+    {
+        placeTaken = true;
+        ps = new PlayerStats(PhotonNetwork.LocalPlayer.NickName);
+        print("RPC TAKE PLACE!!!");
+    }
+
+    [PunRPC]
+    public void GoOutPlace_RPC()
+    {
+        placeTaken = false;
+        ps = null;
+        print("RPC GO OUT FROM PLACE!!!");
     }
 
     public void PreparePlayerPlace()

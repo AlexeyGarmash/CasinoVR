@@ -70,6 +70,12 @@ public abstract class TableCell : MonoBehaviourPun
         //BetsData.RemoveAll(data => data.PlayerStat.PlayerNick.Equals(betData.PlayerStat.PlayerNick));
         photonView?.RPC("ResetBets_RPC", RpcTarget.All, betData.ToByteArray());
     }
+
+    public void ResetBets(string nickname)
+    {
+        //BetsData.RemoveAll(data => data.PlayerStat.PlayerNick.Equals(betData.PlayerStat.PlayerNick));
+        photonView?.RPC("ResetBetsByNickname_RPC", RpcTarget.All, nickname);
+    }
     private int FindBetDataIndex(BetData betData) => BetsData.FindIndex(data => data.PlayerStat.PlayerNick.Equals(betData.PlayerStat.PlayerNick));
 
     
@@ -96,6 +102,12 @@ public abstract class TableCell : MonoBehaviourPun
     public void ResetBets_RPC(byte[] betData)
     {
         BetsData.RemoveAll(data => data.PlayerStat.PlayerNick.Equals((betData.FromByteArray() as BetData).PlayerStat.PlayerNick));
+    }
+
+    [PunRPC]
+    public void ResetBetsByNickname_RPC(string nickname)
+    {
+        BetsData.RemoveAll(data => data.PlayerStat.PlayerNick == nickname);
     }
 
     [PunRPC]

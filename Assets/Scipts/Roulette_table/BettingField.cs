@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -72,7 +73,7 @@ public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
                 if(grabbadBy == null)
                     if (StackUtils.Instance.MagnetizeObject(other.gameObject, chip.player, yOffset, BetStacks))
                     {
-                        tableCell.ReceiveBetData(new BetData(new PlayerStats(chip.player), (int)chip.Cost));
+                        tableCell.ReceiveBetData(new BetData(new PlayerStats(PhotonNetwork.LocalPlayer.NickName), (int)chip.Cost));
                     }
             }
         }

@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System;
 
 public enum ROULETTE_EVENT {   
     BET_WIN,
@@ -16,7 +19,7 @@ public class RouletteRandom {
 
     public int RndNext()
     {
-        return Random.Range(0, 36);
+        return UnityEngine.Random.Range(0, 36);
     }
 }
 public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
@@ -24,6 +27,7 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
     [SerializeField] private TableCell[] TableCells;
     [SerializeField] private RouletteWheelManager RouletteWheelManager;
     [SerializeField] private PlayerPlace[] plyers;
+    [SerializeField] private PlayerInformer _playerInformer;
 
     private RouletteRandom random = new RouletteRandom();
     public EventManager<ROULETTE_EVENT> rouletteEventManager = new EventManager<ROULETTE_EVENT>();
@@ -37,9 +41,24 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
     {
         if (OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.LTouch))
         {
-            RouletteWheelManager.StartSpin(random.RndNext());
-            Debug.Log("ROULETTE_GAME_START");
-            rouletteEventManager.PostNotification(ROULETTE_EVENT.ROULETTE_GAME_START, this, null);
+            
+        }
+    }
+
+    public void StartSpinAllParts()
+    { 
+        RouletteWheelManager.StartSpin(random.RndNext());
+        Debug.Log("ROULETTE_GAME_START");
+        rouletteEventManager.PostNotification(ROULETTE_EVENT.ROULETTE_GAME_START, this, null);
+        _playerInformer.HideMessage();
+    }
+
+    public void LeaveTable()
+    {
+        _playerInformer.HideMessage();
+        foreach (var tCell in TableCells)
+        {
+            tCell.ResetBets(PhotonNetwork.LocalPlayer.NickName);
         }
     }
 
@@ -50,9 +69,8 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
 
     private void CheckAndNotifyAllCells(WheelCellData obj)
     {
-
-        foreach (PlayerPlace player in plyers)      
-        {
+        var player = plyers.ToList().Find(x => x.ps.PlayerNick == PhotonNetwork.LocalPlayer.NickName);
+        if (player == null) return;
             int win = 0; 
             foreach (var tCell in TableCells)
             {
@@ -63,9 +81,8 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
                         print(string.Format("Player {0} win {1}", betData.PlayerStat.PlayerNick, betData.BetValue * tCell.WinKoeff));
                         if (player.ps.PlayerNick.Equals(betData.PlayerStat.PlayerNick))
                         {
-                            win += (tCell.WinKoeff * betData.BetValue) - betData.BetValue;
+                            win += (tCell.WinKoeff * betData.BetValue);
                             print(string.Format("Player {0} win {1}", betData.PlayerStat.PlayerNick, betData.BetValue * tCell.WinKoeff));
-
                         }
 
                     }
@@ -84,9 +101,19 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
             }
 
             player.ps.AllMoney += win;
+
+        if(win < 0)
+        {
+            _playerInformer?.SetMessage(string.Format("You lose {0}$ !", Math.Abs(win)), WIN_STATUS.LOSE);
         }
-
-
+        else if (win > 0)
+        {
+            _playerInformer?.SetMessage(string.Format("You win {0}$ !", Math.Abs(win)), WIN_STATUS.WIN);
+        }
+        else
+        {
+            _playerInformer?.SetMessage("You win nothing !", WIN_STATUS.NOTHING);
+        }
     }
  
 

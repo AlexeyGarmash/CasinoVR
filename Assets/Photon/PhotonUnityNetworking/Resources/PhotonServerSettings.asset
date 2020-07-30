@@ -27,7 +27,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: 
+  DevRegion: ru
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -45,6 +45,11 @@ MonoBehaviour:
   - StartSpin_RPC
   - SpawnBall_RPC
   - DestroyBall_RPC
+  - TakePlace_RPC
+  - GoOutPlace_RPC
+  - ResetBetsByNickname_RPC
+  - LeaveTable_RPC
+  - JoinTable_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
-  DevRegionSetOnce: 0
+  DevRegionSetOnce: 1
