@@ -108,8 +108,8 @@ public class LongClickProgress : MonoBehaviourPun
     public void LeaveTable_RPC()
     {
         inGame = false;
-        _imageReady.texture = _notReadyTexture;
-        _textReady.text = "Not ready";
+        //_imageReady.texture = _notReadyTexture;
+        //_textReady.text = "Not ready";
     }
 
 
@@ -117,8 +117,8 @@ public class LongClickProgress : MonoBehaviourPun
     public void JoinTable_RPC(string nickname)
     {
         inGame = true;
-        _imageReady.texture = _readyTexture;
-        _textReady.text = nickname;
+        //_imageReady.texture = _readyTexture;
+        //_textReady.text = nickname;
     }
 
 
