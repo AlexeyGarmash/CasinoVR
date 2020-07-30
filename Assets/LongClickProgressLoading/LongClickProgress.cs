@@ -23,6 +23,8 @@ public class LongClickProgress : MonoBehaviourPun
     private float currentHoldTime = 0f;
     private bool inGame = false;
 
+    private int enterCount = 0;
+    private int exitCount = 0;
     private void Start()
     {
         _imageReady.texture = _notReadyTexture;
@@ -100,7 +102,7 @@ public class LongClickProgress : MonoBehaviourPun
     {
         if (other.gameObject.GetComponent<LongClickHand>() != null)
         {
-            //if (inGame && !photonView.IsMine) return;
+            if (!photonView.IsMine) return;
             inProgress = true;
         }
     }
@@ -109,7 +111,7 @@ public class LongClickProgress : MonoBehaviourPun
     {
         if (other.gameObject.GetComponent<LongClickHand>() != null)
         {
-            //if (inGame && !photonView.IsMine) return;
+            if (!photonView.IsMine) return;
             ResetProgress();
         }
     }
