@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -107,8 +108,6 @@ public class StackAnimator : MonoBehaviour
     }
     IEnumerator MoveChip(float chipsDropSpeed, float chipsDropMult, GameObject chip)
     {
-
-      
         chip.SetActive(true);
 
 
