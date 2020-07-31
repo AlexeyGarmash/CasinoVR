@@ -55,7 +55,7 @@ public class RouletteSpin : MonoBehaviourPun, ISpinableTransform
 
     public void StartSpin()
     {
-        photonView.RequestOwnership();
+        //photonView.RequestOwnership();
         StartCoroutine(_RotateRouletteBase());
     }
 

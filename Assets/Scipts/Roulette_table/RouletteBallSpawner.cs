@@ -14,23 +14,38 @@ public class RouletteBallSpawner : MonoBehaviourPun
 
     public void SpawnBall(int winNumber)
     {
-        photonView.RequestOwnership();
+        //photonView.RequestOwnership();
         if(_createdBallPrefab != null)
         {
             //
-            photonView.RPC("DestroyBall_RPC", RpcTarget.All);
+            //photonView.RPC("DestroyBall_RPC", RpcTarget.All);
+            DestroyBall();
         }
 
         if (BallSpawnPoints != null && BallSpawnPoints.Length > 0)
         {
             //
             int randomSpawnPoint = Random.Range(0, BallSpawnPoints.Length);
-            photonView.RPC("SpawnBall_RPC", RpcTarget.All, winNumber, randomSpawnPoint);
+            //photonView.RPC("SpawnBall_RPC", RpcTarget.All, winNumber, randomSpawnPoint);
+            SpawnBall(winNumber, randomSpawnPoint);
         }
         else
         {
             print("No spawn points!");
         }
+    }
+
+    private void DestroyBall()
+    {
+        Destroy(_createdBallPrefab);
+        _createdBallPrefab = null;
+    }
+
+    private void SpawnBall(int winNumber, int randSpPoint)
+    {
+        Vector3 spawnPos = BallSpawnPoints[randSpPoint].position;
+        _createdBallPrefab = Instantiate(BallPrefab, spawnPos, Quaternion.identity);
+        _createdBallPrefab.GetComponent<BallTrigger>().winingNumber = winNumber;
     }
 
     [PunRPC]

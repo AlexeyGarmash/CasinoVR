@@ -71318,7 +71318,8 @@ PrefabInstance:
       propertyPath: plyers.Array.data[1]
       value: 
       objectReference: {fileID: 1170222327}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2171686728485096119, guid: 573e65b08c7d9da489dd654c7c6d0555, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 573e65b08c7d9da489dd654c7c6d0555, type: 3}
 --- !u!1 &2090097506 stripped
 GameObject:
@@ -72671,12 +72672,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2090097505}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2090097605 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6497124074224089273, guid: 573e65b08c7d9da489dd654c7c6d0555,
-    type: 3}
-  m_PrefabInstance: {fileID: 2090097505}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2090097606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72697,28 +72692,6 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 0}
   viewIdField: 69
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &2090097608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2090097605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 0
-  OwnershipTransfer: 2
-  ObservedComponents:
-  - {fileID: 0}
-  viewIdField: 68
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!4 &2090097609 stripped
