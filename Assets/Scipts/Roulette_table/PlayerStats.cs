@@ -11,7 +11,7 @@ public class PlayerStats
 
     public int AllMoney;
 
-    public PlayerStats(string nick, int allMoney = 500000)
+    public PlayerStats(string nick, int allMoney = 1000)
     {
         PlayerNick = nick;
         AllMoney = allMoney;

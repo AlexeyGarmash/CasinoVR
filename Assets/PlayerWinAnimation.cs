@@ -20,8 +20,9 @@ public class PlayerWinAnimation : MonoBehaviour
     private void Start()
     {
         curves = GetComponentsInChildren<BezierCurve>();
-        
-        
+        //StartAnimation(1000);
+
+
     }
     List<GameObject> winChips;
 

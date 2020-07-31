@@ -21,7 +21,7 @@ public class PlayerPlace : MonoBehaviourPun
         ps = null;
         rouletteManager = GetComponentInParent<TableBetsManager>().rouletteEventManager;
         playerWinAnim = GetComponentInChildren<PlayerWinAnimation>();
-           sf = GetComponentInChildren<PlayerChipsField>();
+        sf = GetComponentInChildren<PlayerChipsField>();
     }
 
      private void OnTriggerStay(Collider other)
@@ -37,7 +37,7 @@ public class PlayerPlace : MonoBehaviourPun
             print("Button clikced ps == null");
             photonView?.RPC("TakePlace_RPC", RpcTarget.All, PhotonNetwork.LocalPlayer.NickName);
             ps = new PlayerStats(PhotonNetwork.LocalPlayer.NickName);
-            //PreparePlayerPlace();
+            PreparePlayerPlace();
         }
     }
 
@@ -49,7 +49,7 @@ public class PlayerPlace : MonoBehaviourPun
             print("Button clikced ps != null");
             photonView?.RPC("GoOutPlace_RPC", RpcTarget.All);
             ps = null;
-            //sf.ClearPlace();
+            sf.ClearStacks();
         }
     }
 
@@ -57,7 +57,7 @@ public class PlayerPlace : MonoBehaviourPun
     public void TakePlace_RPC(string nickname)
     {
         placeTaken = true;
-        ps = new PlayerStats(nickname);
+        ps = new PlayerStats(nickname, 1000);
         print("RPC TAKE PLACE!!!");
     }
 

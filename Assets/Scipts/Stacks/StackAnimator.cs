@@ -32,10 +32,10 @@ public class StackAnimator : MonoBehaviour
 
     public StackData stack;
 
-    private PlayerPlace pplace;
+    
     private void Start()
     {
-        pplace = GetComponentInParent<PlayerPlace>();
+       
         stack = GetComponent<StackData>();
     }
     IEnumerator MoveLastChips(float chipsDropSpeed, float chipsDropMult, float pause)
@@ -101,14 +101,14 @@ public class StackAnimator : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         EnabledColliders(true);
-        pplace.canLeave = true;
+       
 
 
     }
     IEnumerator MoveChip(float chipsDropSpeed, float chipsDropMult, GameObject chip)
     {
 
-        pplace.canLeave = false;
+      
         chip.SetActive(true);
 
 
