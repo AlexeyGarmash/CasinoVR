@@ -18,11 +18,12 @@ public class StackData : MonoBehaviour
     }
     public virtual void ClearData()
     {
+
+        animator.Clear();
         foreach (var chip in Objects)
             Destroy(chip);
 
-        Objects.Clear();
-        animator.Clear();
+        Objects.Clear();     
         playerName = "";      
 
     }

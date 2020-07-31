@@ -334,7 +334,7 @@ public class OVRGrabberCustom : MonoBehaviour
         foreach (OVRGrabbableCustom grabbable in m_grabCandidates.Keys)
         {
 
-            Debug.Log(Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position));
+            //Debug.Log(Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position));
             if (Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position) > MaxDistance)
             {
                 if(grabbable.gameObject.GetComponent<GrabbableChip>() != null)

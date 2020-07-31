@@ -43,11 +43,6 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
         }
     }
 
-    //private void RouletteWheelManager_OnRouletteWheelFinish(WheelCellData obj)
-    //{
-    //    CheckAndNotifyAllCells(obj);
-    //}
-
     private void CheckAndNotifyAllCells(WheelCellData obj)
     {
 
@@ -60,11 +55,16 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
                 {
                     foreach (var betData in tCell.BetsData)
                     {
-                        print(string.Format("Player {0} win {1}", betData.PlayerStat.PlayerNick, betData.BetValue * tCell.WinKoeff));
+                        
+                      
                         if (player.ps.PlayerNick.Equals(betData.PlayerStat.PlayerNick))
                         {
-                            win += (tCell.WinKoeff * betData.BetValue) - betData.BetValue;
+                            var localWin = (tCell.WinKoeff * betData.BetValue) - betData.BetValue;
+                            win += localWin;
                             print(string.Format("Player {0} win {1}", betData.PlayerStat.PlayerNick, betData.BetValue * tCell.WinKoeff));
+                            tCell.BetsData.Remove(betData);
+                            break;
+
 
                         }
 
@@ -72,18 +72,23 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
                 }
                 else
                 {
-                    foreach (var betData in tCell.BetsData)
-                    {
-                        if (player.ps.PlayerNick.Equals(betData.PlayerStat.PlayerNick))
-                        {
-                            win -= betData.BetValue;
-                            print(string.Format("Player {0} Lose {1}", betData.PlayerStat.PlayerNick, betData.BetValue));
-                        }
-                    }
+                    //foreach (var betData in tCell.BetsData)
+                    //{
+                    //    if (player.ps.PlayerNick.Equals(betData.PlayerStat.PlayerNick))
+                    //    {
+                    //        win -= betData.BetValue;
+                    //        print(string.Format("Player {0} Lose {1}", betData.PlayerStat.PlayerNick, betData.BetValue));
+                    //    }
+                    //}
                 }
             }
 
-            player.ps.AllMoney += win;
+            //player.ps.AllMoney += win;
+            if (win > 0)
+            {
+                Debug.Log("StartAnim win:" + win);
+                player.playerWinAnim.StartAnimation(win);
+            }
         }
 
 

@@ -17,13 +17,14 @@ public class PlayerChipsField : ChipsField
     
     [SerializeField]
     private Transform SpawnPos;
-
+ 
     private void Start()
     {      
         SetPrefabs();
+       
     }
 
-    
+
     private void SetPrefabs()
     {
         yellowChipPrefab = ChipUtils.Instance.yellowChipPrefab;
@@ -35,42 +36,37 @@ public class PlayerChipsField : ChipsField
     }
 
 
+    private void InstatiateChip(GameObject prefab, Chips chipsCost, ref int money)   
+    {
+        Instantiate(prefab, SpawnPos);
+        money -= (int)chipsCost;
+    }
     public void InstantiateToStackWithColor(Chips chipsCost, ref int money)
     {
-       
-        GameObject prefab = null;
+             
         switch (chipsCost)
         {
             case Chips.BLACK:
-                prefab = blackChipPrefab;
+                
+                InstatiateChip(blackChipPrefab, Chips.BLACK, ref money);
                 break;
             case Chips.BLUE:
-                prefab = blueChipPrefab;
+                InstatiateChip(blueChipPrefab, Chips.BLUE, ref money);
                 break;
             case Chips.GREEN:
-                prefab = greenChipPrefab;
+                InstatiateChip(greenChipPrefab, Chips.GREEN, ref money);
                 break;
             case Chips.PURPLE:
-                prefab = purpleChipPrefab;
+                InstatiateChip(purpleChipPrefab, Chips.PURPLE, ref money);
                 break;
             case Chips.RED:
-                prefab = redChipPrefab;
+                InstatiateChip(redChipPrefab, Chips.RED, ref money);
                 break;
             case Chips.YELLOW:
-                prefab = yellowChipPrefab;
+                InstatiateChip(yellowChipPrefab, Chips.YELLOW, ref money);
                 break;
-        }
-        if (prefab != null)
-        {
-             Instantiate(prefab,
-                      new Vector3(
-                          SpawnPos.position.x,
-                          SpawnPos.position.y,
-                          SpawnPos.position.z
-                      ), new Quaternion(0, 0, 0, 0)
-                  );
-        }
-        money -= (int)chipsCost;
+        }       
+       
     }
       
 }

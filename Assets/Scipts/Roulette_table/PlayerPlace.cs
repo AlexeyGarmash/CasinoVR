@@ -9,15 +9,16 @@ public class PlayerPlace : MonoBehaviour
 {
     public PlayerStats ps;
     PlayerChipsField sf;
+    public PlayerWinAnimation playerWinAnim;
 
     EventManager<ROULETTE_EVENT> rouletteManager;
 
-    
+    public bool canLeave;
     private void Start()
     {
         rouletteManager = GetComponentInParent<TableBetsManager>().rouletteEventManager;
-     
-        sf = GetComponentInChildren<PlayerChipsField>();
+        playerWinAnim = GetComponentInChildren<PlayerWinAnimation>();
+           sf = GetComponentInChildren<PlayerChipsField>();
     }
 
      private void OnTriggerStay(Collider other)
@@ -33,18 +34,20 @@ public class PlayerPlace : MonoBehaviour
                     ps = other.gameObject.GetComponent<PlayerStats>();
                     PreparePlayerPlace();
                 }
-                else {
+                if(ps != null && canLeave) {
                     ps = null;
-                    //sf.ClearPlace();
+                    sf.ClearStacks();
 
                 }
             }
         }
     }
 
+
     public void PreparePlayerPlace()
     {
         Debug.Log(sf);
+        
         int money = ps.AllMoney;
         if (money > 0)
         {
@@ -83,6 +86,9 @@ public class PlayerPlace : MonoBehaviour
                
             }
         }
+       
+
+        
     }
 
    

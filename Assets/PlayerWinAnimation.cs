@@ -10,7 +10,7 @@ public class PlayerWinAnimation : MonoBehaviour
     BezierCurve[] curves;
 
     [SerializeField]
-    float speed = 5;
+    float speed = 0.1f;
     [SerializeField]
     float MinSpeed = 1;
 
@@ -20,11 +20,16 @@ public class PlayerWinAnimation : MonoBehaviour
     private void Start()
     {
         curves = GetComponentsInChildren<BezierCurve>();
-        CreateWinChips(10000);
-
-        StartCoroutine(MoveChipWithCurve());
+        
+        
     }
     List<GameObject> winChips;
+
+    public void StartAnimation(int money)
+    {
+        CreateWinChips(money);
+        StartCoroutine(MoveChipWithCurve());
+    }
     private void CreateWinChips(int money)
     {
         winChips = new List<GameObject>();
@@ -90,16 +95,13 @@ public class PlayerWinAnimation : MonoBehaviour
             
             StartCoroutine(MoveOneChip(curvePurpel, chip));
             yield return new WaitForSeconds(0.1f);
-
-
-           
-
             
         }
 
         yield return null;
 
-     }
+    }
+
     IEnumerator MoveOneChip(BezierCurve curvePurpel, GameObject chip)
     {
         var localSpeed = speed;
@@ -111,12 +113,13 @@ public class PlayerWinAnimation : MonoBehaviour
         chip.GetComponent<Rigidbody>().isKinematic = true;
         while (t != 1)
         {
-            localSpeed -= speedSlowingStep;
+            //localSpeed -= speedSlowingStep;
             if (t > 0.95)
                 t = 1;
             chip.transform.position = curvePurpel.GetPointAt(t);
+            chip.transform.Rotate(Random.Range(10f, 30f), Random.Range(10f, 30f), Random.Range(10f, 30f));
             yield return null;
-            t += Time.deltaTime * speed;
+            t += Time.deltaTime * localSpeed;
             if (t > 0.95)
                 t = 1;
         }

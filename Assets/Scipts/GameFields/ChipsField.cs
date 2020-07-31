@@ -50,18 +50,26 @@ public class ChipsField : AbstractField
         var list = new List<StackData>();
 
         for (var i = 0; i < Stacks.Length; i++)
-
-            if (Stacks[i].Objects.Count == 0 || Stacks[i].Objects[0].GetComponent<ChipData>().Cost == data.Cost && maxChipsOnField != Stacks[i].Objects.Count)
+            if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == data.Cost && maxChipsOnField != Stacks[i].Objects.Count)
                 list.Add(Stacks[i]);
 
+        if(list.Count == 0)
+            for (var i = 0; i < Stacks.Length; i++)
+                if(Stacks[i].Objects.Count == 0)
+                    list.Add(Stacks[i]);
 
         if (list.Count == 0)
         {
             maxChipsOnField += 1;
-            for (var i = 0; i < Stacks.Length; i++)
 
-                if (Stacks[i].Objects.Count == 0 || Stacks[i].Objects[0].GetComponent<ChipData>().Cost == data.Cost && maxChipsOnField != Stacks[i].Objects.Count)
+            for (var i = 0; i < Stacks.Length; i++)
+                if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == data.Cost && maxChipsOnField != Stacks[i].Objects.Count)
                     list.Add(Stacks[i]);
+
+            if (list.Count == 0)
+                for (var i = 0; i < Stacks.Length; i++)
+                    if (Stacks[i].Objects.Count == 0)
+                        list.Add(Stacks[i]);
         }
 
         return list;

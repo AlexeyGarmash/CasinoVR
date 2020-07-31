@@ -14,77 +14,101 @@ public class StackAnimator : MonoBehaviour
 
     [SerializeField]
     public const float pauseBeetwenChips = 0.1f;
+
+
+    [SerializeField]
+    public float yOffsetForAnim = 0.2f;
+
+    [SerializeField]
+    public float delayForCollidersEnabled = 1f;
+
     public float currentY;
     public float lastY;
 
     public float xOffset = 0.004f;
     public float zOffset = 0.004f;
 
-    public float yOffset = 0.0073f;
-
-
-
-    public bool IsMoving = false;
+    public float yOffset = 0.0073f; 
 
     public StackData stack;
 
+    private PlayerPlace pplace;
     private void Start()
     {
+        pplace = GetComponentInParent<PlayerPlace>();
         stack = GetComponent<StackData>();
     }
-    IEnumerator MoveLastChips(float chipsDropSpeed, float chipsDropMult, float pause, List<GameObject> Objects)
+    IEnumerator MoveLastChips(float chipsDropSpeed, float chipsDropMult, float pause)
     {
-        IsMoving = true;
-        currentY = lastY;
-
-        //for (var i = 0; i < currentObjects.Count; i++)
-        //   currentObjects[i].GetComponent<Collider>().enabled = false;
-
-        for (var i = 0; i < currentObjects.Count; i++)
+        EnabledColliders(false);
+        bool haveUnactiveObjects = true;
+        
+        while (haveUnactiveObjects)
         {
+            haveUnactiveObjects = false;
+            for (var i = 0; i < currentObjects.Count; i++)
+            {
+                if (!currentObjects[i].activeSelf)
+                {
+                    stack.StartCoroutine(
+                            MoveChip(chipsDropSpeed, chipsDropMult, currentObjects[i])
+                        );
+                    haveUnactiveObjects = true;
+                    yield return new WaitForSeconds(pause);
+                }
+            }
+            
+        }
 
-            stack.StartCoroutine(
-                    MoveChip(chipsDropSpeed, chipsDropMult, currentObjects[i])
-                );
-            yield return new WaitForSeconds(pause);
+        StartCoroutine(WaitChipForBoxEnabled(delayForCollidersEnabled));
+        currentObjects.Clear();
+        prevMoveLastChips = null;
+
+
+
+    }
+
+    private void EnabledColliders(bool isEnabled)
+    {
+        foreach (GameObject chip in stack.Objects)
+        {
+            var GrabbableChip = chip.GetComponent<Collider>();
+            if (GrabbableChip != null)
+                GrabbableChip.enabled = isEnabled;
+
 
         }
-        //for (var i = 0; i < currentObjects.Count; i++)
-        //    currentObjects[i].GetComponent<Collider>().enabled = true;
-
-        lastY = currentY;
-        IsMoving = false;
-        currentObjects.Clear();
     }
     List<GameObject> currentObjects = new List<GameObject>();
 
-    IEnumerator WaitForLastChips(GameObject chip)
-    {
-        chip.SetActive(false);
-        currentObjects.Add(chip);
+    Coroutine prevMoveLastChips;
 
-        yield return new WaitForSeconds(0.2f);
-
-        while (!IsMoving)
-        {
-            UpdateStackWithAnim();
-        }
-
-
-    }
     public void StartAnim(GameObject chip)
     {
-        StopAllCoroutines();
-        StartCoroutine(
-                WaitForLastChips(chip)
-            );
+        //EnabledColliders(false);
+        chip.SetActive(false);
+        currentObjects.Add(chip);
+        chip.GetComponent<Collider>().enabled = false;
+
+
+        if (prevMoveLastChips == null)
+        {
+            prevMoveLastChips = StartCoroutine(MoveLastChips(chipsDropSpeed, chipsDropMult, pauseBeetwenChips));
+        }       
     }
 
+    IEnumerator WaitChipForBoxEnabled(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        EnabledColliders(true);
+        pplace.canLeave = true;
 
+
+    }
     IEnumerator MoveChip(float chipsDropSpeed, float chipsDropMult, GameObject chip)
     {
 
-
+        pplace.canLeave = false;
         chip.SetActive(true);
 
 
@@ -102,7 +126,7 @@ public class StackAnimator : MonoBehaviour
                     pos.z + currOffsetZ);
         var End = new Vector3(
                     pos.x + currOffsetX,
-                    transform.position.y + currentY + 0.2f,
+                    transform.position.y + currentY + yOffsetForAnim,
                      pos.z + currOffsetZ);
 
         var t = chipsDropSpeed * Time.deltaTime;
@@ -121,21 +145,13 @@ public class StackAnimator : MonoBehaviour
             t += chipsDropSpeed * Time.deltaTime;
         }
 
-
+              
         yield return null;
 
 
     }
 
 
-
-
-    private void UpdateStackWithAnim()
-    {
-
-        StopAllCoroutines();
-        StartCoroutine(MoveLastChips(chipsDropSpeed, chipsDropMult, pauseBeetwenChips, currentObjects));
-    }
 
     public void UpdateStackInstantly()
     {
@@ -163,12 +179,13 @@ public class StackAnimator : MonoBehaviour
             currentY += yOffset;
         }
 
-        lastY = currentY;
+        //lastY = currentY;
 
     }
 
     public void Clear()
     {
+        StopAllCoroutines();
         currentY = 0;
         lastY = 0;
     }
