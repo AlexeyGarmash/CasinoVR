@@ -69,12 +69,17 @@ public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
 
             if (chip != null && tableCell != null && bettingController == null)
             {
+                chip.player = PhotonNetwork.LocalPlayer.NickName;
                 var grabbadBy = other.gameObject.GetComponent<GrabbableChip>().grabbedBy;
-                if(grabbadBy == null)
-                    if (StackUtils.Instance.MagnetizeObject(other.gameObject, chip.player, yOffset, BetStacks))
+                if (grabbadBy == null)
+                {
+                    var chipPhotonView = chip.GetComponent<PhotonView>();
+
+                    if (chipPhotonView != null && chipPhotonView.IsMine && StackUtils.Instance.MagnetizeObject(other.gameObject, chip.player, yOffset, BetStacks))
                     {
                         tableCell.ReceiveBetData(new BetData(new PlayerStats(PhotonNetwork.LocalPlayer.NickName), (int)chip.Cost));
                     }
+                }
             }
         }
     }
@@ -88,11 +93,15 @@ public class BettingField : MonoBehaviour, IListener<ROULETTE_EVENT>
 
             if (chip != null && tableCell != null)
             {
+                chip.player = PhotonNetwork.LocalPlayer.NickName;
                 var grabbadBy = other.gameObject.GetComponent<GrabbableChip>().grabbedBy;
                 if (grabbadBy != null)
-                    if (StackUtils.Instance.ExtractionObject(other.gameObject, yOffset, BetStacks))
                 {
-                    tableCell.RemoveBetData(new BetData(new PlayerStats(chip.player), (int)chip.Cost));
+                    var chipPhotonView = chip.GetComponent<PhotonView>();
+                    if (chipPhotonView != null && chipPhotonView.IsMine && StackUtils.Instance.ExtractionObject(other.gameObject, yOffset, BetStacks))
+                    {
+                        tableCell.RemoveBetData(new BetData(new PlayerStats(chip.player), (int)chip.Cost));
+                    }
                 }
             }
         }
