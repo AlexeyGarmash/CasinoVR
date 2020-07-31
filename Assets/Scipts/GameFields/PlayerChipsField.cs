@@ -48,12 +48,12 @@ public class PlayerChipsField : ChipsField
     //}
 
     [PunRPC]
-    private void InstantiateChip_RPC(byte[] prefab, int chipCost, int money)
+    private void InstantiateChip_RPC(byte[] prefab)
     {
         var convertedPrefab = prefab.FromByteArray() as GameObject;  
 
         Instantiate(convertedPrefab, SpawnPos);
-        money -= chipCost;
+      
     }
     public void InstantiateToStackWithColor(Chips chipsCost, ref int money)
     {
@@ -62,26 +62,28 @@ public class PlayerChipsField : ChipsField
         {
             case Chips.BLACK:
 
-                view.RPC("InstantiateChip_RPC", RpcTarget.All, blackChipPrefab.ToByteArray(), (int)chipsCost);
+                view.RPC("InstantiateChip_RPC", RpcTarget.All, blackChipPrefab.ToByteArray());
                 
                 break;
             case Chips.BLUE:
-                view.RPC("InstantiateChip_RPC", RpcTarget.All, blueChipPrefab.ToByteArray(), (int)chipsCost);
+                view.RPC("InstantiateChip_RPC", RpcTarget.All, blueChipPrefab.ToByteArray());
                 break;
             case Chips.GREEN:
-                view.RPC("InstantiateChip_RPC", RpcTarget.All, greenChipPrefab.ToByteArray(), (int)chipsCost);
+                view.RPC("InstantiateChip_RPC", RpcTarget.All, greenChipPrefab.ToByteArray());
                 break;
             case Chips.PURPLE:
-                view.RPC("InstantiateChip_RPC", RpcTarget.All, purpleChipPrefab.ToByteArray(), (int)chipsCost);
+                view.RPC("InstantiateChip_RPC", RpcTarget.All, purpleChipPrefab.ToByteArray());
                 break;
             case Chips.RED:
-                view.RPC("InstantiateChip_RPC", RpcTarget.All, redChipPrefab.ToByteArray(), (int)chipsCost);
+                view.RPC("InstantiateChip_RPC", RpcTarget.All, redChipPrefab.ToByteArray());
                 break;
             case Chips.YELLOW:
-                view.RPC("InstantiateChip_RPC", RpcTarget.All, yellowChipPrefab.ToByteArray(), (int)chipsCost);
+                view.RPC("InstantiateChip_RPC", RpcTarget.All, yellowChipPrefab.ToByteArray());
                 break;
-        }       
-       
+        }
+
+        money -= (int)chipsCost;
+
     }
       
 }
