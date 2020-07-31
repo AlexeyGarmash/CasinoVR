@@ -33,23 +33,23 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - AddNewBet_RPC
   - ClickRpc
+  - DestroyBall_RPC
   - DestroyRpc
   - DestroySpaceship
   - Fire
-  - RespawnSpaceship
-  - AddNewBet_RPC
-  - UpdateExistBet_RPC
-  - ResetBets_RPC
-  - RemoveBetValues_RPC
-  - StartSpin_RPC
-  - SpawnBall_RPC
-  - DestroyBall_RPC
-  - TakePlace_RPC
   - GoOutPlace_RPC
-  - ResetBetsByNickname_RPC
-  - LeaveTable_RPC
   - JoinTable_RPC
+  - LeaveTable_RPC
+  - RemoveBetValues_RPC
+  - ResetBets_RPC
+  - ResetBetsByNickname_RPC
+  - RespawnSpaceship
+  - SpawnBall_RPC
+  - StartSpin_RPC
+  - TakePlace_RPC
+  - UpdateExistBet_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
