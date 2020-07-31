@@ -106,6 +106,307 @@ MonoBehaviour:
   - {fileID: 1100099778}
   - {fileID: 1328578631}
   - {fileID: 1496679479}
+--- !u!1 &229832784
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 229832785}
+  - component: {fileID: 229832787}
+  - component: {fileID: 229832786}
+  m_Layer: 0
+  m_Name: ImageProgress
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &229832785
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229832784}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1562259510}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -0}
+  m_SizeDelta: {x: 5.7302523, y: 5.72526}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &229832787
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229832784}
+  m_CullTransparentMesh: 0
+--- !u!114 &229832786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 229832784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b3ca90f9149f68a469cd0303c1bd5e66, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 0
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &238643124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 238643125}
+  - component: {fileID: 238643127}
+  - component: {fileID: 238643126}
+  m_Layer: 0
+  m_Name: ImageReady
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &238643125
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238643124}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1562259510}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &238643127
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238643124}
+  m_CullTransparentMesh: 0
+--- !u!114 &238643126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238643124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 4c4bbe8030e487349a0a66c5bb7d31ec, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!1 &359943982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 359943983}
+  - component: {fileID: 359943985}
+  - component: {fileID: 359943984}
+  m_Layer: 0
+  m_Name: TextMessageToPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &359943983
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359943982}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1557585927}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &359943985
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359943982}
+  m_CullTransparentMesh: 0
+--- !u!114 &359943984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359943982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: ............................
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 20
+  m_fontSizeBase: 20
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_textAlignment: 514
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 359943984}
+    characterCount: 28
+    spriteCount: 0
+    spaceCount: 0
+    wordCount: 1
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &370374930
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,12 +560,334 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
   zOffset: 0.004
   yOffset: 0.0073
   stack: {fileID: 0}
+--- !u!1 &465972806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 465972807}
+  - component: {fileID: 465972812}
+  - component: {fileID: 465972811}
+  - component: {fileID: 465972810}
+  - component: {fileID: 465972809}
+  - component: {fileID: 465972808}
+  m_Layer: 0
+  m_Name: ReadyButton (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &465972807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465972806}
+  m_LocalRotation: {x: 0.29944488, y: 0.00035025494, z: 0.0027399398, w: 0.95410955}
+  m_LocalPosition: {x: -0.266, y: -0.659, z: 1.084}
+  m_LocalScale: {x: 3.0582075, y: 3.0582078, z: 3.0582075}
+  m_Children:
+  - {fileID: 1562259510}
+  m_Father: {fileID: 3676266040715018496}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 34.73, y: 0, z: 0}
+--- !u!33 &465972812
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465972806}
+  m_Mesh: {fileID: 4300012, guid: dcfd65c769267f546a29c202e9287e4b, type: 3}
+--- !u!23 &465972811
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465972806}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 70fd34122afdf45498daf8dae62662ce, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!65 &465972810
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465972806}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.046368085, y: 0.04613188, z: 0.0104941325}
+  m_Center: {x: 0.000000011175871, y: 0.000027868897, z: 0.0010924216}
+--- !u!114 &465972809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465972806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758a6b5ccd280af48b26bf026e0b719f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onLongClickTalePlace:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7134512836217752443}
+        m_MethodName: TakePlace
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onLongClickLeavePlace:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7134512836217752443}
+        m_MethodName: GoOutFromPlace
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5596634738321917635}
+        m_MethodName: LeaveTable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _holdTime: 1
+  _progressImage: {fileID: 229832786}
+  _textReady: {fileID: 1754543005}
+  _imageReady: {fileID: 238643126}
+  _readyTexture: {fileID: 2800000, guid: cacb5dbd019f9394699a8bdd2801b504, type: 3}
+  _notReadyTexture: {fileID: 2800000, guid: 4c4bbe8030e487349a0a66c5bb7d31ec, type: 3}
+--- !u!114 &465972808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465972806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 2
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!1 &509781318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 509781319}
+  - component: {fileID: 509781321}
+  - component: {fileID: 509781320}
+  m_Layer: 0
+  m_Name: ImageReady
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &509781319
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509781318}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1028606892}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &509781321
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509781318}
+  m_CullTransparentMesh: 0
+--- !u!114 &509781320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509781318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 98da384279f4e69438e887cd00d5d288, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!1 &572940138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 572940139}
+  - component: {fileID: 572940141}
+  - component: {fileID: 572940140}
+  m_Layer: 0
+  m_Name: ImageProgress
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &572940139
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572940138}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1028606892}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -0}
+  m_SizeDelta: {x: 5.7302523, y: 5.72526}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &572940141
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572940138}
+  m_CullTransparentMesh: 0
+--- !u!114 &572940140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572940138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b3ca90f9149f68a469cd0303c1bd5e66, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 0
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &583343625
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,6 +1022,107 @@ MonoBehaviour:
   - {fileID: 1769236026}
   - {fileID: 370374932}
   - {fileID: 406610001}
+--- !u!1 &1028606891
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1028606892}
+  - component: {fileID: 1028606895}
+  - component: {fileID: 1028606894}
+  - component: {fileID: 1028606893}
+  m_Layer: 0
+  m_Name: CanvasReady
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1028606892
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028606891}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.005}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_Children:
+  - {fileID: 572940139}
+  - {fileID: 509781319}
+  - {fileID: 2116844999}
+  m_Father: {fileID: 1546838338}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.00011, y: 0.00009}
+  m_SizeDelta: {x: 4.4936914, y: 4.4897766}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &1028606895
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028606891}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &1028606894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028606891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+--- !u!114 &1028606893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028606891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1077999633
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,6 +1182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -700,6 +1426,122 @@ MonoBehaviour:
   handleStyle: 0
   _handle1: {x: 1.349233, y: -0.16586503, z: -0.98904854}
   _handle2: {x: -1.349233, y: 0.16586503, z: 0.98904854}
+--- !u!1 &1453297479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1453297480}
+  - component: {fileID: 1453297484}
+  - component: {fileID: 1453297483}
+  - component: {fileID: 1453297482}
+  - component: {fileID: 1453297481}
+  m_Layer: 0
+  m_Name: CanvasPlayerInformer (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1453297480
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453297479}
+  m_LocalRotation: {x: -0.00048346465, y: 0.99999565, z: 0.001035606, w: -0.0027195972}
+  m_LocalPosition: {x: 0, y: 0, z: -0.59}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_Children:
+  - {fileID: 1557585927}
+  m_Father: {fileID: 464494934697163320}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.103, y: 1.764}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &1453297484
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453297479}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &1453297483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453297479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+--- !u!114 &1453297482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453297479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &1453297481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1453297479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9ca12daa65f9945be98ea1913ee7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textMessage: {fileID: 359943984}
+  _confettiSpawnPoint: {fileID: 0}
+  _confettiPrefab: {fileID: 8588372562746167457, guid: b5a869ec56ff8c449a9b38c910475150,
+    type: 3}
 --- !u!1 &1473130924
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,6 +1636,486 @@ MonoBehaviour:
   handleStyle: 0
   _handle1: {x: 0.021278111, y: 0.8318355, z: 0.024615299}
   _handle2: {x: -0.021278111, y: -0.8318355, z: -0.024615299}
+--- !u!1 &1546838337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1546838338}
+  - component: {fileID: 1546838343}
+  - component: {fileID: 1546838342}
+  - component: {fileID: 1546838341}
+  - component: {fileID: 1546838340}
+  - component: {fileID: 1546838339}
+  m_Layer: 0
+  m_Name: StartButton (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &1546838338
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546838337}
+  m_LocalRotation: {x: -0.7063714, y: 0.0015811846, z: 0.002264907, w: 0.70783603}
+  m_LocalPosition: {x: 0.785, y: 1.269, z: 0.268}
+  m_LocalScale: {x: 6.192452, y: 6.1924534, z: 6.192454}
+  m_Children:
+  - {fileID: 1028606892}
+  m_Father: {fileID: 464494934697163320}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!33 &1546838343
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546838337}
+  m_Mesh: {fileID: 4300012, guid: dcfd65c769267f546a29c202e9287e4b, type: 3}
+--- !u!23 &1546838342
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546838337}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 70fd34122afdf45498daf8dae62662ce, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!65 &1546838341
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546838337}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.046368085, y: 0.04613188, z: 0.0104941325}
+  m_Center: {x: 0.000000011175871, y: 0.000027868897, z: 0.0010924216}
+--- !u!114 &1546838340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546838337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1546838339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546838337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b7410a91b875254a87e65e02e3bcf51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onLongClickStartRoulette:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5596634738321917635}
+        m_MethodName: StartSpinAllParts
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _holdTime: 1.8
+  _progressImage: {fileID: 572940140}
+--- !u!1 &1557585926
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1557585927}
+  - component: {fileID: 1557585929}
+  - component: {fileID: 1557585928}
+  m_Layer: 0
+  m_Name: Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1557585927
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557585926}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 359943983}
+  m_Father: {fileID: 1453297480}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1557585929
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557585926}
+  m_CullTransparentMesh: 0
+--- !u!114 &1557585928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557585926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.56078434}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1562259509
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1562259510}
+  - component: {fileID: 1562259513}
+  - component: {fileID: 1562259512}
+  - component: {fileID: 1562259511}
+  m_Layer: 0
+  m_Name: CanvasReady
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1562259510
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562259509}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.005}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_Children:
+  - {fileID: 229832785}
+  - {fileID: 238643125}
+  - {fileID: 1754543004}
+  m_Father: {fileID: 465972807}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.00011, y: 0.00009}
+  m_SizeDelta: {x: 4.4936914, y: 4.4897766}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &1562259513
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562259509}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &1562259512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562259509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+--- !u!114 &1562259511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562259509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!1 &1754543003
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1754543004}
+  - component: {fileID: 1754543006}
+  - component: {fileID: 1754543005}
+  m_Layer: 0
+  m_Name: TextReady
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1754543004
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754543003}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00000013323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1562259510}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.00000015997, y: -2.51}
+  m_SizeDelta: {x: 5, y: 1.8214397}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1754543006
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754543003}
+  m_CullTransparentMesh: 0
+--- !u!114 &1754543005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754543003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 'Not ready
+
+'
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 0.7
+  m_fontSizeBase: 0.7
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_textAlignment: 514
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 1754543005}
+    characterCount: 10
+    spriteCount: 0
+    spaceCount: 2
+    wordCount: 2
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1769236025
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,6 +2322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -1053,6 +2377,162 @@ MonoBehaviour:
   handleStyle: 0
   _handle1: {x: 1.349233, y: -0.16586503, z: -0.98904854}
   _handle2: {x: -1.349233, y: 0.16586503, z: 0.98904854}
+--- !u!1 &2116844998
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2116844999}
+  - component: {fileID: 2116845001}
+  - component: {fileID: 2116845000}
+  m_Layer: 0
+  m_Name: TextReady
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2116844999
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116844998}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00000013323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1028606892}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.00000015997, y: -2.51}
+  m_SizeDelta: {x: 5, y: 1.8214397}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2116845001
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116844998}
+  m_CullTransparentMesh: 0
+--- !u!114 &2116845000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116844998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 0.7
+  m_fontSizeBase: 0.7
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_textAlignment: 514
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 2116845000}
+    characterCount: 0
+    spriteCount: 0
+    spaceCount: 0
+    wordCount: 0
+    linkCount: 0
+    lineCount: 0
+    pageCount: 0
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &20346043040404260
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,6 +2792,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -1498,6 +2980,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -1684,6 +3168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -1749,6 +3235,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -1889,6 +3377,7 @@ GameObject:
   - component: {fileID: 5622754455661451932}
   - component: {fileID: 5219316394451432449}
   - component: {fileID: 497162315586147483}
+  - component: {fileID: 3676266042209746976}
   m_Layer: 0
   m_Name: Betting Field (15)
   m_TagString: Untagged
@@ -1963,8 +3452,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 15
   Color: 1
+--- !u!114 &3676266042209746976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532279661932175723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &536418111107811426
 GameObject:
   m_ObjectHideFlags: 0
@@ -2054,6 +3566,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -2119,6 +3633,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -2198,6 +3714,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -2263,6 +3781,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -2328,6 +3848,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -2347,6 +3869,7 @@ GameObject:
   - component: {fileID: 6815684150611372606}
   - component: {fileID: 4875163748534299469}
   - component: {fileID: 5868877267513390572}
+  - component: {fileID: 3676266042209746993}
   m_Layer: 0
   m_Name: Betting Field (33)
   m_TagString: Untagged
@@ -2421,8 +3944,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 33
   Color: 1
+--- !u!114 &3676266042209746993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676980350661126307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &703094861722298085
 GameObject:
   m_ObjectHideFlags: 0
@@ -2482,6 +4028,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -2547,6 +4095,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -2566,6 +4116,7 @@ GameObject:
   - component: {fileID: 93547553379861209}
   - component: {fileID: 2682772187140156865}
   - component: {fileID: 8394202172977070153}
+  - component: {fileID: 3676266042209746980}
   m_Layer: 0
   m_Name: Betting Field (20)
   m_TagString: Untagged
@@ -2640,8 +4191,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 20
   Color: 1
+--- !u!114 &3676266042209746980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714670358928246392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &731886629186411479
 GameObject:
   m_ObjectHideFlags: 0
@@ -2701,6 +4275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -2887,6 +4463,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -2906,6 +4484,7 @@ GameObject:
   - component: {fileID: 6065418461977370332}
   - component: {fileID: 1065930155218369550}
   - component: {fileID: 4688624470330221229}
+  - component: {fileID: 3676266042209746971}
   m_Layer: 0
   m_Name: Betting Field (11)
   m_TagString: Untagged
@@ -2980,8 +4559,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 11
   Color: 1
+--- !u!114 &3676266042209746971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814213566278625132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &830015907561783641
 GameObject:
   m_ObjectHideFlags: 0
@@ -2995,6 +4597,7 @@ GameObject:
   - component: {fileID: 5328190869028698239}
   - component: {fileID: 8322993472578994183}
   - component: {fileID: 7357739273317179991}
+  - component: {fileID: 3676266042209746978}
   m_Layer: 0
   m_Name: Betting Field (16)
   m_TagString: Untagged
@@ -3069,8 +4672,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 16
   Color: 0
+--- !u!114 &3676266042209746978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830015907561783641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &845933228182905124
 GameObject:
   m_ObjectHideFlags: 0
@@ -3130,6 +4756,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -3195,6 +4823,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -3212,6 +4842,7 @@ GameObject:
   - component: {fileID: 8244656309766025098}
   - component: {fileID: 7134512836217752443}
   - component: {fileID: 7317736680755533945}
+  - component: {fileID: 3676266042209747001}
   m_Layer: 0
   m_Name: PlayerPos1
   m_TagString: Player
@@ -3251,8 +4882,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 652e86df05fc373478fdc12e5e4eeca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ps: {fileID: 0}
+  ps:
+    PlayerNick: 
+    AllMoney: 0
   playerWinAnim: {fileID: 0}
+  canLeave: 0
 --- !u!65 &7317736680755533945
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3266,6 +4900,28 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.4736067, y: 0.96746975, z: 1.0340892}
   m_Center: {x: -0.0046051145, y: -1.0793568, z: 0.5695116}
+--- !u!114 &3676266042209747001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904859847774163655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &909507779426161618
 GameObject:
   m_ObjectHideFlags: 0
@@ -3325,6 +4981,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -3390,6 +5048,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -3530,6 +5190,7 @@ GameObject:
   - component: {fileID: 4066852202926814878}
   - component: {fileID: 810862651635082657}
   - component: {fileID: 90477152009150053}
+  - component: {fileID: 3676266042209746975}
   m_Layer: 0
   m_Name: Betting Field (13)
   m_TagString: Untagged
@@ -3604,8 +5265,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 13
   Color: 1
+--- !u!114 &3676266042209746975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969312461206561292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1011505880402191413
 GameObject:
   m_ObjectHideFlags: 0
@@ -3665,6 +5349,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -3700,6 +5386,8 @@ Transform:
   m_Children:
   - {fileID: 7579227840630465994}
   - {fileID: 3676266042206026922}
+  - {fileID: 1453297480}
+  - {fileID: 1546838338}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -0.119, y: -0.312, z: -0.055000003}
@@ -3762,6 +5450,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -3878,6 +5568,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -4018,6 +5710,7 @@ GameObject:
   - component: {fileID: 4826273975718670419}
   - component: {fileID: 8727487151941028396}
   - component: {fileID: 27615639926149648}
+  - component: {fileID: 3676266042209746988}
   m_Layer: 0
   m_Name: Betting Field (25)
   m_TagString: Untagged
@@ -4092,8 +5785,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 25
   Color: 0
+--- !u!114 &3676266042209746988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211210787983090405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1261951314578286360
 GameObject:
   m_ObjectHideFlags: 0
@@ -4153,6 +5869,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -4449,6 +6167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -4514,6 +6234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -4579,6 +6301,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -4644,6 +6368,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -4709,6 +6435,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -4774,6 +6502,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -4839,6 +6569,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -4904,6 +6636,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -4923,6 +6657,7 @@ GameObject:
   - component: {fileID: 3389511454378400695}
   - component: {fileID: 3551422568074588844}
   - component: {fileID: 2910868450549095105}
+  - component: {fileID: 3676266042209747000}
   m_Layer: 0
   m_Name: Betting Field (2 to 1 left)
   m_TagString: Untagged
@@ -4997,7 +6732,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 3
+  _showBetsData: []
   RowNum: 1
+--- !u!114 &3676266042209747000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641889413776500467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1652197230513117074
 GameObject:
   m_ObjectHideFlags: 0
@@ -5057,6 +6815,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -5076,6 +6836,7 @@ GameObject:
   - component: {fileID: 3877677359864650716}
   - component: {fileID: 2646417977235941890}
   - component: {fileID: 7943849259436564190}
+  - component: {fileID: 3676266042209746983}
   m_Layer: 0
   m_Name: Betting Field (23)
   m_TagString: Untagged
@@ -5150,8 +6911,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 23
   Color: 0
+--- !u!114 &3676266042209746983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696410505079991967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1702283910539684161
 GameObject:
   m_ObjectHideFlags: 0
@@ -5165,6 +6949,7 @@ GameObject:
   - component: {fileID: 7375608967615821189}
   - component: {fileID: 3834368717705595887}
   - component: {fileID: 8732526644149624216}
+  - component: {fileID: 3676266042209746962}
   m_Layer: 0
   m_Name: Betting Field (2)
   m_TagString: Untagged
@@ -5239,8 +7024,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 2
   Color: 1
+--- !u!114 &3676266042209746962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702283910539684161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1705088909480105790
 GameObject:
   m_ObjectHideFlags: 0
@@ -5254,6 +7062,7 @@ GameObject:
   - component: {fileID: 345725552971618961}
   - component: {fileID: 940173208110225024}
   - component: {fileID: 8894342805349451526}
+  - component: {fileID: 3676266042209746992}
   m_Layer: 0
   m_Name: Betting Field (32)
   m_TagString: Untagged
@@ -5328,8 +7137,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 32
   Color: 0
+--- !u!114 &3676266042209746992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705088909480105790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1711184431169935940
 GameObject:
   m_ObjectHideFlags: 0
@@ -5389,6 +7221,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -5454,6 +7288,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -5519,6 +7355,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -5538,6 +7376,7 @@ GameObject:
   - component: {fileID: 3972350916289217956}
   - component: {fileID: 4557671460886132445}
   - component: {fileID: 8726713926644262242}
+  - component: {fileID: 3676266042209746957}
   m_Layer: 0
   m_Name: Betting Field (1 to 18)
   m_TagString: Untagged
@@ -5612,7 +7451,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 2
+  _showBetsData: []
   HalfPartNum: 1
+--- !u!114 &3676266042209746957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812499017535545509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1813168017644309327
 GameObject:
   m_ObjectHideFlags: 0
@@ -5672,6 +7534,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -5737,6 +7601,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -5802,6 +7668,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -5867,6 +7735,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -6021,6 +7891,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -6086,6 +7958,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -6151,6 +8025,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -6337,6 +8213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -6402,6 +8280,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -6421,6 +8301,7 @@ GameObject:
   - component: {fileID: 1294496338224097454}
   - component: {fileID: 1716549093917376576}
   - component: {fileID: 1714877634380127429}
+  - component: {fileID: 3676266042209746996}
   m_Layer: 0
   m_Name: Betting Field (36)
   m_TagString: Untagged
@@ -6495,8 +8376,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 36
   Color: 0
+--- !u!114 &3676266042209746996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2210463652344392255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2245161075676094048
 GameObject:
   m_ObjectHideFlags: 0
@@ -6556,6 +8460,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -6696,6 +8602,7 @@ GameObject:
   - component: {fileID: 6935844876101398012}
   - component: {fileID: 1611520497885263642}
   - component: {fileID: 5919054883737262284}
+  - component: {fileID: 3676266042209746994}
   m_Layer: 0
   m_Name: Betting Field (31)
   m_TagString: Untagged
@@ -6770,8 +8677,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 31
   Color: 1
+--- !u!114 &3676266042209746994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2320323881485948741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2406467961772314269
 GameObject:
   m_ObjectHideFlags: 0
@@ -6831,6 +8761,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -6896,6 +8828,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -6961,6 +8895,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -7026,6 +8962,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -7045,6 +8983,7 @@ GameObject:
   - component: {fileID: 574566045769659992}
   - component: {fileID: 6063088455175643281}
   - component: {fileID: 5426596853890642933}
+  - component: {fileID: 3676266042209746979}
   m_Layer: 0
   m_Name: Betting Field (18)
   m_TagString: Untagged
@@ -7119,8 +9058,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 18
   Color: 0
+--- !u!114 &3676266042209746979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2532179501740234263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2606507011199576321
 GameObject:
   m_ObjectHideFlags: 0
@@ -7180,6 +9142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -7245,6 +9209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -7310,6 +9276,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -7375,6 +9343,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -7394,6 +9364,7 @@ GameObject:
   - component: {fileID: 1595655596493584295}
   - component: {fileID: 8520052586180241671}
   - component: {fileID: 9014433048540380677}
+  - component: {fileID: 3676266042209746954}
   m_Layer: 0
   m_Name: Betting Field (Black) (1)
   m_TagString: Untagged
@@ -7468,7 +9439,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 2
+  _showBetsData: []
   BetColor: 1
+--- !u!114 &3676266042209746954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2768215215915354010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2857190968411737617
 GameObject:
   m_ObjectHideFlags: 0
@@ -7528,6 +9522,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -7593,6 +9589,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -7612,6 +9610,7 @@ GameObject:
   - component: {fileID: 4650046816149351965}
   - component: {fileID: 4766887241214603702}
   - component: {fileID: 2645254025948086694}
+  - component: {fileID: 3676266042209746986}
   m_Layer: 0
   m_Name: Betting Field (26)
   m_TagString: Untagged
@@ -7686,8 +9685,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 26
   Color: 1
+--- !u!114 &3676266042209746986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2880829049050715670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2886010841147902749
 GameObject:
   m_ObjectHideFlags: 0
@@ -7868,6 +9890,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -7933,6 +9957,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -7998,6 +10024,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -8063,6 +10091,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -8279,6 +10309,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -8344,6 +10376,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -8651,6 +10685,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -8716,6 +10752,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -8826,6 +10864,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -8891,6 +10931,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -8956,6 +10998,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -9021,6 +11065,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -9040,6 +11086,7 @@ GameObject:
   - component: {fileID: 3521070874894764565}
   - component: {fileID: 4467874375804331167}
   - component: {fileID: 2411222504983983785}
+  - component: {fileID: 3676266042209746982}
   m_Layer: 0
   m_Name: Betting Field (21)
   m_TagString: Untagged
@@ -9114,8 +11161,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 21
   Color: 0
+--- !u!114 &3676266042209746982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3372049183428305351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3391312173286627741
 GameObject:
   m_ObjectHideFlags: 0
@@ -9296,6 +11366,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -9361,6 +11433,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -9380,6 +11454,7 @@ GameObject:
   - component: {fileID: 9210535990868615334}
   - component: {fileID: 6833958218169035634}
   - component: {fileID: 7827631680264329035}
+  - component: {fileID: 3676266042209746960}
   m_Layer: 0
   m_Name: Betting Field (1 st 12)
   m_TagString: Untagged
@@ -9454,7 +11529,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 3
+  _showBetsData: []
   DozenNum: 1
+--- !u!114 &3676266042209746960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3454808870735056614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3511574206569330257
 GameObject:
   m_ObjectHideFlags: 0
@@ -9514,6 +11612,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -9579,6 +11679,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -9644,6 +11746,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -9680,6 +11784,7 @@ Transform:
   - {fileID: 3676266042487353491}
   - {fileID: 3676266041621271368}
   - {fileID: 3676266042362133991}
+  - {fileID: 465972807}
   m_Father: {fileID: 8244656309766025098}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9742,6 +11847,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -9886,6 +11993,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -9951,6 +12060,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -10060,6 +12171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -10188,6 +12301,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -10332,6 +12447,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -10429,6 +12546,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -10570,6 +12689,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -10714,6 +12835,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -10858,6 +12981,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -10923,6 +13048,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -11109,6 +13236,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -11174,6 +13303,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -11239,6 +13370,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -11304,6 +13437,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -11369,6 +13504,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -11434,6 +13571,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -11499,6 +13638,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -11564,6 +13705,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -11629,6 +13772,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -11694,12 +13839,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
   zOffset: 0.004
   yOffset: 0.0073
   stack: {fileID: 0}
+--- !u!114 &3676266042209746997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3862979479066322298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3921636622428093178
 GameObject:
   m_ObjectHideFlags: 0
@@ -11713,6 +13882,7 @@ GameObject:
   - component: {fileID: 8907043136515468992}
   - component: {fileID: 1628304109834632272}
   - component: {fileID: 5315684599602573644}
+  - component: {fileID: 3676266042209746991}
   m_Layer: 0
   m_Name: Betting Field (28)
   m_TagString: Untagged
@@ -11787,8 +13957,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 28
   Color: 1
+--- !u!114 &3676266042209746991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3921636622428093178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3946975877877545316
 GameObject:
   m_ObjectHideFlags: 0
@@ -11848,6 +14041,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -11913,6 +14108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -11978,6 +14175,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -12285,6 +14484,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -12350,6 +14551,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -12415,6 +14618,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -12480,6 +14685,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -12545,6 +14752,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -12564,6 +14773,7 @@ GameObject:
   - component: {fileID: 1358067421511283569}
   - component: {fileID: 7864400553578559590}
   - component: {fileID: 3792727306265696837}
+  - component: {fileID: 3676266042209746963}
   m_Layer: 0
   m_Name: Betting Field (1)
   m_TagString: Untagged
@@ -12638,8 +14848,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 1
   Color: 0
+--- !u!114 &3676266042209746963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4505386229538743413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4513581516199689660
 GameObject:
   m_ObjectHideFlags: 0
@@ -12653,6 +14886,7 @@ GameObject:
   - component: {fileID: 5995663769977103645}
   - component: {fileID: 4717751198975472067}
   - component: {fileID: 1400045652766103333}
+  - component: {fileID: 3676266042209746972}
   m_Layer: 0
   m_Name: Betting Field (10)
   m_TagString: Untagged
@@ -12727,8 +14961,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 10
   Color: 1
+--- !u!114 &3676266042209746972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4513581516199689660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4515559345318861000
 GameObject:
   m_ObjectHideFlags: 0
@@ -12788,6 +15045,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -12928,6 +15187,7 @@ GameObject:
   - component: {fileID: 3465833429355954893}
   - component: {fileID: 2606235395457253389}
   - component: {fileID: 4270550183868160981}
+  - component: {fileID: 3676266042209746967}
   m_Layer: 0
   m_Name: Betting Field (6)
   m_TagString: Untagged
@@ -13002,8 +15262,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 6
   Color: 1
+--- !u!114 &3676266042209746967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4642190229212358085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4659672800080042668
 GameObject:
   m_ObjectHideFlags: 0
@@ -13063,6 +15346,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -13128,6 +15413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -13193,6 +15480,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -13258,6 +15547,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -13323,6 +15614,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -13388,6 +15681,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -13453,6 +15748,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -13472,6 +15769,7 @@ GameObject:
   - component: {fileID: 5848062153582585838}
   - component: {fileID: 3293008014432932076}
   - component: {fileID: 1119487460215020597}
+  - component: {fileID: 3676266042209746970}
   m_Layer: 0
   m_Name: Betting Field (9)
   m_TagString: Untagged
@@ -13546,8 +15844,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 9
   Color: 0
+--- !u!114 &3676266042209746970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4819761953832660482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4843583283799512228
 GameObject:
   m_ObjectHideFlags: 0
@@ -13758,6 +16079,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -13823,6 +16146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -13888,6 +16213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -14074,6 +16401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -14139,6 +16468,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -14158,6 +16489,7 @@ GameObject:
   - component: {fileID: 1370814887743910792}
   - component: {fileID: 2151869218093433722}
   - component: {fileID: 1434591762883758262}
+  - component: {fileID: 3676266042209746969}
   m_Layer: 0
   m_Name: Betting Field (7)
   m_TagString: Untagged
@@ -14232,8 +16564,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 7
   Color: 0
+--- !u!114 &3676266042209746969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5108571663575658859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5119686579869927006
 GameObject:
   m_ObjectHideFlags: 0
@@ -14293,6 +16648,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -14358,6 +16715,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -14423,6 +16782,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -14609,6 +16970,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -14674,6 +17037,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -14739,6 +17104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -14804,6 +17171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -14869,6 +17238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -14934,6 +17305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -14999,6 +17372,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -15064,6 +17439,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -15129,6 +17506,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -15194,6 +17573,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -15259,6 +17640,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -15324,6 +17707,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -15389,6 +17774,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -15408,6 +17795,7 @@ GameObject:
   - component: {fileID: 3564882539010161392}
   - component: {fileID: 4893722826310687748}
   - component: {fileID: 3639119066814037116}
+  - component: {fileID: 3676266042209746959}
   m_Layer: 0
   m_Name: Betting Field (2 st 12)
   m_TagString: Untagged
@@ -15482,7 +17870,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 3
+  _showBetsData: []
   DozenNum: 2
+--- !u!114 &3676266042209746959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5549069669667596908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5601114050767548903
 GameObject:
   m_ObjectHideFlags: 0
@@ -15496,6 +17907,7 @@ GameObject:
   - component: {fileID: 2491336199859571129}
   - component: {fileID: 3670560388792782444}
   - component: {fileID: 7150640231216598343}
+  - component: {fileID: 3676266042209746995}
   m_Layer: 0
   m_Name: Betting Field (35)
   m_TagString: Untagged
@@ -15570,8 +17982,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 35
   Color: 1
+--- !u!114 &3676266042209746995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5601114050767548903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5644128058060374895
 GameObject:
   m_ObjectHideFlags: 0
@@ -15631,6 +18066,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -15696,6 +18133,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -15761,6 +18200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -15826,6 +18267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -15966,6 +18409,7 @@ GameObject:
   - component: {fileID: 6420419175500210609}
   - component: {fileID: 152266970951062667}
   - component: {fileID: 5685122341812848089}
+  - component: {fileID: 3676266042209746998}
   m_Layer: 0
   m_Name: Betting Field (2 to 1 right)
   m_TagString: Untagged
@@ -16040,7 +18484,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 3
+  _showBetsData: []
   RowNum: 3
+--- !u!114 &3676266042209746998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5783036677030574442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &3676266042762443837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16068,6 +18535,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -16087,6 +18556,7 @@ GameObject:
   - component: {fileID: 5841704980429942633}
   - component: {fileID: 6457604768310791943}
   - component: {fileID: 1440950113805834859}
+  - component: {fileID: 3676266042209746989}
   m_Layer: 0
   m_Name: Betting Field (29)
   m_TagString: Untagged
@@ -16161,8 +18631,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 29
   Color: 1
+--- !u!114 &3676266042209746989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5845914153852652405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5909824315673538463
 GameObject:
   m_ObjectHideFlags: 0
@@ -16176,6 +18669,7 @@ GameObject:
   - component: {fileID: 5445803515992381357}
   - component: {fileID: 1191753817213416523}
   - component: {fileID: 6792392834240957850}
+  - component: {fileID: 3676266042209746977}
   m_Layer: 0
   m_Name: Betting Field (17)
   m_TagString: Untagged
@@ -16250,8 +18744,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 17
   Color: 1
+--- !u!114 &3676266042209746977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5909824315673538463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5933905877320813814
 GameObject:
   m_ObjectHideFlags: 0
@@ -16311,6 +18828,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -16330,6 +18849,7 @@ GameObject:
   - component: {fileID: 221474918268142108}
   - component: {fileID: 8066396283636058842}
   - component: {fileID: 8077634873332937341}
+  - component: {fileID: 3676266042209746984}
   m_Layer: 0
   m_Name: Betting Field (22)
   m_TagString: Untagged
@@ -16404,8 +18924,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 22
   Color: 1
+--- !u!114 &3676266042209746984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5967285757502110795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6075946301107103320
 GameObject:
   m_ObjectHideFlags: 0
@@ -16465,6 +19008,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -16530,6 +19075,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -16595,6 +19142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -16660,6 +19209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -16725,6 +19276,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -16790,6 +19343,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -16809,6 +19364,7 @@ GameObject:
   - component: {fileID: 1489468552672586929}
   - component: {fileID: 1380552861907725972}
   - component: {fileID: 702088820725324359}
+  - component: {fileID: 3676266042209746974}
   m_Layer: 0
   m_Name: Betting Field (14)
   m_TagString: Untagged
@@ -16883,8 +19439,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 14
   Color: 0
+--- !u!114 &3676266042209746974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6201005377997910395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6339550816331494527
 GameObject:
   m_ObjectHideFlags: 0
@@ -17065,6 +19644,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -17084,6 +19665,7 @@ GameObject:
   - component: {fileID: 1955712916603784071}
   - component: {fileID: 3049157764256424252}
   - component: {fileID: 8805178792985221824}
+  - component: {fileID: 3676266042209746958}
   m_Layer: 0
   m_Name: Betting Field (3 st 12)
   m_TagString: Untagged
@@ -17158,7 +19740,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 3
+  _showBetsData: []
   DozenNum: 3
+--- !u!114 &3676266042209746958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6517051424861787843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6535874957399533547
 GameObject:
   m_ObjectHideFlags: 0
@@ -17218,6 +19823,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -17283,6 +19890,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -17348,6 +19957,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -17367,6 +19978,7 @@ GameObject:
   - component: {fileID: 571035848675150942}
   - component: {fileID: 4214402710355396009}
   - component: {fileID: 7284399815132910539}
+  - component: {fileID: 3676266042209746966}
   m_Layer: 0
   m_Name: Betting Field (4)
   m_TagString: Untagged
@@ -17441,8 +20053,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 4
   Color: 1
+--- !u!114 &3676266042209746966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6588646464743227655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6590596500567170798
 GameObject:
   m_ObjectHideFlags: 0
@@ -17502,6 +20137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -17567,6 +20204,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -17707,6 +20346,7 @@ GameObject:
   - component: {fileID: 7053574313742914025}
   - component: {fileID: 8414393895219093957}
   - component: {fileID: 5474734790337951893}
+  - component: {fileID: 3676266042209746953}
   m_Layer: 0
   m_Name: Betting Field (ODD) (2)
   m_TagString: Untagged
@@ -17781,7 +20421,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 2
+  _showBetsData: []
   EvenOdd: 1
+--- !u!114 &3676266042209746953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6674986149644250398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6675334517424807465
 GameObject:
   m_ObjectHideFlags: 0
@@ -17916,6 +20579,7 @@ GameObject:
   - component: {fileID: 1805729783313544067}
   - component: {fileID: 5526031344763307173}
   - component: {fileID: 9195488352417485882}
+  - component: {fileID: 3676266042209746985}
   m_Layer: 0
   m_Name: Betting Field (24)
   m_TagString: Untagged
@@ -17990,8 +20654,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 24
   Color: 1
+--- !u!114 &3676266042209746985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6696090240359793392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6776056674410312587
 GameObject:
   m_ObjectHideFlags: 0
@@ -18051,6 +20738,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -18116,6 +20805,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -18181,6 +20872,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -18246,6 +20939,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -18379,6 +21074,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -18444,6 +21141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -18509,6 +21208,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -18574,6 +21275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -18639,6 +21342,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -18734,6 +21439,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -18799,6 +21506,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -18864,6 +21573,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -18929,6 +21640,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -19115,6 +21828,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -19180,6 +21895,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -19245,6 +21962,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -19278,6 +21997,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -19343,6 +22064,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -19408,6 +22131,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -19427,6 +22152,7 @@ GameObject:
   - component: {fileID: 8306761577058511334}
   - component: {fileID: 2273280916911614900}
   - component: {fileID: 6959445786465092470}
+  - component: {fileID: 3676266042209746956}
   m_Layer: 0
   m_Name: Betting Field (Even)
   m_TagString: Untagged
@@ -19501,7 +22227,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 2
+  _showBetsData: []
   EvenOdd: 0
+--- !u!114 &3676266042209746956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7164675268858817481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7167306095139280191
 GameObject:
   m_ObjectHideFlags: 0
@@ -19561,6 +22310,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -19580,6 +22331,7 @@ GameObject:
   - component: {fileID: 2928364764952827859}
   - component: {fileID: 3468233852973077268}
   - component: {fileID: 8556228998990906167}
+  - component: {fileID: 3676266042209746955}
   m_Layer: 0
   m_Name: Betting Field (Red)
   m_TagString: Untagged
@@ -19654,7 +22406,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 2
+  _showBetsData: []
   BetColor: 0
+--- !u!114 &3676266042209746955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7223033012321775909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7272263271794117750
 GameObject:
   m_ObjectHideFlags: 0
@@ -19668,6 +22443,7 @@ GameObject:
   - component: {fileID: 7081249182775896920}
   - component: {fileID: 1202087338843682791}
   - component: {fileID: 6590589247966375214}
+  - component: {fileID: 3676266042209746961}
   m_Layer: 0
   m_Name: Betting Field (37)
   m_TagString: Untagged
@@ -19742,8 +22518,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 0
   Color: 2
+--- !u!114 &3676266042209746961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7272263271794117750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7341154707493741787
 GameObject:
   m_ObjectHideFlags: 0
@@ -20045,6 +22844,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -20064,6 +22865,7 @@ GameObject:
   - component: {fileID: 2548743019524248418}
   - component: {fileID: 4493825797752972271}
   - component: {fileID: 7334806096406709871}
+  - component: {fileID: 3676266042209746987}
   m_Layer: 0
   m_Name: Betting Field (27)
   m_TagString: Untagged
@@ -20138,8 +22940,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 27
   Color: 0
+--- !u!114 &3676266042209746987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7478718415826534345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7530111364724271032
 GameObject:
   m_ObjectHideFlags: 0
@@ -20275,6 +23100,7 @@ GameObject:
   - component: {fileID: 4041970615718325389}
   - component: {fileID: 4351695107320284939}
   - component: {fileID: 5596634738321917635}
+  - component: {fileID: 3676266042209747002}
   m_Layer: 0
   m_Name: HR_Roulette_Table
   m_TagString: Untagged
@@ -20444,6 +23270,29 @@ MonoBehaviour:
   RouletteWheelManager: {fileID: 4351695107320284939}
   plyers:
   - {fileID: 7134512836217752443}
+  _playerInformer: {fileID: 1453297481}
+--- !u!114 &3676266042209747002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7579227840630090230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7579227840630139734
 GameObject:
   m_ObjectHideFlags: 0
@@ -20615,6 +23464,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -20680,6 +23531,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -20820,6 +23673,7 @@ GameObject:
   - component: {fileID: 1217351124545376678}
   - component: {fileID: 7733747672166249143}
   - component: {fileID: 8650370491252400743}
+  - component: {fileID: 3676266042209746981}
   m_Layer: 0
   m_Name: Betting Field (19)
   m_TagString: Untagged
@@ -20894,8 +23748,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 19
   Color: 0
+--- !u!114 &3676266042209746981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7718958692636673231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7850124628462043668
 GameObject:
   m_ObjectHideFlags: 0
@@ -20955,6 +23832,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -21020,6 +23899,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -21085,6 +23966,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -21271,6 +24154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -21336,6 +24221,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -21401,6 +24288,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -21708,6 +24597,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -21773,6 +24664,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -21838,6 +24731,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -21857,6 +24752,7 @@ GameObject:
   - component: {fileID: 3508401853572287046}
   - component: {fileID: 249105452837519830}
   - component: {fileID: 4322386897762773839}
+  - component: {fileID: 3676266042209746952}
   m_Layer: 0
   m_Name: Betting Field (19 to 36)
   m_TagString: Untagged
@@ -21931,7 +24827,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 2
+  _showBetsData: []
   HalfPartNum: 2
+--- !u!114 &3676266042209746952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8060399523438983384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8076676836608232074
 GameObject:
   m_ObjectHideFlags: 0
@@ -21945,6 +24864,7 @@ GameObject:
   - component: {fileID: 2561665404999817197}
   - component: {fileID: 8987537714134938810}
   - component: {fileID: 8829156107162380949}
+  - component: {fileID: 3676266042209746968}
   m_Layer: 0
   m_Name: Betting Field (8)
   m_TagString: Untagged
@@ -22019,8 +24939,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 8
   Color: 1
+--- !u!114 &3676266042209746968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8076676836608232074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8081036579566528899
 GameObject:
   m_ObjectHideFlags: 0
@@ -22080,6 +25023,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -22145,6 +25090,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -22210,6 +25157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -22275,6 +25224,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -22340,6 +25291,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -22405,6 +25358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -22470,6 +25425,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -22656,6 +25613,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -22675,6 +25634,7 @@ GameObject:
   - component: {fileID: 3840781619081705364}
   - component: {fileID: 7056954660555949737}
   - component: {fileID: 8974352152502760602}
+  - component: {fileID: 3676266042209746964}
   m_Layer: 0
   m_Name: Betting Field (3)
   m_TagString: Untagged
@@ -22749,8 +25709,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 3
   Color: 0
+--- !u!114 &3676266042209746964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8403944165899566804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8431220101066754389
 GameObject:
   m_ObjectHideFlags: 0
@@ -22810,6 +25793,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -22875,6 +25860,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -22940,6 +25927,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -22959,6 +25948,7 @@ GameObject:
   - component: {fileID: 5100183012161289190}
   - component: {fileID: 8195422417561266593}
   - component: {fileID: 9099031688987078162}
+  - component: {fileID: 3676266042209746990}
   m_Layer: 0
   m_Name: Betting Field (30)
   m_TagString: Untagged
@@ -23033,8 +26023,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 30
   Color: 0
+--- !u!114 &3676266042209746990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8473382308524772725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8528075543649287309
 GameObject:
   m_ObjectHideFlags: 0
@@ -23094,6 +26107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -23113,6 +26128,7 @@ GameObject:
   - component: {fileID: 5870225919877635336}
   - component: {fileID: 5047446661869620889}
   - component: {fileID: 4176630600793198024}
+  - component: {fileID: 3676266042209746965}
   m_Layer: 0
   m_Name: Betting Field (5)
   m_TagString: Untagged
@@ -23187,8 +26203,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 5
   Color: 0
+--- !u!114 &3676266042209746965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8536075122222193122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8585495192505307905
 GameObject:
   m_ObjectHideFlags: 0
@@ -23248,6 +26287,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -23313,6 +26354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -23378,6 +26421,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -23443,6 +26488,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -23508,6 +26555,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -23573,6 +26622,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -23638,6 +26689,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -23657,6 +26710,7 @@ GameObject:
   - component: {fileID: 4760365470350285406}
   - component: {fileID: 2111306928360653569}
   - component: {fileID: 3947166749348886466}
+  - component: {fileID: 3676266042209746973}
   m_Layer: 0
   m_Name: Betting Field (12)
   m_TagString: Untagged
@@ -23731,8 +26785,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 36
+  _showBetsData: []
   Number: 12
   Color: 0
+--- !u!114 &3676266042209746973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8817355638795095164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8851706516728587665
 GameObject:
   m_ObjectHideFlags: 0
@@ -23792,6 +26869,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -23857,6 +26936,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -24043,6 +27124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -24076,6 +27159,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -24141,6 +27226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -24206,6 +27293,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -24350,6 +27439,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -24415,6 +27506,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -24480,6 +27573,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -24499,6 +27594,7 @@ GameObject:
   - component: {fileID: 5561269023563855211}
   - component: {fileID: 515986696761465954}
   - component: {fileID: 3729010366167799005}
+  - component: {fileID: 3676266042209746999}
   m_Layer: 0
   m_Name: Betting Field (2 to 1 middle)
   m_TagString: Untagged
@@ -24573,7 +27669,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WinKoeff: 3
+  _showBetsData: []
   RowNum: 2
+--- !u!114 &3676266042209746999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9176045252273415046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &9182296733047518439
 GameObject:
   m_ObjectHideFlags: 0
@@ -24633,6 +27752,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -24698,6 +27819,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917ac32fe996e274d8cec5e19b686c00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetForAnim: 0.2
+  delayForCollidersEnabled: 1
   currentY: 0
   lastY: 0
   xOffset: 0.004
@@ -25028,9 +28151,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48d3fb4e5714d1a469ae901aa3f5e121, type: 3}
---- !u!1 &7108418320606223984 stripped
+--- !u!1 &3862979479066322298 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 4755564859381530380, guid: 48d3fb4e5714d1a469ae901aa3f5e121,
+  m_CorrespondingSourceObject: {fileID: 1640729293087032326, guid: 48d3fb4e5714d1a469ae901aa3f5e121,
+    type: 3}
+  m_PrefabInstance: {fileID: 2547073420124283260}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3847217317440729145 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1602448053041746245, guid: 48d3fb4e5714d1a469ae901aa3f5e121,
     type: 3}
   m_PrefabInstance: {fileID: 2547073420124283260}
   m_PrefabAsset: {fileID: 0}
@@ -25040,15 +28169,15 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2547073420124283260}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 3862979479066322298}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ac2d9823207e5f4a884a32664de48c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &3847217317440729145 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1602448053041746245, guid: 48d3fb4e5714d1a469ae901aa3f5e121,
+--- !u!1 &8948224547857623457 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6879106692024568029, guid: 48d3fb4e5714d1a469ae901aa3f5e121,
     type: 3}
   m_PrefabInstance: {fileID: 2547073420124283260}
   m_PrefabAsset: {fileID: 0}
@@ -25058,15 +28187,15 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2547073420124283260}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2026417101563023833 stripped
+--- !u!1 &7108418320606223984 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 4559404626103251109, guid: 48d3fb4e5714d1a469ae901aa3f5e121,
+  m_CorrespondingSourceObject: {fileID: 4755564859381530380, guid: 48d3fb4e5714d1a469ae901aa3f5e121,
     type: 3}
   m_PrefabInstance: {fileID: 2547073420124283260}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8948224547857623457 stripped
+--- !u!1 &2026417101563023833 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 6879106692024568029, guid: 48d3fb4e5714d1a469ae901aa3f5e121,
+  m_CorrespondingSourceObject: {fileID: 4559404626103251109, guid: 48d3fb4e5714d1a469ae901aa3f5e121,
     type: 3}
   m_PrefabInstance: {fileID: 2547073420124283260}
   m_PrefabAsset: {fileID: 0}
