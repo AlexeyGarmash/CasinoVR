@@ -120,6 +120,8 @@ public class OVRGrabbableCustom : MonoBehaviourPun
         if(photonView != null)
         {
             photonView.RequestOwnership();
+            var physicsPhotonView = gameObject.GetComponent<PhysicsSmoothView>();
+            photonView.ObservedComponents.Add(physicsPhotonView);
         }
 
         GetComponent<Collider>().isTrigger = true;

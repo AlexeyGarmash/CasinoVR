@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using OVR.OpenVR;
+using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,15 +15,17 @@ public class PlayerChipsField : ChipsField
     GameObject purpleChipPrefab;
 
     [SerializeField]
-    private float yOffset = 0.0073f;   
-    
+    private float yOffset = 0.0073f;
+
     [SerializeField]
     private Transform SpawnPos;
- 
+
+    private PhotonView view;
+
     private void Start()
-    {      
+    {
         SetPrefabs();
-       
+        view = GetComponent<PhotonView>();
     }
 
 
@@ -35,11 +39,21 @@ public class PlayerChipsField : ChipsField
         purpleChipPrefab = ChipUtils.Instance.purpleChipPrefab;
     }
 
+    
+    //private void InstatiateChip(GameObject prefab, Chips chipsCost, ref int money)
+    //{
+        
+    //    Instantiate(prefab, SpawnPos);
+    //    money -= (int)chipsCost;
+    //}
 
-    private void InstatiateChip(GameObject prefab, Chips chipsCost, ref int money)   
+    [PunRPC]
+    private void InstantiateChip_RPC(byte[] prefab, int chipCost, int money)
     {
-        Instantiate(prefab, SpawnPos);
-        money -= (int)chipsCost;
+        var convertedPrefab = prefab.FromByteArray() as GameObject;  
+
+        Instantiate(convertedPrefab, SpawnPos);
+        money -= chipCost;
     }
     public void InstantiateToStackWithColor(Chips chipsCost, ref int money)
     {
@@ -47,23 +61,24 @@ public class PlayerChipsField : ChipsField
         switch (chipsCost)
         {
             case Chips.BLACK:
+
+                view.RPC("InstantiateChip_RPC", RpcTarget.All, blackChipPrefab.ToByteArray(), (int)chipsCost);
                 
-                InstatiateChip(blackChipPrefab, Chips.BLACK, ref money);
                 break;
             case Chips.BLUE:
-                InstatiateChip(blueChipPrefab, Chips.BLUE, ref money);
+                view.RPC("InstantiateChip_RPC", RpcTarget.All, blueChipPrefab.ToByteArray(), (int)chipsCost);
                 break;
             case Chips.GREEN:
-                InstatiateChip(greenChipPrefab, Chips.GREEN, ref money);
+                view.RPC("InstantiateChip_RPC", RpcTarget.All, greenChipPrefab.ToByteArray(), (int)chipsCost);
                 break;
             case Chips.PURPLE:
-                InstatiateChip(purpleChipPrefab, Chips.PURPLE, ref money);
+                view.RPC("InstantiateChip_RPC", RpcTarget.All, purpleChipPrefab.ToByteArray(), (int)chipsCost);
                 break;
             case Chips.RED:
-                InstatiateChip(redChipPrefab, Chips.RED, ref money);
+                view.RPC("InstantiateChip_RPC", RpcTarget.All, redChipPrefab.ToByteArray(), (int)chipsCost);
                 break;
             case Chips.YELLOW:
-                InstatiateChip(yellowChipPrefab, Chips.YELLOW, ref money);
+                view.RPC("InstantiateChip_RPC", RpcTarget.All, yellowChipPrefab.ToByteArray(), (int)chipsCost);
                 break;
         }       
        
