@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeverGabbable : OVRGrabbable
+public class LeverGabbable : OVRGrabbableCustom
 {
 
     public Transform handler;
@@ -22,6 +22,7 @@ public class LeverGabbable : OVRGrabbable
 
     private void Update()
     {
+        if(grabbedBy != null)
         if (Vector3.Distance(handler.position, transform.position) > 0.2f)
         {
             grabbedBy.ForceRelease(this);

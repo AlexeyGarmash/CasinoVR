@@ -71,6 +71,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90c47d95c82c9141a8014c68e407f43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Stacks: []
+  maxChipsOnField: 20
+  yOffset: 0.0073
 --- !u!114 &5945053095760357828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,7 +98,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7655626238777600858}
-  - component: {fileID: 5499969151147685083}
   m_Layer: 0
   m_Name: Stack1 (1)
   m_TagString: Untagged
@@ -117,22 +119,6 @@ Transform:
   m_Father: {fileID: 1602448053041746245}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5499969151147685083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4559404626103251109}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3645d01c29c35c04ba8be3444d08523e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerName: 
-  currentY: 0
-  Chips: []
-  bet: 0
 --- !u!1 &4755564859381530380
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,7 +128,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3173001951603466073}
-  - component: {fileID: 8256163955409837115}
   m_Layer: 0
   m_Name: Stack1
   m_TagString: Untagged
@@ -164,22 +149,6 @@ Transform:
   m_Father: {fileID: 1602448053041746245}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8256163955409837115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4755564859381530380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3645d01c29c35c04ba8be3444d08523e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerName: 
-  currentY: 0
-  Chips: []
-  bet: 0
 --- !u!1 &6879106692024568029
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +158,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3271879151004244480}
-  - component: {fileID: 85409061589015582}
   m_Layer: 0
   m_Name: Stack1 (3)
   m_TagString: Untagged
@@ -211,22 +179,6 @@ Transform:
   m_Father: {fileID: 1602448053041746245}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &85409061589015582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6879106692024568029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3645d01c29c35c04ba8be3444d08523e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerName: 
-  currentY: 0
-  Chips: []
-  bet: 0
 --- !u!1 &8329279638584058234
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +188,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2554169505650279459}
-  - component: {fileID: 5692444068666269506}
   m_Layer: 0
   m_Name: Stack1 (2)
   m_TagString: Untagged
@@ -258,19 +209,3 @@ Transform:
   m_Father: {fileID: 1602448053041746245}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5692444068666269506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8329279638584058234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3645d01c29c35c04ba8be3444d08523e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerName: 
-  currentY: 0
-  Chips: []
-  bet: 0

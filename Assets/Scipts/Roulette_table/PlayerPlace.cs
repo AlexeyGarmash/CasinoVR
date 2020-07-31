@@ -11,37 +11,22 @@ public class PlayerPlace : MonoBehaviourPun
     public PlayerStats ps;
     private bool placeTaken = false;
     PlayerChipsField sf;
+    public PlayerWinAnimation playerWinAnim;
 
     EventManager<ROULETTE_EVENT> rouletteManager;
 
-    
+    public bool canLeave;
     private void Start()
     {
         ps = null;
         rouletteManager = GetComponentInParent<TableBetsManager>().rouletteEventManager;
-     
-        sf = GetComponentInChildren<PlayerChipsField>();
+        playerWinAnim = GetComponentInChildren<PlayerWinAnimation>();
+           sf = GetComponentInChildren<PlayerChipsField>();
     }
 
      private void OnTriggerStay(Collider other)
     {
-        /*if (other.gameObject.tag == "Player")
-        {
-            if (OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.RTouch))
-            {
-                if (ps == null && !placeTaken)
-                {
-                    photonView.RPC("TakePlace_RPC", RpcTarget.All);
-                    ps = other.gameObject.GetComponent<PlayerStats>();
-                    PreparePlayerPlace();
-                }
-                else {
-                    photonView.RPC("GoOutPlace_RPC", RpcTarget.All);
-                    ps = null;
-                    sf.ClearPlace();
-                }
-            }
-        }*/
+        
     }
 
     public void TakePlace()
@@ -55,6 +40,7 @@ public class PlayerPlace : MonoBehaviourPun
             //PreparePlayerPlace();
         }
     }
+
 
     public void GoOutFromPlace()
     {
@@ -83,21 +69,23 @@ public class PlayerPlace : MonoBehaviourPun
         print("RPC GO OUT FROM PLACE!!!");
     }
 
+
     public void PreparePlayerPlace()
     {
         Debug.Log(sf);
+        
         int money = ps.AllMoney;
         if (money > 0)
         {
 
             var starmoney = money;
-
+            
             while (money > 0)
             {
                 if (starmoney / 2 < money)
                 {
                     sf.InstantiateToStackWithColor(Chips.PURPLE, ref money);
-
+                   
                 }
                 else if (starmoney / 4 < money)
                 {
@@ -121,8 +109,12 @@ public class PlayerPlace : MonoBehaviourPun
                 }
                 else sf.InstantiateToStackWithColor(Chips.YELLOW, ref money);
 
+               
             }
         }
+       
+
+        
     }
 
    

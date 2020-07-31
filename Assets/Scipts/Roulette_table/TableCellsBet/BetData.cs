@@ -19,7 +19,7 @@ public class BetData
     {
         BetValue += value;
     }
-
+   
     public bool RemoveBetValue(int value)
     {
         if(BetValue - value <= 0)
