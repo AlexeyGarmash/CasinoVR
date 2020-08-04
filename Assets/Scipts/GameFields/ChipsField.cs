@@ -102,7 +102,7 @@ public class ChipsField : AbstractField
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
 
-        if (chip != null && gc != null && gc.grabbedBy == null)
+        if (chip != null && gc != null && gc.grabbedBy == null && !rb.isKinematic && view != null)
         {
             //var PhysicsSmoothView = gameObj.GetComponent<PhysicsSmoothView>();
             view.ObservedComponents.Clear();
