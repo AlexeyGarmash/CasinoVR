@@ -96,35 +96,35 @@ public class ChipsField : AbstractField
     private void OnTriggerEnter(Collider other)
     {
 
-        //var gameObj = other.gameObject;
-        //var chip = other.gameObject.GetComponent<ChipData>();
-        //var gc = other.gameObject.GetComponent<GrabbableChip>();
-        //var rb = other.GetComponent<Rigidbody>();
-        //if (chip != null && gc != null && gc.grabbedBy == null && !rb.isKinematic)
-        //{
+        var gameObj = other.gameObject;
+        var chip = other.gameObject.GetComponent<ChipData>();
+        var gc = other.gameObject.GetComponent<GrabbableChip>();
+        var rb = other.GetComponent<Rigidbody>();
+        if (chip != null && gc != null && gc.grabbedBy == null && !rb.isKinematic)
+        {
 
-        //    var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
-        //    MagnetizeObject(gameObj, clossest);
+            var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
+            MagnetizeObject(gameObj, clossest);
 
-        //}
+        }
 
     }
 
     private void OnTriggerStay(Collider other)
     {
 
-        //var gameObj = other.gameObject;
-        //var chip = other.gameObject.GetComponent<ChipData>();
-        //var gc = other.gameObject.GetComponent<GrabbableChip>();
-        //var rb = other.GetComponent<Rigidbody>();
+        var gameObj = other.gameObject;
+        var chip = other.gameObject.GetComponent<ChipData>();
+        var gc = other.gameObject.GetComponent<GrabbableChip>();
+        var rb = other.GetComponent<Rigidbody>();
 
-        //if (chip != null && gc != null && gc.grabbedBy != null && rb.isKinematic)
-        //{
+        if (chip != null && gc != null && gc.grabbedBy != null && rb.isKinematic)
+        {
 
-        //    RemoveChip(chip);
+            RemoveChip(chip);
 
 
-        //}
+        }
 
     }
 

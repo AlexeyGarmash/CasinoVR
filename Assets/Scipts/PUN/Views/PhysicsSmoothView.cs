@@ -10,16 +10,20 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
     private Vector3 networkPosition;
     private Quaternion networkRotation;
     private bool networkIsKinematic;
+    private Collider _collider;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _collider = GetComponent<Collider>();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
+            stream.SendNext(_collider.enabled);
+            stream.SendNext(gameObject.activeSelf);
             stream.SendNext(_rigidbody.isKinematic);
             stream.SendNext(_rigidbody.position);
             stream.SendNext(_rigidbody.rotation);
@@ -27,6 +31,8 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
         }
         else
         {
+            _collider.enabled = ((bool)stream.ReceiveNext());
+            gameObject.SetActive((bool)stream.ReceiveNext());
             _rigidbody.isKinematic = (bool)stream.ReceiveNext();
             networkPosition = (Vector3)stream.ReceiveNext();
             networkRotation = (Quaternion)stream.ReceiveNext();
