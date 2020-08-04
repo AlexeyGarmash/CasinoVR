@@ -51,7 +51,7 @@ public class PlayerChipsField : ChipsField
     //    money -= (int)chipsCost;
     //}
 
-    [PunRPC]
+    //[PunRPC]
     private void InstantiateChip_RPC(int color)
     {
         switch ((Chips)color)
@@ -80,7 +80,8 @@ public class PlayerChipsField : ChipsField
     public void InstantiateToStackWithColor(Chips chipsCost, ref int money)
     {
 
-        View.RPC("InstantiateChip_RPC", RpcTarget.All, (int)chipsCost);
+        //View.RPC("InstantiateChip_RPC", RpcTarget.All, (int)chipsCost);
+        PhotonNetwork.Instantiate("Chips/Casino_Chip_Y", SpawnPos.position, Quaternion.identity);
         money -= (int)chipsCost;
     }
       
