@@ -32,6 +32,7 @@ public abstract class TableCell : MonoBehaviourPun
     private void AddNewBet(BetData betData)
     {
         //BetsData.Add(betData);
+        
         photonView?.RPC("AddNewBet_RPC", RpcTarget.All, betData.ToByteArray());
         print(string.Format("New Player {0} add bet {1}", betData.PlayerStat.PlayerNick, betData.BetValue));
     }

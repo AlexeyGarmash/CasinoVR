@@ -70,7 +70,6 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
                         tableCell.ReceiveBetData(new BetData(new PlayerStats(chip.player), (int)chip.Cost));
                     }
                  }
-
                 }
             }
         }
