@@ -100,7 +100,8 @@ public class ChipsField : AbstractField
         var chip = other.gameObject.GetComponent<ChipData>();
         var gc = other.gameObject.GetComponent<GrabbableChip>();
         var rb = other.GetComponent<Rigidbody>();
-        if (chip != null && gc != null && gc.grabbedBy == null && !rb.isKinematic)
+        var view = gameObj.GetComponent<PhotonView>();
+        if (chip != null && gc != null && gc.grabbedBy == null && !rb.isKinematic && view.IsMine)
         {
 
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
@@ -117,8 +118,8 @@ public class ChipsField : AbstractField
         var chip = other.gameObject.GetComponent<ChipData>();
         var gc = other.gameObject.GetComponent<GrabbableChip>();
         var rb = other.GetComponent<Rigidbody>();
-
-        if (chip != null && gc != null && gc.grabbedBy != null && rb.isKinematic)
+        var view = gameObj.GetComponent<PhotonView>();
+        if (chip != null && gc != null && gc.grabbedBy != null && rb.isKinematic && view.IsMine)
         {
 
             RemoveChip(chip);
