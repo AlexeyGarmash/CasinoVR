@@ -144,23 +144,36 @@ public class StackAnimator : MonoBehaviour
             t += chipsDropSpeed * Time.deltaTime;
         }
 
-        var isMine = chip.GetComponent<NetworkInfo>().isMine;
+        var view = chip.GetComponent<PhotonView>();
+        view.ObservedComponents.Add(chip.GetComponent<PhysicsSmoothView>());
+        //var isMine = chip.GetComponent<NetworkInfo>().isMine;
 
-        if (isMine)
-        {
-            var path = ChipUtils.Instance.GetPathToChip(chip.GetComponent<ChipData>().Cost);
-            var gameObj = PhotonNetwork.Instantiate(path, chip.transform.position, chip.transform.rotation);
-            
-            var rb = gameObj.GetComponent<Rigidbody>();
-            var collider = gameObj.GetComponent<Collider>();
-            rb.isKinematic = true;
-            collider.enabled = false;
+        //GameObject go = null;
 
-            
-        }
+        //if (isMine)
+        //{
+        //    var path = ChipUtils.Instance.GetPathToChip(chip.GetComponent<ChipData>().Cost);
+        //    var gameObj = PhotonNetwork.Instantiate(path, chip.transform.position, chip.transform.rotation);
+
+        //    var rb = gameObj.GetComponent<Rigidbody>();
+        //    var collider = gameObj.GetComponent<Collider>();
+
+        //    rb.isKinematic = true;
+        //    collider.enabled = false;
+
+        //    go = gameObj;
+        //    gameObj.transform.parent = stack.transform;
+
+
+        //}
 
         //stack.Objects.Remove(chip);
-        Destroy(chip);
+        //if (go != null)
+        //{
+        //    stack.Objects[stack.Objects.IndexOf(chip)] = go;
+        //}
+        //Destroy(chip);
+
         yield return null;
 
 

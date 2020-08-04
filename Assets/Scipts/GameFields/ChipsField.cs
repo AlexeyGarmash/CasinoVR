@@ -104,10 +104,10 @@ public class ChipsField : AbstractField
 
         if (chip != null && gc != null && gc.grabbedBy == null)
         {
-            var PhysicsSmoothView = gameObj.GetComponent<PhysicsSmoothView>();
-
-            Destroy(PhysicsSmoothView);
-            Destroy(view);
+            //var PhysicsSmoothView = gameObj.GetComponent<PhysicsSmoothView>();
+            view.ObservedComponents.Clear();
+            //Destroy(PhysicsSmoothView);
+            //Destroy(view);
             
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);
