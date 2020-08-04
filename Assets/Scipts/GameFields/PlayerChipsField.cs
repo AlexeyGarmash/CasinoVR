@@ -81,7 +81,7 @@ public class PlayerChipsField : ChipsField
     {
 
         //View.RPC("InstantiateChip_RPC", RpcTarget.All, (int)chipsCost);
-        PhotonNetwork.Instantiate("Chips/Casino_Chip_Y", SpawnPos.position, Quaternion.identity);
+        PhotonNetwork.Instantiate("Chips/Casino_Chip_Y", SpawnPos.position, SpawnPos.rotation);
         money -= (int)chipsCost;
     }
       

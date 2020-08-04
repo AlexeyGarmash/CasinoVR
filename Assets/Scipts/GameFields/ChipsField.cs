@@ -12,7 +12,7 @@ public class ChipsField : AbstractField
     public override bool MagnetizeObject(GameObject Object, StackData Stack)
     {
         var photonView = Object.GetComponent<PhotonView>();
-        photonView.ObservedComponents.Clear();
+        //photonView.ObservedComponents.Clear();
         var rb = Object.GetComponent<Rigidbody>();
         var chip = Object.GetComponent<ChipData>();
         
