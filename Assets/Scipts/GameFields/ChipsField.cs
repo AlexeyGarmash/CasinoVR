@@ -101,9 +101,14 @@ public class ChipsField : AbstractField
         var gc = other.gameObject.GetComponent<GrabbableChip>();
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
-        if (chip != null && gc != null && gc.grabbedBy == null && !rb.isKinematic && view.IsMine)
-        {
 
+        if (chip != null && gc != null && gc.grabbedBy == null)
+        {
+            var PhysicsSmoothView = gameObj.GetComponent<PhysicsSmoothView>();
+
+            Destroy(PhysicsSmoothView);
+            Destroy(view);
+            
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);
 
@@ -119,7 +124,7 @@ public class ChipsField : AbstractField
         var gc = other.gameObject.GetComponent<GrabbableChip>();
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
-        if (chip != null && gc != null && gc.grabbedBy != null && rb.isKinematic && view.IsMine)
+        if (chip != null && gc != null && gc.grabbedBy != null && rb.isKinematic && view != null && view.IsMine)
         {
 
             RemoveChip(chip);

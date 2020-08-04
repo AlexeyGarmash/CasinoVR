@@ -25,6 +25,34 @@ class ChipUtils : Singleton<ChipUtils>
         blackChipPrefab = Resources.Load("Chips/Casino_Chip_Black") as GameObject;
         purpleChipPrefab = Resources.Load("Chips/Casino_Chip_P") as GameObject;
     }
+
+    public string GetPathToChip(Chips chipcolor)
+    {
+        switch (chipcolor)
+        {
+            case Chips.BLACK:
+                return "Chips/Casino_Chip_Black";
+                break;
+            case Chips.BLUE:
+                return "Chips/Casino_Chip_Blue";
+                break;
+            case Chips.GREEN:
+                return "Chips/Casino_Chip_G";
+                break;
+            case Chips.PURPLE:
+                return "Chips/Casino_Chip_P";
+                break;
+            case Chips.RED:
+                return "Chips/Casino_Chip_R";
+                break;
+            case Chips.YELLOW:
+                return "Chips/Casino_Chip_Y";
+                break;
+
+           
+        }
+        return null;
+    }
    
 
  }

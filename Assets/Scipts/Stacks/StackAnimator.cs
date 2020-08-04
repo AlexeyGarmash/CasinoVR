@@ -144,7 +144,23 @@ public class StackAnimator : MonoBehaviour
             t += chipsDropSpeed * Time.deltaTime;
         }
 
-              
+        var isMine = chip.GetComponent<NetworkInfo>().isMine;
+
+        if (isMine)
+        {
+            var path = ChipUtils.Instance.GetPathToChip(chip.GetComponent<ChipData>().Cost);
+            var gameObj = PhotonNetwork.Instantiate(path, chip.transform.position, chip.transform.rotation);
+            
+            var rb = gameObj.GetComponent<Rigidbody>();
+            var collider = gameObj.GetComponent<Collider>();
+            rb.isKinematic = true;
+            collider.enabled = false;
+
+            
+        }
+
+        //stack.Objects.Remove(chip);
+        Destroy(chip);
         yield return null;
 
 
