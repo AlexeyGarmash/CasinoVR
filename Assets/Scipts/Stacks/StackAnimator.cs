@@ -48,7 +48,7 @@ public class StackAnimator : MonoBehaviour
         EnabledColliders(false);
         bool haveUnactiveObjects = true;
 
-        while (haveUnactiveObjects && newChipsComming)
+        while (haveUnactiveObjects || newChipsComming)
         {
             newChipsComming = false;
             haveUnactiveObjects = false;
@@ -114,7 +114,7 @@ public class StackAnimator : MonoBehaviour
         var newChip = Instantiate(ChipUtils.Instance.GetPrefabByColor((Chips)color), currChip.transform.position, currChip.transform.rotation);
 
 
-        Destroy(currChip);
+        //Destroy(currChip);
 
         var rb = newChip.GetComponent<Rigidbody>();
         //var collider = newChip.GetComponent<Collider>();
@@ -149,6 +149,8 @@ public class StackAnimator : MonoBehaviour
     {
         Debug.Log(currentObjects.Count);
         Debug.Log(toRemove.Count);
+
+
 
         foreach (GameObject chip in toRemove)
         {

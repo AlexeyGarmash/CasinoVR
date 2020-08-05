@@ -6,8 +6,8 @@ using UnityEngine;
 public class NetworkInfo : MonoBehaviour
 {
     public bool isMine = false;
-    public int ViewId; 
-    private void Start()
+    public int ViewId;
+    private void Awake()
     {
         var view = GetComponent<PhotonView>();
 

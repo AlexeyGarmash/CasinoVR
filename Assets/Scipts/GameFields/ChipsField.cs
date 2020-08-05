@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 
 public class ChipsField : AbstractField
@@ -26,6 +27,8 @@ public class ChipsField : AbstractField
 
             rb.isKinematic = true;
             chip.transform.parent = stackData.transform;
+
+            //Debug.Break();
 
             stackData.Objects.Add(Object);
             stackData.StartAnim(Object);
@@ -107,9 +110,11 @@ public class ChipsField : AbstractField
             var PhysicsSmoothView = gameObj.GetComponent<PhysicsSmoothView>();
             view.ObservedComponents.Clear();
             Destroy(PhysicsSmoothView);
-            Destroy(view);          
+            Destroy(view);
             //view.Synchronization = ViewSynchronization.Off;
             //view.RequestOwnership();
+
+            Debug.Break();
 
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);
