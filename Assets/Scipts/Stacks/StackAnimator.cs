@@ -56,7 +56,7 @@ public class StackAnimator : MonoBehaviour
             {
                 if (!currentObjects[i].activeSelf)
                 {
-                    currentObjects[i].SetActive(true);
+                    //currentObjects[i].SetActive(true);
 
                     stack.StartCoroutine(
                             MoveChip(chipsDropSpeed, chipsDropMult, currentObjects[i])
@@ -133,7 +133,7 @@ public class StackAnimator : MonoBehaviour
     public void StartAnim(GameObject chip)
     {
         //EnabledColliders(false);
-        chip.SetActive(false);
+        //chip.SetActive(false);
 
       
         currentObjects.Add(chip);
