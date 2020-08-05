@@ -109,6 +109,7 @@ public class ChipsField : AbstractField
             //Destroy(PhysicsSmoothView);
             //Destroy(view);          
             view.Synchronization = ViewSynchronization.Off;
+            view.RequestOwnership();
 
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);

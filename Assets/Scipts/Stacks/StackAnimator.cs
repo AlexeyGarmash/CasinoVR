@@ -74,8 +74,14 @@ public class StackAnimator : MonoBehaviour
         foreach (GameObject chip in stack.Objects)
         {
             var GrabbableChip = chip.GetComponent<Collider>();
+            var isMine = chip.GetComponent<NetworkInfo>().isMine;
+            var view = chip.GetComponent<PhotonView>();
             if (GrabbableChip != null)
+            {
+                if (isMine == true)
+                    view.RequestOwnership();
                 GrabbableChip.enabled = isEnabled;
+            }
 
 
         }
@@ -149,8 +155,8 @@ public class StackAnimator : MonoBehaviour
       
         view.Synchronization = ViewSynchronization.Unreliable;
         
-        //var isMine = chip.GetComponent<NetworkInfo>().isMine;
-
+       
+        
         //GameObject go = null;
 
         //if (isMine)
