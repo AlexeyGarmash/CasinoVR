@@ -42,6 +42,7 @@ public class StackAnimator : MonoBehaviour
         toRemove = new List<GameObject>();
         
     }
+    Coroutine waitEnd;
     IEnumerator MoveLastChips(float chipsDropSpeed, float chipsDropMult, float pause)
     {
         EnabledColliders(false);
@@ -64,10 +65,11 @@ public class StackAnimator : MonoBehaviour
             
         }
 
-        StartCoroutine(WaitChipForBoxEnabled(delayForCollidersEnabled));
+        waitEnd = StartCoroutine(WaitChipForBoxEnabled(2f));
         currentObjects.Clear();
         prevMoveLastChips = null;
 
+        yield return null;
 
 
     }
@@ -125,6 +127,8 @@ public class StackAnimator : MonoBehaviour
 
         if (prevMoveLastChips == null)
         {
+            if(waitEnd!= null)
+                StopCoroutine(waitEnd);
             prevMoveLastChips = StartCoroutine(MoveLastChips(chipsDropSpeed, chipsDropMult, pauseBeetwenChips));
         }       
     }
