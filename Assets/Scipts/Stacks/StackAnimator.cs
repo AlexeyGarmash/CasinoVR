@@ -114,7 +114,7 @@ public class StackAnimator : MonoBehaviour
         var newChip = Instantiate(ChipUtils.Instance.GetPrefabByColor((Chips)color), currChip.transform.position, currChip.transform.rotation);
 
 
-        //Destroy(currChip);
+        Destroy(currChip);
 
         var rb = newChip.GetComponent<Rigidbody>();
         //var collider = newChip.GetComponent<Collider>();

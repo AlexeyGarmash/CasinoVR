@@ -18,8 +18,8 @@ GameObject:
   - component: {fileID: -7724774276303518046}
   - component: {fileID: -1333670739134795897}
   - component: {fileID: -1944808793818971107}
-  - component: {fileID: -4112597428088824547}
   - component: {fileID: -3615916718467254295}
+  - component: {fileID: -6012437298032723305}
   m_Layer: 12
   m_Name: Casino_Chip_Blue
   m_TagString: Chip
@@ -297,22 +297,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: -4112597428088824547}
+  - {fileID: -6012437298032723305}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-4112597428088824547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 177790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6499b1dcd3a0e148ae7bfc8ab4c4835, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-3615916718467254295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,3 +314,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMine: 0
+  ViewId: 0
+--- !u!114 &-6012437298032723305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6499b1dcd3a0e148ae7bfc8ab4c4835, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
