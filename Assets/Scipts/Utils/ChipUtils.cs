@@ -53,7 +53,34 @@ class ChipUtils : Singleton<ChipUtils>
         }
         return null;
     }
-   
+    public GameObject GetPrefabByColor(Chips chipcolor)
+    {
+        switch (chipcolor)
+        {
+            case Chips.BLACK:
+                return blackChipPrefab;
+                break;
+            case Chips.BLUE:
+                return blueChipPrefab;
+                break;
+            case Chips.GREEN:
+                return greenChipPrefab;
+                break;
+            case Chips.PURPLE:
+                return purpleChipPrefab;
+                break;
+            case Chips.RED:
+                return redChipPrefab;
+                break;
+            case Chips.YELLOW:
+                return yellowChipPrefab;
+                break;
 
- }
+
+        }
+        return null;
+    }
+
+
+}
 

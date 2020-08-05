@@ -6,9 +6,13 @@ using UnityEngine;
 public class NetworkInfo : MonoBehaviour
 {
     public bool isMine = false;
-
+    public int ViewId;
     private void Start()
     {
-        isMine = GetComponent<PhotonView>().IsMine;
+        var view = GetComponent<PhotonView>();
+        isMine = view.IsMine;
+        ViewId = view.ViewID;
+
+
     }
 }

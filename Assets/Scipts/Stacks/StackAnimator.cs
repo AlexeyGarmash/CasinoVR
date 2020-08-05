@@ -74,12 +74,10 @@ public class StackAnimator : MonoBehaviour
         foreach (GameObject chip in stack.Objects)
         {
             var GrabbableChip = chip.GetComponent<Collider>();
-            var isMine = chip.GetComponent<NetworkInfo>().isMine;
-            var view = chip.GetComponent<PhotonView>();
+           
             if (GrabbableChip != null)
             {
-                if (isMine == true)
-                    view.RequestOwnership();
+                
                 GrabbableChip.enabled = isEnabled;
             }
 
@@ -90,6 +88,26 @@ public class StackAnimator : MonoBehaviour
 
     Coroutine prevMoveLastChips;
 
+    [PunRPC]
+    public void UpdateChipsList_RPC(int viewID, int color, Vector3 position, Quaternion rotation)
+    {
+        var currChip = stack.Objects.Find(c => c.GetComponent<NetworkInfo>().ViewId == viewID);
+
+        var newChip = Instantiate(ChipUtils.Instance.GetPrefabByColor((Chips)color), position, rotation);
+
+        stack.Objects[stack.Objects.IndexOf(currChip)] = newChip;
+
+        Destroy(currChip);
+
+        var rb = newChip.GetComponent<Rigidbody>();
+        var collider = newChip.GetComponent<Collider>();
+
+        rb.isKinematic = true;
+        collider.enabled = false;
+
+
+        newChip.transform.parent = stack.transform;
+    }
     public void StartAnim(GameObject chip)
     {
         //EnabledColliders(false);
@@ -150,38 +168,21 @@ public class StackAnimator : MonoBehaviour
             t += chipsDropSpeed * Time.deltaTime;
         }
 
-       
-        var view = chip.GetComponent<PhotonView>();
-      
-        view.Synchronization = ViewSynchronization.Unreliable;
+
         
+
+        //view.Synchronization = ViewSynchronization.Unreliable;
+
+        var netInfo = chip.GetComponent<NetworkInfo>();
        
-        
-        //GameObject go = null;
-
-        //if (isMine)
-        //{
-        //    var path = ChipUtils.Instance.GetPathToChip(chip.GetComponent<ChipData>().Cost);
-        //    var gameObj = PhotonNetwork.Instantiate(path, chip.transform.position, chip.transform.rotation);
-
-        //    var rb = gameObj.GetComponent<Rigidbody>();
-        //    var collider = gameObj.GetComponent<Collider>();
-
-        //    rb.isKinematic = true;
-        //    collider.enabled = false;
-
-        //    go = gameObj;
-        //    gameObj.transform.parent = stack.transform;
+        if (netInfo.isMine)
+        {
+            var view = GetComponent<PhotonView>();
+            var chipData = chip.GetComponent<ChipData>();
+            view.RPC("UpdateChipsList_RPC", RpcTarget.All, (int)chipData.Cost, chip.transform.position, chip.transform.rotation);
 
 
-        //}
-
-        //stack.Objects.Remove(chip);
-        //if (go != null)
-        //{
-        //    stack.Objects[stack.Objects.IndexOf(chip)] = go;
-        //}
-        //Destroy(chip);
+        }     
 
         yield return null;
 
