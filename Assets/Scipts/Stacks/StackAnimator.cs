@@ -60,13 +60,16 @@ public class StackAnimator : MonoBehaviour
                         );
                     haveUnactiveObjects = true;
                     yield return new WaitForSeconds(pause);
+                    toRemove.Add(currentObjects[i]);
+                    currentObjects.Remove(currentObjects[i]);
+                    
+
                 }
             }
             
         }
 
         waitEnd = StartCoroutine(WaitChipForBoxEnabled(2f));
-        currentObjects.Clear();
         prevMoveLastChips = null;
 
         yield return null;
@@ -114,6 +117,8 @@ public class StackAnimator : MonoBehaviour
         newChip.transform.parent = stack.transform;
 
        
+
+
     }
     public void StartAnim(GameObject chip)
     {
@@ -139,11 +144,15 @@ public class StackAnimator : MonoBehaviour
         EnabledColliders(true);
 
         RemovelocalChip();
+        currentObjects.Clear();
 
 
     }
     void RemovelocalChip()
     {
+        Debug.Log(stack.Objects.Count);
+        Debug.Log(toRemove.Count);
+
         foreach (GameObject chip in toRemove)
         {
             var netInfo = chip.GetComponent<NetworkInfo>();
@@ -154,6 +163,8 @@ public class StackAnimator : MonoBehaviour
                 var view = GetComponent<PhotonView>();
                 var chipData = chip.GetComponent<ChipData>();
                 Debug.Log(view == null);
+
+               
 
                 view.RPC("UpdateChipsList_RPC", RpcTarget.All, netInfo.ViewId, (int)chipData.Cost);
                
@@ -205,7 +216,8 @@ public class StackAnimator : MonoBehaviour
 
 
 
-        toRemove.Add(chip);
+        
+
         yield return null;
 
 
