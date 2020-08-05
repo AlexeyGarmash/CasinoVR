@@ -38,8 +38,8 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
             networkRotation = (Quaternion)stream.ReceiveNext();
             _rigidbody.velocity = (Vector3)stream.ReceiveNext();
 
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-            networkPosition += (_rigidbody.velocity * lag);
+            //float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            //networkPosition += (_rigidbody.velocity * lag);
         }
     }
 
@@ -47,8 +47,8 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine)
         {
-            _rigidbody.position = Vector3.Lerp(_rigidbody.position, networkPosition, Time.fixedDeltaTime);
-            _rigidbody.rotation = Quaternion.Lerp(_rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+            _rigidbody.position = Vector3.MoveTowards(_rigidbody.position, networkPosition, Time.fixedDeltaTime);
+            _rigidbody.rotation = Quaternion.RotateTowards(_rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
         }
     }
 }
