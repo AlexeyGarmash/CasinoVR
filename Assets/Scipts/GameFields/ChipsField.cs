@@ -109,12 +109,13 @@ public class ChipsField : AbstractField
         {
             var PhysicsSmoothView = gameObj.GetComponent<PhysicsSmoothView>();
             view.ObservedComponents.Clear();
+            view.Synchronization = ViewSynchronization.Off;
             Destroy(PhysicsSmoothView);
             Destroy(view);
             //view.Synchronization = ViewSynchronization.Off;
             //view.RequestOwnership();
 
-            Debug.Break();
+            //Debug.Break();
 
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);

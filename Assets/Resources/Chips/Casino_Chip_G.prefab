@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 7106519562532038552}
   - component: {fileID: -7672289256921043974}
   - component: {fileID: 4038314042092820564}
-  - component: {fileID: 8373067667830832223}
   - component: {fileID: 4073249099428622399}
   m_Layer: 12
   m_Name: Casino_Chip_G
@@ -294,25 +293,13 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 0
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 8373067667830832223}
+  - {fileID: 0}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &8373067667830832223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 167068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6499b1dcd3a0e148ae7bfc8ab4c4835, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4073249099428622399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,3 +313,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMine: 0
+  ViewId: 0
