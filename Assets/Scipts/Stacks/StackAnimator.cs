@@ -200,7 +200,11 @@ public class StackAnimator : MonoBehaviour
         }
 
 
+
+        toRemove.Add(chip);
         yield return null;
+
+
 
 
     }
