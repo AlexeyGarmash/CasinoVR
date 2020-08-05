@@ -148,7 +148,7 @@ public class StackAnimator : MonoBehaviour
         var view = chip.GetComponent<PhotonView>();
       
         view.Synchronization = ViewSynchronization.Unreliable;
-
+        
         //var isMine = chip.GetComponent<NetworkInfo>().isMine;
 
         //GameObject go = null;
