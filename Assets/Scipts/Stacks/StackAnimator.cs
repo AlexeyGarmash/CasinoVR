@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class StackAnimator : MonoBehaviour
 {
-    
+
     [SerializeField]
     public const float chipsDropSpeed = 0.4f;
 
@@ -30,46 +30,54 @@ public class StackAnimator : MonoBehaviour
     public float xOffset = 0.004f;
     public float zOffset = 0.004f;
 
-    public float yOffset = 0.0073f; 
+    public float yOffset = 0.0073f;
 
     public StackData stack;
     private List<GameObject> toRemove;
 
     private void Start()
     {
-       
+
         stack = GetComponent<StackData>();
         toRemove = new List<GameObject>();
-        
+
     }
     Coroutine waitEnd;
     IEnumerator MoveLastChips(float chipsDropSpeed, float chipsDropMult, float pause)
     {
         EnabledColliders(false);
         bool haveUnactiveObjects = true;
-        
-        while (haveUnactiveObjects)
+
+        while (haveUnactiveObjects && newChipsComming)
         {
+            newChipsComming = false;
             haveUnactiveObjects = false;
             for (var i = 0; i < currentObjects.Count; i++)
             {
                 if (!currentObjects[i].activeSelf)
                 {
+                    currentObjects[i].SetActive(true);
+
                     stack.StartCoroutine(
                             MoveChip(chipsDropSpeed, chipsDropMult, currentObjects[i])
                         );
                     haveUnactiveObjects = true;
                     yield return new WaitForSeconds(pause);
                     toRemove.Add(currentObjects[i]);
-                    currentObjects.Remove(currentObjects[i]);
-                    
 
                 }
+
+                
             }
-            
+           
         }
 
-        waitEnd = StartCoroutine(WaitChipForBoxEnabled(2f));
+        yield return new WaitForSeconds(1f);
+
+        EnabledColliders(true);
+
+        RemovelocalChip();
+
         prevMoveLastChips = null;
 
         yield return null;
@@ -82,10 +90,10 @@ public class StackAnimator : MonoBehaviour
         foreach (GameObject chip in stack.Objects)
         {
             var GrabbableChip = chip.GetComponent<Collider>();
-           
+
             if (GrabbableChip != null)
             {
-                
+
                 GrabbableChip.enabled = isEnabled;
             }
 
@@ -95,15 +103,16 @@ public class StackAnimator : MonoBehaviour
     List<GameObject> currentObjects = new List<GameObject>();
 
     Coroutine prevMoveLastChips;
+    bool newChipsComming = false;
 
+    
     [PunRPC]
     public void UpdateChipsList_RPC(int viewID, int color)
     {
-        var currChip = stack.Objects.Find(c => c.GetComponent<NetworkInfo>().ViewId == viewID);
+        var currChip = currentObjects.Find(c => c.GetComponent<NetworkInfo>().ViewId == viewID);
 
         var newChip = Instantiate(ChipUtils.Instance.GetPrefabByColor((Chips)color), currChip.transform.position, currChip.transform.rotation);
 
-        stack.Objects.Remove(currChip);             
 
         Destroy(currChip);
 
@@ -116,6 +125,7 @@ public class StackAnimator : MonoBehaviour
 
         newChip.transform.parent = stack.transform;
 
+        stack.Objects.Add(newChip);
        
 
 
@@ -125,32 +135,19 @@ public class StackAnimator : MonoBehaviour
         //EnabledColliders(false);
         chip.SetActive(false);
 
-        stack.Objects.Add(chip);
+      
         currentObjects.Add(chip);
         chip.GetComponent<Collider>().enabled = false;
-
+        newChipsComming = true;
 
         if (prevMoveLastChips == null)
         {
-            if(waitEnd!= null)
-                StopCoroutine(waitEnd);
             prevMoveLastChips = StartCoroutine(MoveLastChips(chipsDropSpeed, chipsDropMult, pauseBeetwenChips));
         }       
     }
-
-    IEnumerator WaitChipForBoxEnabled(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        EnabledColliders(true);
-
-        RemovelocalChip();
-        currentObjects.Clear();
-
-
-    }
     void RemovelocalChip()
     {
-        Debug.Log(stack.Objects.Count);
+        Debug.Log(currentObjects.Count);
         Debug.Log(toRemove.Count);
 
         foreach (GameObject chip in toRemove)
@@ -162,10 +159,7 @@ public class StackAnimator : MonoBehaviour
 
                 var view = GetComponent<PhotonView>();
                 var chipData = chip.GetComponent<ChipData>();
-                Debug.Log(view == null);
-
-               
-
+              
                 view.RPC("UpdateChipsList_RPC", RpcTarget.All, netInfo.ViewId, (int)chipData.Cost);
                
 
@@ -175,10 +169,11 @@ public class StackAnimator : MonoBehaviour
         }
        
         toRemove.Clear();
+        currentObjects.Clear();
     }
     IEnumerator MoveChip(float chipsDropSpeed, float chipsDropMult, GameObject chip)
     {
-        chip.SetActive(true);
+        
 
 
         var currOffsetX = Random.Range(-xOffset, xOffset);
