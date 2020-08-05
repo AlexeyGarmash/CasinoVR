@@ -103,10 +103,10 @@ public class StackAnimator : MonoBehaviour
         Destroy(currChip);
 
         var rb = newChip.GetComponent<Rigidbody>();
-        var collider = newChip.GetComponent<Collider>();
+        //var collider = newChip.GetComponent<Collider>();
 
         rb.isKinematic = true;
-        collider.enabled = false;
+        //collider.enabled = false;
 
 
         newChip.transform.parent = stack.transform;
