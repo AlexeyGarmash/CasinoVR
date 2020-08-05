@@ -144,8 +144,12 @@ public class StackAnimator : MonoBehaviour
             t += chipsDropSpeed * Time.deltaTime;
         }
 
+       
         var view = chip.GetComponent<PhotonView>();
-        view.ObservedComponents.Add(chip.GetComponent<PhysicsSmoothView>());
+
+        if (view.IsMine)
+            view.Synchronization = ViewSynchronization.Unreliable;
+
         //var isMine = chip.GetComponent<NetworkInfo>().isMine;
 
         //GameObject go = null;

@@ -541,6 +541,7 @@ public class LocomotionTeleport : MonoBehaviour
 		{
 			EnterStateAim();
 		}
+
 		_teleportDestination.gameObject.SetActive(true);
 
 		// Wait until the user is done aiming. The input system will turn this off when the button that triggered aiming is released.
@@ -770,7 +771,6 @@ public class LocomotionTeleport : MonoBehaviour
 	public void DoTeleport()
 	{
 		var character = LocomotionController.CharacterController;
-		character.enabled = false;
 		var characterTransform = character.transform;
 		var destTransform = _teleportDestination.OrientationIndicator;
 
@@ -791,10 +791,6 @@ public class LocomotionTeleport : MonoBehaviour
 
 		characterTransform.position = destPosition;
 		characterTransform.rotation = destRotation;
-
-
-		LocomotionController.PlayerController.Teleported = true;
-		character.enabled = true;
 	}
 
 	/// <summary>
@@ -859,6 +855,6 @@ public class LocomotionTeleport : MonoBehaviour
 
 		characterTransform.position = lerpPosition;
 
-		
+		//LocomotionController.PlayerController.Teleported = true;
 	}
 }
