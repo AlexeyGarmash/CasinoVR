@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -178449099427034524}
   - component: {fileID: 8379113082270078932}
   - component: {fileID: 8034352019992173953}
+  - component: {fileID: -1270196094909736432}
   m_Layer: 12
   m_Name: Casino_Chip_Black
   m_TagString: Chip
@@ -293,10 +294,10 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 0
+  Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: -1270196094909736432}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -314,3 +315,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMine: 0
   ViewId: 0
+--- !u!114 &-1270196094909736432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6499b1dcd3a0e148ae7bfc8ab4c4835, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
