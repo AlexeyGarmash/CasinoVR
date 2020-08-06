@@ -121,7 +121,7 @@ public class OVRGrabbableCustom : MonoBehaviourPun
         if(photonView != null)
         {
             photonView.RequestOwnership();
-            NetworkInfo.Synchronization = photonView.Synchronization;
+            
         }
 
         GetComponent<Collider>().isTrigger = true;

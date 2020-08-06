@@ -99,7 +99,7 @@ public class ChipsField : AbstractField
     }
     #region RPC 
     [PunRPC]
-    private void ExtranctChipOnAll_RPC(int viewID)
+    public void ExtranctChipOnAll_RPC(int viewID)
     {
         var data = GetChipAndHisStack(viewID);
 
@@ -113,9 +113,9 @@ public class ChipsField : AbstractField
     {
         var data = GetChipAndHisStack(viewID);
 
-        data.chip.GetComponent<PhotonView>().Synchronization = ViewSynchronization.Unreliable;
+        data.chip.GetComponent<NetworkInfo>().Synchronization = photonView.Synchronization;      
         data.stack.Objects.Remove(data.chip);
-
+       
         data.stack.UpdateStackInstantly();
         
         photonView.RPC("ExtranctChipOnAll_RPC", RpcTarget.Others, viewID);
@@ -139,7 +139,8 @@ public class ChipsField : AbstractField
         var view = gameObj.GetComponent<PhotonView>();
 
         if (chip != null && gc != null && gc.grabbedBy == null && !rb.isKinematic && view != null)
-        {          
+        {
+            chip.GetComponent<NetworkInfo>().Synchronization = ViewSynchronization.Off;
 
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);
