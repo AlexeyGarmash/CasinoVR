@@ -7,6 +7,7 @@ public class NetworkInfo : MonoBehaviourPun
 {
     public bool IsMine = false;
     public int ViewID;
+    public bool isGrabbed;
     public ViewSynchronization Synchronization = ViewSynchronization.Off;
     private void Awake()
     {    
