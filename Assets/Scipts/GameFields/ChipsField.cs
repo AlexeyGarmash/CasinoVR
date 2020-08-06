@@ -83,18 +83,10 @@ public class ChipsField : AbstractField
 
     private (GameObject chip, StackData stack) GetChipAndHisStack(int viewID)
     {
-        for (var i = 0; i < Stacks.Length; i++)
-        {
-            var chip = Stacks[i].Objects.Find(s => s.GetComponent<NetworkInfo>().ViewID == viewID);
+        var stack = Stacks.ToList().Find(s => s.Objects.Find(c => c.GetComponent<PhotonView>().ViewID == viewID));
+        var chip = stack.Objects.Find(s => s.GetComponent<PhotonView>().ViewID == viewID);
 
-            if (chip != null)
-
-                return (chip, Stacks[i]);               
-            
-
-        }
-
-        return (null, null);
+        return (chip, stack);
 
     }
     #region RPC 
@@ -102,6 +94,8 @@ public class ChipsField : AbstractField
     public void ExtranctChipOnAll_RPC(int viewID)
     {
         var data = GetChipAndHisStack(viewID);
+        if (data.chip == null)
+            Debug.Log("chip not found! viewID = "  + viewID);
 
         data.chip.GetComponent<PhotonView>().Synchronization = ViewSynchronization.Unreliable;
         data.stack.Objects.Remove(data.chip);
@@ -110,20 +104,11 @@ public class ChipsField : AbstractField
     }
 
     protected bool ExtranctChipOnAll(int viewID)
-    {
-        var data = GetChipAndHisStack(viewID);
-
-        data.chip.GetComponent<NetworkInfo>().Synchronization = photonView.Synchronization;      
-        data.stack.Objects.Remove(data.chip);
-       
-        data.stack.UpdateStackInstantly();
+    {     
         
-        photonView.RPC("ExtranctChipOnAll_RPC", RpcTarget.Others, viewID);
+        photonView.RPC("ExtranctChipOnAll_RPC", RpcTarget.All, viewID);
 
-        if (data.chip != null)
-            return true;
-
-        return false;
+        return true;
     }
     #endregion
 
