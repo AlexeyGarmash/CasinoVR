@@ -20,23 +20,30 @@ public class PlayerWinAnimation : MonoBehaviourPun
 
     private void Start()
     {
+        winChips = new List<GameObject>();
         curves = GetComponentsInChildren<BezierCurve>();
-        StartAnimation(2000);
+        if(photonView.IsMine)
+            StartAnimation(2000);
+        else StartCoroutine(MoveChipWithCurve());
+
 
 
     }
     List<GameObject> winChips;
-
-    public void StartAnimation(int money)
-    {
-
-        CreateWinChips(money);
-        
-    }
     [PunRPC]
+    public void StartAnimation_RPC()
+    {
+        StartCoroutine(MoveChipWithCurve());
+    }
+    public void StartAnimation(int win)
+    {
+        CreateWinChips(win);
+        //photonView.RPC("StartAnimation_RPC", RpcTarget.All);    
+
+    }
     private void CreateWinChips(int money)
     {
-        winChips = new List<GameObject>();
+        
         var starmoney = money;
         Chips chipCost;
         
@@ -44,57 +51,37 @@ public class PlayerWinAnimation : MonoBehaviourPun
         {
             GameObject chip;
             chipCost = Chips.YELLOW;
-            if (starmoney / 2 < money && money > (int)Chips.PURPLE)
-            {
+            if (starmoney / 2 < money && money > (int)Chips.PURPLE)           
                 chipCost = Chips.PURPLE;
-                
-                chip = Instantiate(ChipUtils.Instance.purpleChipPrefab, transform);
-                
-
-            }
-            else if (starmoney / 4 < money && money > (int)Chips.BLACK)
-            {
+            
+            else if (starmoney / 4 < money && money > (int)Chips.BLACK)            
                 chipCost = Chips.BLACK;
-                chip = Instantiate(ChipUtils.Instance.blackChipPrefab, transform);
-                
-              
 
-            }
-            else if (starmoney / 8 < money && money > (int)Chips.GREEN)
-            {
+            else if (starmoney / 8 < money && money > (int)Chips.GREEN)           
                 chipCost = Chips.GREEN;
-                chip = Instantiate(ChipUtils.Instance.greenChipPrefab, transform);
-
-
-            }
-            else if (starmoney / 16 < money && money > (int)Chips.BLUE)
-            {
-                chipCost = Chips.BLUE;
-                
-                chip = Instantiate(ChipUtils.Instance.blueChipPrefab, transform);
-
-            }
-            else if (starmoney / 32 < money && money > (int)Chips.RED)
-            {
+    
+            else if (starmoney / 16 < money && money > (int)Chips.BLUE)           
+                chipCost = Chips.BLUE;              
+            
+            else if (starmoney / 32 < money && money > (int)Chips.RED)           
                 chipCost = Chips.RED;               
-                chip = Instantiate(ChipUtils.Instance.redChipPrefab, transform);
-
-            }
-            else
-                chip = Instantiate(ChipUtils.Instance.yellowChipPrefab, transform);
+                
 
 
-            chip.SetActive(false);
-            winChips.Add(chip);
+            PhotonNetwork.Instantiate(ChipUtils.Instance.GetPathToChip(chipCost), transform.position, transform.rotation);                       
             money -= (int)chipCost;
         }
 
-        StartCoroutine(MoveChipWithCurve());
+       
     }
     IEnumerator MoveChipWithCurve()
     {
-        
-        while(winChips.Count != 0)
+
+        yield return new WaitForSeconds(1f);
+
+        Debug.Log(winChips);
+
+        while (winChips.Count != 0)
         { 
             var curvePurpel = curves[Random.Range(0, curves.Length - 1)];
             var chip = winChips[Random.Range(0, winChips.Count - 1)];
@@ -147,6 +134,9 @@ public class PlayerWinAnimation : MonoBehaviourPun
         var viewInfo = other.gameObject.GetComponent<NetworkInfo>();
         if (chip != null && view != null && viewInfo != null)
         {
+            winChips.Add(other.gameObject);
+           
+            other.gameObject.SetActive(false);
             viewInfo.Synchronization = ViewSynchronization.Off;
 
         }
