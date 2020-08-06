@@ -148,6 +148,7 @@ MonoBehaviour:
   m_snapOrientation: 0
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
+  NetworkInfo: {fileID: 0}
   GrabPos1ChipLeft: {fileID: 0}
   GrabPos2ChipLeft: {fileID: 0}
   GrabPos3ChipLeft: {fileID: 0}
@@ -295,7 +296,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 2
   ObservedComponents:
   - {fileID: -1223849697103958058}
   viewIdField: 0
@@ -313,8 +314,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c0894f749906c438fdb98955b09e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMine: 0
-  ViewId: 0
+  IsMine: 0
+  ViewID: 0
+  Synchronization: 0
 --- !u!114 &-1223849697103958058
 MonoBehaviour:
   m_ObjectHideFlags: 0
