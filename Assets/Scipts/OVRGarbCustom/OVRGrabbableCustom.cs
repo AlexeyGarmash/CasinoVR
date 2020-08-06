@@ -56,6 +56,7 @@ public class OVRGrabbableCustom : MonoBehaviourPun
     public bool isGrabbed
     {
         get { return m_grabbedBy != null; }
+
     }
 
     /// <summary>

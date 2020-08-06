@@ -9,8 +9,11 @@ public class NetworkInfo : MonoBehaviourPun
     public int ViewID;
     public bool isGrabbed;
     public ViewSynchronization Synchronization = ViewSynchronization.Off;
+
+    private OVRGrabbableCustom grabbale;
     private void Awake()
-    {    
+    {
+        grabbale = GetComponent<OVRGrabbableCustom>();
 
         IsMine = photonView.IsMine;
         ViewID = photonView.ViewID;
@@ -18,5 +21,10 @@ public class NetworkInfo : MonoBehaviourPun
         //Synchronization = photonView.Synchronization;
 
 
+    }
+    private void Update()
+    {
+        if(photonView.IsMine)
+            isGrabbed = grabbale.isGrabbed;
     }
 }

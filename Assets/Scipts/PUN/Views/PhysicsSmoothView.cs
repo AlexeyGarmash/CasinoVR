@@ -28,7 +28,7 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
             stream.SendNext(_collider.enabled);
             stream.SendNext(gameObject.activeSelf);
             
-            _networkInfo.isGrabbed = _ovrGrabbableCustom.isGrabbed;
+           
             stream.SendNext(_networkInfo.isGrabbed);
 
             if (!_networkInfo.isGrabbed)
@@ -62,8 +62,9 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
     }
 
     public void FixedUpdate()
-    {
-        if(_networkInfo.Synchronization != ViewSynchronization.Off)
+    {      
+
+        if (_networkInfo.Synchronization != ViewSynchronization.Off)
             if (!photonView.IsMine )
             {
                 _rigidbody.position = Vector3.MoveTowards(_rigidbody.position, networkPosition, Time.fixedDeltaTime);
