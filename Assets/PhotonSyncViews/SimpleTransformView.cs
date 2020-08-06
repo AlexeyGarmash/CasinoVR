@@ -27,7 +27,7 @@ public class SimpleTransformView : MonoBehaviourPun, IPunObservable
     {
         if(!photonView.IsMine)
         {
-            transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.deltaTime * 100f);
+            transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.deltaTime);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, networkRotation, Time.deltaTime * 100.0f);
         }
     }
