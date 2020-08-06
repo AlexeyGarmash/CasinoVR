@@ -126,9 +126,9 @@ public class ChipsField : AbstractField
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
         var networkProps = gameObj.GetComponent<NetworkInfo>();
-        if (chip != null && gc != null && !networkProps.isGrabbed  && !rb.isKinematic && view != null)
+        if (chip != null && gc != null  && !rb.isKinematic && view != null)
         {
-            chip.GetComponent<NetworkInfo>().Synchronization = ViewSynchronization.Off;
+            //chip.GetComponent<NetworkInfo>().Synchronization = ViewSynchronization.Off;
 
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);
@@ -147,11 +147,18 @@ public class ChipsField : AbstractField
         var view = gameObj.GetComponent<PhotonView>();
         var networkProps = gameObj.GetComponent<NetworkInfo>();
 
-        if (chip != null && gc != null && networkProps.isGrabbed && rb.isKinematic && view != null && view.IsMine  && Contain(gameObj))
+        if (chip != null && gc != null && rb.isKinematic && view != null && view.IsMine  && Contain(gameObj))
         {
-            
-            photonView.RPC("ExtranctChipOnAll", RpcTarget.All, view.ViewID);
 
+            //photonView.RPC("ExtranctChipOnAll", RpcTarget.All, view.ViewID);
+            var data = GetChipAndHisStack(view.ViewID);
+            if (data.chip == null)
+                Debug.Log("chip not found! viewID = " + view.ViewID);
+
+            //data.chip.GetComponent<PhotonView>().Synchronization = ViewSynchronization.Unreliable;
+            data.stack.Objects.Remove(data.chip);
+
+            data.stack.UpdateStackInstantly();
         }
 
     }

@@ -78,7 +78,7 @@ public class PlayerChipsField : ChipsField
      
         var chip = Instantiate(prefab, SpawnPos);
 
-        chip.GetComponent<NetworkInfo>().Synchronization = ViewSynchronization.Off;
+        //chip.GetComponent<NetworkInfo>().Synchronization = ViewSynchronization.Off;
        
 
 

@@ -25,34 +25,26 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(_collider.enabled);
-            stream.SendNext(gameObject.activeSelf);
+            
             
            
-            stream.SendNext(_networkInfo.isGrabbed);
+            //stream.SendNext(_networkInfo.isGrabbed);
 
-            if (!_networkInfo.isGrabbed)
-                stream.SendNext(_rigidbody.isKinematic);
-
+            //if (!_networkInfo.isGrabbed)
+            stream.SendNext(_rigidbody.isKinematic);
             stream.SendNext(_rigidbody.position);
             stream.SendNext(_rigidbody.rotation);
             stream.SendNext(_rigidbody.velocity);
         }
         else
         {
-            _collider.enabled = ((bool)stream.ReceiveNext());
-            gameObject.SetActive((bool)stream.ReceiveNext());
-            _networkInfo.isGrabbed = ((bool)stream.ReceiveNext());
+           
+            //_networkInfo.isGrabbed = ((bool)stream.ReceiveNext());
 
-            var obj = stream.ReceiveNext();
+            _rigidbody.isKinematic = (bool)stream.ReceiveNext();
 
-            if (!_networkInfo.isGrabbed && obj is bool)
-            {
-                _rigidbody.isKinematic = (bool)obj;
-                obj = stream.ReceiveNext(); ;
-            }
 
-            networkPosition = (Vector3)obj;
+            networkPosition = (Vector3)stream.ReceiveNext();
             networkRotation = (Quaternion)stream.ReceiveNext();
             _rigidbody.velocity = (Vector3)stream.ReceiveNext();
 
@@ -63,8 +55,6 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
 
     public void FixedUpdate()
     {      
-
-        if (_networkInfo.Synchronization != ViewSynchronization.Off)
             if (!photonView.IsMine )
             {
                 _rigidbody.position = Vector3.MoveTowards(_rigidbody.position, networkPosition, Time.fixedDeltaTime);
