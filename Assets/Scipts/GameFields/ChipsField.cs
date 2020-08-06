@@ -133,7 +133,7 @@ public class ChipsField : AbstractField
 
     }
 
-    protected void OnTriggerStay(Collider other)
+    protected void OnTriggerExit(Collider other)
     {
 
         var gameObj = other.gameObject;
@@ -142,7 +142,7 @@ public class ChipsField : AbstractField
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
     
-        if (chip != null && gc != null && gc.isGrabbed && rb.isKinematic && view != null && Contain(gameObj))
+        if (chip != null && gc != null && gc.isGrabbed && rb.isKinematic && view != null)
         {
 
             ExtranctChipOnAll(view.ViewID);
