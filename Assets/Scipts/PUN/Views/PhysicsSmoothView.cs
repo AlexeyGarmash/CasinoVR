@@ -9,14 +9,16 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
     private Rigidbody _rigidbody;
     private Vector3 networkPosition;
     private Quaternion networkRotation;
-    private NetworkInfo NetworkInfo;
+    private NetworkInfo _networkInfo;
     private Collider _collider;
+    private OVRGrabbableCustom _ovrGrabbableCustom;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
-        NetworkInfo = GetComponent<NetworkInfo>();
+        _networkInfo = GetComponent<NetworkInfo>();
+        _ovrGrabbableCustom = GetComponent<OVRGrabbableCustom>();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -25,7 +27,9 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
         {
             stream.SendNext(_collider.enabled);
             stream.SendNext(gameObject.activeSelf);
-            stream.SendNext(_rigidbody.isKinematic);
+            
+            if(!_ovrGrabbableCustom.grabbedBy)
+                stream.SendNext(_rigidbody.isKinematic);
 
             stream.SendNext(_rigidbody.position);
             stream.SendNext(_rigidbody.rotation);
@@ -35,7 +39,10 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
         {
             _collider.enabled = ((bool)stream.ReceiveNext());
             gameObject.SetActive((bool)stream.ReceiveNext());
-            _rigidbody.isKinematic = (bool)stream.ReceiveNext();
+
+            if (!_ovrGrabbableCustom.grabbedBy)
+                _rigidbody.isKinematic = (bool)stream.ReceiveNext();
+
             networkPosition = (Vector3)stream.ReceiveNext();
             networkRotation = (Quaternion)stream.ReceiveNext();
             _rigidbody.velocity = (Vector3)stream.ReceiveNext();
@@ -47,7 +54,7 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
 
     public void FixedUpdate()
     {
-        if (!photonView.IsMine && NetworkInfo.Synchronization != ViewSynchronization.Off )
+        if (!photonView.IsMine && _networkInfo.Synchronization != ViewSynchronization.Off )
         {
             _rigidbody.position = Vector3.MoveTowards(_rigidbody.position, networkPosition, Time.fixedDeltaTime);
             _rigidbody.rotation = Quaternion.RotateTowards(_rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
