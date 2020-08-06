@@ -18,7 +18,6 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
         _networkInfo = GetComponent<NetworkInfo>();
-        _ovrGrabbableCustom = GetComponent<OVRGrabbableCustom>();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -26,7 +25,7 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(_collider.enabled);
-            stream.SendNext(gameObject.activeSelf);
+            //stream.SendNext(gameObject.activeSelf);
             
            
             stream.SendNext(_networkInfo.isGrabbed);
@@ -41,7 +40,7 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
         else
         {
             _collider.enabled = ((bool)stream.ReceiveNext());
-            gameObject.SetActive((bool)stream.ReceiveNext());
+            //gameObject.SetActive((bool)stream.ReceiveNext());
             _networkInfo.isGrabbed = ((bool)stream.ReceiveNext());
 
             var obj = stream.ReceiveNext();
@@ -49,7 +48,7 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
             if (!_networkInfo.isGrabbed && obj is bool)
             {
                 _rigidbody.isKinematic = (bool)obj;
-                obj = stream.ReceiveNext(); ;
+                obj = stream.ReceiveNext();
             }
 
             networkPosition = (Vector3)obj;
