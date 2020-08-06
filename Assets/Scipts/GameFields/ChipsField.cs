@@ -121,8 +121,8 @@ public class ChipsField : AbstractField
         var gc = other.gameObject.GetComponent<GrabbableChip>();
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
-
-        if (chip != null && gc != null && !gc.isGrabbed  && !rb.isKinematic && view != null)
+        var networkProps = gameObj.GetComponent<NetworkInfo>();
+        if (chip != null && gc != null && !networkProps.isGrabbed  && !rb.isKinematic && view != null)
         {
             chip.GetComponent<NetworkInfo>().Synchronization = ViewSynchronization.Off;
 
@@ -141,8 +141,9 @@ public class ChipsField : AbstractField
         var gc = other.gameObject.GetComponent<GrabbableChip>();
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
-    
-        if (chip != null && gc != null && gc.isGrabbed && rb.isKinematic && view != null)
+        var networkProps = gameObj.GetComponent<NetworkInfo>();
+
+        if (chip != null && gc != null && networkProps.isGrabbed && rb.isKinematic && view != null)
         {
 
             ExtranctChipOnAll(view.ViewID);

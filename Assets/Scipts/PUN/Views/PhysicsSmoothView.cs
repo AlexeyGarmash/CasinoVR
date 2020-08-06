@@ -47,7 +47,10 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
             var obj = stream.ReceiveNext();
 
             if (!_networkInfo.isGrabbed && obj is bool)
+            {
                 _rigidbody.isKinematic = (bool)obj;
+                obj = stream.ReceiveNext(); ;
+            }
 
             networkPosition = (Vector3)obj;
             networkRotation = (Quaternion)stream.ReceiveNext();
