@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class NetworkInfo : MonoBehaviourPun
 {
+    [SerializeField] private bool _disableRigidbody = true;
     /*public bool IsMine = false;
     public int ViewID;
     public bool isGrabbed;
@@ -31,6 +32,10 @@ public class NetworkInfo : MonoBehaviourPun
         {
             Destroy(GetComponent<ChipData>());
             Destroy(GetComponent<GrabbableChip>());
+            if (_disableRigidbody)
+            {
+                Destroy(GetComponent<Rigidbody>());
+            }
         }
     }
 
