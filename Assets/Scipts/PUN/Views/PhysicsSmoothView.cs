@@ -9,16 +9,16 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
     private Rigidbody _rigidbody;
     private Vector3 networkPosition;
     private Quaternion networkRotation;
-    private NetworkInfo _networkInfo;
-    private Collider _collider;
-    private OVRGrabbableCustom _ovrGrabbableCustom;
+    //private NetworkInfo _networkInfo;
+    //private Collider _collider;
+    //private OVRGrabbableCustom _ovrGrabbableCustom;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _collider = GetComponent<Collider>();
-        _networkInfo = GetComponent<NetworkInfo>();
-        _ovrGrabbableCustom = GetComponent<OVRGrabbableCustom>();
+        //_collider = GetComponent<Collider>();
+        //_networkInfo = GetComponent<NetworkInfo>();
+        //_ovrGrabbableCustom = GetComponent<OVRGrabbableCustom>();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

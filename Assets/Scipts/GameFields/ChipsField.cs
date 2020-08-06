@@ -147,7 +147,7 @@ public class ChipsField : AbstractField
         var view = gameObj.GetComponent<PhotonView>();
         var networkProps = gameObj.GetComponent<NetworkInfo>();
 
-        if (chip != null && gc != null && rb.isKinematic && view != null && view.IsMine  && Contain(gameObj))
+        if (chip != null && gc != null && gc.isGrabbed && rb.isKinematic && view != null && view.IsMine  && Contain(gameObj))
         {
 
             //photonView.RPC("ExtranctChipOnAll", RpcTarget.All, view.ViewID);

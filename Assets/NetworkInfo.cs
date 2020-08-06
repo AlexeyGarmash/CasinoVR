@@ -10,7 +10,7 @@ public class NetworkInfo : MonoBehaviourPun
     public bool isGrabbed;
     public ViewSynchronization Synchronization = ViewSynchronization.Off;*/
 
-    private List<Component> _componentsToDelete;
+    
 
     //private OVRGrabbableCustom grabbale;
     private void Awake()
@@ -27,13 +27,10 @@ public class NetworkInfo : MonoBehaviourPun
 
     private void Start()
     {
-        _componentsToDelete = new List<Component>();
-        _componentsToDelete.Add(GetComponent<ChipData>());
-        _componentsToDelete.Add(GetComponent<GrabbableChip>());
-
-        for (int i = 0; i < _componentsToDelete.Count; i++)
+        if (!photonView.IsMine)
         {
-            Destroy(_componentsToDelete[i]);
+            Destroy(GetComponent<ChipData>());
+            Destroy(GetComponent<GrabbableChip>());
         }
     }
 
