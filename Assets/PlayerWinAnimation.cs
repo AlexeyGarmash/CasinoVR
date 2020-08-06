@@ -22,8 +22,12 @@ public class PlayerWinAnimation : MonoBehaviourPun
     {
         winChips = new List<GameObject>();
         curves = GetComponentsInChildren<BezierCurve>();
-        if(photonView.IsMine)
+
+        if (photonView.IsMine)
+        {
             StartAnimation(2000);
+            StartCoroutine(MoveChipWithCurve());
+        }
         else StartCoroutine(MoveChipWithCurve());
 
 
