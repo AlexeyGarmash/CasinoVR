@@ -48,13 +48,15 @@ public class OVRGrabbableCustom : MonoBehaviourPun
         get { return m_allowOffhandGrab; }
     }
 
+    private bool _isGrabbed;
     /// <summary>
     /// If true, the object is currently grabbed.
     /// </summary>
+    /// 
     public bool isGrabbed
     {
         get { return m_grabbedBy != null; }
-        set { isGrabbed = value; }
+        set { _isGrabbed = value; }
     }
 
     /// <summary>
