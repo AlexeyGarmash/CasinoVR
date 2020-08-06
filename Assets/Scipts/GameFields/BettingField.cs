@@ -92,7 +92,7 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
                     
 
                     Debug.Log("OnTriggerStay");
-                    if (chipPhotonView != null && chipPhotonView.IsMine && ExtranctChipOnAll(chipPhotonView.ViewID))
+                    if (chipPhotonView != null && chipPhotonView.IsMine /*&& ExtranctChipOnAll(chipPhotonView.ViewID)*/)
 
                     {
                         tableCell.RemoveBetData(new BetData(new PlayerStats(chip.player), (int)chip.Cost));

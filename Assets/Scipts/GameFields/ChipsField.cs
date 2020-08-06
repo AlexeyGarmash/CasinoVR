@@ -90,8 +90,7 @@ public class ChipsField : AbstractField
 
     }
     #region RPC 
-    [PunRPC]
-    public void ExtranctChipOnAll_RPC(int viewID)
+    public void ExtranctChipOnAll(int viewID)
     {
         var data = GetChipAndHisStack(viewID);
         if (data.chip == null)
@@ -103,13 +102,13 @@ public class ChipsField : AbstractField
         data.stack.UpdateStackInstantly();
     }
 
-    protected bool ExtranctChipOnAll(int viewID)
-    {     
+    //protected bool ExtranctChipOnAll(int viewID)
+    //{     
         
-        photonView.RPC("ExtranctChipOnAll_RPC", RpcTarget.All, viewID);
+    //    photonView.RPC("ExtranctChipOnAll_RPC", RpcTarget.All, viewID);
 
-        return true;
-    }
+    //    return true;
+    //}
     #endregion
 
 
@@ -123,7 +122,7 @@ public class ChipsField : AbstractField
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
 
-        if (chip != null && gc != null && gc.grabbedBy == null && !rb.isKinematic && view != null)
+        if (chip != null && gc != null && !gc.isGrabbed  && !rb.isKinematic && view != null)
         {
             chip.GetComponent<NetworkInfo>().Synchronization = ViewSynchronization.Off;
 
@@ -143,9 +142,9 @@ public class ChipsField : AbstractField
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
     
-        if (chip != null && gc != null && gc.grabbedBy != null && rb.isKinematic && view != null && view.IsMine && Contain(gameObj))
+        if (chip != null && gc != null && gc.isGrabbed && rb.isKinematic && view != null && Contain(gameObj))
         {
-           
+
             ExtranctChipOnAll(view.ViewID);
 
         }

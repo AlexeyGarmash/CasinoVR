@@ -27,8 +27,9 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
         {
             stream.SendNext(_collider.enabled);
             stream.SendNext(gameObject.activeSelf);
-            
-            if(!_ovrGrabbableCustom.grabbedBy)
+            stream.SendNext(_ovrGrabbableCustom.isGrabbed);
+
+            if (!_ovrGrabbableCustom.isGrabbed)
                 stream.SendNext(_rigidbody.isKinematic);
 
             stream.SendNext(_rigidbody.position);
@@ -39,11 +40,14 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
         {
             _collider.enabled = ((bool)stream.ReceiveNext());
             gameObject.SetActive((bool)stream.ReceiveNext());
+            _ovrGrabbableCustom.isGrabbed = ((bool)stream.ReceiveNext());
 
-            if (!_ovrGrabbableCustom.grabbedBy)
-                _rigidbody.isKinematic = (bool)stream.ReceiveNext();
+            var obj = stream.ReceiveNext();
 
-            networkPosition = (Vector3)stream.ReceiveNext();
+            if (!_ovrGrabbableCustom.isGrabbed && obj is bool)
+                _rigidbody.isKinematic = (bool)obj;
+
+            networkPosition = (Vector3)obj;
             networkRotation = (Quaternion)stream.ReceiveNext();
             _rigidbody.velocity = (Vector3)stream.ReceiveNext();
 
@@ -54,10 +58,11 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
 
     public void FixedUpdate()
     {
-        if (!photonView.IsMine && _networkInfo.Synchronization != ViewSynchronization.Off )
-        {
-            _rigidbody.position = Vector3.MoveTowards(_rigidbody.position, networkPosition, Time.fixedDeltaTime);
-            _rigidbody.rotation = Quaternion.RotateTowards(_rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
-        }
+        if(_networkInfo.Synchronization != ViewSynchronization.Off)
+            if (!photonView.IsMine )
+            {
+                _rigidbody.position = Vector3.MoveTowards(_rigidbody.position, networkPosition, Time.fixedDeltaTime);
+                _rigidbody.rotation = Quaternion.RotateTowards(_rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+            }
     }
 }

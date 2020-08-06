@@ -54,6 +54,7 @@ public class OVRGrabbableCustom : MonoBehaviourPun
     public bool isGrabbed
     {
         get { return m_grabbedBy != null; }
+        set { isGrabbed = value; }
     }
 
     /// <summary>
@@ -124,7 +125,7 @@ public class OVRGrabbableCustom : MonoBehaviourPun
             
         }
 
-        GetComponent<Collider>().isTrigger = true;
+        //GetComponent<Collider>().isTrigger = true;
         GetComponent<Outline>().enabled = false;
         grabPoint.transform.parent = hand.transform;
         m_grabbedBy = hand;
