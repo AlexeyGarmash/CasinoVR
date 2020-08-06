@@ -100,7 +100,7 @@ public class ChipsField : AbstractField
         if (data.chip == null)
             Debug.Log("chip not found! viewID = " + viewID);
 
-        data.chip.GetComponent<PhotonView>().Synchronization = ViewSynchronization.Unreliable;
+        data.chip.GetComponent<NetworkInfo>().Synchronization = ViewSynchronization.Unreliable;
         data.stack.Objects.Remove(data.chip);
 
         data.stack.UpdateStackInstantly();
