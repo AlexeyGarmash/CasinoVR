@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,40 +13,40 @@ class PlayerBettingChipsField : ChipsField
     public float yOffset = 0.0073f;
     
 
-    private void OnTriggerEnter(Collider other)
-    {
-        var playerBettingStack = Stacks[0];
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    var playerBettingStack = Stacks[0];
 
-        var gameObj = other.gameObject;
-        var chip = other.gameObject.GetComponent<ChipData>();
-        var gc = other.gameObject.GetComponent<GrabbableChip>();
-        var rb = other.GetComponent<Rigidbody>();
+    //    var gameObj = other.gameObject;
+    //    var chip = other.gameObject.GetComponent<ChipData>();
+    //    var gc = other.gameObject.GetComponent<GrabbableChip>();
+    //    var rb = other.GetComponent<Rigidbody>();
 
-        if (chip != null && gc != null && gc.grabbedBy == null && !rb.isKinematic)
-        {
-            chip.GetComponent<Collider>().isTrigger = true;
-            MagnetizeObject(gameObj, playerBettingStack);
-            chip.transform.parent = playerBettingStack.transform;
+    //    if (chip != null && gc != null && gc.grabbedBy == null && !rb.isKinematic)
+    //    {
+    //        chip.GetComponent<Collider>().isTrigger = true;
+    //        MagnetizeObject(gameObj, playerBettingStack);
+    //        chip.transform.parent = playerBettingStack.transform;
             
-        }
+    //    }
 
-    }
+    //}
 
-    private void OnTriggerStay(Collider other)
-    {
+    //private void OnTriggerStay(Collider other)
+    //{
        
-        var chip = other.GetComponent<ChipData>();      
-        var gc = other.gameObject.GetComponent<GrabbableChip>();
+    //    var chip = other.GetComponent<ChipData>();      
+    //    var gc = other.gameObject.GetComponent<GrabbableChip>();
 
-        var rb = other.GetComponent<Rigidbody>();
-        if (chip != null && gc != null && gc.grabbedBy != null && rb.isKinematic)
-        {
-            ExtractionObject(other.gameObject);
+    //    var rb = other.GetComponent<Rigidbody>();
+    //    if (chip != null && gc != null && gc.grabbedBy != null && rb.isKinematic)
+    //    {
+    //        photonView.RPC("ExtranctChipOnAll", RpcTarget.All, view.ViewID);
 
-            
-        }
 
-    }
+    //    }
+
+    //}
 
         
        
