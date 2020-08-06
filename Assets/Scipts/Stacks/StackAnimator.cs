@@ -33,24 +33,25 @@ public class StackAnimator : MonoBehaviour
     public float yOffset = 0.0073f;
 
     public StackData stack;
-    private List<GameObject> toRemove;
+
+    List<GameObject> currentObjects = new List<GameObject>();
+
+    Coroutine prevMoveLastChips, waitToEnd;
 
     private void Start()
     {
 
         stack = GetComponent<StackData>();
-        toRemove = new List<GameObject>();
+      
 
-    }
-    Coroutine waitEnd;
+    }  
     IEnumerator MoveLastChips(float chipsDropSpeed, float chipsDropMult, float pause)
     {
-        EnabledColliders(false);
         bool haveUnactiveObjects = true;
 
-        while (haveUnactiveObjects || newChipsComming)
+        while (haveUnactiveObjects)
         {
-            newChipsComming = false;
+           
             haveUnactiveObjects = false;
             for (var i = 0; i < currentObjects.Count; i++)
             {
@@ -63,7 +64,7 @@ public class StackAnimator : MonoBehaviour
                         );
                     haveUnactiveObjects = true;
                     yield return new WaitForSeconds(pause);
-                    toRemove.Add(currentObjects[i]);
+                   
 
                 }
 
@@ -71,18 +72,27 @@ public class StackAnimator : MonoBehaviour
             }
            
         }
-
-        yield return new WaitForSeconds(1f);
-
-        EnabledColliders(true);
-
-        currentObjects.Clear();
+   
 
         prevMoveLastChips = null;
+        StartCoroutine(WaitToEnd());
+
+      
+
+        
 
         yield return null;
 
 
+    }
+
+    IEnumerator WaitToEnd()
+    {
+        yield return new WaitForSeconds(2f);
+
+        EnabledColliders(true);
+        currentObjects.Clear();
+        waitToEnd = null;
     }
 
     private void EnabledColliders(bool isEnabled)
@@ -100,22 +110,20 @@ public class StackAnimator : MonoBehaviour
 
         }
     }
-    List<GameObject> currentObjects = new List<GameObject>();
-
-    Coroutine prevMoveLastChips;
-    bool newChipsComming = false;    
+  
+ 
     
     public void StartAnim(GameObject chip)
     {
         chip.SetActive(false);
 
-      
         currentObjects.Add(chip);
         chip.GetComponent<Collider>().enabled = false;
-        newChipsComming = true;
 
         if (prevMoveLastChips == null)
         {
+            if(waitToEnd != null)
+                StopCoroutine(waitToEnd);
             prevMoveLastChips = StartCoroutine(MoveLastChips(chipsDropSpeed, chipsDropMult, pauseBeetwenChips));
         }       
     }
@@ -158,15 +166,7 @@ public class StackAnimator : MonoBehaviour
             t += chipsDropSpeed * Time.deltaTime;
         }
 
-
-
-        
-
         yield return null;
-
-
-
-
     }
 
 

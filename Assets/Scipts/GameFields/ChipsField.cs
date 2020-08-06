@@ -98,13 +98,17 @@ public class ChipsField : AbstractField
     {
         var data = GetChipAndHisStack(viewID);
         if (data.chip == null)
+        {
             Debug.Log("chip not found! viewID = " + viewID);
+            return;
+        }
 
         data.chip.GetComponent<NetworkInfo>().Synchronization = ViewSynchronization.Unreliable;
         data.stack.Objects.Remove(data.chip);
 
         data.stack.UpdateStackInstantly();
     }   
+
 
     //protected bool ExtranctChipOnAll(int viewID)
     //{     
@@ -129,7 +133,6 @@ public class ChipsField : AbstractField
         if (chip != null && gc != null && !networkProps.isGrabbed  && !rb.isKinematic && view != null)
         {
             chip.GetComponent<NetworkInfo>().Synchronization = ViewSynchronization.Off;
-
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);
 

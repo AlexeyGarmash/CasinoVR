@@ -1,9 +1,10 @@
 ﻿using BansheeGz.BGSpline.Curve;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWinAnimation : MonoBehaviour
+public class PlayerWinAnimation : MonoBehaviourPun
 {
     
     [SerializeField]
@@ -20,7 +21,7 @@ public class PlayerWinAnimation : MonoBehaviour
     private void Start()
     {
         curves = GetComponentsInChildren<BezierCurve>();
-        //StartAnimation(1000);
+        StartAnimation(2000);
 
 
     }
@@ -28,9 +29,11 @@ public class PlayerWinAnimation : MonoBehaviour
 
     public void StartAnimation(int money)
     {
+
         CreateWinChips(money);
-        StartCoroutine(MoveChipWithCurve());
+        
     }
+    [PunRPC]
     private void CreateWinChips(int money)
     {
         winChips = new List<GameObject>();
@@ -44,6 +47,7 @@ public class PlayerWinAnimation : MonoBehaviour
             if (starmoney / 2 < money && money > (int)Chips.PURPLE)
             {
                 chipCost = Chips.PURPLE;
+                
                 chip = Instantiate(ChipUtils.Instance.purpleChipPrefab, transform);
                 
 
@@ -79,10 +83,13 @@ public class PlayerWinAnimation : MonoBehaviour
             else
                 chip = Instantiate(ChipUtils.Instance.yellowChipPrefab, transform);
 
+
             chip.SetActive(false);
             winChips.Add(chip);
             money -= (int)chipCost;
         }
+
+        StartCoroutine(MoveChipWithCurve());
     }
     IEnumerator MoveChipWithCurve()
     {
@@ -130,6 +137,20 @@ public class PlayerWinAnimation : MonoBehaviour
 
         yield return null;
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+       
+        var chip = other.gameObject.GetComponent<ChipData>();           
+        var view = other.gameObject.GetComponent<PhotonView>();
+        var viewInfo = other.gameObject.GetComponent<NetworkInfo>();
+        if (chip != null && view != null && viewInfo != null)
+        {
+            viewInfo.Synchronization = ViewSynchronization.Off;
+
+        }
+
     }
 
 
