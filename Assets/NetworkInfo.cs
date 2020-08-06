@@ -3,16 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetworkInfo : MonoBehaviour
+public class NetworkInfo : MonoBehaviourPun
 {
-    public bool isMine = false;
-    public int ViewId;
+    public bool IsMine = false;
+    public int ViewID;
+    public ViewSynchronization Synchronization = ViewSynchronization.Off;
     private void Awake()
-    {
-        var view = GetComponent<PhotonView>();
+    {    
 
-        isMine = view.IsMine;
-        ViewId = view.ViewID;
+        IsMine = photonView.IsMine;
+        ViewID = photonView.ViewID;
+        Synchronization = ViewSynchronization.Off;
+        //Synchronization = photonView.Synchronization;
 
 
     }

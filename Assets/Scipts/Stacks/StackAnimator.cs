@@ -56,7 +56,7 @@ public class StackAnimator : MonoBehaviour
             {
                 if (!currentObjects[i].activeSelf)
                 {
-                    //currentObjects[i].SetActive(true);
+                    currentObjects[i].SetActive(true);
 
                     stack.StartCoroutine(
                             MoveChip(chipsDropSpeed, chipsDropMult, currentObjects[i])
@@ -76,7 +76,7 @@ public class StackAnimator : MonoBehaviour
 
         EnabledColliders(true);
 
-        RemovelocalChip();
+        currentObjects.Clear();
 
         prevMoveLastChips = null;
 
@@ -103,37 +103,11 @@ public class StackAnimator : MonoBehaviour
     List<GameObject> currentObjects = new List<GameObject>();
 
     Coroutine prevMoveLastChips;
-    bool newChipsComming = false;
-
+    bool newChipsComming = false;    
     
-    [PunRPC]
-    public void UpdateChipsList_RPC(int viewID, int color)
-    {
-        var currChip = currentObjects.Find(c => c.GetComponent<NetworkInfo>().ViewId == viewID);
-
-        var newChip = Instantiate(ChipUtils.Instance.GetPrefabByColor((Chips)color), currChip.transform.position, currChip.transform.rotation);
-
-
-        Destroy(currChip);
-
-        var rb = newChip.GetComponent<Rigidbody>();
-        //var collider = newChip.GetComponent<Collider>();
-
-        rb.isKinematic = true;
-        //collider.enabled = false;
-
-
-        newChip.transform.parent = stack.transform;
-
-        stack.Objects.Add(newChip);
-       
-
-
-    }
     public void StartAnim(GameObject chip)
     {
-        //EnabledColliders(false);
-        //chip.SetActive(false);
+        chip.SetActive(false);
 
       
         currentObjects.Add(chip);
@@ -145,34 +119,7 @@ public class StackAnimator : MonoBehaviour
             prevMoveLastChips = StartCoroutine(MoveLastChips(chipsDropSpeed, chipsDropMult, pauseBeetwenChips));
         }       
     }
-    void RemovelocalChip()
-    {
-        Debug.Log(currentObjects.Count);
-        Debug.Log(toRemove.Count);
-
-
-
-        foreach (GameObject chip in toRemove)
-        {
-            var netInfo = chip.GetComponent<NetworkInfo>();
-
-            if (netInfo.isMine)
-            {
-
-                var view = GetComponent<PhotonView>();
-                var chipData = chip.GetComponent<ChipData>();
-              
-                view.RPC("UpdateChipsList_RPC", RpcTarget.All, netInfo.ViewId, (int)chipData.Cost);
-               
-
-
-            }
-            
-        }
-       
-        toRemove.Clear();
-        currentObjects.Clear();
-    }
+   
     IEnumerator MoveChip(float chipsDropSpeed, float chipsDropMult, GameObject chip)
     {
         

@@ -9,14 +9,14 @@ using UnityEngine;
 
 public class ChipsField : AbstractField
 {
-   
+
     public override bool MagnetizeObject(GameObject Object, StackData Stack)
     {
         var photonView = Object.GetComponent<PhotonView>();
         //photonView.ObservedComponents.Clear();
         var rb = Object.GetComponent<Rigidbody>();
         var chip = Object.GetComponent<ChipData>();
-        
+
 
         var stackData = Stack;
         var transform = stackData.gameObject.transform;
@@ -34,7 +34,7 @@ public class ChipsField : AbstractField
             stackData.StartAnim(Object);
 
             return true;
-            
+
         }
 
         return false;
@@ -58,9 +58,9 @@ public class ChipsField : AbstractField
             if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == data.Cost && maxChipsOnField != Stacks[i].Objects.Count)
                 list.Add(Stacks[i]);
 
-        if(list.Count == 0)
+        if (list.Count == 0)
             for (var i = 0; i < Stacks.Length; i++)
-                if(Stacks[i].Objects.Count == 0)
+                if (Stacks[i].Objects.Count == 0)
                     list.Add(Stacks[i]);
 
         if (list.Count == 0)
@@ -81,22 +81,55 @@ public class ChipsField : AbstractField
 
     }
 
-    private StackData FindStackOfChip(ChipData data)
+    private (GameObject chip, StackData stack) GetChipAndHisStack(int viewID)
     {
         for (var i = 0; i < Stacks.Length; i++)
-            if (Stacks[i].Objects.Contains(data.gameObject))
-                return Stacks[i];
+        {
+            var chip = Stacks[i].Objects.Find(s => s.GetComponent<NetworkInfo>().ViewID == viewID);
 
-        return null;
+            if (chip != null)
+
+                return (chip, Stacks[i]);               
+            
+
+        }
+
+        return (null, null);
+
     }
-
-    private void RemoveChip(ChipData data)
+    #region RPC 
+    [PunRPC]
+    private void ExtranctChipOnAll_RPC(int viewID)
     {
-        var stack = FindStackOfChip(data);
-        if (stack != null)
-            ExtractionObject(data.gameObject);
+        var data = GetChipAndHisStack(viewID);
+
+        data.chip.GetComponent<PhotonView>().Synchronization = ViewSynchronization.Unreliable;
+        data.stack.Objects.Remove(data.chip);
+
+        data.stack.UpdateStackInstantly();
     }
-    private void OnTriggerEnter(Collider other)
+
+    protected bool ExtranctChipOnAll(int viewID)
+    {
+        var data = GetChipAndHisStack(viewID);
+
+        data.chip.GetComponent<PhotonView>().Synchronization = ViewSynchronization.Unreliable;
+        data.stack.Objects.Remove(data.chip);
+
+        data.stack.UpdateStackInstantly();
+        
+        photonView.RPC("ExtranctChipOnAll_RPC", RpcTarget.Others, viewID);
+
+        if (data.chip != null)
+            return true;
+
+        return false;
+    }
+    #endregion
+
+
+    #region Unity Callbacks
+    protected void OnTriggerEnter(Collider other)
     {
 
         var gameObj = other.gameObject;
@@ -106,15 +139,7 @@ public class ChipsField : AbstractField
         var view = gameObj.GetComponent<PhotonView>();
 
         if (chip != null && gc != null && gc.grabbedBy == null && !rb.isKinematic && view != null)
-        {
-            var PhysicsSmoothView = gameObj.GetComponent<PhysicsSmoothView>();
-            view.Synchronization = ViewSynchronization.Off;
-
-            view.ObservedComponents.Clear();
-            Destroy(PhysicsSmoothView);
-            Destroy(view);
-            //view.Synchronization = ViewSynchronization.Off;
-            //view.RequestOwnership();          
+        {          
 
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);
@@ -123,7 +148,7 @@ public class ChipsField : AbstractField
 
     }
 
-    private void OnTriggerStay(Collider other)
+    protected void OnTriggerStay(Collider other)
     {
 
         var gameObj = other.gameObject;
@@ -131,15 +156,17 @@ public class ChipsField : AbstractField
         var gc = other.gameObject.GetComponent<GrabbableChip>();
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
-        if (chip != null && gc != null && gc.grabbedBy != null && rb.isKinematic && view != null && view.IsMine)
+    
+        if (chip != null && gc != null && gc.grabbedBy != null && rb.isKinematic && view != null && view.IsMine && Contain(gameObj))
         {
-
-            RemoveChip(chip);
-
+           
+            ExtranctChipOnAll(view.ViewID);
 
         }
 
     }
+
+    #endregion
 
 
 

@@ -74,7 +74,7 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
             }
         }
 
-    private void OnTriggerStay(Collider other)
+    private new void OnTriggerStay(Collider other)
     {
         if (canBet)
         {
@@ -92,7 +92,7 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
                     
 
                     Debug.Log("OnTriggerStay");
-                    if (chipPhotonView != null && chipPhotonView.IsMine && ExtractionObject(other.gameObject))
+                    if (chipPhotonView != null && chipPhotonView.IsMine && ExtranctChipOnAll(chipPhotonView.ViewID))
 
                     {
                         tableCell.RemoveBetData(new BetData(new PlayerStats(chip.player), (int)chip.Cost));

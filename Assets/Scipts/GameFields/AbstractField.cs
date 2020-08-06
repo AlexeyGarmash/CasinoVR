@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Photon.Pun;
 
-public abstract class AbstractField : MonoBehaviour, IMagnetize
-{
-
+public abstract class AbstractField : MonoBehaviourPun, IMagnetize
+{ 
     [SerializeField]
     public StackData[] Stacks;
 
@@ -52,22 +51,6 @@ public abstract class AbstractField : MonoBehaviour, IMagnetize
 
         return false;
     }
-
-    public bool ExtractionObject(GameObject chip)
-    {
-        for (var i = 0; i < Stacks.Length; i++)
-        {
-            if (Stacks[i].Objects.Contains(chip))
-            {
-                Stacks[i].Objects.Remove(chip);
-                Stacks[i].UpdateStackInstantly();
-
-                return true;
-            }
-        }
-        return false;
-    }
-
 
 
     public abstract bool MagnetizeObject(GameObject Object, StackData Stack);
