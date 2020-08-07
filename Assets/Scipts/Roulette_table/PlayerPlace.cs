@@ -33,6 +33,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
         print("Button clikced");
         if (ps != null && !placeTaken)
         {
+            placeTaken = true;
             this.ps = ps;
             print("Button clikced ps == null");
             photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);          
@@ -46,6 +47,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
     {
         if (ps != null && placeTaken)
         {
+            placeTaken = false;
             print("Button clikced ps != null");
             photonView?.RPC("GoOutPlace_RPC", RpcTarget.All);
             ps = null;

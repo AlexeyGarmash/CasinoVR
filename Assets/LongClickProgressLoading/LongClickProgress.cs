@@ -69,11 +69,10 @@ public class LongClickProgress : MonoBehaviourPun
         inGame = false;
         _imageReady.texture = _notReadyTexture;
         _textReady.text = "Not ready";
-        //if (photonView.IsMine)
-        //{
-            print("FUCKING GO OUT <ESSAGE");
-            photonView?.RPC("LeaveTable_RPC", RpcTarget.Others);
-        //}
+       
+        print("FUCKING GO OUT <ESSAGE");
+        photonView?.RPC("LeaveTable_RPC", RpcTarget.Others);
+       
     }
 
     private void InvokeClickTakePlace()

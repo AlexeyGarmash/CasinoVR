@@ -95,7 +95,7 @@ public class StackAnimator : MonoBehaviour
         waitToEnd = null;
     }
 
-    private void ChangeStateOfItem(bool colliderEnable, bool inAnimation,ViewSynchronization sync)
+    private void ChangeStateOfItem(bool collider, bool InAnimation, ViewSynchronization viewSynchronization)
     {
         foreach (GameObject chip in stack.Objects)
         {
@@ -103,12 +103,10 @@ public class StackAnimator : MonoBehaviour
             var netInfo = chip.GetComponent<ItemNetworkInfo>();
             if (GrabbableChip != null)
             {
-
-                
-                GrabbableChip.enabled = colliderEnable;
-                
-                netInfo.Synchronization = sync;
-                netInfo.InAnimation = inAnimation;
+                chip.GetComponent<Collider>().enabled = collider;
+                var ItemNetworkInfo = chip.GetComponent<ItemNetworkInfo>();
+                ItemNetworkInfo.InAnimation = InAnimation;
+                ItemNetworkInfo.Synchronization = viewSynchronization;
 
             }
 
@@ -119,16 +117,25 @@ public class StackAnimator : MonoBehaviour
     
     public void StartAnim(GameObject chip)
     {
-        chip.SetActive(false);
-
+       
         currentObjects.Add(chip);
+        chip.SetActive(false);
         chip.GetComponent<Collider>().enabled = false;
-        ChangeStateOfItem(false, true, ViewSynchronization.Off);
+        var ItemNetworkInfo = chip.GetComponent<ItemNetworkInfo>();
+        ItemNetworkInfo.InAnimation = true;
+        ItemNetworkInfo.Synchronization = ViewSynchronization.Off;
+
+        if (waitToEnd != null)
+        {
+            StopCoroutine(waitToEnd);
+            waitToEnd = StartCoroutine(WaitToEnd());
+        }
+        //ChangeStateOfItem(false, true, ViewSynchronization.Off);
         if (prevMoveLastChips == null)
         {
-            
-            if (waitToEnd != null)
-                StopCoroutine(waitToEnd);
+            UpdateStackInstantly();
+            ChangeStateOfItem(false, true, ViewSynchronization.Off);
+           
             prevMoveLastChips = StartCoroutine(MoveLastChips(chipsDropSpeed, chipsDropMult, pauseBeetwenChips));
         }       
     }
@@ -136,8 +143,6 @@ public class StackAnimator : MonoBehaviour
     IEnumerator MoveChip(float chipsDropSpeed, float chipsDropMult, GameObject chip)
     {
         
-
-
         var currOffsetX = Random.Range(-xOffset, xOffset);
         var currOffsetZ = Random.Range(-zOffset, zOffset);
 
@@ -201,6 +206,7 @@ public class StackAnimator : MonoBehaviour
 
             currentY += yOffset;
         }
+        currentY -= yOffset;
 
         //lastY = currentY;
 

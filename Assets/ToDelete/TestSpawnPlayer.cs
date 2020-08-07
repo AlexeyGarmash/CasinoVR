@@ -8,14 +8,12 @@ public class TestSpawnPlayer : MonoBehaviourPun
     [SerializeField] private string HeadPlayerPrefabPath_Remote;
     [SerializeField] private string HeadPlayerPrefabPath_Local;
 
-    private void Start()
+    private void Awake()
     {
         if (PhotonPlayerSettings.Instance != null)
         {
             if(PhotonPlayerSettings.Instance.PrefabResourceName != null)
                 PhotonNetwork.Instantiate(PhotonPlayerSettings.Instance.PrefabResourceName, new Vector3(0, 0, 0), Quaternion.identity);
-            
-
         }
         else
         {

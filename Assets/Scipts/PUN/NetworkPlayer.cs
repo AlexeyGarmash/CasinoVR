@@ -16,7 +16,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
     [SerializeField] private TextMeshPro TextNickName;
     [SerializeField] private Component[] ComponentsToDisable;
     
-    void Start()
+    void Awake()
     {
         if(photonView != null && photonView.IsMine)
         {

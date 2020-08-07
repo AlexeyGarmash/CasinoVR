@@ -15,6 +15,7 @@ permissions and limitations under the License.
 ************************************************************************************/
 
 using Assets.Scipts.Player;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
@@ -27,8 +28,9 @@ public class OVRGrabberCustom : MonoBehaviour
     [Header("New Settings")]
     //кнопка 1 для взятия предмета (нужна для добавления нескольких предметов в руку)
     [SerializeField]
-    private OVRInput.Button GrabButton = OVRInput.Button.PrimaryThumbstick;  
+    private OVRInput.Button GrabButton = OVRInput.Button.PrimaryThumbstick;
 
+    private PlayerStats playerStat;
     //кнопка 2 для взятия предмета
     [SerializeField]
     private OVRInput.Axis1D GrabAxis = OVRInput.Axis1D.PrimaryHandTrigger;
@@ -155,7 +157,8 @@ public class OVRGrabberCustom : MonoBehaviour
     }
 
     protected virtual void Start()
-    {      
+    {
+        playerStat = GetComponentInParent<PlayerStats>();
 
         m_lastPos = transform.position;
         m_lastRot = transform.rotation;
@@ -337,11 +340,11 @@ public class OVRGrabberCustom : MonoBehaviour
         var removeCandidaes = new List<OVRGrabbableCustom>();
         foreach (OVRGrabbableCustom grabbable in m_grabCandidates.Keys)
         {
-            if (grabbable.gameObject.GetComponent<ItemNetworkInfo>() != null &&
-                    grabbable.gameObject.GetComponent<ItemNetworkInfo>().InAnimation == true)
-            {
-                removeCandidaes.Add(grabbable);
-            }
+            var itemNetInfo = grabbable.gameObject.GetComponent<ItemNetworkInfo>();
+            if (itemNetInfo != null)            
+                if(itemNetInfo.InAnimation == true || itemNetInfo.Owner != playerStat.PlayerNick)
+                    removeCandidaes.Add(grabbable);
+                      
             //Debug.Log(Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position));
             else if (Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position) > MaxDistance)
             {
