@@ -101,12 +101,18 @@ public class StackAnimator : MonoBehaviour
         {
             var GrabbableChip = chip.GetComponent<Collider>();
             var netInfo = chip.GetComponent<ItemNetworkInfo>();
+            var view = chip.GetComponent<PhotonView>();
             if (GrabbableChip != null)
             {
                 chip.GetComponent<Collider>().enabled = collider;
                 var ItemNetworkInfo = chip.GetComponent<ItemNetworkInfo>();
                 ItemNetworkInfo.InAnimation = InAnimation;
                 ItemNetworkInfo.Synchronization = viewSynchronization;
+
+                if (viewSynchronization == ViewSynchronization.Off)
+                    view.GetComponent<PhysicsSmoothView>().SyncOff();
+                else
+                    view.GetComponent<PhysicsSmoothView>().SyncOn();
 
             }
 
@@ -117,7 +123,10 @@ public class StackAnimator : MonoBehaviour
     
     public void StartAnim(GameObject chip)
     {
-       
+        var view = chip.GetComponent<PhotonView>();
+        if (view.IsMine)
+            view.GetComponent<PhysicsSmoothView>().SyncOff();
+
         currentObjects.Add(chip);
         chip.SetActive(false);
         chip.GetComponent<Collider>().enabled = false;

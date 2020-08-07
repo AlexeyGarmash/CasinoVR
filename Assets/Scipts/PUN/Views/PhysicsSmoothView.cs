@@ -13,6 +13,8 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
     private Collider _collider;
     private OVRGrabbableCustom _ovrGrabbableCustom;
 
+
+    
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -65,11 +67,34 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
     public void FixedUpdate()
     {      
 
-        if (_networkInfo.Synchronization != ViewSynchronization.Off)
+        if (photonView.Synchronization != ViewSynchronization.Off)
             if (!photonView.IsMine )
             {
                 _rigidbody.position = Vector3.MoveTowards(_rigidbody.position, networkPosition, Time.fixedDeltaTime);
                 _rigidbody.rotation = Quaternion.RotateTowards(_rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
             }
+    }
+
+
+    public bool IsPhotonSync { get => photonView.Synchronization != ViewSynchronization.Off; }
+    public void SyncOff()
+    {
+        if(photonView.IsMine)
+            photonView.RPC("SyncOff_RPC", RpcTarget.All);
+    }
+    public void SyncOn()
+    {
+        if (photonView.IsMine)
+            photonView.RPC("SyncOn_RPC", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void SyncOff_RPC()
+    {
+        photonView.Synchronization = ViewSynchronization.Off;
+    }
+    public void SyncOn_RPC()
+    {
+        photonView.Synchronization = ViewSynchronization.Unreliable;
     }
 }
