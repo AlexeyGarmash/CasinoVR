@@ -114,7 +114,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
                 }
                 else sf.InstantiateToStackWithColor(Chips.YELLOW, ref money, ps.PlayerNick);
 
-                yield return null;
+                yield return new WaitForSeconds(0.01f);
             }
         }
        
