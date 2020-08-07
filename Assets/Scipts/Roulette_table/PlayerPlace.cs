@@ -12,17 +12,16 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
     private bool placeTaken = false;
     PlayerChipsField sf;
     public PlayerWinAnimation playerWinAnim;
-    public int PlayerPlaceID;
+   
 
-    EventManager<ROULETTE_EVENT> rouletteManager;
+ 
 
     public bool canLeave;
     private void Start()
     {
         ps = null;
        
-        rouletteManager = GetComponentInParent<TableBetsManager>().rouletteEventManager;
-        //rouletteManager.AddListener(ROULETTE_EVENT.PLAYER_CONNECTED, this);
+       
 
         playerWinAnim = GetComponentInChildren<PlayerWinAnimation>();
         sf = GetComponentInChildren<PlayerChipsField>();
@@ -34,8 +33,9 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
         print("Button clikced");
         if (ps != null && !placeTaken)
         {
+            this.ps = ps;
             print("Button clikced ps == null");
-            photonView?.RPC("TakePlace_RPC", RpcTarget.All, ps.PlayerNick, ps.AllMoney);          
+            photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);          
             PreparePlayerPlace();
             playerWinAnim.StartAnimation(1000, ps.PlayerNick);
         }
@@ -117,14 +117,5 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
         
     }
 
-    //public void OnEvent(ROULETTE_EVENT Event_type, Component Sender, params object[] Param)
-    //{
-    //    switch (Event_type)
-    //    {
-    //        case ROULETTE_EVENT.PLAYER_CONNECTED:
-    //            if (PlayerPlaceID == (int)Param[0])
-    //                ps = (PlayerStats)Param[1];
-    //            break;
-    //    }
-    //}
+   
 }

@@ -20,16 +20,14 @@ using UnityEngine;
 /// <summary>
 /// Allows grabbing and throwing of objects with the OVRGrabbable component on them.
 /// </summary>
-[RequireComponent(typeof(Rigidbody), typeof(PlayerData))]
+[RequireComponent(typeof(Rigidbody))]
 public class OVRGrabberCustom : MonoBehaviour
 {
     #region Extention variables 
     [Header("New Settings")]
     //кнопка 1 для взятия предмета (нужна для добавления нескольких предметов в руку)
     [SerializeField]
-    private OVRInput.Button GrabButton = OVRInput.Button.PrimaryThumbstick;
-
-    private PlayerData playerData;
+    private OVRInput.Button GrabButton = OVRInput.Button.PrimaryThumbstick;  
 
     //кнопка 2 для взятия предмета
     [SerializeField]
@@ -41,6 +39,7 @@ public class OVRGrabberCustom : MonoBehaviour
     //холдер для предметов руки находиться в TrackingSpace/LeftHandAnchor для левой руки TrackingSpace/RightHandAnchor для правой
     [SerializeField]
     public Transform grabbleObjSpawnPoint;
+
 
     //число предметов для взятия в руку
     public int max_grabbed_obj = 5;
@@ -156,8 +155,7 @@ public class OVRGrabberCustom : MonoBehaviour
     }
 
     protected virtual void Start()
-    {
-        playerData = GetComponent<PlayerData>();
+    {      
 
         m_lastPos = transform.position;
         m_lastRot = transform.rotation;
@@ -339,11 +337,15 @@ public class OVRGrabberCustom : MonoBehaviour
         var removeCandidaes = new List<OVRGrabbableCustom>();
         foreach (OVRGrabbableCustom grabbable in m_grabCandidates.Keys)
         {
-
-            //Debug.Log(Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position));
-            if (Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position) > MaxDistance)
+            if (grabbable.gameObject.GetComponent<ItemNetworkInfo>() != null &&
+                    grabbable.gameObject.GetComponent<ItemNetworkInfo>().InAnimation == true)
             {
-                if(grabbable.gameObject.GetComponent<GrabbableChip>() != null)
+                removeCandidaes.Add(grabbable);
+            }
+            //Debug.Log(Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position));
+            else if (Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position) > MaxDistance)
+            {
+                if(grabbable.gameObject.GetComponent<OVRGrabbableCustom>() != null)
                     removeCandidaes.Add(grabbable);
             }
         }

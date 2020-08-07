@@ -36,6 +36,8 @@ public class OVRGrabbableCustom : MonoBehaviourPun
     [SerializeField]
     protected Collider[] m_grabPoints = null;
     [SerializeField]
+    protected ItemNetworkInfo itemNetworkInfo = null;
+    [SerializeField]
 
     protected bool m_grabbedKinematic = false;
     protected Collider m_grabbedCollider = null;
@@ -125,7 +127,9 @@ public class OVRGrabbableCustom : MonoBehaviourPun
         if(photonView != null)
         {
             photonView.RequestOwnership();
-            
+            itemNetworkInfo.isGrabbed = true;
+
+
         }
 
         //GetComponent<Collider>().isTrigger = true;
@@ -149,6 +153,8 @@ public class OVRGrabbableCustom : MonoBehaviourPun
         m_grabbedCollider = null;
         gameObject.transform.parent = null;
         GetComponent<Collider>().isTrigger = false;
+
+        itemNetworkInfo.isGrabbed = false;
     }
 
     void Awake()
@@ -168,7 +174,8 @@ public class OVRGrabbableCustom : MonoBehaviourPun
     }
 
     protected virtual void Start()
-    {      
+    {
+        itemNetworkInfo = GetComponent<ItemNetworkInfo>();
         m_grabbedKinematic = GetComponent<Rigidbody>().isKinematic;
     }
 

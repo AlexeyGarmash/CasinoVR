@@ -9,6 +9,7 @@ public class ItemNetworkInfo : MonoBehaviourPun
     public string Owner;
     public int ViewID;
     public bool isGrabbed;
+    public bool InAnimation;
     public ViewSynchronization Synchronization = ViewSynchronization.Off;
 
     private OVRGrabbableCustom grabbale;

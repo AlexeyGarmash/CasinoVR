@@ -90,12 +90,12 @@ public class StackAnimator : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        ReturnToNormalState();
+        ChangeStateOfItem(true, false, ViewSynchronization.Unreliable);
         currentObjects.Clear();
         waitToEnd = null;
     }
 
-    private void ReturnToNormalState()
+    private void ChangeStateOfItem(bool colliderEnable, bool inAnimation,ViewSynchronization sync)
     {
         foreach (GameObject chip in stack.Objects)
         {
@@ -104,10 +104,13 @@ public class StackAnimator : MonoBehaviour
             if (GrabbableChip != null)
             {
 
-                GrabbableChip.enabled = true;
-                netInfo.Synchronization = ViewSynchronization.Unreliable;
-            }
+                
+                GrabbableChip.enabled = colliderEnable;
+                
+                netInfo.Synchronization = sync;
+                netInfo.InAnimation = inAnimation;
 
+            }
 
         }
     }
@@ -120,10 +123,11 @@ public class StackAnimator : MonoBehaviour
 
         currentObjects.Add(chip);
         chip.GetComponent<Collider>().enabled = false;
-
+        ChangeStateOfItem(false, true, ViewSynchronization.Off);
         if (prevMoveLastChips == null)
         {
-            if(waitToEnd != null)
+            
+            if (waitToEnd != null)
                 StopCoroutine(waitToEnd);
             prevMoveLastChips = StartCoroutine(MoveLastChips(chipsDropSpeed, chipsDropMult, pauseBeetwenChips));
         }       

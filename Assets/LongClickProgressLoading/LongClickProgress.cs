@@ -21,6 +21,7 @@ public class LongClickProgress : MonoBehaviourPun
     [SerializeField] private Texture _readyTexture;
     [SerializeField] private Texture _notReadyTexture;
 
+    [SerializeField] private PlayerPlace p_place;
     private bool inProgress = false;
     private float currentHoldTime = 0f;
     private bool inGame = false;
@@ -31,6 +32,7 @@ public class LongClickProgress : MonoBehaviourPun
     {
         _imageReady.texture = _notReadyTexture;
         _progressImage.fillAmount = 0f;
+        p_place = GetComponentInParent<PlayerPlace>();
     }
 
     private void Update()
@@ -102,9 +104,10 @@ public class LongClickProgress : MonoBehaviourPun
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<LongClickHand>() != null)
+        if (other.gameObject.GetComponent<LongClickHand>() != null && inProgress == false)
         {
             playerStats = other.GetComponentInParent<PlayerStats>();
+            if(p_place.ps == null || p_place.ps == playerStats)
             inProgress = true;
 
         }
