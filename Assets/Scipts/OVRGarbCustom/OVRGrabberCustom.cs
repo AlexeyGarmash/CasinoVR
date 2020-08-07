@@ -239,7 +239,7 @@ public class OVRGrabberCustom : MonoBehaviour
         ItemNetworkInfo netInfo = otherCollider.gameObject.GetComponent<ItemNetworkInfo>();
         OVRGrabbableCustom grabbable = otherCollider.GetComponent<OVRGrabbableCustom>() ?? otherCollider.GetComponentInParent<OVRGrabbableCustom>();
         if (grabbable == null) return;
-        //if (netInfo != null && netInfo.Owner != playerData.playerNickname) return;
+        if (netInfo != null && netInfo.Owner != playerStat.PlayerNick) return;
 
         // Add the grabbable
         int refCount = 0;
