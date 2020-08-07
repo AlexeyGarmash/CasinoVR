@@ -38,7 +38,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
             print("Button clikced ps == null");
             photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);          
             PreparePlayerPlace();
-            //playerWinAnim.StartAnimation(1000, ps.PlayerNick);
+            playerWinAnim.StartAnimation(1000, ps.PlayerNick);
         }
     }
 
