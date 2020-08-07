@@ -24,7 +24,7 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(_collider.enabled);
+            //stream.SendNext(_collider.enabled);
             //stream.SendNext(gameObject.activeSelf);
             
            //network info 
@@ -40,7 +40,7 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
         }
         else
         {
-            _collider.enabled = ((bool)stream.ReceiveNext());
+            //_collider.enabled = ((bool)stream.ReceiveNext());
             //gameObject.SetActive((bool)stream.ReceiveNext());
             _networkInfo.isGrabbed = ((bool)stream.ReceiveNext());
             _networkInfo.Owner = ((string)stream.ReceiveNext());
