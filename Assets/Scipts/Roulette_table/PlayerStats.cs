@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class PlayerStats
+public class PlayerStats : MonoBehaviour
 {
     
     public string PlayerNick;
@@ -15,5 +16,10 @@ public class PlayerStats
     {
         PlayerNick = nick;
         AllMoney = allMoney;
+    }
+
+    private void Start()
+    {
+        PlayerNick = PhotonNetwork.LocalPlayer.NickName;
     }
 }

@@ -7,7 +7,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1450482835771476019}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
@@ -37,7 +37,7 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-4782178633887677236
+--- !u!114 &7420611754438058358
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,19 +46,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 1450482835771476019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f363f3f1ea616e489bcc9cee901e8e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 902c013b7253fcd43aa068887f14785e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GrabButton: 32768
+  GrabAxis: 4
+  m_grabbedObjs: []
+  grabbleObjSpawnPoint: {fileID: 0}
+  max_grabbed_obj: 5
+  color: {r: 0, g: 0, b: 0, a: 0}
+  Width: 6
   grabBegin: 0.55
   grabEnd: 0.35
   throwForce: 1
   m_parentHeldObject: 0
   m_moveHandPosition: 0
-  m_gripTransform: {fileID: 0}
-  m_grabVolumes: []
-  m_controller: 0
+  m_gripTransform: {fileID: 1450482835771207111}
+  m_grabVolumes:
+  - {fileID: 0}
+  m_controller: 1
   m_parentTransform: {fileID: 0}
   m_player: {fileID: 0}
+--- !u!114 &7420611754438058361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450482835771476019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9027b8f21f996794ca1f19a6f263712b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_controller: 1
+  m_animator: {fileID: 1544928281976721755}
+  m_defaultGrabPose: {fileID: 11437176, guid: 35525acb4c3b75c4a8c4dc2c117427be, type: 3}
 --- !u!114 &4939570969177146544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,7 +152,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 414912, guid: e6ba3498ffa1e534b91a07264266e6b8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 414912, guid: e6ba3498ffa1e534b91a07264266e6b8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -192,9 +215,21 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1450482835771619591}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1450482835771207111 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 414912, guid: e6ba3498ffa1e534b91a07264266e6b8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1450482835771619591}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1451845473604293385 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1367450344401422, guid: e6ba3498ffa1e534b91a07264266e6b8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1450482835771619591}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1544928281976721755 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95022414942611548, guid: e6ba3498ffa1e534b91a07264266e6b8,
     type: 3}
   m_PrefabInstance: {fileID: 1450482835771619591}
   m_PrefabAsset: {fileID: 0}

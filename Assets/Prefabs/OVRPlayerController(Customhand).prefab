@@ -153,52 +153,6 @@ Transform:
   m_Father: {fileID: 1130859484810170216}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7420611755666709885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4265955226357613822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 902c013b7253fcd43aa068887f14785e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GrabButton: 32768
-  GrabAxis: 4
-  m_grabbedObjs: []
-  grabbleObjSpawnPoint: {fileID: 2159928048481242725}
-  max_grabbed_obj: 5
-  color: {r: 0, g: 0, b: 0, a: 0}
-  Width: 6
-  grabBegin: 0.55
-  grabEnd: 0.35
-  throwForce: 1
-  m_parentHeldObject: 0
-  m_moveHandPosition: 0
-  m_gripTransform: {fileID: 4265955226357386480}
-  m_grabVolumes:
-  - {fileID: 4265955226346234746}
-  - {fileID: 4265955226345365604}
-  m_controller: 2
-  m_parentTransform: {fileID: 0}
-  m_player: {fileID: 0}
---- !u!114 &7420611755666709886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4265955226357613822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9027b8f21f996794ca1f19a6f263712b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_controller: 2
-  m_animator: {fileID: 4206976687118037500}
-  m_defaultGrabPose: {fileID: 11437176, guid: 35525acb4c3b75c4a8c4dc2c117427be, type: 3}
 --- !u!1 &8182305870202396380
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,51 +246,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7420611754438058358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8276043156916013811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 902c013b7253fcd43aa068887f14785e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GrabButton: 32768
-  GrabAxis: 4
-  m_grabbedObjs: []
-  grabbleObjSpawnPoint: {fileID: 2159928048481242725}
-  max_grabbed_obj: 5
-  color: {r: 0, g: 0, b: 0, a: 0}
-  Width: 6
-  grabBegin: 0.55
-  grabEnd: 0.35
-  throwForce: 1
-  m_parentHeldObject: 0
-  m_moveHandPosition: 0
-  m_gripTransform: {fileID: 0}
-  m_grabVolumes:
-  - {fileID: 2533779472087893193}
-  m_controller: 1
-  m_parentTransform: {fileID: 0}
-  m_player: {fileID: 0}
---- !u!114 &7420611754438058361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8276043156916013811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9027b8f21f996794ca1f19a6f263712b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_controller: 1
-  m_animator: {fileID: 8326028733761754011}
-  m_defaultGrabPose: {fileID: 11437176, guid: 35525acb4c3b75c4a8c4dc2c117427be, type: 3}
 --- !u!1 &8411887614969736243
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,9 +514,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
---- !u!4 &1130859484810181484 stripped
+--- !u!4 &1130859484810088126 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 487254, guid: 126d619cf4daa52469682f85c1378b4a,
+  m_CorrespondingSourceObject: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a,
     type: 3}
   m_PrefabInstance: {fileID: 1130859484809958458}
   m_PrefabAsset: {fileID: 0}
@@ -617,9 +526,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1130859484809958458}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1130859484810088126 stripped
+--- !u!4 &1130859484810181484 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a,
+  m_CorrespondingSourceObject: {fileID: 487254, guid: 126d619cf4daa52469682f85c1378b4a,
     type: 3}
   m_PrefabInstance: {fileID: 1130859484809958458}
   m_PrefabAsset: {fileID: 0}
@@ -630,11 +539,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1130859484810170216}
     m_Modifications:
-    - target: {fileID: 115351540359447327, guid: b3dd079607b6a41419837629d0d4edd8,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1450482835771207111, guid: b3dd079607b6a41419837629d0d4edd8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -695,31 +599,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CustomHandLeft Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 5643931938206911418, guid: b3dd079607b6a41419837629d0d4edd8,
+    - target: {fileID: 7420611754438058358, guid: b3dd079607b6a41419837629d0d4edd8,
         type: 3}
-      propertyPath: viewIdField
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7456818811289595886, guid: b3dd079607b6a41419837629d0d4edd8,
+      propertyPath: grabbleObjSpawnPoint
+      value: 
+      objectReference: {fileID: 2159928048481242725}
+    - target: {fileID: 7420611754438058358, guid: b3dd079607b6a41419837629d0d4edd8,
         type: 3}
-      propertyPath: viewIdField
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: -4782178633887677236, guid: b3dd079607b6a41419837629d0d4edd8, type: 3}
+      propertyPath: m_grabVolumes.Array.data[0]
+      value: 
+      objectReference: {fileID: 2533779472087893193}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3dd079607b6a41419837629d0d4edd8, type: 3}
---- !u!95 &8326028733761754011 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1544928281976721755, guid: b3dd079607b6a41419837629d0d4edd8,
-    type: 3}
-  m_PrefabInstance: {fileID: 7420611755710988992}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8276043156916013811 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1450482835771476019, guid: b3dd079607b6a41419837629d0d4edd8,
-    type: 3}
-  m_PrefabInstance: {fileID: 7420611755710988992}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7420611755943320487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -727,16 +618,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1130859484810181484}
     m_Modifications:
-    - target: {fileID: 940656850922086184, guid: 1d4c26470cf65f748a87e985d6579b16,
-        type: 3}
-      propertyPath: viewIdField
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6137426449693204445, guid: 1d4c26470cf65f748a87e985d6579b16,
-        type: 3}
-      propertyPath: viewIdField
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6757924737270325081, guid: 1d4c26470cf65f748a87e985d6579b16,
         type: 3}
       propertyPath: m_Name
@@ -797,36 +678,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: -7390389245662880802, guid: 1d4c26470cf65f748a87e985d6579b16, type: 3}
+    - target: {fileID: 7420611755666709885, guid: 1d4c26470cf65f748a87e985d6579b16,
+        type: 3}
+      propertyPath: grabbleObjSpawnPoint
+      value: 
+      objectReference: {fileID: 2159928048481242725}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d4c26470cf65f748a87e985d6579b16, type: 3}
---- !u!1 &4265955226357613822 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6757924737270325081, guid: 1d4c26470cf65f748a87e985d6579b16,
-    type: 3}
-  m_PrefabInstance: {fileID: 7420611755943320487}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &4265955226357386480 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6757924737270552407, guid: 1d4c26470cf65f748a87e985d6579b16,
-    type: 3}
-  m_PrefabInstance: {fileID: 7420611755943320487}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &4265955226345365604 stripped
-CapsuleCollider:
-  m_CorrespondingSourceObject: {fileID: 6757924737258601411, guid: 1d4c26470cf65f748a87e985d6579b16,
-    type: 3}
-  m_PrefabInstance: {fileID: 7420611755943320487}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &4265955226346234746 stripped
-CapsuleCollider:
-  m_CorrespondingSourceObject: {fileID: 6757924737256552669, guid: 1d4c26470cf65f748a87e985d6579b16,
-    type: 3}
-  m_PrefabInstance: {fileID: 7420611755943320487}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &4206976687118037500 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 6672469955886443099, guid: 1d4c26470cf65f748a87e985d6579b16,
-    type: 3}
-  m_PrefabInstance: {fileID: 7420611755943320487}
-  m_PrefabAsset: {fileID: 0}

@@ -14,12 +14,13 @@ ANY KIND, either express or implied. See the License for the specific language g
 permissions and limitations under the License.
 ************************************************************************************/
 
+using Assets.Scipts.Player;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// Allows grabbing and throwing of objects with the OVRGrabbable component on them.
 /// </summary>
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(PlayerData))]
 public class OVRGrabberCustom : MonoBehaviour
 {
     #region Extention variables 
@@ -28,6 +29,7 @@ public class OVRGrabberCustom : MonoBehaviour
     [SerializeField]
     private OVRInput.Button GrabButton = OVRInput.Button.PrimaryThumbstick;
 
+    private PlayerData playerData;
 
     //кнопка 2 для взятия предмета
     [SerializeField]
@@ -155,6 +157,8 @@ public class OVRGrabberCustom : MonoBehaviour
 
     protected virtual void Start()
     {
+        playerData = GetComponent<PlayerData>();
+
         m_lastPos = transform.position;
         m_lastRot = transform.rotation;
 
@@ -231,8 +235,10 @@ public class OVRGrabberCustom : MonoBehaviour
     void OnTriggerEnter(Collider otherCollider)
     {
         // Get the grab trigger
+        ItemNetworkInfo netInfo = otherCollider.gameObject.GetComponent<ItemNetworkInfo>();
         OVRGrabbableCustom grabbable = otherCollider.GetComponent<OVRGrabbableCustom>() ?? otherCollider.GetComponentInParent<OVRGrabbableCustom>();
         if (grabbable == null) return;
+        //if (netInfo != null && netInfo.Owner != playerData.playerNickname) return;
 
         // Add the grabbable
         int refCount = 0;

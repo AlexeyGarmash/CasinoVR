@@ -7,9 +7,11 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+[Serializable]
+public class TakePlaceUnityEvent : UnityEvent<PlayerStats> { }
 public class LongClickProgress : MonoBehaviourPun
 {
-    [SerializeField] private UnityEvent _onLongClickTalePlace;
+    [SerializeField] private TakePlaceUnityEvent _onLongClickTalePlace;
     [SerializeField] private UnityEvent _onLongClickLeavePlace;
     [SerializeField] private float _holdTime;
     [SerializeField] private Image _progressImage;
@@ -22,7 +24,7 @@ public class LongClickProgress : MonoBehaviourPun
     private bool inProgress = false;
     private float currentHoldTime = 0f;
     private bool inGame = false;
-
+    private PlayerStats playerStats;
     private int enterCount = 0;
     private int exitCount = 0;
     private void Start()
@@ -75,7 +77,7 @@ public class LongClickProgress : MonoBehaviourPun
     private void InvokeClickTakePlace()
     {
         photonView?.RequestOwnership();
-        _onLongClickTalePlace?.Invoke();
+        _onLongClickTalePlace?.Invoke(playerStats);
         inGame = true;
         _imageReady.texture = _readyTexture;
         _textReady.text = PhotonNetwork.LocalPlayer.NickName;
@@ -102,8 +104,9 @@ public class LongClickProgress : MonoBehaviourPun
     {
         if (other.gameObject.GetComponent<LongClickHand>() != null)
         {
-            //if (!photonView.IsMine) return;
+            playerStats = other.GetComponentInParent<PlayerStats>();
             inProgress = true;
+
         }
     }
 

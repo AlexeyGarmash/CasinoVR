@@ -113,7 +113,7 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
             if (win > 0)
             {
                 Debug.Log("StartAnim win:" + win);
-                player.playerWinAnim.StartAnimation(win);
+                player.playerWinAnim.StartAnimation(win, player.ps.PlayerNick);
             }
         
 

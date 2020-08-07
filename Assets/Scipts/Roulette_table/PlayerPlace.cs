@@ -6,12 +6,13 @@ using UnityEngine;
 
 
 
-public class PlayerPlace : MonoBehaviourPun
+public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
 {
     public PlayerStats ps;
     private bool placeTaken = false;
     PlayerChipsField sf;
     public PlayerWinAnimation playerWinAnim;
+    public int PlayerPlaceID;
 
     EventManager<ROULETTE_EVENT> rouletteManager;
 
@@ -19,25 +20,24 @@ public class PlayerPlace : MonoBehaviourPun
     private void Start()
     {
         ps = null;
+       
         rouletteManager = GetComponentInParent<TableBetsManager>().rouletteEventManager;
+        //rouletteManager.AddListener(ROULETTE_EVENT.PLAYER_CONNECTED, this);
+
         playerWinAnim = GetComponentInChildren<PlayerWinAnimation>();
         sf = GetComponentInChildren<PlayerChipsField>();
     }
 
-     private void OnTriggerStay(Collider other)
-    {
-        
-    }
 
-    public void TakePlace()
+    public void TakePlace(PlayerStats ps)
     {
         print("Button clikced");
-        if (ps == null && !placeTaken)
+        if (ps != null && !placeTaken)
         {
             print("Button clikced ps == null");
-            photonView?.RPC("TakePlace_RPC", RpcTarget.All, PhotonNetwork.LocalPlayer.NickName);
-            ps = new PlayerStats(PhotonNetwork.LocalPlayer.NickName);
+            photonView?.RPC("TakePlace_RPC", RpcTarget.All, ps.PlayerNick, ps.AllMoney);          
             PreparePlayerPlace();
+            playerWinAnim.StartAnimation(1000, ps.PlayerNick);
         }
     }
 
@@ -54,10 +54,10 @@ public class PlayerPlace : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void TakePlace_RPC(string nickname)
+    public void TakePlace_RPC(string nickname, int money)
     {
         placeTaken = true;
-        ps = new PlayerStats(nickname, 1000);
+        ps = new PlayerStats(nickname, money);
         print("RPC TAKE PLACE!!!");
     }
 
@@ -84,30 +84,30 @@ public class PlayerPlace : MonoBehaviourPun
             {
                 if (starmoney / 2 < money)
                 {
-                    sf.InstantiateToStackWithColor(Chips.PURPLE, ref money);
+                    sf.InstantiateToStackWithColor(Chips.PURPLE, ref money, ps.PlayerNick);
                    
                 }
                 else if (starmoney / 4 < money)
                 {
-                    sf.InstantiateToStackWithColor(Chips.BLACK, ref money);
+                    sf.InstantiateToStackWithColor(Chips.BLACK, ref money, ps.PlayerNick);
 
                 }
                 else if (starmoney / 8 < money)
                 {
-                    sf.InstantiateToStackWithColor(Chips.GREEN, ref money);
+                    sf.InstantiateToStackWithColor(Chips.GREEN, ref money, ps.PlayerNick);
 
                 }
                 else if (starmoney / 16 < money)
                 {
-                    sf.InstantiateToStackWithColor(Chips.BLUE, ref money);
+                    sf.InstantiateToStackWithColor(Chips.BLUE, ref money, ps.PlayerNick);
 
                 }
                 else if (starmoney / 32 < money)
                 {
-                    sf.InstantiateToStackWithColor(Chips.RED, ref money);
+                    sf.InstantiateToStackWithColor(Chips.RED, ref money, ps.PlayerNick);
 
                 }
-                else sf.InstantiateToStackWithColor(Chips.YELLOW, ref money);
+                else sf.InstantiateToStackWithColor(Chips.YELLOW, ref money, ps.PlayerNick);
 
                
             }
@@ -117,6 +117,14 @@ public class PlayerPlace : MonoBehaviourPun
         
     }
 
-   
-    
+    //public void OnEvent(ROULETTE_EVENT Event_type, Component Sender, params object[] Param)
+    //{
+    //    switch (Event_type)
+    //    {
+    //        case ROULETTE_EVENT.PLAYER_CONNECTED:
+    //            if (PlayerPlaceID == (int)Param[0])
+    //                ps = (PlayerStats)Param[1];
+    //            break;
+    //    }
+    //}
 }

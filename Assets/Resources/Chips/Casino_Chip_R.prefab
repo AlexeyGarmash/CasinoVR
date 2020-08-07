@@ -148,7 +148,7 @@ MonoBehaviour:
   m_snapOrientation: 0
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
-  NetworkInfo: {fileID: 0}
+  m_grabbedKinematic: 0
   GrabPos1ChipLeft: {fileID: 0}
   GrabPos2ChipLeft: {fileID: 0}
   GrabPos3ChipLeft: {fileID: 0}
@@ -311,10 +311,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 114676}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c0894f749906c438fdb98955b09e4b, type: 3}
+  m_Script: {fileID: 11500000, guid: 18d332eb53bdfec45a83ba72d4e1bfaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsMine: 0
+  Owner: 
   ViewID: 0
   isGrabbed: 0
   Synchronization: 0

@@ -21,6 +21,7 @@ using UnityEngine;
 /// <summary>
 /// An object that can be grabbed and thrown by OVRGrabber.
 /// </summary>
+[RequireComponent(typeof(ItemNetworkInfo))]
 public class OVRGrabbableCustom : MonoBehaviourPun
 {
 
@@ -35,7 +36,7 @@ public class OVRGrabbableCustom : MonoBehaviourPun
     [SerializeField]
     protected Collider[] m_grabPoints = null;
     [SerializeField]
-    protected NetworkInfo NetworkInfo;
+
     protected bool m_grabbedKinematic = false;
     protected Collider m_grabbedCollider = null;
     protected OVRGrabberCustom m_grabbedBy = null;
@@ -167,8 +168,7 @@ public class OVRGrabbableCustom : MonoBehaviourPun
     }
 
     protected virtual void Start()
-    {
-        NetworkInfo = GetComponent<NetworkInfo>();
+    {      
         m_grabbedKinematic = GetComponent<Rigidbody>().isKinematic;
     }
 

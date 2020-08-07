@@ -3,14 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetworkInfo : MonoBehaviourPun
+public class ItemNetworkInfo : MonoBehaviourPun
 {
     public bool IsMine = false;
+    public string Owner;
     public int ViewID;
     public bool isGrabbed;
     public ViewSynchronization Synchronization = ViewSynchronization.Off;
 
     private OVRGrabbableCustom grabbale;
+
     private void Awake()
     {
         grabbale = GetComponent<OVRGrabbableCustom>();

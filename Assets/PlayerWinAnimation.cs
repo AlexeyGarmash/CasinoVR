@@ -23,29 +23,25 @@ public class PlayerWinAnimation : MonoBehaviourPun
         winChips = new List<GameObject>();
         curves = GetComponentsInChildren<BezierCurve>();
 
-        if (photonView.IsMine)
-        {
-            StartAnimation(2000);
-            StartCoroutine(MoveChipWithCurve());
-        }
-        else StartCoroutine(MoveChipWithCurve());
+       
 
 
 
     }
     List<GameObject> winChips;
+  
     [PunRPC]
     public void StartAnimation_RPC()
     {
         StartCoroutine(MoveChipWithCurve());
     }
-    public void StartAnimation(int win)
+    public void StartAnimation(int win, string nickName)
     {
-        CreateWinChips(win);
-        //photonView.RPC("StartAnimation_RPC", RpcTarget.All);    
+        CreateWinChips(win, nickName);
+        photonView.RPC("StartAnimation_RPC", RpcTarget.All);    
 
     }
-    private void CreateWinChips(int money)
+    private void CreateWinChips(int money, string nickName)
     {
         
         var starmoney = money;
@@ -53,7 +49,7 @@ public class PlayerWinAnimation : MonoBehaviourPun
         
         while (money > 0)
         {
-            GameObject chip;
+           
             chipCost = Chips.YELLOW;
             if (starmoney / 2 < money && money > (int)Chips.PURPLE)           
                 chipCost = Chips.PURPLE;
@@ -72,7 +68,8 @@ public class PlayerWinAnimation : MonoBehaviourPun
                 
 
 
-            PhotonNetwork.Instantiate(ChipUtils.Instance.GetPathToChip(chipCost), transform.position, transform.rotation);                       
+            var chip = PhotonNetwork.Instantiate(ChipUtils.Instance.GetPathToChip(chipCost), transform.position, transform.rotation);
+            chip.GetComponent<ItemNetworkInfo>().Owner = nickName;
             money -= (int)chipCost;
         }
 
@@ -135,7 +132,7 @@ public class PlayerWinAnimation : MonoBehaviourPun
        
         var chip = other.gameObject.GetComponent<ChipData>();           
         var view = other.gameObject.GetComponent<PhotonView>();
-        var viewInfo = other.gameObject.GetComponent<NetworkInfo>();
+        var viewInfo = other.gameObject.GetComponent<ItemNetworkInfo>();
         if (chip != null && view != null && viewInfo != null)
         {
             winChips.Add(other.gameObject);

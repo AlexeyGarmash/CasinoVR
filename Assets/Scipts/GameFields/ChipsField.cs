@@ -94,7 +94,7 @@ public class ChipsField : AbstractField
     }
     #region RPC 
     [PunRPC]
-    public void ExtranctChipOnAll(int viewID)
+    public void ExtranctChipOnAll_RPC(int viewID)
     {
         var data = GetChipAndHisStack(viewID);
         if (data.chip == null)
@@ -102,12 +102,24 @@ public class ChipsField : AbstractField
             Debug.Log("chip not found! viewID = " + viewID);
             return;
         }
-
-        data.chip.GetComponent<NetworkInfo>().Synchronization = ViewSynchronization.Unreliable;
+       
         data.stack.Objects.Remove(data.chip);
 
         data.stack.UpdateStackInstantly();
-    }   
+    }
+    public void ExtranctChip(int viewID)
+    {
+        var data = GetChipAndHisStack(viewID);
+        if (data.chip == null)
+        {
+            Debug.Log("chip not found! viewID = " + viewID);
+            return;
+        }
+     
+        data.stack.Objects.Remove(data.chip);
+
+        data.stack.UpdateStackInstantly();
+    }
 
 
     //protected bool ExtranctChipOnAll(int viewID)
@@ -129,10 +141,10 @@ public class ChipsField : AbstractField
         var gc = other.gameObject.GetComponent<GrabbableChip>();
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
-        var networkProps = gameObj.GetComponent<NetworkInfo>();
+        var networkProps = gameObj.GetComponent<ItemNetworkInfo>();
         if (chip != null && gc != null && !networkProps.isGrabbed  && !rb.isKinematic && view != null)
         {
-            chip.GetComponent<NetworkInfo>().Synchronization = ViewSynchronization.Off;
+            chip.GetComponent<ItemNetworkInfo>().Synchronization = ViewSynchronization.Off;
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);
 
@@ -148,13 +160,13 @@ public class ChipsField : AbstractField
         var gc = other.gameObject.GetComponent<GrabbableChip>();
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
-        var networkProps = gameObj.GetComponent<NetworkInfo>();
+        var networkProps = gameObj.GetComponent<ItemNetworkInfo>();
 
         if (chip != null && gc != null && networkProps.isGrabbed && rb.isKinematic && view != null && view.IsMine  && Contain(gameObj))
         {
-            
-            photonView.RPC("ExtranctChipOnAll", RpcTarget.All, view.ViewID);
 
+            //photonView.RPC("ExtranctChipOnAll", RpcTarget.All, view.ViewID);
+            ExtranctChip(view.ViewID);
         }
 
     }

@@ -78,14 +78,15 @@ public class PlayerChipsField : ChipsField
      
         var chip = Instantiate(prefab, SpawnPos);
 
-        chip.GetComponent<NetworkInfo>().Synchronization = ViewSynchronization.Off;
+        chip.GetComponent<ItemNetworkInfo>().Synchronization = ViewSynchronization.Off;
        
 
 
     }
-    public void InstantiateToStackWithColor(Chips chipsCost, ref int money)
+    public void InstantiateToStackWithColor(Chips chipsCost, ref int money, string playerNick)
     {
-        PhotonNetwork.Instantiate(ChipUtils.Instance.GetPathToChip(chipsCost), SpawnPos.position, SpawnPos.rotation);   
+        var chip = PhotonNetwork.Instantiate(ChipUtils.Instance.GetPathToChip(chipsCost), SpawnPos.position, SpawnPos.rotation);
+        chip.GetComponent<ItemNetworkInfo>().Owner = playerNick;
         money -= (int)chipsCost;
     }
       

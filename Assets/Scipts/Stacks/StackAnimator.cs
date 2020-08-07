@@ -90,21 +90,22 @@ public class StackAnimator : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        EnabledColliders(true);
+        ReturnToNormalState();
         currentObjects.Clear();
         waitToEnd = null;
     }
 
-    private void EnabledColliders(bool isEnabled)
+    private void ReturnToNormalState()
     {
         foreach (GameObject chip in stack.Objects)
         {
             var GrabbableChip = chip.GetComponent<Collider>();
-
+            var netInfo = chip.GetComponent<ItemNetworkInfo>();
             if (GrabbableChip != null)
             {
 
-                GrabbableChip.enabled = isEnabled;
+                GrabbableChip.enabled = true;
+                netInfo.Synchronization = ViewSynchronization.Unreliable;
             }
 
 
