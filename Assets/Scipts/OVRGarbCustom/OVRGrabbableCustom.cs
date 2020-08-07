@@ -21,7 +21,6 @@ using UnityEngine;
 /// <summary>
 /// An object that can be grabbed and thrown by OVRGrabber.
 /// </summary>
-[RequireComponent(typeof(ItemNetworkInfo))]
 public class OVRGrabbableCustom : MonoBehaviourPun
 {
 
@@ -35,12 +34,11 @@ public class OVRGrabbableCustom : MonoBehaviourPun
     protected Transform m_snapOffset;
     [SerializeField]
     protected Collider[] m_grabPoints = null;
-    [SerializeField]
-    protected ItemNetworkInfo itemNetworkInfo = null;
-    [SerializeField]
 
+    [SerializeField]
     protected bool m_grabbedKinematic = false;
     protected Collider m_grabbedCollider = null;
+    [SerializeField]
     protected OVRGrabberCustom m_grabbedBy = null;
 
     /// <summary>
@@ -121,15 +119,15 @@ public class OVRGrabbableCustom : MonoBehaviourPun
     /// <summary>
     /// Notifies the object that it has been grabbed.
     /// </summary>
+    /// 
+   
     virtual public void GrabBegin(OVRGrabberCustom hand, Collider grabPoint)
     {
 
         if(photonView != null)
         {
             photonView.RequestOwnership();
-            itemNetworkInfo.isGrabbed = true;
-
-
+            GetComponent<ChipData>().IsGragged_Photon(true);
         }
 
         //GetComponent<Collider>().isTrigger = true;
@@ -140,21 +138,24 @@ public class OVRGrabbableCustom : MonoBehaviourPun
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
     }
 
+
     /// <summary>
     /// Notifies the object that it has been released.
     /// </summary>
+    
     virtual public void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         rb.isKinematic = m_grabbedKinematic;
         rb.velocity = linearVelocity;
         rb.angularVelocity = angularVelocity;
+        GetComponent<ChipData>().IsGragged_Photon(false);
         m_grabbedBy = null;
         m_grabbedCollider = null;
         gameObject.transform.parent = null;
         GetComponent<Collider>().isTrigger = false;
 
-        itemNetworkInfo.isGrabbed = false;
+        
     }
 
     void Awake()
@@ -174,8 +175,7 @@ public class OVRGrabbableCustom : MonoBehaviourPun
     }
 
     protected virtual void Start()
-    {
-        itemNetworkInfo = GetComponent<ItemNetworkInfo>();
+    {    
         m_grabbedKinematic = GetComponent<Rigidbody>().isKinematic;
     }
 

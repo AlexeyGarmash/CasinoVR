@@ -236,7 +236,7 @@ public class OVRGrabberCustom : MonoBehaviour
     void OnTriggerEnter(Collider otherCollider)
     {
         // Get the grab trigger
-        ItemNetworkInfo netInfo = otherCollider.gameObject.GetComponent<ItemNetworkInfo>();
+        var netInfo = otherCollider.gameObject.GetComponent<ChipData>();
         OVRGrabbableCustom grabbable = otherCollider.GetComponent<OVRGrabbableCustom>() ?? otherCollider.GetComponentInParent<OVRGrabbableCustom>();
         if (grabbable == null) return;
         if (netInfo != null && netInfo.Owner != playerStat.PlayerNick) return;
@@ -340,7 +340,7 @@ public class OVRGrabberCustom : MonoBehaviour
         var removeCandidaes = new List<OVRGrabbableCustom>();
         foreach (OVRGrabbableCustom grabbable in m_grabCandidates.Keys)
         {
-            var itemNetInfo = grabbable.gameObject.GetComponent<ItemNetworkInfo>();
+            var itemNetInfo = grabbable.gameObject.GetComponent<ChipData>();
             if (itemNetInfo != null)            
                 if(itemNetInfo.InAnimation == true || itemNetInfo.Owner != playerStat.PlayerNick)
                     removeCandidaes.Add(grabbable);

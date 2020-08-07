@@ -44,8 +44,8 @@ public class PlayerChipsField : ChipsField
     public void InstantiateToStackWithColor(Chips chipsCost, ref int money, string playerNick)
     {
         var chip = PhotonNetwork.Instantiate(ChipUtils.Instance.GetPathToChip(chipsCost), SpawnPos.position, SpawnPos.rotation);
-        chip.GetComponent<ItemNetworkInfo>().Owner = playerNick;
-        chip.GetComponent<PhysicsSmoothView>().SyncOff();
+        chip.GetComponent<ChipData>().Owner = playerNick;
+        chip.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
         money -= (int)chipsCost;
     }
       

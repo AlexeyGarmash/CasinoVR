@@ -20,10 +20,10 @@ public class ChipsField : AbstractField
 
         var stackData = Stack;
         var transform = stackData.gameObject.transform;
-        if (stackData.playerName.Equals(chip.player) || stackData.playerName == "")
+        if (stackData.playerName.Equals(chip.Owner) || stackData.playerName == "")
         {
             if (stackData.playerName == "")
-                stackData.playerName = chip.player;
+                stackData.playerName = chip.Owner;
 
             rb.isKinematic = true;
             chip.transform.parent = stackData.transform;
@@ -133,6 +133,7 @@ public class ChipsField : AbstractField
 
 
     #region Unity Callbacks
+
     protected void OnTriggerEnter(Collider other)
     {
 
@@ -141,9 +142,10 @@ public class ChipsField : AbstractField
         var gc = other.gameObject.GetComponent<GrabbableChip>();
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
-        var networkProps = gameObj.GetComponent<ItemNetworkInfo>();
-        if (chip != null && gc != null && !networkProps.isGrabbed  && !rb.isKinematic && view != null)
+        var networkProps = gameObj.GetComponent<ChipData>();
+        if (chip != null && gc != null && !networkProps.isGrabbed && !rb.isKinematic && view != null)
         {
+            
             Debug.Log("MagnetizeObject viewID=" + view.ViewID);          
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);
@@ -160,12 +162,10 @@ public class ChipsField : AbstractField
         var gc = other.gameObject.GetComponent<GrabbableChip>();
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
-        var networkProps = gameObj.GetComponent<ItemNetworkInfo>();
+        var networkProps = gameObj.GetComponent<ChipData>();
 
         if (chip != null && gc != null && networkProps.isGrabbed && rb.isKinematic && view != null && Contain(gameObj))
         {
-
-            //photonView.RPC("ExtranctChipOnAll", RpcTarget.All, view.ViewID);
             ExtranctChip(view.ViewID);
         }
 

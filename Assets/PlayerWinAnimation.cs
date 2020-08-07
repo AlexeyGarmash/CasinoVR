@@ -69,7 +69,7 @@ public class PlayerWinAnimation : MonoBehaviourPun
 
 
             var chip = PhotonNetwork.Instantiate(ChipUtils.Instance.GetPathToChip(chipCost), transform.position, transform.rotation);
-            chip.GetComponent<ItemNetworkInfo>().Owner = nickName;
+            chip.GetComponent<ChipData>().SetOwner_Photon(nickName);
             money -= (int)chipCost;
         }
 
@@ -138,7 +138,7 @@ public class PlayerWinAnimation : MonoBehaviourPun
             winChips.Add(other.gameObject);
            
             other.gameObject.SetActive(false);
-            view.GetComponent<PhysicsSmoothView>().SyncOff();
+            view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
 
         }
 

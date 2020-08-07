@@ -130,7 +130,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cost: 25
-  player: 
+  Owner: 
+  InAnimation: 0
+  isGrabbed: 0
 --- !u!114 &826903926256348457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,8 +150,8 @@ MonoBehaviour:
   m_snapOrientation: 0
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
-  itemNetworkInfo: {fileID: 0}
   m_grabbedKinematic: 0
+  m_grabbedBy: {fileID: 0}
   GrabPos1ChipLeft: {fileID: 0}
   GrabPos2ChipLeft: {fileID: 0}
   GrabPos3ChipLeft: {fileID: 0}
@@ -312,15 +314,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 167068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18d332eb53bdfec45a83ba72d4e1bfaa, type: 3}
+  m_Script: {fileID: 11500000, guid: ead309109265a9742bedb75e54445baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsMine: 0
-  Owner: 
-  ViewID: 0
-  isGrabbed: 0
-  InAnimation: 0
-  Synchronization: 0
 --- !u!114 &-1223849697103958058
 MonoBehaviour:
   m_ObjectHideFlags: 0

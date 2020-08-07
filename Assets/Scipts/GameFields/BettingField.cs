@@ -58,7 +58,7 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
 
             if (chip != null && tableCell != null && bettingController == null)
             {
-                chip.player = PhotonNetwork.LocalPlayer.NickName;
+                chip.Owner = PhotonNetwork.LocalPlayer.NickName;
                 var grabbadBy = other.gameObject.GetComponent<GrabbableChip>().grabbedBy;
 
                 if(grabbadBy == null && !Contain(chip.gameObject))                    
@@ -67,7 +67,7 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
                     MagnetizeObject(other.gameObject, Stacks[0]);
                     if (chipPhotonView != null && chipPhotonView.IsMine)
                     {
-                        tableCell.ReceiveBetData(new BetData(new PlayerStats(chip.player), (int)chip.Cost));
+                        tableCell.ReceiveBetData(new BetData(new PlayerStats(chip.Owner), (int)chip.Cost));
                     }
                  }
                 }
@@ -83,7 +83,7 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
 
             if (chip != null && tableCell != null)
             {
-                chip.player = PhotonNetwork.LocalPlayer.NickName;
+                chip.Owner = PhotonNetwork.LocalPlayer.NickName;
                 var grabbadBy = other.gameObject.GetComponent<GrabbableChip>().grabbedBy;
                 if (grabbadBy != null)
                 {
@@ -95,7 +95,7 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
                     if (chipPhotonView != null && chipPhotonView.IsMine /*&& ExtranctChipOnAll(chipPhotonView.ViewID)*/)
 
                     {
-                        tableCell.RemoveBetData(new BetData(new PlayerStats(chip.player), (int)chip.Cost));
+                        tableCell.RemoveBetData(new BetData(new PlayerStats(chip.Owner), (int)chip.Cost));
                     }
                 }
             }
