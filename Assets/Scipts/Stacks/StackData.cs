@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class StackData : MonoBehaviour
     public string playerName = "";
    
     public List<GameObject> Objects = new List<GameObject>();
+
+    public List<GameObject> SyncObjects = new List<GameObject>();
 
     public StackAnimator animator;
 
@@ -42,7 +45,8 @@ public class StackData : MonoBehaviour
 
 
 
-    }
+
+}
 
 
 

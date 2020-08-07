@@ -86,16 +86,20 @@ public class StackAnimator : MonoBehaviour
 
     }
 
+    private bool AnimationEnded = true;
+    public int AnimationFlag { get  { if (AnimationEnded) return 1; else return 0; } }
     IEnumerator WaitToEnd()
     {
         yield return new WaitForSeconds(2f);
 
-        ChangeStateOfItem(true, false, ViewSynchronization.Unreliable);
+        AnimationEnded = true;
+        //ChangeStateOfItem(true, false, ViewSynchronization.Unreliable);
         currentObjects.Clear();
         waitToEnd = null;
+        
     }
 
-    private void ChangeStateOfItem(bool collider, bool InAnimation, ViewSynchronization viewSynchronization)
+    public void ChangeStateOfItem(bool collider, bool InAnimation, ViewSynchronization viewSynchronization)
     {
         foreach (GameObject chip in stack.Objects)
         {
@@ -118,11 +122,16 @@ public class StackAnimator : MonoBehaviour
 
         }
     }
-  
+
+    
+
+    
  
     
     public void StartAnim(GameObject chip)
     {
+        AnimationEnded = false;
+
         var view = chip.GetComponent<PhotonView>();
         if (view.IsMine)
             view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
@@ -141,7 +150,7 @@ public class StackAnimator : MonoBehaviour
         //ChangeStateOfItem(false, true, ViewSynchronization.Off);
         if (prevMoveLastChips == null)
         {
-            UpdateStackInstantly();
+            //UpdateStackInstantly();
             ChangeStateOfItem(false, true, ViewSynchronization.Off);
            
             prevMoveLastChips = StartCoroutine(MoveLastChips(chipsDropSpeed, chipsDropMult, pauseBeetwenChips));

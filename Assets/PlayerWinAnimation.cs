@@ -39,7 +39,6 @@ public class PlayerWinAnimation : MonoBehaviourPun
     {
         CreateWinChips(win, nickName);
         photonView.RPC("StartAnimation_RPC", RpcTarget.All);    
-
     }
     private void CreateWinChips(int money, string nickName)
     {
