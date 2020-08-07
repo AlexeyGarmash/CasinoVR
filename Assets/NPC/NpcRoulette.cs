@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NpcRoulette : MonoBehaviour
 {
-    private const string SPIN_ANIM = "Spin";
+    private const string SPIN_ANIM = "SpinT";
     private Animator animator;
 
     private void Awake()
@@ -14,9 +14,14 @@ public class NpcRoulette : MonoBehaviour
 
     public void RunSpinAnimation()
     {
-        
+        animator.SetTrigger(SPIN_ANIM);
     }
 
-    
-
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            RunSpinAnimation();
+        }
+    }
 }

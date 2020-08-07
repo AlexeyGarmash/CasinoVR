@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 0f70ab76-ffdd-4efe-b6f3-395dd321b211
+    AppIdRealtime: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 0.1
+    AppVersion: 
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -27,7 +27,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: ru
+  DevRegion: 
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -38,8 +38,10 @@ MonoBehaviour:
   - DestroyBall_RPC
   - DestroyRpc
   - DestroySpaceship
+  - ExtranctChipOnAll
   - Fire
   - GoOutPlace_RPC
+  - InstantiateChip_RPC
   - JoinTable_RPC
   - LeaveTable_RPC
   - RemoveBetValues_RPC
@@ -50,11 +52,6 @@ MonoBehaviour:
   - StartSpin_RPC
   - TakePlace_RPC
   - UpdateExistBet_RPC
-  - UpdateChipsList_RPC
-  - InstantiateChip_RPC
-  - ExtranctChipOnAll_RPC
-  - ExtranctChipOnAll
-  - CreateWinChips
   DisableAutoOpenWizard: 1
-  ShowSettings: 1
-  DevRegionSetOnce: 1
+  ShowSettings: 0
+  DevRegionSetOnce: 0
