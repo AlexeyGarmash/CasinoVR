@@ -132,13 +132,13 @@ public class PlayerWinAnimation : MonoBehaviourPun
        
         var chip = other.gameObject.GetComponent<ChipData>();           
         var view = other.gameObject.GetComponent<PhotonView>();
-        var viewInfo = other.gameObject.GetComponent<ItemNetworkInfo>();
-        if (chip != null && view != null && viewInfo != null)
+       
+        if (chip != null && view != null)
         {
             winChips.Add(other.gameObject);
            
             other.gameObject.SetActive(false);
-            viewInfo.Synchronization = ViewSynchronization.Off;
+            view.GetComponent<PhysicsSmoothView>().SyncOff();
 
         }
 

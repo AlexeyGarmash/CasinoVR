@@ -38,7 +38,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
             print("Button clikced ps == null");
             photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);          
             PreparePlayerPlace();
-            playerWinAnim.StartAnimation(1000, ps.PlayerNick);
+            //playerWinAnim.StartAnimation(1000, ps.PlayerNick);
         }
     }
 
@@ -71,8 +71,11 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
         print("RPC GO OUT FROM PLACE!!!");
     }
 
-
     public void PreparePlayerPlace()
+    {
+        StartCoroutine(CreateChipWithDelay());
+    }
+    public IEnumerator CreateChipWithDelay()
     {
         Debug.Log(sf);
         
@@ -111,7 +114,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
                 }
                 else sf.InstantiateToStackWithColor(Chips.YELLOW, ref money, ps.PlayerNick);
 
-               
+                yield return new WaitForSeconds(0.1f);
             }
         }
        

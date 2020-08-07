@@ -41,52 +41,11 @@ public class PlayerChipsField : ChipsField
     }
 
 
-    //private void InstatiateChip(GameObject prefab, Chips chipsCost, ref int money)
-    //{
-
-    //    Instantiate(prefab, SpawnPos);
-    //    money -= (int)chipsCost;
-    //}
-
-    [PunRPC]
-    private void InstantiateChip_RPC(int color)
-    {
-       
-        GameObject prefab = null;
-
-        switch ((Chips)color)
-        {
-            case Chips.BLACK:
-                prefab = blackChipPrefab;
-                break;
-            case Chips.BLUE:
-                prefab = blueChipPrefab;
-                break;
-            case Chips.GREEN:
-                prefab = greenChipPrefab;
-                break;
-            case Chips.PURPLE:
-                prefab = purpleChipPrefab;
-                break;
-            case Chips.RED:
-                prefab = redChipPrefab;
-                break;
-            case Chips.YELLOW:
-                prefab = yellowChipPrefab;
-                break;              
-        }
-     
-        var chip = Instantiate(prefab, SpawnPos);
-
-        chip.GetComponent<ItemNetworkInfo>().Synchronization = ViewSynchronization.Off;
-       
-
-
-    }
     public void InstantiateToStackWithColor(Chips chipsCost, ref int money, string playerNick)
     {
         var chip = PhotonNetwork.Instantiate(ChipUtils.Instance.GetPathToChip(chipsCost), SpawnPos.position, SpawnPos.rotation);
         chip.GetComponent<ItemNetworkInfo>().Owner = playerNick;
+        chip.GetComponent<PhysicsSmoothView>().SyncOff();
         money -= (int)chipsCost;
     }
       

@@ -92,12 +92,12 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
     public void SyncOff_RPC()
     {
         photonView.Synchronization = ViewSynchronization.Off;
-        _networkInfo.Synchronization = ViewSynchronization.Off;
+      
     }
     [PunRPC]
     public void SyncOn_RPC()
     {
         photonView.Synchronization = ViewSynchronization.Unreliable;
-        _networkInfo.Synchronization = ViewSynchronization.Unreliable;
+       
     }
 }

@@ -105,9 +105,9 @@ public class StackAnimator : MonoBehaviour
             if (GrabbableChip != null)
             {
                 chip.GetComponent<Collider>().enabled = collider;
-                var ItemNetworkInfo = chip.GetComponent<ItemNetworkInfo>();
-                ItemNetworkInfo.InAnimation = InAnimation;
-                ItemNetworkInfo.Synchronization = viewSynchronization;
+
+                netInfo.InAnimation = InAnimation;
+              
 
                 if (viewSynchronization == ViewSynchronization.Off)
                     view.GetComponent<PhysicsSmoothView>().SyncOff();
@@ -131,8 +131,7 @@ public class StackAnimator : MonoBehaviour
         chip.SetActive(false);
         chip.GetComponent<Collider>().enabled = false;
         var ItemNetworkInfo = chip.GetComponent<ItemNetworkInfo>();
-        ItemNetworkInfo.InAnimation = true;
-        ItemNetworkInfo.Synchronization = ViewSynchronization.Off;
+        ItemNetworkInfo.InAnimation = true;    
 
         if (waitToEnd != null)
         {

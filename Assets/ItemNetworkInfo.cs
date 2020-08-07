@@ -10,7 +10,7 @@ public class ItemNetworkInfo : MonoBehaviourPun
     public int ViewID;
     public bool isGrabbed;
     public bool InAnimation;
-    public ViewSynchronization Synchronization = ViewSynchronization.Off;
+   
 
     private OVRGrabbableCustom grabbale;
 
@@ -20,7 +20,7 @@ public class ItemNetworkInfo : MonoBehaviourPun
 
         IsMine = photonView.IsMine;
         ViewID = photonView.ViewID;
-        Synchronization = ViewSynchronization.Off;
+    
         //Synchronization = photonView.Synchronization;
 
 
