@@ -108,7 +108,7 @@ public class LongClickProgress : MonoBehaviourPun
             playerStats = other.GetComponentInParent<PlayerStats>();
             if(p_place.ps == null || p_place.ps == playerStats) 
             {
-                if(p_place.ps != null && GetComponentInParent<TableBetsManager>().checkPlaceTakenYet(p_place.ps)) return;
+                if(!inGame && GetComponentInParent<TableBetsManager>().checkPlaceTakenYet(playerStats)) return;
                 inProgress = true;
             }
         }

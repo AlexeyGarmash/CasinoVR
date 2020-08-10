@@ -53,7 +53,7 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
     }
 
     public bool checkPlaceTakenYet(PlayerStats pss) {
-        PlayerPlace findPlace = plyers.First(pl => pl.ps.name == pss.name);
+        PlayerPlace findPlace = plyers.ToList().Find(pl => pl.ps!=null && pl.ps.name == pss.name);
         if(findPlace == null) {
             return false;
         } else {
