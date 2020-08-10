@@ -10,11 +10,10 @@ public class PhotonSyncCrontroller : MonoBehaviourPun
     public bool IsPhotonSync { get => photonView.Synchronization != ViewSynchronization.Off; }
     public void SyncOff_Photon()
     {
-        if (photonView.IsMine)
-        {
-            Debug.Log("SyncOff_RPC");
-            photonView.RPC("SyncOff_RPC", RpcTarget.All);
-        }
+        
+        Debug.Log("SyncOff_RPC");
+        photonView.RPC("SyncOff_RPC", RpcTarget.All);
+        
     }
     public void SyncOn_Photon()
     {
