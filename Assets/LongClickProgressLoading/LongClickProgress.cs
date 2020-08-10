@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 [Serializable]
 public class TakePlaceUnityEvent : UnityEvent<PlayerStats> { }
-public class LongClickProgress : MonoBehaviourPun
+public class LongClickProgress : MonoBehaviourPun, IListener<ROULETTE_EVENT>
 {
     [SerializeField] private TakePlaceUnityEvent _onLongClickTalePlace;
     [SerializeField] private UnityEvent _onLongClickLeavePlace;
@@ -22,17 +22,25 @@ public class LongClickProgress : MonoBehaviourPun
     [SerializeField] private Texture _notReadyTexture;
 
     [SerializeField] private PlayerPlace p_place;
+
     private bool inProgress = false;
     private float currentHoldTime = 0f;
     private bool inGame = false;
     private PlayerStats playerStats;
     private int enterCount = 0;
     private int exitCount = 0;
+    private bool canLeave = true;
+
+    private EventManager<ROULETTE_EVENT> eventMang;
     private void Start()
     {
         _imageReady.texture = _notReadyTexture;
         _progressImage.fillAmount = 0f;
         p_place = GetComponentInParent<PlayerPlace>();
+
+        eventMang = GetComponentInParent<TableBetsManager>().rouletteEventManager;
+        eventMang.AddListener(ROULETTE_EVENT.ROULETTE_GAME_START,this);
+        eventMang.AddListener(ROULETTE_EVENT.ROULETTE_GAME_END, this);
     }
 
     private void Update()
@@ -65,13 +73,9 @@ public class LongClickProgress : MonoBehaviourPun
     private void InvokeClickGoOutFromPlace()
     {
         photonView?.RequestOwnership();
-        _onLongClickLeavePlace?.Invoke();
-        inGame = false;
-        _imageReady.texture = _notReadyTexture;
-        _textReady.text = "Not ready";
-       
-        print("FUCKING GO OUT <ESSAGE");
-        photonView?.RPC("LeaveTable_RPC", RpcTarget.Others);
+        _onLongClickLeavePlace?.Invoke();           
+
+        photonView?.RPC("LeaveTable_RPC", RpcTarget.All);
        
     }
 
@@ -81,12 +85,9 @@ public class LongClickProgress : MonoBehaviourPun
         _onLongClickTalePlace?.Invoke(playerStats);
         inGame = true;
         _imageReady.texture = _readyTexture;
-        _textReady.text = PhotonNetwork.LocalPlayer.NickName;
-        //if (photonView.IsMine)
-        //{
-            print("FUCKING TAKE PLACE <ESSAGE");
-            photonView?.RPC("JoinTable_RPC", RpcTarget.Others, PhotonNetwork.LocalPlayer.NickName);
-        //}
+        _textReady.text = PhotonNetwork.LocalPlayer.NickName;             
+        photonView?.RPC("JoinTable_RPC", RpcTarget.Others, PhotonNetwork.LocalPlayer.NickName);
+        
     }
 
     private void ResetProgress()
@@ -100,10 +101,10 @@ public class LongClickProgress : MonoBehaviourPun
     {
         _progressImage.fillAmount = progress;
     }
-
+    
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<LongClickHand>() != null && inProgress == false)
+        if (other.gameObject.GetComponent<LongClickHand>() != null && inProgress == false && canLeave)
         {
             playerStats = other.GetComponentInParent<PlayerStats>();
             if(p_place.ps == null || p_place.ps == playerStats) 
@@ -126,6 +127,7 @@ public class LongClickProgress : MonoBehaviourPun
     [PunRPC]
     public void LeaveTable_RPC()
     {
+        eventMang.PostNotification(ROULETTE_EVENT.PLAYER_LEAVE, this, playerStats.PlayerNick);
         inGame = false;
         _imageReady.texture = _notReadyTexture;
         _textReady.text = "Hold to join";
@@ -140,5 +142,16 @@ public class LongClickProgress : MonoBehaviourPun
         _textReady.text = nickname;
     }
 
-
+    public void OnEvent(ROULETTE_EVENT Event_type, Component Sender, params object[] Param)
+    {
+        switch (Event_type)
+        {
+            case ROULETTE_EVENT.ROULETTE_GAME_START:
+                canLeave = false;
+                break;
+            case ROULETTE_EVENT.ROULETTE_GAME_END:
+                canLeave = true;
+                break;
+        }
+    }
 }

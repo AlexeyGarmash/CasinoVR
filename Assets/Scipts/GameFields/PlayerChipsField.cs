@@ -22,8 +22,9 @@ public class PlayerChipsField : ChipsField
     [SerializeField]
     private Transform SpawnPos;
 
-    private void Start()
+    private new void Start()
     {
+        base.Start();
         SetPrefabs();
     }
 

@@ -28,6 +28,10 @@ public abstract class TableCell : MonoBehaviourPun
             AddNewBet(betData);
         }
     }
+    public void ReceiveBetDataByName(string name)
+    {      
+        BetsData.RemoveAll(b => b.PlayerStat.PlayerNick == name);
+    }
 
     private void AddNewBet(BetData betData)
     {

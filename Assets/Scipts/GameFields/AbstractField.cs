@@ -21,14 +21,10 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize
 
     public void ClearStacks()
     {
-        for (var i = 0; i < Stacks.Length; i++)
-        {          
-                foreach (Transform child1 in Stacks[i].transform)
-                    Destroy(child1.gameObject);
-
+        for (var i = 0; i < Stacks.Length; i++)                               
             Stacks[i].ClearData();
 
-        }
+        
     }
     public void ClearStack(StackData stack)
     {

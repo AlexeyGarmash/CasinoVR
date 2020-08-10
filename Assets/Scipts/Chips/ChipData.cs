@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-class ChipData : MonoBehaviourPun
+public class ChipData : MonoBehaviourPun
 {
     public Chips Cost;
     public string Owner;

@@ -8,11 +8,12 @@ using UnityEngine;
 
 
 
-public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
+public class PlayerPlace : MonoBehaviourPun
 {
     public Action<bool, PlayerStats> actionReadyOrNot;
     public PlayerStats ps;
     private bool placeTaken = false;
+
     public bool IsPlaceTaken {get => placeTaken;}
     private bool readyToPlay = false;
     public bool IsReady {get => readyToPlay; }
@@ -22,11 +23,15 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
 
  
 
+
+    private PlayerChipsField sf;
+    private PlayerWinAnimation playerWinAnim;
+   
     public bool canLeave;
+
     private void Start()
     {
         ps = null;
-        
         playerWinAnim = GetComponentInChildren<PlayerWinAnimation>();
         sf = GetComponentInChildren<PlayerChipsField>();
     }
@@ -42,6 +47,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
             photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);          
             PreparePlayerPlace();
             //StartWinAnimation(1000, ps.PlayerNick);
+            sf.photonView.RequestOwnership();
 
 
         }
@@ -90,6 +96,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
     [PunRPC]
     public void TakePlace_RPC(string nickname, int money)
     {
+
         placeTaken = true;
         ps = new PlayerStats(nickname, money);
         print("RPC TAKE PLACE!!!");
@@ -163,5 +170,4 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
         
     }
 
-   
 }
