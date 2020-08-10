@@ -167,6 +167,7 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
         var networkProps = gameObj.GetComponent<ChipData>();
+
         if (chip != null && gc != null && !networkProps.isGrabbed && !rb.isKinematic && view != null)
         {
 
@@ -258,7 +259,7 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
             case ChipFieldEvents.StackAnimationEnded:
                 StackAnimEndedCounter++;
                 
-                if (StackAnimStartedCounter == StackAnimEndedCounter && photonView.IsMine)
+                if (StackAnimStartedCounter == StackAnimEndedCounter)
                 {
                     Debug.Log("UnblockAllStacks");
                     UnblockAllStacks();
@@ -270,7 +271,7 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
             case ChipFieldEvents.StackAnimationStarted:
                 StackAnimStartedCounter++;
 
-                if (StackAnimStartedCounter == 1 && photonView.IsMine)
+                if (StackAnimStartedCounter == 1)
                 {
                     BlockAllStacks();
                     Debug.Log("BlockAllStacks");

@@ -40,7 +40,6 @@ public class PlayerPlace : MonoBehaviourPun
             PreparePlayerPlace();
             //StartWinAnimation(1000, ps.PlayerNick);
 
-
         }
     }
 
