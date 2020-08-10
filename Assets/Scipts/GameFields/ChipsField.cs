@@ -202,7 +202,7 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
     void BlockAllStacks()
     {
         photonView.RequestOwnership();
-        photonView.RPC("BlockAllStacks", RpcTarget.All, false, true);
+        photonView.RPC("UpdateAllStacks", RpcTarget.All, false, true);
 
         foreach (var stack in Stacks)
             foreach (var chip in stack.Objects)
