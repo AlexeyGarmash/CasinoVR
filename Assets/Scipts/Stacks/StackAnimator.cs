@@ -121,8 +121,8 @@ public class StackAnimator : MonoBehaviour
 
         var view = chip.GetComponent<PhotonView>();
 
-        if (view.IsMine)
-            view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+       
+        view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
 
         currentObjects.Add(chip);
         chip.SetActive(false);
