@@ -106,7 +106,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
             for (var j = 0; j < sf.Stacks[i].Objects.Count; j++)
             {
                 var position = sf.Stacks[i].Objects[i].transform.position;
-                var viewID = sf.Stacks[i].Objects[i].GetComponent<PhotonView>();
+                var viewID = sf.Stacks[i].Objects[i].GetComponent<PhotonView>().ViewID;
 
                 photonView.RPC("SyncGameObjects", RpcTarget.Others, viewID, position, i, j);
             }
