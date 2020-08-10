@@ -37,6 +37,30 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
         rouletteEventManager.AddListener(ROULETTE_EVENT.CHECK_WINNERS, this);
     }
 
+    private void Start() {
+        foreach (var place in plyers)
+        {
+            place.actionReadyOrNot += playerClickReady;
+        }
+    }
+
+    private void playerClickReady(bool isReady, PlayerStats ps) 
+    {
+        bool allReady = plyers.All( player => player.IsReady);
+        if(allReady) {
+            print("STUB!!! START SPIN ROULETTE!!!");
+        }
+    }
+
+    public bool checkPlaceTakenYet(PlayerStats pss) {
+        PlayerPlace findPlace = plyers.First(pl => pl.ps.name == pss.name);
+        if(findPlace == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     private void Update()
     {
         if (OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.LTouch))

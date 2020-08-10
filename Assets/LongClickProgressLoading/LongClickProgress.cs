@@ -106,9 +106,11 @@ public class LongClickProgress : MonoBehaviourPun
         if (other.gameObject.GetComponent<LongClickHand>() != null && inProgress == false)
         {
             playerStats = other.GetComponentInParent<PlayerStats>();
-            if(p_place.ps == null || p_place.ps == playerStats)
-            inProgress = true;
-
+            if(p_place.ps == null || p_place.ps == playerStats) 
+            {
+                if(p_place.ps != null && GetComponentInParent<TableBetsManager>().checkPlaceTakenYet(p_place.ps)) return;
+                inProgress = true;
+            }
         }
     }
 
@@ -126,7 +128,7 @@ public class LongClickProgress : MonoBehaviourPun
     {
         inGame = false;
         _imageReady.texture = _notReadyTexture;
-        _textReady.text = "Not ready";
+        _textReady.text = "Hold to join";
     }
 
 

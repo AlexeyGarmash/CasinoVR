@@ -13,7 +13,9 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
     public Action<bool, PlayerStats> actionReadyOrNot;
     public PlayerStats ps;
     private bool placeTaken = false;
+    public bool IsPlaceTaken {get => placeTaken;}
     private bool readyToPlay = false;
+    public bool IsReady {get => readyToPlay; }
     PlayerChipsField sf;
     public PlayerWinAnimation playerWinAnim;
    

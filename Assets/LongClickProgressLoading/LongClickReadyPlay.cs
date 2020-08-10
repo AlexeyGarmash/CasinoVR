@@ -93,8 +93,10 @@ public class LongClickReadyPlay : MonoBehaviourPun
         if (other.gameObject.GetComponent<LongClickHand>() != null && inProgress == false)
         {
             playerStats = other.GetComponentInParent<PlayerStats>();
-            if(p_place.ps == null || p_place.ps == playerStats)
-            inProgress = true;
+            if(p_place.ps != null || p_place.ps == playerStats) 
+            {
+                inProgress = true;
+            }
 
         }
     }
