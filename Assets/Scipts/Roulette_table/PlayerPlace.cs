@@ -39,7 +39,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
             print("Button clikced ps == null");
             photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);          
             PreparePlayerPlace();
-            StartWinAnimation(1000, ps.PlayerNick);
+            //StartWinAnimation(1000, ps.PlayerNick);
 
 
         }
@@ -153,7 +153,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
                 }
                 else sf.InstantiateToStackWithColor(Chips.YELLOW, ref money, ps.PlayerNick);
 
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(0.1f);
             }
         }
        
