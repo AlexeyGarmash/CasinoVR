@@ -24,8 +24,7 @@ public class PlayerPlace : MonoBehaviourPun
  
 
 
-    private PlayerChipsField sf;
-    private PlayerWinAnimation playerWinAnim;
+
    
     public bool canLeave;
 
