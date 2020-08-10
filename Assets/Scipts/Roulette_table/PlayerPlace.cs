@@ -39,7 +39,6 @@ public class PlayerPlace : MonoBehaviourPun
             photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);          
             PreparePlayerPlace();
             //StartWinAnimation(1000, ps.PlayerNick);
-            sf.photonView.RequestOwnership();
 
 
         }
