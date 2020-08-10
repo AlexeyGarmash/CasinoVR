@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,10 @@ using UnityEngine;
 
 public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
 {
+    public Action<bool, PlayerStats> actionReadyOrNot;
     public PlayerStats ps;
     private bool placeTaken = false;
+    private bool readyToPlay = false;
     PlayerChipsField sf;
     public PlayerWinAnimation playerWinAnim;
    
@@ -21,13 +24,10 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
     private void Start()
     {
         ps = null;
-       
-       
-
+        
         playerWinAnim = GetComponentInChildren<PlayerWinAnimation>();
         sf = GetComponentInChildren<PlayerChipsField>();
     }
-
 
     public void TakePlace(PlayerStats ps)
     {
@@ -56,6 +56,31 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
             ps = null;
             sf.ClearStacks();
         }
+    }
+
+    public void ReadyToPlay() {
+        if(ps != null && !readyToPlay) {
+            readyToPlay = true;
+            photonView?.RPC("ReadyPlay_RPC", RpcTarget.All);
+        }
+    }
+
+    public void NotReadyToPlay() {
+        if(ps != null && readyToPlay) {
+            readyToPlay = false;
+            photonView?.RPC("NotReadyToPlay_RPC", RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    public void ReadyPlay_RPC() {
+        readyToPlay = true;
+    }
+
+
+    [PunRPC]
+    public void NotReadyToPlay_RPC() {
+        readyToPlay = false;
     }
 
     [PunRPC]
