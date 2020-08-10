@@ -214,7 +214,7 @@ public class ChipsField : AbstractField
                 var position = Stacks[i].Objects[j].transform.position;
                 var viewID = Stacks[i].Objects[j].GetComponent<PhotonView>().ViewID;
 
-                photonView.RPC("SyncGameObjects", RpcTarget.All, viewID, position, i, j);
+                photonView.RPC("SyncGameObjects", RpcTarget.Others, viewID, position, i, j);
             }
         }
 
