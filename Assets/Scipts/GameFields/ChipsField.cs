@@ -32,9 +32,12 @@ public class ChipsField : AbstractField
             //Debug.Break();
 
             stackData.Objects.Add(Object);
-            stackData.StartAnim(Object);
+            stackData.animator.StartAnim(Object);
+
+            SyncStacks();
 
             return true;
+          
 
         }
 
@@ -150,7 +153,7 @@ public class ChipsField : AbstractField
             Debug.Log("MagnetizeObject viewID=" + view.ViewID);          
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);
-            SyncStacks();
+            
         }
 
     }
@@ -176,10 +179,11 @@ public class ChipsField : AbstractField
     #endregion
     bool syncStarted = false;
 
+    Coroutine syncStacks;
     public void SyncStacks()
     {
-        if (!syncStarted)
-            StartCoroutine(SynchronizeStacks());
+        if (syncStacks == null)
+            syncStacks = StartCoroutine(SynchronizeStacks());
     }
     IEnumerator SynchronizeStacks()
     {
@@ -192,10 +196,11 @@ public class ChipsField : AbstractField
                 chip.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
 
         yield return new WaitForSeconds(2f);
+        float time = 0;
         while (Stacks.ToList().Sum(s => s.animator.AnimationFlag) != Stacks.Length)
         {
-
-            Debug.Log("Wait Anim to sync");
+            time += 0.2f;
+            Debug.Log("Wait Anim to sync " + gameObject.name + " time=" + time);
             yield return new WaitForSeconds(0.2f);
 
         }
@@ -220,7 +225,7 @@ public class ChipsField : AbstractField
 
         photonView.RPC("UpdateAllStacks", RpcTarget.All, true, false);
 
-        syncStarted = false;
+        syncStacks = null;
 
     }
 
