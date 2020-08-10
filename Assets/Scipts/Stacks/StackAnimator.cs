@@ -24,6 +24,7 @@ public class StackAnimator : MonoBehaviour
     [SerializeField]
     public float delayForCollidersEnabled = 2f;
 
+    PlayerPlace pp;
     public float currentY;
     public float lastY;
 
@@ -40,7 +41,7 @@ public class StackAnimator : MonoBehaviour
 
     private void Start()
     {
-
+        
         stack = GetComponent<StackData>();
       
 
@@ -88,7 +89,7 @@ public class StackAnimator : MonoBehaviour
       
     }
 
-    public void ChangeStateOfItem(bool collider, bool InAnimation, ViewSynchronization viewSynchronization)
+    public void ChangeStateOfItem(bool collider, bool InAnimation)
     {
         foreach (GameObject chip in stack.Objects)
         {
@@ -99,13 +100,7 @@ public class StackAnimator : MonoBehaviour
             {
                 chip.GetComponent<Collider>().enabled = collider;
 
-                netInfo.InAnimation = InAnimation;
-              
-
-                if (viewSynchronization == ViewSynchronization.Off)
-                    view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
-                else
-                    view.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
+                netInfo.InAnimation = InAnimation;          
 
             }
         }
@@ -138,8 +133,7 @@ public class StackAnimator : MonoBehaviour
         //ChangeStateOfItem(false, true, ViewSynchronization.Off);
         if (prevMoveLastChips == null)
         {
-            //UpdateStackInstantly();
-            ChangeStateOfItem(false, true, ViewSynchronization.Off);
+            //UpdateStackInstantly();          
            
             prevMoveLastChips = StartCoroutine(MoveLastChips(chipsDropSpeed, chipsDropMult, pauseBeetwenChips));
         }       
@@ -148,8 +142,8 @@ public class StackAnimator : MonoBehaviour
     IEnumerator MoveChip(float chipsDropSpeed, float chipsDropMult, GameObject chip)
     {
         
-        var currOffsetX = Random.Range(-xOffset, xOffset);
-        var currOffsetZ = Random.Range(-zOffset, zOffset);
+        //var currOffsetX = Random.Range(-xOffset, xOffset);
+        //var currOffsetZ = Random.Range(-zOffset, zOffset);
 
         var pos = gameObject.transform.position;
 
@@ -157,13 +151,13 @@ public class StackAnimator : MonoBehaviour
 
 
         var Start = new Vector3(
-                    pos.x + currOffsetX,
+                    pos.x/* + currOffsetX*/,
                     transform.position.y + currentY,
-                    pos.z + currOffsetZ);
+                    pos.z/* + currOffsetZ*/);
         var End = new Vector3(
-                    pos.x + currOffsetX,
+                    pos.x /*+ currOffsetX*/,
                     transform.position.y + currentY + yOffsetForAnim,
-                     pos.z + currOffsetZ);
+                     pos.z /*+ currOffsetZ*/);
 
         var t = chipsDropSpeed * Time.deltaTime;
 
@@ -197,21 +191,21 @@ public class StackAnimator : MonoBehaviour
         for (var i = 0; i < stack.Objects.Count; i++)
         {
 
-            var currOffsetX = Random.Range(-xOffset, xOffset);
-            var currOffsetZ = Random.Range(-zOffset, zOffset);
+            //var currOffsetX = Random.Range(-xOffset, xOffset);
+            //var currOffsetZ = Random.Range(-zOffset, zOffset);
 
             var pos = gameObject.transform.position;
 
             stack.Objects[i].transform.rotation = new Quaternion();
             stack.Objects[i].transform.position = new Vector3(
-                        pos.x + currOffsetX,
+                        pos.x /*+ currOffsetX*/,
                         transform.position.y + currentY,
-                        pos.z + currOffsetZ
+                        pos.z /*+ currOffsetZ*/
              );
 
             currentY += yOffset;
         }
-        currentY -= yOffset;
+        //currentY -= yOffset;
 
         //lastY = currentY;
 
