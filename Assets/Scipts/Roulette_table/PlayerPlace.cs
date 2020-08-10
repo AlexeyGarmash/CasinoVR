@@ -39,7 +39,9 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
             print("Button clikced ps == null");
             photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);          
             PreparePlayerPlace();
-            
+            StartWinAnimation(1000, ps.PlayerNick);
+
+
         }
     }
 
@@ -96,7 +98,8 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
         while (sf.Stacks.ToList().Sum(s => s.animator.AnimationFlag) != sf.Stacks.Length)
         {
 
-            yield return new WaitForSeconds(0.1f);
+            Debug.Log("Wait Anim to sync");
+            yield return new WaitForSeconds(0.2f);
           
         }
 
@@ -106,7 +109,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
             for (var j = 0; j < sf.Stacks[i].Objects.Count; j++)
             {
                 var position = sf.Stacks[i].Objects[i].transform.position;
-                var viewID = sf.Stacks[i].Objects[i].GetComponent<PhotonView>();
+                var viewID = sf.Stacks[i].Objects[i].GetComponent<PhotonView>().ViewID;
 
                 photonView.RPC("SyncGameObjects", RpcTarget.Others, viewID, position, i, j);
             }
