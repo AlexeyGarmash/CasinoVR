@@ -40,6 +40,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
             photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);          
             PreparePlayerPlace();
             //StartWinAnimation(1000, ps.PlayerNick);
+            sf.photonView.RequestOwnership();
 
 
         }
@@ -61,6 +62,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
     [PunRPC]
     public void TakePlace_RPC(string nickname, int money)
     {
+
         placeTaken = true;
         ps = new PlayerStats(nickname, money);
         print("RPC TAKE PLACE!!!");

@@ -83,7 +83,7 @@ public class PlayerWinAnimation : MonoBehaviourPun
         int i = 0;
         while (winChips.Count > i)
         { 
-            var curvePurpel = curves[Random.Range(0, curves.Length - 1)];
+            var curvePurpel = curves[0];
             var chip = winChips[i];
             i++;
             //winChips.Remove(chip);

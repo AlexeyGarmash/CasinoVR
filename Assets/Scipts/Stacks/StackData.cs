@@ -11,7 +11,7 @@ public class StackData : MonoBehaviour
    
     public List<GameObject> Objects = new List<GameObject>();
 
-    public List<GameObject> SyncObjects = new List<GameObject>();
+  
 
     public StackAnimator animator;
 
