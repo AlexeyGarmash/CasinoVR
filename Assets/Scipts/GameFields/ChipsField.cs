@@ -182,7 +182,7 @@ public class ChipsField : AbstractField
     Coroutine syncStacks;
     public void SyncStacks()
     {
-        if (syncStacks == null)
+        if (syncStacks == null && photonView.IsMine)
             syncStacks = StartCoroutine(SynchronizeStacks());
     }
     IEnumerator SynchronizeStacks()
@@ -192,8 +192,9 @@ public class ChipsField : AbstractField
         photonView.RPC("UpdateAllStacks", RpcTarget.All, false, true);
 
         foreach (var stack in Stacks)
-            foreach (var chip in stack.Objects)
+            foreach (var chip in stack.Objects)           
                 chip.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+            
 
         yield return new WaitForSeconds(2f);
         float time = 0;
