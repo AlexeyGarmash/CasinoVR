@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
@@ -19,13 +20,16 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
         tableCell = GetComponent<TableCell>();
     }
 
-    void Start()
+    new void Start()
     {
+        base.Start();
+
         EventManager = GetComponentInParent<TableBetsManager>().rouletteEventManager;
 
       
         EventManager.AddListener(ROULETTE_EVENT.ROULETTE_GAME_START, this);
         EventManager.AddListener(ROULETTE_EVENT.ROULETTE_GAME_END, this);
+        EventManager.AddListener(ROULETTE_EVENT.PLAYER_LEAVE, this);
 
     }
     public void OnEvent(ROULETTE_EVENT Event_type, Component Sender, params object[] Param)
@@ -41,6 +45,11 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
             case ROULETTE_EVENT.ROULETTE_GAME_START:
                 
                 canBet = false;
+                break;
+            case ROULETTE_EVENT.PLAYER_LEAVE:
+                tableCell.ReceiveBetDataByName((string)Param[0]);
+                var stacks = Stacks.ToList().FindAll(s => s.playerName == (string)Param[0]);               
+                stacks.ForEach(s => { s.StopAllCoroutines();  s.ClearData(); });
                 break;
         }
     }

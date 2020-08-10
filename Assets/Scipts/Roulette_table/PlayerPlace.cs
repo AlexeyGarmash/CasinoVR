@@ -7,7 +7,7 @@ using UnityEngine;
 
 
 
-public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
+public class PlayerPlace : MonoBehaviourPun
 {
     public PlayerStats ps;
     private bool placeTaken = false;
@@ -20,9 +20,9 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
     private void Start()
     {
         ps = null;
-       
-       
 
+
+      
         playerWinAnim = GetComponentInChildren<PlayerWinAnimation>();
         sf = GetComponentInChildren<PlayerChipsField>();
     }
@@ -135,5 +135,4 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
         
     }
 
-   
 }

@@ -52,10 +52,14 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
 
     protected StackData FindStackByName(Transform chip)
     {
-        var stack = Stacks.ToList().First(s => s.playerName == chip.GetComponent<ChipData>().Owner);
+        var list = Stacks.ToList();
+        StackData stack = null;
+        if (list.Exists(s => s.playerName == chip.GetComponent<ChipData>().Owner))
+            stack = Stacks.ToList().Find(s => s.playerName == chip.GetComponent<ChipData>().Owner);
 
         if(stack == null)
-            return Stacks.ToList().First(s => s.playerName == "");
+            return Stacks.ToList().Find(s => s.playerName == "");
+
         return stack;
     }
     protected StackData FindClossestField(Transform chip, List<StackData> PossibleField)

@@ -87,6 +87,7 @@ public class StackAnimator : MonoBehaviour
     IEnumerator WaitToEnd()
     {
         yield return new WaitForSeconds(2f);
+        currentObjects.Clear();
         evenmManager.PostNotification(ChipFieldEvents.StackAnimationEnded, this);
         AnimationEnded = true;
       
@@ -154,7 +155,7 @@ public class StackAnimator : MonoBehaviour
 
         chip.transform.rotation = new Quaternion();
 
-        currentY += yOffset;
+       
 
         var Start = new Vector3(
                     pos.x/* + currOffsetX*/,
@@ -167,7 +168,8 @@ public class StackAnimator : MonoBehaviour
 
         var t = chipsDropSpeed * Time.deltaTime;
 
-        
+        currentY += yOffset;
+
 
         chip.transform.position = End;
         
@@ -220,7 +222,7 @@ public class StackAnimator : MonoBehaviour
     public void Clear()
     {
         StopAllCoroutines();
-        currentY = 0;
+        currentY = -1;
         lastY = 0;
     }
 }
