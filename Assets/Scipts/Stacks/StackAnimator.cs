@@ -24,7 +24,6 @@ public class StackAnimator : MonoBehaviour
     [SerializeField]
     public float delayForCollidersEnabled = 2f;
 
-    PlayerPlace pp;
     public float currentY = 0;
     public float lastY;
 
@@ -222,7 +221,7 @@ public class StackAnimator : MonoBehaviour
     public void Clear()
     {
         StopAllCoroutines();
-        currentY = -1;
+        currentY = 0;
         lastY = 0;
     }
 }
