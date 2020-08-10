@@ -62,6 +62,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
         if(ps != null && !readyToPlay) {
             readyToPlay = true;
             photonView?.RPC("ReadyPlay_RPC", RpcTarget.All);
+            actionReadyOrNot.Invoke(true, ps);
         }
     }
 
@@ -69,6 +70,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
         if(ps != null && readyToPlay) {
             readyToPlay = false;
             photonView?.RPC("NotReadyToPlay_RPC", RpcTarget.All);
+            actionReadyOrNot.Invoke(false, ps);
         }
     }
 

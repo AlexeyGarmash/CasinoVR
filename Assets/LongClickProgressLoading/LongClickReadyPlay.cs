@@ -9,9 +9,6 @@ using UnityEngine.UI;
 
 public class LongClickReadyPlay : MonoBehaviourPun
 {
-    
-    [SerializeField] private UnityEvent _onLongClickRedyToPlay;
-    [SerializeField] private UnityEvent _onLongClickNotReady;
     [SerializeField] private float _holdTime;
     [SerializeField] private Image _progressImage;
     [SerializeField] private TMP_Text _textReady;

@@ -8506,8 +8506,8 @@ GameObject:
   - component: {fileID: 674610829}
   - component: {fileID: 674610828}
   - component: {fileID: 674610827}
-  - component: {fileID: 674610826}
   - component: {fileID: 674610825}
+  - component: {fileID: 674610826}
   m_Layer: 0
   m_Name: ReadyToStart
   m_TagString: Untagged
@@ -8561,66 +8561,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 674610823}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 758a6b5ccd280af48b26bf026e0b719f, type: 3}
+  m_Script: {fileID: 11500000, guid: 618d59ed1f17b1d4caf5b4add0add86a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onLongClickTalePlace:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1541392214}
-        m_MethodName: TakePlace
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1983389984}
-          m_ObjectArgumentAssemblyTypeName: PlayerStats, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _onLongClickLeavePlace:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1541392214}
-        m_MethodName: GoOutFromPlace
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1541392213}
-        m_MethodName: LeaveTable
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _holdTime: 1
+  _holdTime: 3
   _progressImage: {fileID: 812451601}
   _textReady: {fileID: 376590766}
   _imageReady: {fileID: 1783866202}
   _readyTexture: {fileID: 2800000, guid: cacb5dbd019f9394699a8bdd2801b504, type: 3}
   _notReadyTexture: {fileID: 2800000, guid: 4c4bbe8030e487349a0a66c5bb7d31ec, type: 3}
-  p_place: {fileID: 0}
+  p_place: {fileID: 1541392213}
 --- !u!65 &674610827
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26052,18 +26002,6 @@ PrefabInstance:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d6884a9396a47344a3346c34dca44e2, type: 3}
 --- !u!114 &1541392213 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5596634738321917635, guid: 8d6884a9396a47344a3346c34dca44e2,
-    type: 3}
-  m_PrefabInstance: {fileID: 1541392212}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a8788e4764d9f745a8ab3fe69d2e9e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1541392214 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7134512836217752443, guid: 8d6884a9396a47344a3346c34dca44e2,
     type: 3}
