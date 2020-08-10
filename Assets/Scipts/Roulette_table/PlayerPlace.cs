@@ -86,12 +86,13 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
 
     public void SyncStacks()
     {
-        if(syncStarted)
+        if(!syncStarted)
             StartCoroutine(SynchronizeStacks());
     }
     IEnumerator SynchronizeStacks()
     {
         syncStarted = true;
+        yield return new WaitForSeconds(2f);
         while (sf.Stacks.ToList().Sum(s => s.animator.AnimationFlag) != sf.Stacks.Length)
         {
 
@@ -114,7 +115,7 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
 
         foreach (var stack in sf.Stacks)      
             foreach (var chip in stack.Objects)
-                chip.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+                chip.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
 
 
         photonView.RPC("UpdateAllStacks", RpcTarget.All);
@@ -127,8 +128,13 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
     public void UpdateAllStacks()
     {
         foreach (var stack in sf.Stacks)
+        {
             stack.UpdateStackInstantly();
+            stack.animator.ChangeStateOfItem(true, false, ViewSynchronization.Unreliable);
+        }
     }
+
+    
     [PunRPC]
     public void SyncGameObjects(int viewID, Vector3 position, int stackIndex, int chipsIndex)
     {
