@@ -80,13 +80,13 @@ public class PlayerWinAnimation : MonoBehaviourPun
         yield return new WaitForSeconds(1f);
 
         Debug.Log(winChips);
-
-        while (winChips.Count != 0)
+        int i = 0;
+        while (winChips.Count > i)
         { 
             var curvePurpel = curves[Random.Range(0, curves.Length - 1)];
-            var chip = winChips[Random.Range(0, winChips.Count - 1)];
-
-            winChips.Remove(chip);
+            var chip = winChips[i];
+            i++;
+            //winChips.Remove(chip);
             
             StartCoroutine(MoveOneChip(curvePurpel, chip));
             yield return new WaitForSeconds(0.1f);
