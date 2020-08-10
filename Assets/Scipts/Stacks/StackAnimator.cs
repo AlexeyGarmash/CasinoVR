@@ -66,23 +66,15 @@ public class StackAnimator : MonoBehaviour
                     yield return new WaitForSeconds(pause);
                    
 
-                }
-
-                
+                }                
             }
-           
+            
         }
    
-
         prevMoveLastChips = null;
         StartCoroutine(WaitToEnd());
 
-      
-
-        
-
         yield return null;
-
 
     }
 
@@ -93,10 +85,7 @@ public class StackAnimator : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         AnimationEnded = true;
-        //ChangeStateOfItem(true, false, ViewSynchronization.Unreliable);
-        currentObjects.Clear();
-        waitToEnd = null;
-        
+      
     }
 
     public void ChangeStateOfItem(bool collider, bool InAnimation, ViewSynchronization viewSynchronization)
@@ -119,7 +108,6 @@ public class StackAnimator : MonoBehaviour
                     view.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
 
             }
-
         }
     }
 
