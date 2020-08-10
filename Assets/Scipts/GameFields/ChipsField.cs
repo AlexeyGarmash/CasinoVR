@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -149,7 +150,7 @@ public class ChipsField : AbstractField
             Debug.Log("MagnetizeObject viewID=" + view.ViewID);          
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);
-
+            SyncStacks();
         }
 
     }
@@ -167,12 +168,79 @@ public class ChipsField : AbstractField
         if (chip != null && gc != null && networkProps.isGrabbed && rb.isKinematic && view != null && Contain(gameObj))
         {
             ExtranctChip(view.ViewID);
+            //SyncStacks();
         }
 
     }
 
     #endregion
+    bool syncStarted = false;
 
+    public void SyncStacks()
+    {
+        if (!syncStarted)
+            StartCoroutine(SynchronizeStacks());
+    }
+    IEnumerator SynchronizeStacks()
+    {
+        syncStarted = true;
+
+        photonView.RPC("UpdateAllStacks", RpcTarget.All, false, true);
+
+        foreach (var stack in Stacks)
+            foreach (var chip in stack.Objects)
+                chip.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+
+        yield return new WaitForSeconds(2f);
+        while (Stacks.ToList().Sum(s => s.animator.AnimationFlag) != Stacks.Length)
+        {
+
+            Debug.Log("Wait Anim to sync");
+            yield return new WaitForSeconds(0.2f);
+
+        }
+
+
+        for (var i = 0; i < Stacks.Length; i++)
+        {
+            for (var j = 0; j < Stacks[i].Objects.Count; j++)
+            {
+                var position = Stacks[i].Objects[j].transform.position;
+                var viewID = Stacks[i].Objects[j].GetComponent<PhotonView>().ViewID;
+
+                photonView.RPC("SyncGameObjects", RpcTarget.All, viewID, position, i, j);
+            }
+        }
+
+
+        foreach (var stack in Stacks)
+            foreach (var chip in stack.Objects)
+                chip.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
+
+
+        photonView.RPC("UpdateAllStacks", RpcTarget.All, true, false);
+
+        syncStarted = false;
+
+    }
+
+    [PunRPC]
+    public void UpdateAllStacks(bool col, bool isAnim)
+    {
+        foreach (var stack in Stacks)
+        {
+            //stack.UpdateStackInstantly();
+            stack.animator.ChangeStateOfItem(col, isAnim);
+        }
+    }
+
+    [PunRPC]
+    public void SyncGameObjects(int viewID, Vector3 position, int stackIndex, int chipsIndex)
+    {
+        Stacks[stackIndex].Objects[chipsIndex].GetComponent<PhotonView>().ViewID = viewID;
+        Stacks[stackIndex].Objects[chipsIndex].transform.position = position;       
+        //chip.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
+    }
 
 
 }

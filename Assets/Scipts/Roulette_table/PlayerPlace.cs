@@ -74,77 +74,19 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
         print("RPC GO OUT FROM PLACE!!!");
     }
 
-    bool syncStarted = false; 
+   
     public void PreparePlayerPlace()
     {
         StartCoroutine(CreateChipWithDelay());
-        SyncStacks();
+        
     }
     public void StartWinAnimation(int win, string owner)
     {
         playerWinAnim.StartAnimation(win, owner);        
-        SyncStacks();
+       
     }
 
-    public void SyncStacks()
-    {
-        if(!syncStarted)
-            StartCoroutine(SynchronizeStacks());
-    }
-    IEnumerator SynchronizeStacks()
-    {
-        syncStarted = true;
-        yield return new WaitForSeconds(2f);
-        while (sf.Stacks.ToList().Sum(s => s.animator.AnimationFlag) != sf.Stacks.Length)
-        {
 
-            Debug.Log("Wait Anim to sync");
-            yield return new WaitForSeconds(0.2f);
-          
-        }
-
-
-        for(var i =0; i < sf.Stacks.Length; i++)
-        {
-            for (var j = 0; j < sf.Stacks[i].Objects.Count; j++)
-            {
-                var position = sf.Stacks[i].Objects[i].transform.position;
-                var viewID = sf.Stacks[i].Objects[i].GetComponent<PhotonView>().ViewID;
-
-                photonView.RPC("SyncGameObjects", RpcTarget.Others, viewID, position, i, j);
-            }
-        }
-
-
-        foreach (var stack in sf.Stacks)      
-            foreach (var chip in stack.Objects)
-                chip.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
-
-
-        photonView.RPC("UpdateAllStacks", RpcTarget.All);
-
-        syncStarted = false;
-
-    }
-
-    [PunRPC]
-    public void UpdateAllStacks()
-    {
-        foreach (var stack in sf.Stacks)
-        {
-            stack.UpdateStackInstantly();
-            stack.animator.ChangeStateOfItem(true, false, ViewSynchronization.Unreliable);
-        }
-    }
-
-    
-    [PunRPC]
-    public void SyncGameObjects(int viewID, Vector3 position, int stackIndex, int chipsIndex)
-    {
-        sf.Stacks[stackIndex].Objects[chipsIndex].GetComponent<PhotonView>().ViewID = viewID;
-        sf.Stacks[stackIndex].Objects[chipsIndex].transform.position = position;
-
-    }
     public IEnumerator CreateChipWithDelay()
     {
         Debug.Log(sf);

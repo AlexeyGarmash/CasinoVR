@@ -25,8 +25,6 @@ public class PlayerChipsField : ChipsField
     private void Start()
     {
         SetPrefabs();
-    
-
     }
 
 
@@ -48,5 +46,6 @@ public class PlayerChipsField : ChipsField
         chip.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
         money -= (int)chipsCost;
     }
-      
+
+
 }
