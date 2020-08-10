@@ -11,13 +11,12 @@ public class PlayerPlace : MonoBehaviourPun/*, IListener<ROULETTE_EVENT>*/
 {
     public PlayerStats ps;
     private bool placeTaken = false;
-    PlayerChipsField sf;
-    public PlayerWinAnimation playerWinAnim;
+
+    private PlayerChipsField sf;
+    private PlayerWinAnimation playerWinAnim;
    
-
- 
-
     public bool canLeave;
+
     private void Start()
     {
         ps = null;

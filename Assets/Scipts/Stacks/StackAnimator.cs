@@ -220,7 +220,7 @@ public class StackAnimator : MonoBehaviour
     public void Clear()
     {
         StopAllCoroutines();
-        currentY = -1;
+        currentY = 0;
         lastY = 0;
     }
 }

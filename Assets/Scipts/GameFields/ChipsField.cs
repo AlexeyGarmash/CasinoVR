@@ -49,7 +49,16 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
 
         return false;
     }
-    private StackData FindClossestField(Transform chip, List<StackData> PossibleField)
+
+    protected StackData FindStackByName(Transform chip)
+    {
+        var stack = Stacks.ToList().First(s => s.playerName == chip.GetComponent<ChipData>().Owner);
+
+        if(stack == null)
+            return Stacks.ToList().First(s => s.playerName == "");
+        return stack;
+    }
+    protected StackData FindClossestField(Transform chip, List<StackData> PossibleField)
     {
         List<float> distances = new List<float>();
         for (var i = 0; i < PossibleField.Count; i++)
@@ -60,7 +69,7 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
         return PossibleField[distances.IndexOf(distances.Min())];
     }
 
-    private List<StackData> FindPossibleFields(ChipData data)
+    protected List<StackData> FindPossibleFields(ChipData data)
     {
         var list = new List<StackData>();
 
@@ -120,6 +129,7 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
     public void ExtranctChip(int viewID)
     {
         var data = GetChipAndHisStack(viewID);
+
         if (data.chip == null)
         {
             Debug.Log("chip not found! viewID = " + viewID);
