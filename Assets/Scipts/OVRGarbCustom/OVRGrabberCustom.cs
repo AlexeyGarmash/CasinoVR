@@ -397,27 +397,21 @@ public class OVRGrabberCustom : MonoBehaviourPun
             }
         }
     }
-
+    [PunRPC]
     protected virtual void GrabBegin_RPC(int viewID)
     {
-        
-    }
-    /// <summary>
-    /// Главная функция при взятии предмета 
-    /// </summary>
-    protected virtual void GrabBegin()
-    {
-                  
+        var result = m_grabCandidates.FirstOrDefault(c => c.Key.GetComponent<PhotonView>().ViewID == viewID);
+        if (result.Key != null)
+            closestGrabbable = result.Key;
+        else closestGrabbable = null;
+
         if (closestGrabbable != null)
         {
-
-            //if (photonView.IsMine)
-            //    photonView.RPC("GrabBegin_RPC", RpcTarget.All, closestGrabbable.GetComponent<PhotonView>().ViewID);
-
             //условие для искоренение возможности единовременно брать разные предметы в руку 
             if (m_grabbedObjs.Count != 0 && m_grabbedObjs.Exists(go => go.tag != closestGrabbable.tag))
                 return;
 
+            
 
             //если мы взяли наш же предмет
             if (closestGrabbable.isGrabbed)
@@ -489,6 +483,16 @@ public class OVRGrabberCustom : MonoBehaviourPun
         {
             print("Grabbable collider not found!");
         }
+    }
+    /// <summary>
+    /// Главная функция при взятии предмета 
+    /// </summary>
+    protected virtual void GrabBegin()
+    {
+        if (photonView.IsMine && closestGrabbable != null)
+        {
+            photonView.RPC("GrabBegin_RPC", RpcTarget.All, closestGrabbable.GetComponent<PhotonView>().ViewID);
+        }
         
     }
 
@@ -515,7 +519,8 @@ public class OVRGrabberCustom : MonoBehaviourPun
         }
     }
 
-    protected void GrabEnd()
+    [PunRPC]
+    protected void GrabEnd_RPC()
     {
         if (m_grabbedObjs.Count != 0)
         {
@@ -536,6 +541,13 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
         // Re-enable grab volumes to allow overlap events
         GrabVolumeEnable(true);
+    }
+    protected void GrabEnd()
+    {
+        if (photonView.IsMine)
+        {
+            photonView.RPC("GrabEnd_RPC", RpcTarget.All);
+        }
     }
 
     protected void GrabbableRelease(Vector3 linearVelocity, Vector3 angularVelocity)
