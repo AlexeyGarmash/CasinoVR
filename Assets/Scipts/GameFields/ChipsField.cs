@@ -258,7 +258,7 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
         {
             case ChipFieldEvents.StackAnimationEnded:
                 StackAnimEndedCounter++;
-                
+                Debug.Log("ChipFieldEvents.StackAnimationEnded");
                 if (StackAnimStartedCounter == StackAnimEndedCounter)
                 {
                     Debug.Log("UnblockAllStacks");
@@ -270,7 +270,7 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
                 break;
             case ChipFieldEvents.StackAnimationStarted:
                 StackAnimStartedCounter++;
-
+                Debug.Log("ChipFieldEvents.StackAnimationStarted");
                 if (StackAnimStartedCounter == 1)
                 {
                     BlockAllStacks();
