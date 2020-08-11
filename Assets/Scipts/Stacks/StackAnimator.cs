@@ -194,6 +194,8 @@ public class StackAnimator : MonoBehaviour
 
     public void UpdateStackInstantly()
     {
+
+        stack.Objects.ForEach(c => c.SetActive(true));
         StopAllCoroutines();
 
 
