@@ -146,20 +146,22 @@ public class OVRGrabberCustom : MonoBehaviourPun
         m_anchorOffsetPosition = transform.localPosition;
         m_anchorOffsetRotation = transform.localRotation;
 
-        if (photonView.IsMine)
-        {
-            if (!m_moveHandPosition)
-            {
-                // If we are being used with an OVRCameraRig, let it drive input updates, which may come from Update or FixedUpdate.
-                OVRCameraRig rig = transform.GetComponentInParent<OVRCameraRig>();
-                if (rig != null)
-                {
-                    rig.UpdatedAnchors += (r) => { OnUpdatedAnchors(); };
-                    m_operatingWithoutOVRCameraRig = false;
-                }
-            }
-        }
+        //if (photonView.IsMine)
+        //{
+        //    if (!m_moveHandPosition)
+        //    {
+        //        // If we are being used with an OVRCameraRig, let it drive input updates, which may come from Update or FixedUpdate.
+        //        OVRCameraRig rig = transform.GetComponentInParent<OVRCameraRig>();
+        //        if (rig != null)
+        //        {
+        //            rig.UpdatedAnchors += (r) => { OnUpdatedAnchors(); };
+        //            m_operatingWithoutOVRCameraRig = false;
+        //        }
+        //    }
+        //}
     }
+
+    [PunRPC]
 
     protected virtual void Start()
     {
