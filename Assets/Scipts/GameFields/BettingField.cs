@@ -88,9 +88,9 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
         if (canBet)
         {
             var chip = other.gameObject.GetComponent<ChipData>();
+            var grabbable = other.gameObject.GetComponent<OVRGrabbableCustom>();
 
-
-            if (chip != null && tableCell != null && chip.isGrabbed)
+            if (chip != null && tableCell != null && grabbable.isGrabbed)
             {
 
                 

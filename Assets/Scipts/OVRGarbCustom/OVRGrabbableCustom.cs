@@ -127,8 +127,7 @@ public class OVRGrabbableCustom : MonoBehaviourPun
         if(photonView != null)
         {
             photonView.RequestOwnership();
-            photonView.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
-            GetComponent<ChipData>().IsGragged_Photon(true);
+            photonView.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();            
         }
 
         //GetComponent<Collider>().isTrigger = true;
@@ -150,7 +149,6 @@ public class OVRGrabbableCustom : MonoBehaviourPun
         rb.isKinematic = m_grabbedKinematic;
         rb.velocity = linearVelocity;
         rb.angularVelocity = angularVelocity;
-        GetComponent<ChipData>().IsGragged_Photon(false);
         m_grabbedBy = null;
         m_grabbedCollider = null;
         gameObject.transform.parent = null;

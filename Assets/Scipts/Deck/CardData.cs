@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scipts.Chips;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,12 +11,10 @@ namespace Cards
 
     public enum Card_Sign { Clover, Diamond, Heart, Spades }
     public enum Card_Face { Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Ace, Jack, King, Queen }
-    public class CardData : MonoBehaviour
+    public class CardData : OwnerData
     {
         public Card_Sign Sign;
         public Card_Face Face;
-
-        public string playerName;
 
         public CardData(Card_Sign sign, Card_Face face)
         {

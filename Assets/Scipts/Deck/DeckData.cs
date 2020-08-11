@@ -20,8 +20,9 @@ namespace Cards
 
             GenerateDeck();
 
-            CardUtils.Instance.InstantiateDeck(Deck, transform);
+           
         }
+        
         private void GenerateDeck()
         {
             var listOfCards = new List<CardData>();

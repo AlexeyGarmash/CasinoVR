@@ -20,6 +20,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Assets.Scipts.Chips;
 /// <summary>
 /// Allows grabbing and throwing of objects with the OVRGrabbable component on them.
 /// </summary>
@@ -39,7 +40,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
     //список предметов которые находяться в руке
     public List<OVRGrabbableCustom> m_grabbedObjs;
-     
+
     //холдер для предметов руки находиться в TrackingSpace/LeftHandAnchor для левой руки TrackingSpace/RightHandAnchor для правой
     [SerializeField]
     public Transform grabbleObjSpawnPoint;
@@ -346,12 +347,12 @@ public class OVRGrabberCustom : MonoBehaviourPun
         var removeCandidaes = new List<OVRGrabbableCustom>();
         foreach (OVRGrabbableCustom grabbable in m_grabCandidates.Keys)
         {
-            //var itemNetInfo = grabbable.gameObject.GetComponent<ChipData>();
-            //if (itemNetInfo != null)            
-            //    if(itemNetInfo.InAnimation == true || itemNetInfo.Owner != playerStat.PlayerNick)
-            //        removeCandidaes.Add(grabbable);
-                      
-            //Debug.Log(Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position));
+            var itemNetInfo = grabbable.gameObject.GetComponent<OwnerData>();
+            if (itemNetInfo != null)
+                if (itemNetInfo.Owner != playerStat.PlayerNick)
+                    removeCandidaes.Add(grabbable);
+
+            Debug.Log(Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position));
             if (Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position) > MaxDistance)
             {
                 if(grabbable.gameObject.GetComponent<OVRGrabbableCustom>() != null)

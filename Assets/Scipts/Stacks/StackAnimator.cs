@@ -98,18 +98,15 @@ public class StackAnimator : MonoBehaviour
       
     }
 
-    public void ChangeStateOfItem(bool collider, bool InAnimation)
+    public void ChangeStateOfItem(bool collider)
     {
         foreach (GameObject chip in stack.Objects)
         {
             var GrabbableChip = chip.GetComponent<Collider>();
-            var netInfo = chip.GetComponent<ChipData>();
-            var view = chip.GetComponent<PhotonView>();
+
             if (GrabbableChip != null)
             {
-                chip.GetComponent<Collider>().enabled = collider;
-
-                netInfo.InAnimation = InAnimation;          
+                chip.GetComponent<Collider>().enabled = collider;         
 
             }
         }
@@ -131,8 +128,6 @@ public class StackAnimator : MonoBehaviour
         currentObjects.Add(chip);
         chip.SetActive(false);
         chip.GetComponent<Collider>().enabled = false;
-        var ItemNetworkInfo = chip.GetComponent<ChipData>();
-        ItemNetworkInfo.InAnimation = true;    
 
         if (waitToEnd != null)
         {

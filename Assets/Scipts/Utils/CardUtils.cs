@@ -102,7 +102,63 @@ namespace Cards
             LoadHearts();
             LoadSpades();
         }
+        public string GetPathToCard(CardData data)
+        {
+            switch (data.Sign)
+            {
+                case Card_Sign.Clover:
+                    return GetCloverCard(data, "B", "Clover");
+                    
+                case Card_Sign.Diamond:
+                    return GetCloverCard(data, "B", "Diamond");
+                    
+                case Card_Sign.Heart:
+                    return GetCloverCard(data, "B", "Heart");
+                    
+                case Card_Sign.Spades:
+                    return GetCloverCard(data, "B", "Spade");
+                   
 
+            }
+
+            return null;
+        }
+        private string GetCloverCard(CardData data, string color, string sign)
+        {          
+            switch (data.Face)
+            {
+                case Card_Face.Ace:
+                    return "Cards/" + sign + "s/Card_"+ sign + "_"+ color + "_Ace";    
+                case Card_Face.King:
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_King";
+                case Card_Face.Jack:
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_Jack";
+                case Card_Face.Queen:
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_Queen";
+                case Card_Face.Ten:
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_10";
+                case Card_Face.Nine:
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_9";
+                case Card_Face.Eight:
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_8";
+                case Card_Face.Seven:
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_7";
+                case Card_Face.Six:
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_6";
+                case Card_Face.Five:
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_5";
+                case Card_Face.Four:
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_4";
+                case Card_Face.Three:
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_3";
+                case Card_Face.Two:
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_2";
+
+
+            }
+
+            return null;
+        }
         private void LoadClovers()
         {
              CardsPrefabs.Add(Resources.Load("Cards/Clover/Card_Clover_B_02") as GameObject);
