@@ -35,11 +35,12 @@ public class PlayerPlace : MonoBehaviourPun
         {
             placeTaken = true;
             this.ps = ps;
-            print("Button clikced ps == null");
-            photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);          
-            PreparePlayerPlace();
             photonView.RequestOwnership();
             sf.photonView.RequestOwnership();
+            print("Button clikced ps == null");
+            photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);          
+            PreparePlayerPlace();           
+           
             //StartWinAnimation(1000, ps.PlayerNick);
 
         }
