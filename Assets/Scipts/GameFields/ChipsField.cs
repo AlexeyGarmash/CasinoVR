@@ -142,7 +142,7 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
 
         data.stack.Objects.Remove(data.chip);
 
-        data.stack.UpdateStackInstantly();
+        data.stack.animator.UpdateStackInstantly();
     }
 
 
