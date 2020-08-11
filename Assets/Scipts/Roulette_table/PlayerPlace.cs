@@ -38,6 +38,8 @@ public class PlayerPlace : MonoBehaviourPun
             print("Button clikced ps == null");
             photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);          
             PreparePlayerPlace();
+            photonView.RequestOwnership();
+            sf.photonView.RequestOwnership();
             //StartWinAnimation(1000, ps.PlayerNick);
 
         }
@@ -90,7 +92,7 @@ public class PlayerPlace : MonoBehaviourPun
     {
         Debug.Log(sf);
         
-        int money = ps.AllMoney;
+        int money = 3000;
         if (money > 0)
         {
 
@@ -125,7 +127,7 @@ public class PlayerPlace : MonoBehaviourPun
                 }
                 else sf.InstantiateToStackWithColor(Chips.YELLOW, ref money, ps.PlayerNick);
 
-                yield return new WaitForSeconds(0.1f);
+                yield return null;
             }
         }
        

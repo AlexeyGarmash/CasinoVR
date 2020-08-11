@@ -254,29 +254,33 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
     int StackAnimStartedCounter = 0;
     public void OnEvent(ChipFieldEvents Event_type, Component Sender, params object[] Param)
     {
-        switch (Event_type)
+        if (photonView.IsMine)
         {
-            case ChipFieldEvents.StackAnimationEnded:
-                StackAnimEndedCounter++;
-                
-                if (StackAnimStartedCounter == StackAnimEndedCounter && photonView.IsMine)
-                {
-                    Debug.Log("UnblockAllStacks");
-                    UnblockAllStacks();
-                    StackAnimEndedCounter = 0;
-                    StackAnimStartedCounter = 0;
-                }
-                
-                break;
-            case ChipFieldEvents.StackAnimationStarted:
-                StackAnimStartedCounter++;
+            switch (Event_type)
+            {
+                case ChipFieldEvents.StackAnimationEnded:
 
-                if (StackAnimStartedCounter == 1 && photonView.IsMine)
-                {
-                    BlockAllStacks();
-                    Debug.Log("BlockAllStacks");
-                }
-                break;
+                    StackAnimEndedCounter++;
+                    Debug.Log("StackAnimStartedCounter =" + StackAnimEndedCounter);
+                    if (StackAnimStartedCounter == StackAnimEndedCounter)
+                    {
+                        Debug.Log("UnblockAllStacks");
+                        UnblockAllStacks();
+                        StackAnimEndedCounter = 0;
+                        StackAnimStartedCounter = 0;
+                    }
+
+                    break;
+                case ChipFieldEvents.StackAnimationStarted:
+                    StackAnimStartedCounter++;
+                    Debug.Log("StackAnimStartedCounter =" + StackAnimStartedCounter);
+                    if (StackAnimStartedCounter == 1)
+                    {
+                        BlockAllStacks();
+                        Debug.Log("BlockAllStacks");
+                    }
+                    break;
+            }
         }
     }
 }

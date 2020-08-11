@@ -87,13 +87,13 @@ public class StackAnimator : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         currentObjects.Clear();
-        stack.Objects.ForEach(s =>
-        {
-            s.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
-            s.GetComponent<Collider>().enabled = true;
-            s.GetComponent<ChipData>().InAnimation = false;
-        });
-        //evenmManager.PostNotification(ChipFieldEvents.StackAnimationEnded, this);
+        //stack.Objects.ForEach(s =>
+        //{
+        //    s.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
+        //    s.GetComponent<Collider>().enabled = true;
+        //    s.GetComponent<ChipData>().InAnimation = false;
+        //});
+        evenmManager.PostNotification(ChipFieldEvents.StackAnimationEnded, this);
         AnimationEnded = true;
       
     }
@@ -139,11 +139,11 @@ public class StackAnimator : MonoBehaviour
             StopCoroutine(waitToEnd);
             waitToEnd = StartCoroutine(WaitToEnd());
         }
-        //ChangeStateOfItem(false, true, ViewSynchronization.Off);
+       
         if (prevMoveLastChips == null)
         {
             //UpdateStackInstantly();          
-            //evenmManager.PostNotification(ChipFieldEvents.StackAnimationStarted, this);
+            evenmManager.PostNotification(ChipFieldEvents.StackAnimationStarted, this);
             prevMoveLastChips = StartCoroutine(MoveLastChips(chipsDropSpeed, chipsDropMult, pauseBeetwenChips));
         }       
     }
