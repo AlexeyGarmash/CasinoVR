@@ -127,6 +127,7 @@ public class OVRGrabbableCustom : MonoBehaviourPun
         if(photonView != null)
         {
             photonView.RequestOwnership();
+            photonView.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
             GetComponent<ChipData>().IsGragged_Photon(true);
         }
 
@@ -154,8 +155,8 @@ public class OVRGrabbableCustom : MonoBehaviourPun
         m_grabbedCollider = null;
         gameObject.transform.parent = null;
         GetComponent<Collider>().isTrigger = false;
+        photonView.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
 
-        
     }
 
     void Awake()

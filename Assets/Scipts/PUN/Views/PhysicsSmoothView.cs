@@ -7,8 +7,6 @@ using UnityEngine;
 public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
 {
     private Rigidbody _rigidbody;
-    private Vector3 networkPosition;
-    private Quaternion networkRotation;
     
     private void Awake()
     {
@@ -46,9 +44,9 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
     {      
 
         if (photonView.Synchronization != ViewSynchronization.Off)
-            if (!photonView.IsMine )
+            if (!photonView.IsMine)
             {
-                //transform.SetPositionAndRotation(position, rotation);
+                transform.SetPositionAndRotation(position, rotation);
                 //_rigidbody.position = Vector3.MoveTowards(_rigidbody.position, networkPosition, Time.fixedDeltaTime);
                 //_rigidbody.rotation = Quaternion.RotateTowards(_rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
             }
