@@ -127,7 +127,7 @@ public class PlayerPlace : MonoBehaviourPun
     {
         Debug.Log(sf);
         
-        int money = 3000;
+        int money = 500;
         if (money > 0)
         {
 
