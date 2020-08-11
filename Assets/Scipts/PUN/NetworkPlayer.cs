@@ -71,14 +71,6 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         hand.transform.SetParent(anchor);
         hand.transform.localPosition = Vector3.zero;
         hand.transform.rotation = Quaternion.Euler(0f, yRot, zRotation);
-        OVRGrabberCustom grabberCustom = hand.GetComponent<OVRGrabberCustom>();
-        if(grabberCustom != null)
-        {
-            Transform spawnPoint = anchor.Find("Spawn");
-            if (spawnPoint != null)
-            {
-                grabberCustom.grabbleObjSpawnPoint = spawnPoint;
-            }
-        }
+        
     }
 }
