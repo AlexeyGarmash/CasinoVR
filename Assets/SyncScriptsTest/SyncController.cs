@@ -7,9 +7,10 @@ public class SyncController : MonoBehaviourPun
 {
     private OVRGrabbableCustom _customGrabbable;
 
-    void Start()
+    void Awake()
     {
         _customGrabbable = GetComponent<OVRGrabbableCustom>();
+        photonView.Synchronization = ViewSynchronization.Off;
     }
 
     void Update()
