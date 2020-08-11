@@ -337,6 +337,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerNick: 
   AllMoney: 1000
+--- !u!1 &5387316499952686805
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7357867711779941156}
+  m_Layer: 0
+  m_Name: Chips_Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7357867711779941156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5387316499952686805}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3818607642996665560}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1927839863139954606
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -573,7 +603,7 @@ PrefabInstance:
         type: 3}
       propertyPath: grabbleObjSpawnPoint
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1317447686498469775}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c8d928ed66b94b41a90a293e25b86e8, type: 3}
 --- !u!1 &7774435424527977969 stripped
@@ -585,6 +615,12 @@ GameObject:
 --- !u!4 &7774435424527746559 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1974921035140182394, guid: 0c8d928ed66b94b41a90a293e25b86e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 8109861307694101637}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1317447686498469775 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7116954413262729994, guid: 0c8d928ed66b94b41a90a293e25b86e8,
     type: 3}
   m_PrefabInstance: {fileID: 8109861307694101637}
   m_PrefabAsset: {fileID: 0}
@@ -671,7 +707,7 @@ PrefabInstance:
         type: 3}
       propertyPath: grabbleObjSpawnPoint
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7357867711779941156}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19b420f7d000b6a43bb124c9120d4baa, type: 3}
 --- !u!1 &3818607642996902188 stripped
