@@ -34,11 +34,14 @@ public class SimpleTransformView : MonoBehaviourPun, IPunObservable
     
     void Update()
     {
-        if(!photonView.IsMine)
+        if(photonView.Synchronization != ViewSynchronization.Off)
         {
-            _rigidbody.isKinematic = IsKinematic;
-            transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.deltaTime);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, networkRotation, Time.deltaTime * 100.0f);
+            if(!photonView.IsMine)
+            {
+                _rigidbody.isKinematic = IsKinematic;
+                transform.position = Vector3.MoveTowards(transform.position, networkPosition, Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, networkRotation, Time.deltaTime * 100.0f);
+            }
         }
     }
 
