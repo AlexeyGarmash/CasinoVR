@@ -52,14 +52,6 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         }
     }
 
-
-    private void LoadAvatar()
-    {
-        if(PhotonPlayerSettings.Instance != null)
-        {
-
-        }
-    }
     private void SetHeadAvatar()
     {
         Avatar.transform.SetParent(CenterEye);
