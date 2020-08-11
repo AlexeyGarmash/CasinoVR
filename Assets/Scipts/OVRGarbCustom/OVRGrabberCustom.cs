@@ -15,14 +15,16 @@ permissions and limitations under the License.
 ************************************************************************************/
 
 using Assets.Scipts.Player;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 /// <summary>
 /// Allows grabbing and throwing of objects with the OVRGrabbable component on them.
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
-public class OVRGrabberCustom : MonoBehaviour
+public class OVRGrabberCustom : MonoBehaviourPun
 {
     #region Extention variables 
     [Header("New Settings")]
@@ -317,7 +319,7 @@ public class OVRGrabberCustom : MonoBehaviour
         UpdateCandidates();
         FindClosestGrabbableCandidate();
 
-        if (closestGrabbable != null && closestGrabbable.GetComponent<Outline>() != null)
+        if (closestGrabbable != null && closestGrabbable.GetComponent<Outline>() != null && photonView.IsMine)
         {
             var outline = closestGrabbable.GetComponent<Outline>();
             
@@ -395,18 +397,27 @@ public class OVRGrabberCustom : MonoBehaviour
             }
         }
     }
+
+    protected virtual void GrabBegin_RPC(int viewID)
+    {
+        
+    }
     /// <summary>
     /// Главная функция при взятии предмета 
     /// </summary>
     protected virtual void GrabBegin()
     {
-       
-
+                  
         if (closestGrabbable != null)
         {
+
+            //if (photonView.IsMine)
+            //    photonView.RPC("GrabBegin_RPC", RpcTarget.All, closestGrabbable.GetComponent<PhotonView>().ViewID);
+
             //условие для искоренение возможности единовременно брать разные предметы в руку 
             if (m_grabbedObjs.Count != 0 && m_grabbedObjs.Exists(go => go.tag != closestGrabbable.tag))
                 return;
+
 
             //если мы взяли наш же предмет
             if (closestGrabbable.isGrabbed)
@@ -464,7 +475,7 @@ public class OVRGrabberCustom : MonoBehaviour
 
             //MoveGrabbedObject(m_lastPos, m_lastRot, true);
 
-           
+
             m_grabCandidates.Clear();
             SetPlayerIgnoreCollision(m_grabbedObj.gameObject, true);
             if (m_grabbedObjs.Count == max_grabbed_obj || closestGrabbable.tag == "Untagged")
@@ -478,6 +489,7 @@ public class OVRGrabberCustom : MonoBehaviour
         {
             print("Grabbable collider not found!");
         }
+        
     }
 
     protected virtual void MoveGrabbedObject(Vector3 pos, Quaternion rot, bool forceTeleport = false)
