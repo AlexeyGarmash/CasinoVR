@@ -126,7 +126,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: 
   Objects: []
-  SyncObjects: []
   animator: {fileID: 0}
 --- !u!114 &6356480769282898850
 MonoBehaviour:
@@ -620,7 +619,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ps: {fileID: 0}
-  playerWinAnim: {fileID: 0}
   canLeave: 0
 --- !u!65 &1062756419882279097
 BoxCollider:
@@ -651,7 +649,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 0
-  OwnershipTransfer: 0
+  OwnershipTransfer: 2
   ObservedComponents:
   - {fileID: 0}
   viewIdField: 0
