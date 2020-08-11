@@ -64,6 +64,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
     {
         Avatar.transform.SetParent(CenterEye);
         Avatar.transform.localPosition = Vector3.zero;
+        Avatar.transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
 
     private void SetHand(GameObject hand, Transform anchor, float yRot, float zRotation)
