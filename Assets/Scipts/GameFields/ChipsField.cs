@@ -202,7 +202,7 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
 
     void BlockAllStacks()
     {       
-        photonView.RPC("UpdateAllStacks", RpcTarget.All, false, true);
+        photonView.RPC("UpdateAllStacks", RpcTarget.All, false, true, false);
 
         foreach (var stack in Stacks)
             foreach (var chip in stack.Objects)
@@ -211,7 +211,7 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
 
     void UnblockAllStacks()
     {
-        photonView.RPC("UpdateAllStacks", RpcTarget.All, true, false);
+        photonView.RPC("UpdateAllStacks", RpcTarget.All, true, false, true);
 
         for (var i = 0; i < Stacks.Length; i++)
         {
@@ -236,11 +236,12 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
     }   
 
     [PunRPC]
-    public void UpdateAllStacks(bool col, bool isAnim)
+    public void UpdateAllStacks(bool col, bool isAnim, bool updateInstantly)
     {
         foreach (var stack in Stacks)
         {
-            stack.UpdateStackInstantly();
+            if(updateInstantly)
+             stack.UpdateStackInstantly();
             stack.animator.ChangeStateOfItem(col, isAnim);
         }
     }
