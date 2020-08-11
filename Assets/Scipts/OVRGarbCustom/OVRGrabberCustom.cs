@@ -146,14 +146,17 @@ public class OVRGrabberCustom : MonoBehaviourPun
         m_anchorOffsetPosition = transform.localPosition;
         m_anchorOffsetRotation = transform.localRotation;
 
-        if (!m_moveHandPosition)
+        if (photonView.IsMine)
         {
-            // If we are being used with an OVRCameraRig, let it drive input updates, which may come from Update or FixedUpdate.
-            OVRCameraRig rig = transform.GetComponentInParent<OVRCameraRig>();
-            if (rig != null)
+            if (!m_moveHandPosition)
             {
-                rig.UpdatedAnchors += (r) => { OnUpdatedAnchors(); };
-                m_operatingWithoutOVRCameraRig = false;
+                // If we are being used with an OVRCameraRig, let it drive input updates, which may come from Update or FixedUpdate.
+                OVRCameraRig rig = transform.GetComponentInParent<OVRCameraRig>();
+                if (rig != null)
+                {
+                    rig.UpdatedAnchors += (r) => { OnUpdatedAnchors(); };
+                    m_operatingWithoutOVRCameraRig = false;
+                }
             }
         }
     }
@@ -323,8 +326,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         {
             var outline = closestGrabbable.GetComponent<Outline>();
             
-            outline.enabled = true;
-           
+            outline.enabled = true;          
         }
         DisableOutline(closestGrabbable);
     }
@@ -421,6 +423,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
 
             m_grabbedObj = closestGrabbable;
+            
             m_grabbedObjs.Add(m_grabbedObj);
 
             //в GrabBegin класса OVRGrabbableCustom и его наследника мы можем протисывать

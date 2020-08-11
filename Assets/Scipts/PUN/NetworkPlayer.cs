@@ -8,6 +8,7 @@ using TMPro.Examples;
 public class NetworkPlayer : MonoBehaviourPunCallbacks
 {
     private Transform CenterEye;
+    private Transform OvrCameraRigTransform;
     private Transform RightHandAnchor;
     private Transform LeftHandAnchor;
     [SerializeField] private GameObject Avatar;
@@ -24,12 +25,20 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
             if(globalVRController != null)
             {
                 Transform ovrControllerTransform = globalVRController.transform;
+                
+                OvrCameraRigTransform = ovrControllerTransform.Find("OVRCameraRig").transform;
+
+               
                 CenterEye = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/CenterEyeAnchor").transform;
                 RightHandAnchor = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/RightHandAnchor").transform;
                 LeftHandAnchor = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/LeftHandAnchor").transform;
                 SetHeadAvatar();
                 SetHand(LeftHand, LeftHandAnchor, 180f, 90f);
                 SetHand(RightHand, RightHandAnchor, -180f, -90f);
+
+                OvrCameraRigTransform.parent = transform;
+                transform.parent = globalVRController.transform;
+                transform.localPosition = Vector3.zero;
             }
         }
 
@@ -53,8 +62,8 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
     }
     private void SetHeadAvatar()
     {
-        transform.SetParent(CenterEye);
-        transform.localPosition = Vector3.zero;
+        Avatar.transform.SetParent(CenterEye);
+        Avatar.transform.localPosition = Vector3.zero;
     }
 
     private void SetHand(GameObject hand, Transform anchor, float yRot, float zRotation)
