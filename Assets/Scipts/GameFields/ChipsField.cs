@@ -211,24 +211,27 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
 
     void UnblockAllStacks()
     {
-        //for (var i = 0; i < Stacks.Length; i++)
-        //{
-        //    for (var j = 0; j < Stacks[i].Objects.Count; j++)
-        //    {
-        //        var position = Stacks[i].Objects[j].transform.position;
-        //        var viewID = Stacks[i].Objects[j].GetComponent<PhotonView>().ViewID;
+        photonView.RPC("UpdateAllStacks", RpcTarget.All, true, false);
 
-        //        photonView.RPC("SyncGameObjects", RpcTarget.Others, viewID, position, i, j);
-        //    }
-        //}
+        for (var i = 0; i < Stacks.Length; i++)
+        {
+            for (var j = 0; j < Stacks[i].Objects.Count; j++)
+            {
+                var position = Stacks[i].Objects[j].transform.position;
+                var viewID = Stacks[i].Objects[j].GetComponent<PhotonView>().ViewID;
 
+                photonView.RPC("SyncGameObjects", RpcTarget.Others, viewID, position, i, j);
+            }
+        }
+
+       
 
         foreach (var stack in Stacks)
             foreach (var chip in stack.Objects)
                 chip.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
 
 
-        photonView.RPC("UpdateAllStacks", RpcTarget.All, true, false);
+       
 
     }   
 
