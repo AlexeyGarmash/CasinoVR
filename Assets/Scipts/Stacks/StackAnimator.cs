@@ -87,7 +87,13 @@ public class StackAnimator : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         currentObjects.Clear();
-        evenmManager.PostNotification(ChipFieldEvents.StackAnimationEnded, this);
+        stack.Objects.ForEach(s =>
+        {
+            s.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
+            s.GetComponent<Collider>().enabled = true;
+            s.GetComponent<ChipData>().InAnimation = false;
+        });
+        //evenmManager.PostNotification(ChipFieldEvents.StackAnimationEnded, this);
         AnimationEnded = true;
       
     }
@@ -119,9 +125,7 @@ public class StackAnimator : MonoBehaviour
         AnimationEnded = false;
         
 
-        var view = chip.GetComponent<PhotonView>();
-
-       
+        var view = chip.GetComponent<PhotonView>();       
         view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
 
         currentObjects.Add(chip);
@@ -139,7 +143,7 @@ public class StackAnimator : MonoBehaviour
         if (prevMoveLastChips == null)
         {
             //UpdateStackInstantly();          
-            evenmManager.PostNotification(ChipFieldEvents.StackAnimationStarted, this);
+            //evenmManager.PostNotification(ChipFieldEvents.StackAnimationStarted, this);
             prevMoveLastChips = StartCoroutine(MoveLastChips(chipsDropSpeed, chipsDropMult, pauseBeetwenChips));
         }       
     }
