@@ -15,7 +15,8 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
         _rigidbody = GetComponent<Rigidbody>();
           
     }
-
+    Vector3 position;
+    Quaternion rotation;
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
@@ -23,31 +24,33 @@ public class PhysicsSmoothView : MonoBehaviourPun, IPunObservable
 
             stream.SendNext(_rigidbody.position);
             stream.SendNext(_rigidbody.rotation);
-            stream.SendNext(_rigidbody.velocity);
+            //stream.SendNext(_rigidbody.velocity);
         }
         else
         {
                            
 
             var obj = stream.ReceiveNext();
+            position = (Vector3)obj;
+            rotation = (Quaternion)stream.ReceiveNext();
+            
+            //networkRotation = (Quaternion)stream.ReceiveNext();
+            //_rigidbody.velocity = (Vector3)stream.ReceiveNext();
 
-            networkPosition = (Vector3)obj;
-            networkRotation = (Quaternion)stream.ReceiveNext();
-            _rigidbody.velocity = (Vector3)stream.ReceiveNext();
-
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
-            networkPosition += (_rigidbody.velocity * lag);
+            //float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            //networkPosition += (_rigidbody.velocity * lag);
         }
     }
 
-    public void FixedUpdate()
+    public void Update()
     {      
 
         if (photonView.Synchronization != ViewSynchronization.Off)
             if (!photonView.IsMine )
             {
-                _rigidbody.position = Vector3.MoveTowards(_rigidbody.position, networkPosition, Time.fixedDeltaTime);
-                _rigidbody.rotation = Quaternion.RotateTowards(_rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+                transform.SetPositionAndRotation(position, rotation);
+                //_rigidbody.position = Vector3.MoveTowards(_rigidbody.position, networkPosition, Time.fixedDeltaTime);
+                //_rigidbody.rotation = Quaternion.RotateTowards(_rigidbody.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
             }
     }
 

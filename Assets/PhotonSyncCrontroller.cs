@@ -13,7 +13,7 @@ public class PhotonSyncCrontroller : MonoBehaviourPun
         if (photonView.IsMine)
         {
 
-            Debug.Log("SyncOff_RPC");
+            //Debug.Log("SyncOff_RPC");
             photonView.RPC("SyncOff_RPC", RpcTarget.All);
         }
         
@@ -22,7 +22,7 @@ public class PhotonSyncCrontroller : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            Debug.Log("SyncOn_RPC");
+            //Debug.Log("SyncOn_RPC");
             photonView.RPC("SyncOn_RPC", RpcTarget.All);
         }
     }
