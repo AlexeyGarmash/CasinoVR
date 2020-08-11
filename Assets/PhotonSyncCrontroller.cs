@@ -17,11 +17,10 @@ public class PhotonSyncCrontroller : MonoBehaviourPun
     }
     public void SyncOn_Photon()
     {
-        if (photonView.IsMine)
-        {
-            Debug.Log("SyncOn_RPC");
-            photonView.RPC("SyncOn_RPC", RpcTarget.All);
-        }
+       
+        Debug.Log("SyncOn_RPC");
+        photonView.RPC("SyncOn_RPC", RpcTarget.All);
+        
     }
 
     public void SetOwner_Photon()
