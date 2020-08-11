@@ -52,18 +52,11 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         }
     }
 
-
-    private void LoadAvatar()
-    {
-        if(PhotonPlayerSettings.Instance != null)
-        {
-
-        }
-    }
     private void SetHeadAvatar()
     {
         Avatar.transform.SetParent(CenterEye);
         Avatar.transform.localPosition = Vector3.zero;
+        Avatar.transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
 
     private void SetHand(GameObject hand, Transform anchor, float yRot, float zRotation)
