@@ -8,15 +8,38 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
-public enum ChipFieldEvents{ StackAnimationEnded, StackAnimationStarted }
-public class ChipsField : AbstractField, IListener<ChipFieldEvents>
+public enum AbstractFieldEvents{ StackAnimationEnded, StackAnimationStarted }
+public class ChipsField : AbstractField
 {
-    public EventManager<ChipFieldEvents> FieldEventManager = new EventManager<ChipFieldEvents>();
-
-    protected void Start()
+    protected List<StackData> FindPossibleFields(ChipData data)
     {
-        FieldEventManager.AddListener(ChipFieldEvents.StackAnimationEnded, this);
-        FieldEventManager.AddListener(ChipFieldEvents.StackAnimationStarted, this);
+        var list = new List<StackData>();
+
+        for (var i = 0; i < Stacks.Length; i++)
+            if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == data.Cost && maxObjectsOnField != Stacks[i].Objects.Count)
+                list.Add(Stacks[i]);
+
+        if (list.Count == 0)
+            for (var i = 0; i < Stacks.Length; i++)
+                if (Stacks[i].Objects.Count == 0)
+                    list.Add(Stacks[i]);
+
+        if (list.Count == 0)
+        {
+            maxObjectsOnField += 1;
+
+            for (var i = 0; i < Stacks.Length; i++)
+                if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == data.Cost && maxObjectsOnField != Stacks[i].Objects.Count)
+                    list.Add(Stacks[i]);
+
+            if (list.Count == 0)
+                for (var i = 0; i < Stacks.Length; i++)
+                    if (Stacks[i].Objects.Count == 0)
+                        list.Add(Stacks[i]);
+        }
+
+        return list;
+
     }
     public override bool MagnetizeObject(GameObject Object, StackData Stack)
     {
@@ -50,51 +73,8 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
         return false;
     }
 
-    
-    #region RPC 
-    [PunRPC]
-    public void ExtranctChipOnAll_RPC(int viewID)
-    {
-        var data = GetChipAndHisStack(viewID);
-        if (data.chip == null)
-        {
-            Debug.Log("chip not found! viewID = " + viewID);
-            return;
-        }
 
-        data.stack.Objects.Remove(data.chip);
-
-        data.stack.UpdateStackInstantly();
-    }
-    public void ExtranctChip(int viewID)
-    {
-        var data = GetChipAndHisStack(viewID);
-
-        if (data.chip == null)
-        {
-            Debug.Log("chip not found! viewID = " + viewID);
-            return;
-        }
-
-        data.stack.Objects.Remove(data.chip);
-
-        data.stack.animator.UpdateStackInstantly();
-    }
-
-
-    //protected bool ExtranctChipOnAll(int viewID)
-    //{     
-
-    //    photonView.RPC("ExtranctChipOnAll_RPC", RpcTarget.All, viewID);
-
-    //    return true;
-    //}
-    #endregion
-
-
-    #region Unity Callbacks
-
-    protected void OnTriggerEnter(Collider other)
+    protected new void OnTriggerEnter(Collider other)
     {
 
         var gameObj = other.gameObject;
@@ -113,8 +93,7 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
         }
 
     }
-
-    protected void OnTriggerStay(Collider other)
+    protected new void OnTriggerStay(Collider other)
     {
 
         var gameObj = other.gameObject;
@@ -131,95 +110,14 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
 
     }
 
+    #region Unity Callbacks
+
+
+
     #endregion
-   
-
-    void BlockAllStacks()
-    {       
-        photonView.RPC("UpdateAllStacks", RpcTarget.All, false, false);
-
-        foreach (var stack in Stacks)
-            foreach (var chip in stack.Objects)
-                chip.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
-    }
-
-    void UnblockAllStacks()
-    {
-        photonView.RPC("UpdateAllStacks", RpcTarget.All, true, true);
-
-        for (var i = 0; i < Stacks.Length; i++)
-        {
-            for (var j = 0; j < Stacks[i].Objects.Count; j++)
-            {
-                var position = Stacks[i].Objects[j].transform.position;
-                var viewID = Stacks[i].Objects[j].GetComponent<PhotonView>().ViewID;
-
-                photonView.RPC("SyncGameObjects", RpcTarget.Others, viewID, position, i, j);
-            }
-        }
-
-       
-
-        foreach (var stack in Stacks)
-            foreach (var chip in stack.Objects)
-                chip.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
 
 
-       
 
-    }   
-
-    [PunRPC]
-    public void UpdateAllStacks(bool col, bool updateInstantly)
-    {
-        foreach (var stack in Stacks)
-        {
-            if(updateInstantly)
-             stack.UpdateStackInstantly();
-            stack.animator.ChangeStateOfItem(col);
-        }
-    }
-
-    [PunRPC]
-    public void SyncGameObjects(int viewID, Vector3 position, int stackIndex, int chipsIndex)
-    {
-        Stacks[stackIndex].Objects[chipsIndex].GetComponent<PhotonView>().ViewID = viewID;
-        Stacks[stackIndex].Objects[chipsIndex].transform.position = position;       
-    }
-
-    int StackAnimEndedCounter = 0;
-    int StackAnimStartedCounter = 0;
-    public void OnEvent(ChipFieldEvents Event_type, Component Sender, params object[] Param)
-    {
-        if (photonView.IsMine)
-        {
-            switch (Event_type)
-            {
-                case ChipFieldEvents.StackAnimationEnded:
-
-                    StackAnimEndedCounter++;
-                    Debug.Log("StackAnimStartedCounter =" + StackAnimEndedCounter);
-                    if (StackAnimStartedCounter == StackAnimEndedCounter)
-                    {
-                        Debug.Log("UnblockAllStacks");
-                        UnblockAllStacks();
-                        StackAnimEndedCounter = 0;
-                        StackAnimStartedCounter = 0;
-                    }
-
-                    break;
-                case ChipFieldEvents.StackAnimationStarted:
-                    StackAnimStartedCounter++;
-                    Debug.Log("StackAnimStartedCounter =" + StackAnimStartedCounter);
-                    if (StackAnimStartedCounter == 1)
-                    {
-                        BlockAllStacks();
-                        Debug.Log("BlockAllStacks");
-                    }
-                    break;
-            }
-        }
-    }
 }
 
 

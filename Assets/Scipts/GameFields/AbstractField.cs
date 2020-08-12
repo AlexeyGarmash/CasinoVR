@@ -5,18 +5,31 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Photon.Pun;
+using Assets.Scipts.Chips;
 
-public abstract class AbstractField : MonoBehaviourPun, IMagnetize
+public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<AbstractFieldEvents>
 { 
     [SerializeField]
     public StackData[] Stacks;
-
+   
     [SerializeField]
     protected int maxObjectsOnField = 20;
+    EventManager<AbstractFieldEvents> _fieldEventManager;
+    public EventManager<AbstractFieldEvents> FieldEventManager
+    {
+        get
+        {
+            if (_fieldEventManager == null)
+                _fieldEventManager = new EventManager<AbstractFieldEvents>();
+            return _fieldEventManager;
+        }
+    }
 
     protected void Awake()
     {
         Stacks = GetComponentsInChildren<StackData>();
+        FieldEventManager.AddListener(AbstractFieldEvents.StackAnimationEnded, this);
+        FieldEventManager.AddListener(AbstractFieldEvents.StackAnimationStarted, this);
     }
 
     public void ClearStacks()
@@ -60,6 +73,8 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize
     }
     protected StackData FindClossestField(Transform chip, List<StackData> PossibleField)
     {
+        if (PossibleField == null)
+            PossibleField = Stacks.ToList();
         List<float> distances = new List<float>();
         for (var i = 0; i < PossibleField.Count; i++)
         {
@@ -69,36 +84,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize
         return PossibleField[distances.IndexOf(distances.Min())];
     }
 
-    protected List<StackData> FindPossibleFields(ChipData data)
-    {
-        var list = new List<StackData>();
-
-        for (var i = 0; i < Stacks.Length; i++)
-            if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == data.Cost && maxObjectsOnField != Stacks[i].Objects.Count)
-                list.Add(Stacks[i]);
-
-        if (list.Count == 0)
-            for (var i = 0; i < Stacks.Length; i++)
-                if (Stacks[i].Objects.Count == 0)
-                    list.Add(Stacks[i]);
-
-        if (list.Count == 0)
-        {
-            maxObjectsOnField += 1;
-
-            for (var i = 0; i < Stacks.Length; i++)
-                if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == data.Cost && maxObjectsOnField != Stacks[i].Objects.Count)
-                    list.Add(Stacks[i]);
-
-            if (list.Count == 0)
-                for (var i = 0; i < Stacks.Length; i++)
-                    if (Stacks[i].Objects.Count == 0)
-                        list.Add(Stacks[i]);
-        }
-
-        return list;
-
-    }
+    
 
     protected (GameObject chip, StackData stack) GetChipAndHisStack(int viewID)
     {
@@ -111,7 +97,157 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize
 
 
     }
+    int StackAnimEndedCounter = 0;
+    int StackAnimStartedCounter = 0;
+    public void OnEvent(AbstractFieldEvents Event_type, Component Sender, params object[] Param)
+    {
+        if (photonView.IsMine)
+        {
+            switch (Event_type)
+            {
+                case AbstractFieldEvents.StackAnimationEnded:
 
+                    StackAnimEndedCounter++;
+                    Debug.Log("StackAnimStartedCounter =" + StackAnimEndedCounter);
+                    if (StackAnimStartedCounter == StackAnimEndedCounter)
+                    {
+                        Debug.Log("UnblockAllStacks");
+                        UnblockAllStacks();
+                        StackAnimEndedCounter = 0;
+                        StackAnimStartedCounter = 0;
+                    }
+
+                    break;
+                case AbstractFieldEvents.StackAnimationStarted:
+                    StackAnimStartedCounter++;
+                    Debug.Log("StackAnimStartedCounter =" + StackAnimStartedCounter);
+                    if (StackAnimStartedCounter == 1)
+                    {
+                        BlockAllStacks();
+                        Debug.Log("BlockAllStacks");
+                    }
+                    break;
+            }
+        }
+    }
+       
+
+    void BlockAllStacks()
+    {       
+        photonView.RPC("UpdateAllStacks", RpcTarget.All, false, false);
+
+        foreach (var stack in Stacks)
+            foreach (var chip in stack.Objects)
+                chip.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+    }
+
+    void UnblockAllStacks()
+    {
+        photonView.RPC("UpdateAllStacks", RpcTarget.All, true, true);
+
+        for (var i = 0; i < Stacks.Length; i++)
+        {
+            for (var j = 0; j < Stacks[i].Objects.Count; j++)
+            {
+                var position = Stacks[i].Objects[j].transform.position;
+                var viewID = Stacks[i].Objects[j].GetComponent<PhotonView>().ViewID;
+
+                photonView.RPC("SyncGameObjects", RpcTarget.Others, viewID, position, i, j);
+            }
+        }
+
+       
+
+        foreach (var stack in Stacks)
+            foreach (var chip in stack.Objects)
+                chip.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
+
+
+       
+
+    }   
+
+    [PunRPC]
+    public void UpdateAllStacks(bool col, bool updateInstantly)
+    {
+        foreach (var stack in Stacks)
+        {
+            if(updateInstantly)
+             stack.UpdateStackInstantly();
+            stack.animator.ChangeStateOfItem(col);
+        }
+    }
+
+    [PunRPC]
+    public void SyncGameObjects(int viewID, Vector3 position, int stackIndex, int chipsIndex)
+    {
+        Stacks[stackIndex].Objects[chipsIndex].GetComponent<PhotonView>().ViewID = viewID;
+        Stacks[stackIndex].Objects[chipsIndex].transform.position = position;       
+    }
+    protected void OnTriggerEnter(Collider other)
+    {
+
+        var gameObj = other.gameObject;
+        var chip = other.gameObject.GetComponent<OwnerData>();
+        var gc = other.gameObject.GetComponent<GrabbableChip>();
+        var rb = other.GetComponent<Rigidbody>();
+        var view = gameObj.GetComponent<PhotonView>();
+
+        if (chip != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null)
+        {
+
+            Debug.Log("MagnetizeObject viewID=" + view.ViewID);
+            var clossest = FindClossestField(chip.transform, null);
+            MagnetizeObject(gameObj, clossest);
+
+        }
+
+    }
+
+    protected void OnTriggerStay(Collider other)
+    {
+
+        var gameObj = other.gameObject;
+        var chip = other.gameObject.GetComponent<OwnerData>();
+        var gc = other.gameObject.GetComponent<GrabbableChip>();
+        var rb = other.GetComponent<Rigidbody>();
+        var view = gameObj.GetComponent<PhotonView>();
+
+        if (chip != null && gc != null && gc.isGrabbed && rb.isKinematic && view != null && Contain(gameObj))
+        {
+            ExtranctChip(view.ViewID);
+            //SyncStacks();
+        }
+
+    }
+    [PunRPC]
+    public void ExtranctChipOnAll_RPC(int viewID)
+    {
+        var data = GetChipAndHisStack(viewID);
+        if (data.chip == null)
+        {
+            Debug.Log("chip not found! viewID = " + viewID);
+            return;
+        }
+
+        data.stack.Objects.Remove(data.chip);
+
+        data.stack.UpdateStackInstantly();
+    }
+    public void ExtranctChip(int viewID)
+    {
+        var data = GetChipAndHisStack(viewID);
+
+        if (data.chip == null)
+        {
+            Debug.Log("chip not found! viewID = " + viewID);
+            return;
+        }
+
+        data.stack.Objects.Remove(data.chip);
+
+        data.stack.animator.UpdateStackInstantly();
+    }
     public abstract bool MagnetizeObject(GameObject Object, StackData Stack);
 
 }

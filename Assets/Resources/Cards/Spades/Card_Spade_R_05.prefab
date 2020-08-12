@@ -21,8 +21,9 @@ GameObject:
   - component: {fileID: 713740750083793579}
   - component: {fileID: -1217773457367655623}
   - component: {fileID: -111908927233527978}
+  - component: {fileID: 7255944686574682447}
   m_Layer: 12
-  m_Name: Card_Spades_R_05
+  m_Name: Card_Spade_R_05
   m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,9 +131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e06eedf570f357640ba147a9882414e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Owner: 
   Sign: 3
   Face: 3
-  playerName: 
 --- !u!114 &-605974166225870553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +151,8 @@ MonoBehaviour:
   m_snapOrientation: 0
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
+  m_grabbedKinematic: 0
+  m_grabbedBy: {fileID: 0}
   handCardsPos: {x: -0.0277, y: -0.0049, z: 0.0085}
   cardRotationFace: {x: -41.744, y: 14.602, z: 176.382, w: 0}
   handPos: {fileID: 7723645442114614947, guid: b0bebda1db8c6664bbcd447a44cac9de, type: 3}
@@ -248,3 +251,15 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
+--- !u!114 &7255944686574682447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ead309109265a9742bedb75e54445baa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

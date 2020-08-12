@@ -17,6 +17,12 @@ public class PlayerPlace : MonoBehaviourPun
    
     public bool canLeave;
 
+    [SerializeField]
+    private int _placeId;
+    
+    public int PlaceId { get => _placeId; }
+    public bool PlayerOnPlace { get => ps != null; }
+    public bool PlayerReady { get => true; }
     private void Start()
     {
         ps = null;

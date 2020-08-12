@@ -7,6 +7,10 @@ using UnityEngine;
 
 public class StackAnimator : MonoBehaviour
 {
+    [SerializeField]
+    public bool useObjectRotation = true;
+    [SerializeField]
+    protected Vector3 objectRotation;
 
     [SerializeField]
     public const float chipsDropSpeed = 0.9f;
@@ -38,10 +42,10 @@ public class StackAnimator : MonoBehaviour
 
     Coroutine prevMoveLastChips, waitToEnd;
 
-    EventManager<ChipFieldEvents> evenmManager;
+    EventManager<AbstractFieldEvents> evenmManager;
     private void Start()
     {
-        evenmManager = GetComponentInParent<ChipsField>().FieldEventManager;
+        evenmManager = GetComponentInParent<AbstractField>().FieldEventManager;
         if (evenmManager == null)
             Debug.LogError("event manager is null");
         stack = GetComponent<StackData>();
@@ -93,7 +97,7 @@ public class StackAnimator : MonoBehaviour
         //    s.GetComponent<Collider>().enabled = true;
         //    s.GetComponent<ChipData>().InAnimation = false;
         //});
-        evenmManager.PostNotification(ChipFieldEvents.StackAnimationEnded, this);
+        evenmManager.PostNotification(AbstractFieldEvents.StackAnimationEnded, this);
         AnimationEnded = true;
       
     }
@@ -112,10 +116,10 @@ public class StackAnimator : MonoBehaviour
         }
     }
 
-    
 
-    
- 
+
+
+
     
     public void StartAnim(GameObject chip)
     {
@@ -138,7 +142,7 @@ public class StackAnimator : MonoBehaviour
         if (prevMoveLastChips == null)
         {
             //UpdateStackInstantly();          
-            evenmManager.PostNotification(ChipFieldEvents.StackAnimationStarted, this);
+            evenmManager.PostNotification(AbstractFieldEvents.StackAnimationStarted, this);
             prevMoveLastChips = StartCoroutine(MoveLastChips(chipsDropSpeed, chipsDropMult, pauseBeetwenChips));
         }       
     }
@@ -151,7 +155,7 @@ public class StackAnimator : MonoBehaviour
 
         var pos = gameObject.transform.position;
 
-        chip.transform.rotation = new Quaternion();
+        chip.transform.localRotation = Quaternion.Euler(objectRotation.x, objectRotation.y, objectRotation.z);
 
        
 
@@ -205,7 +209,7 @@ public class StackAnimator : MonoBehaviour
 
             var pos = gameObject.transform.position;
 
-            stack.Objects[i].transform.rotation = new Quaternion();
+            stack.Objects[i].transform.localRotation = Quaternion.Euler(objectRotation.x, objectRotation.y, objectRotation.z);
             stack.Objects[i].transform.position = new Vector3(
                         pos.x /*+ currOffsetX*/,
                         transform.position.y + currentY,

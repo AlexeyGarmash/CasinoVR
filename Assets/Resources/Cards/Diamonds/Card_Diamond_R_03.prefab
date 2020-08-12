@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: -3844078398040505503}
   - component: {fileID: 3186637068368295047}
   - component: {fileID: 3014649341432147782}
+  - component: {fileID: -4933999303083773249}
   m_Layer: 0
   m_Name: Card_Diamond_R_03
   m_TagString: Card
@@ -117,9 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e06eedf570f357640ba147a9882414e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Owner: 
   Sign: 1
   Face: 1
-  playerName: 
 --- !u!65 &2657179109777029345
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -150,6 +151,8 @@ MonoBehaviour:
   m_snapOrientation: 0
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
+  m_grabbedKinematic: 0
+  m_grabbedBy: {fileID: 0}
   handCardsPos: {x: -0.0277, y: -0.0049, z: 0.0085}
   cardRotationFace: {x: -41.744, y: 14.602, z: 176.382, w: 0}
   handPos: {fileID: 7723645442114614947, guid: b0bebda1db8c6664bbcd447a44cac9de, type: 3}
@@ -248,3 +251,15 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
+--- !u!114 &-4933999303083773249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ead309109265a9742bedb75e54445baa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

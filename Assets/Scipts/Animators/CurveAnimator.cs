@@ -9,6 +9,8 @@ namespace Assets.Scipts
     public class CurveAnimator : MonoBehaviourPun
     {
         [SerializeField]
+        bool RandomRotation = true;
+        [SerializeField]
         protected BezierCurve[] curves;
 
         [SerializeField]
@@ -34,9 +36,7 @@ namespace Assets.Scipts
         }
         IEnumerator MoveObjectWithCurve(int curveIndex)
         {
-
-            yield return new WaitForSeconds(1f);
-      
+            yield return new WaitForSeconds(0.1f);
             int i = 0;
             while (ObjectToAnimation.Count > i)
             {
@@ -49,6 +49,7 @@ namespace Assets.Scipts
                 yield return new WaitForSeconds(0.1f);
 
             }
+            ObjectToAnimation.Clear();
 
             yield return null;
 
@@ -60,19 +61,29 @@ namespace Assets.Scipts
             t += Time.deltaTime * speed;
             chip.SetActive(true);
 
+            
             chip.GetComponent<Collider>().enabled = false;
             chip.GetComponent<Rigidbody>().isKinematic = true;
             while (t != 1)
             {
-                //localSpeed -= speedSlowingStep;
+               
+
                 if (t > 0.95)
                     t = 1;
+
                 chip.transform.position = curvePurpel.GetPointAt(t);
-                chip.transform.Rotate(UnityEngine.Random.Range(10f, 30f), Random.Range(10f, 30f), Random.Range(10f, 30f));
+                if(RandomRotation)
+                    chip.transform.Rotate(Random.Range(10f, 30f), Random.Range(10f, 30f), Random.Range(10f, 30f));
                 yield return null;
                 t += Time.deltaTime * localSpeed;
+
                 if (t > 0.95)
+                {
                     t = 1;
+                    chip.transform.position = curvePurpel.GetPointAt(t);
+                    if (RandomRotation)
+                        chip.transform.Rotate(Random.Range(10f, 30f), Random.Range(10f, 30f), Random.Range(10f, 30f));
+                }
             }
 
             chip.GetComponent<Collider>().enabled = true;
@@ -87,10 +98,11 @@ namespace Assets.Scipts
             var chip = other.gameObject.GetComponent<OwnerData>();
             var view = other.gameObject.GetComponent<PhotonView>();
 
-            if (chip != null && view != null)
+            if (chip != null && view != null && !ObjectToAnimation.Contains(other.gameObject))
             {
                 ObjectToAnimation.Add(other.gameObject);
-
+                chip.GetComponent<Collider>().enabled = false;
+                chip.GetComponent<Rigidbody>().isKinematic = true;
                 other.gameObject.SetActive(false);
                 view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
 

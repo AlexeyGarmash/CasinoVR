@@ -8,22 +8,20 @@ using Unity;
 
 namespace Cards
 {
-    class DeckData : MonoBehaviour
-    {
-        [SerializeField]
-        private int numberOfDecks = 10;
+    class DeckData 
+    {     
+        private int numberOfDecks = 5;
         public Stack<CardData> Deck;
 
-        private void Start()
+        public DeckData()
         {
             Deck = new Stack<CardData>();
 
             GenerateDeck();
-
-           
         }
+       
         
-        private void GenerateDeck()
+        public void GenerateDeck()
         {
             var listOfCards = new List<CardData>();
             Deck.Clear();
@@ -47,6 +45,7 @@ namespace Cards
 
 
         }
+
         
     }
 }

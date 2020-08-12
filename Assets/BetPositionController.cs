@@ -9,7 +9,7 @@ public class BetPositionController : MonoBehaviour
     public Vector3 StartPos;
     public Vector3 StartBettingPos;
     public Vector3 CurrentBettingPos;
-    public BettingField currentField;
+    public RoulettedBettingField currentField;
     private Rigidbody rb;
     bool coroutineStarted;
 
@@ -25,7 +25,7 @@ public class BetPositionController : MonoBehaviour
     {
 
        
-        var currentField = other.gameObject.GetComponent<BettingField>();
+        var currentField = other.gameObject.GetComponent<RoulettedBettingField>();
         if (currentField != null)
         {
            

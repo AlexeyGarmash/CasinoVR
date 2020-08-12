@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Scipts.BackJack
 {
-    class BlackJackPlayerCardField : AbstractField
+    public class BlackJackPlayerCardField : AbstractField
     {
         public override bool MagnetizeObject(GameObject Object, StackData Stack)
         {
@@ -20,7 +20,7 @@ namespace Assets.Scipts.BackJack
 
 
             var stackData = Stack;
-            var transform = stackData.gameObject.transform;
+            
             if (stackData.playerName.Equals(chip.Owner) || stackData.playerName == "")
             {
                 if (stackData.playerName == "")
@@ -43,13 +43,13 @@ namespace Assets.Scipts.BackJack
             return false;
         }
 
-        private void OnTriggerEnter(Collider other)
+        private new void OnTriggerEnter(Collider other)
         {
             var cardData = other.GetComponent<CardData>();
 
             if (cardData)
             {
-                
+                base.OnTriggerEnter(other);
             }
         }
         
