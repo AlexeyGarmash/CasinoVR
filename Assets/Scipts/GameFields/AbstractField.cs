@@ -209,7 +209,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
         var gameObj = other.gameObject;
         var chip = other.gameObject.GetComponent<OwnerData>();
-        var gc = other.gameObject.GetComponent<GrabbableChip>();
+        var gc = other.gameObject.GetComponent<OVRGrabbableCustom>();
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
 

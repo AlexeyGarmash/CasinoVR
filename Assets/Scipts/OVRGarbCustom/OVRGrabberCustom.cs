@@ -352,7 +352,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
                 if (itemNetInfo.Owner != playerStat.PlayerNick)
                     removeCandidaes.Add(grabbable);
 
-            Debug.Log(Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position));
+            //Debug.Log(Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position));
             if (Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position) > MaxDistance)
             {
                 if(grabbable.gameObject.GetComponent<OVRGrabbableCustom>() != null)

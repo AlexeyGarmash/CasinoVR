@@ -138,21 +138,21 @@ namespace Cards
                 case Card_Face.Ten:
                     return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_10";
                 case Card_Face.Nine:
-                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_9";
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_09";
                 case Card_Face.Eight:
-                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_8";
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_08";
                 case Card_Face.Seven:
-                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_7";
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_07";
                 case Card_Face.Six:
-                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_6";
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_06";
                 case Card_Face.Five:
-                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_5";
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_05";
                 case Card_Face.Four:
-                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_4";
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_04";
                 case Card_Face.Three:
-                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_3";
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_03";
                 case Card_Face.Two:
-                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_2";
+                    return "Cards/" + sign + "s/Card_" + sign + "_" + color + "_02";
 
 
             }

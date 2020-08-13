@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class PlayerBlackJackFields : MonoBehaviour
 {
-    public ChipsField bettingField { get; private set; }
-    public BlackJackPlayerCardField blackJackField { get; private set; }
+
+    [SerializeField]
+    public ChipsField bettingField;
+    [SerializeField]
+    public BlackJackPlayerCardField blackJackField;
     void Start()
     {
-        bettingField = GetComponentInChildren<ChipsField>();
-        blackJackField = GetComponentInChildren<BlackJackPlayerCardField>();
+        //bettingField = GetComponentInChildren<ChipsField>();
+        //blackJackField = GetComponentInChildren<BlackJackPlayerCardField>();
     }
 
     // Update is called once per frame
