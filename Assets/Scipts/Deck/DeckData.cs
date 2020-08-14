@@ -13,15 +13,45 @@ namespace Cards
         private int numberOfDecks = 5;
         public Stack<CardData> Deck;
 
-        public DeckData()
+        public DeckData(int[] indexes)
         {
             Deck = new Stack<CardData>();
+            GenerateDeck(indexes);
 
-            GenerateDeck();
         }
-       
-        
-        public void GenerateDeck()
+        public DeckData()
+        {
+           
+        }
+
+
+        public int[] GenerateDeck()
+        {
+            var listOfCards = new List<CardData>();
+            Deck = new Stack<CardData>();
+
+            for (var i = 0; i < numberOfDecks; i++)
+            {
+                var newDeck = CardUtils.Instance.CreateDefaultDeck();
+                listOfCards.AddRange(newDeck);
+            }
+
+            Deck = new Stack<CardData>();
+            List<int> deckIndexes = new List<int>();
+
+           
+            while (listOfCards.Count != 0)
+            {
+                int randIndex = UnityEngine.Random.Range(0, listOfCards.Count);
+
+                Deck.Push(listOfCards[randIndex]);
+                deckIndexes.Add(randIndex);
+                listOfCards.RemoveAt(randIndex);
+            }
+
+            return deckIndexes.ToArray();
+        }
+        public void GenerateDeck(int[] indexes)
         {
             var listOfCards = new List<CardData>();
             Deck.Clear();
@@ -33,19 +63,22 @@ namespace Cards
             }
 
             Deck = new Stack<CardData>();
-          
-            while (listOfCards.Count != 0)
+
+
+
+            foreach (int index in indexes)
             {
-                int randIndex = UnityEngine.Random.Range(0, listOfCards.Count);
-
-                Deck.Push(listOfCards[randIndex]);
-
-                listOfCards.RemoveAt(randIndex);
+                Deck.Push(listOfCards[index]);             
+                listOfCards.RemoveAt(index);
             }
+                
 
+               
+            
 
+           
         }
 
-        
+
     }
 }

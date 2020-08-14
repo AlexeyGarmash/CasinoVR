@@ -44,13 +44,24 @@ namespace Assets.Scipts.BackJack
         }
 
         private new void OnTriggerEnter(Collider other)
-        {
-            var cardData = other.GetComponent<CardData>();
+        {    
 
-            if (cardData)
+            var gameObj = other.gameObject;
+            var card = other.gameObject.GetComponent<CardData>();
+            var gc = other.gameObject.GetComponent<OVRGrabbableCustom>();
+            var rb = other.GetComponent<Rigidbody>();
+            var view = gameObj.GetComponent<PhotonView>();
+
+            if (card != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null)
             {
-                base.OnTriggerEnter(other);
+
+                Debug.Log("MagnetizeObject viewID=" + view.ViewID);
+                var clossest = FindClossestField(card.transform, FindPossibleFields(card));
+                MagnetizeObject(gameObj, clossest);
+
             }
+
+            
         }
         
     }

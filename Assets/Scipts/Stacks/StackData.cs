@@ -19,6 +19,14 @@ public class StackData : MonoBehaviour
     {
         animator = GetComponent<StackAnimator>();
     }
+
+    public void ExtractAll()
+    {
+        animator.Clear();
+        Objects.ForEach(o => o.GetComponent<Rigidbody>().isKinematic = false);
+        Objects.Clear();
+        playerName = "";
+    }
     public virtual void ClearData()
     {
 

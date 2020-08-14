@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using Assets.Scipts.Chips;
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,36 +12,7 @@ using UnityEngine;
 public enum AbstractFieldEvents{ StackAnimationEnded, StackAnimationStarted }
 public class ChipsField : AbstractField
 {
-    protected List<StackData> FindPossibleFields(ChipData data)
-    {
-        var list = new List<StackData>();
-
-        for (var i = 0; i < Stacks.Length; i++)
-            if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == data.Cost && maxObjectsOnField != Stacks[i].Objects.Count)
-                list.Add(Stacks[i]);
-
-        if (list.Count == 0)
-            for (var i = 0; i < Stacks.Length; i++)
-                if (Stacks[i].Objects.Count == 0)
-                    list.Add(Stacks[i]);
-
-        if (list.Count == 0)
-        {
-            maxObjectsOnField += 1;
-
-            for (var i = 0; i < Stacks.Length; i++)
-                if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == data.Cost && maxObjectsOnField != Stacks[i].Objects.Count)
-                    list.Add(Stacks[i]);
-
-            if (list.Count == 0)
-                for (var i = 0; i < Stacks.Length; i++)
-                    if (Stacks[i].Objects.Count == 0)
-                        list.Add(Stacks[i]);
-        }
-
-        return list;
-
-    }
+    
     public override bool MagnetizeObject(GameObject Object, StackData Stack)
     {
         var photonView = Object.GetComponent<PhotonView>();
@@ -104,7 +76,7 @@ public class ChipsField : AbstractField
 
         if (chip != null && gc != null && gc.isGrabbed && rb.isKinematic && view != null && Contain(gameObj))
         {
-            ExtranctChip(view.ViewID);
+            ExtranctObject(view.ViewID);
             //SyncStacks();
         }
 

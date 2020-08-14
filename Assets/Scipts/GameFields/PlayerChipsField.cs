@@ -1,4 +1,5 @@
-﻿using OVR.OpenVR;
+﻿using Assets.Scipts.Chips;
+using OVR.OpenVR;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +14,37 @@ public class PlayerChipsField : ChipsField
     [SerializeField]
     private Transform SpawnPos;
 
+    protected override List<StackData> FindPossibleFields(OwnerData data)
+    {
+        var chip = (ChipData)data;
+        var list = new List<StackData>();
 
+        for (var i = 0; i < Stacks.Length; i++)
+            if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == chip.Cost && maxObjectsOnField != Stacks[i].Objects.Count)
+                list.Add(Stacks[i]);
+
+        if (list.Count == 0)
+            for (var i = 0; i < Stacks.Length; i++)
+                if (Stacks[i].Objects.Count == 0)
+                    list.Add(Stacks[i]);
+
+        if (list.Count == 0)
+        {
+            maxObjectsOnField += 1;
+
+            for (var i = 0; i < Stacks.Length; i++)
+                if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == chip.Cost && maxObjectsOnField != Stacks[i].Objects.Count)
+                    list.Add(Stacks[i]);
+
+            if (list.Count == 0)
+                for (var i = 0; i < Stacks.Length; i++)
+                    if (Stacks[i].Objects.Count == 0)
+                        list.Add(Stacks[i]);
+        }
+
+        return list;
+
+    }
 
 
     public void InstantiateToStackWithColor(Chips chipsCost, ref int money, string playerNick)

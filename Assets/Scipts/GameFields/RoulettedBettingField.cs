@@ -95,7 +95,7 @@ public class RoulettedBettingField : ChipsField, IListener<ROULETTE_EVENT>
 
                 
                 var chipPhotonView = chip.GetComponent<PhotonView>();
-                ExtranctChip(chipPhotonView.ViewID);
+                ExtranctObject(chipPhotonView.ViewID);
 
                 Debug.Log("OnTriggerStay");
                 if (chipPhotonView != null && chipPhotonView.IsMine /*&& ExtranctChipOnAll(chipPhotonView.ViewID)*/)

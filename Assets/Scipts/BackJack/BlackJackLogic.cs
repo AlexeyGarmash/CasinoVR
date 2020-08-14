@@ -114,13 +114,13 @@ namespace Assets.Scipts.BackJack
 
         public BlackJackPlayer diler;
         public DeckData deckData { get; private set; }
-        public BlackJackLogic(List<PlayerStats> players)
+        public BlackJackLogic(List<PlayerStats> players , int[] indexes)
         {
             bjPlayers = new List<BlackJackPlayer>();
 
             diler = new BlackJackPlayer(new PlayerStats("Diler", 0));
             players.ForEach(p => bjPlayers.Add(new BlackJackPlayer(p)));
-            deckData = new DeckData();
+            deckData = new DeckData(indexes);
             InitGame();
         }
 
@@ -331,7 +331,7 @@ namespace Assets.Scipts.BackJack
             if (CheckPlayer(player, out bjPlayer))
             {
 
-                return bjPlayer.endTakeCards;
+                return !bjPlayer.endTakeCards;
             }
             return false;
         }

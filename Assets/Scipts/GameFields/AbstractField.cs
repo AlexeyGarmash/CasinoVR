@@ -24,6 +24,27 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
             return _fieldEventManager;
         }
     }
+    protected virtual List<StackData> FindPossibleFields(OwnerData data)
+    {     
+        var list = new List<StackData>();
+     
+        for (var i = 0; i < Stacks.Length; i++)
+            if (Stacks[i].Objects.Count < maxObjectsOnField)
+                list.Add(Stacks[i]);
+        return list;
+
+    }
+
+    public void BlockField(bool blockUnblock)
+    {
+        foreach (var stack in Stacks)
+            foreach (var chip in stack.Objects)
+        {          
+            chip.GetComponent<Collider>().enabled = !blockUnblock;
+
+        }
+        GetComponent<Collider>().isTrigger = !blockUnblock;
+    }
 
     protected void Awake()
     {
@@ -189,7 +210,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
         var gameObj = other.gameObject;
         var chip = other.gameObject.GetComponent<OwnerData>();
-        var gc = other.gameObject.GetComponent<GrabbableChip>();
+        var gc = other.gameObject.GetComponent<OVRGrabbableCustom>();
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
 
@@ -197,7 +218,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
         {
 
             Debug.Log("MagnetizeObject viewID=" + view.ViewID);
-            var clossest = FindClossestField(chip.transform, null);
+            var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);
 
         }
@@ -215,7 +236,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
         if (chip != null && gc != null && gc.isGrabbed && rb.isKinematic && view != null && Contain(gameObj))
         {
-            ExtranctChip(view.ViewID);
+            ExtranctObject(view.ViewID);
             //SyncStacks();
         }
 
@@ -234,7 +255,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
         data.stack.UpdateStackInstantly();
     }
-    public void ExtranctChip(int viewID)
+    public void ExtranctObject(int viewID)
     {
         var data = GetChipAndHisStack(viewID);
 
@@ -248,6 +269,14 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
         data.stack.animator.UpdateStackInstantly();
     }
+
+    public void ExtractAllObjects()
+    {
+        foreach (var stack in Stacks)
+            stack.ExtractAll();
+
+    }
+
     public abstract bool MagnetizeObject(GameObject Object, StackData Stack);
 
 }

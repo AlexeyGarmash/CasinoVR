@@ -30,8 +30,10 @@ namespace Assets.Scipts.BackJack
 
 
         [SerializeField]
-        BlackJackPlayerCardField BlackJackDilerCardField;
-       
+        BlackJackPlayerCardField BlackJackDilerCardFieldOpen;
+        [SerializeField]
+        BlackJackPlayerCardField BlackJackDilerCardFieldHidden;
+
         [SerializeField]
         private CardCurveAnimator cardCurveAnimator;
 
@@ -64,16 +66,32 @@ namespace Assets.Scipts.BackJack
         //bool playerSkipTurn
         void ResetGame()       
         {
-            playersInGame.ForEach(p => {
+            //playersInGame.ForEach(p => {
+            //    var fields = p.GetComponent<PlayerBlackJackFields>();
+            //    fields.bettingField.ClearStacks();
+            //    fields.bettingField.GetComponent<Collider>().isTrigger = true;
+            //    fields.blackJackField.ClearStacks();
+            //});
+            //playersOutFromGame.ForEach(p => {
+            //    var fields = p.GetComponent<PlayerBlackJackFields>();
+            //    fields.bettingField.ClearStacks();
+            //    fields.bettingField.GetComponent<Collider>().isTrigger = true;
+            //    fields.blackJackField.ClearStacks();
+            //});
+
+            players.ForEach(p => { 
+                var buttons = p.GetComponentInChildren<ButtonsHolder>();
+                ActivateGameButtons(true, false, false, false, p);
                 var fields = p.GetComponent<PlayerBlackJackFields>();
                 fields.bettingField.ClearStacks();
+                fields.bettingField.BlockField(false);
                 fields.blackJackField.ClearStacks();
+
+
             });
-            playersOutFromGame.ForEach(p => {
-                var fields = p.GetComponent<PlayerBlackJackFields>();
-                fields.bettingField.ClearStacks();
-                fields.blackJackField.ClearStacks();
-            });
+
+            BlackJackDilerCardFieldOpen.ClearStacks();
+            BlackJackDilerCardFieldHidden.ClearStacks();
 
             lose = -99999;
             playerLose = false;
@@ -134,6 +152,7 @@ namespace Assets.Scipts.BackJack
 
             var toRemove = new List<PlayerPlace>();
             bool endTurns = true;
+               
 
             foreach (var p in playersInGame)
             {
@@ -145,8 +164,11 @@ namespace Assets.Scipts.BackJack
                 {
                     ActivateGameButtons(false, true, true, false, p);
                     endTurns = false;
+                  
                     while (currWaitTime != waitTimeInSec)
                     {
+                        tms.SetText(p.ps.PlayerNick + " turn time ->" + (waitTimeInSec - currWaitTime).ToString());
+                        Debug.Log(p.ps.PlayerNick + " turn time ->" + (waitTimeInSec - currWaitTime).ToString());
                         if (playerReady)
                         {
                             ActivateGameButtons(false, false, false, false, p);
@@ -168,8 +190,8 @@ namespace Assets.Scipts.BackJack
                             break;
                         }
                         currWaitTime++;
+                        yield return new WaitForSeconds(OneSec);
 
-                       
                     }  
                     
                     blackJackLogic.SkipTruns(p.ps);
@@ -219,7 +241,8 @@ namespace Assets.Scipts.BackJack
             }
             else
             {
-                tms.SetText("Waiting players main cicle time= " + i);
+                tms.SetText("no one players waiting=" + i.ToString());
+                yield return new WaitForSeconds(OneSec);
             }
             if (currWaitTime == waitTimeInSec)
             {
@@ -227,13 +250,21 @@ namespace Assets.Scipts.BackJack
                 if (result != null)
                 {
                     
-                    Debug.Log("to next state -> BlackJackGameStates.CardsToPlayers. players=" + result.Count);
+                    Debug.Log("to next state -> BlackJackGameStates.PlayersBetting | players=" + result.Count);
 
                     playersInGame.AddRange(result);
                     //получаем стату игроков
-                    List<PlayerStats> p_stats = new List<PlayerStats>();
-                    playersInGame.ForEach(p => p_stats.Add(p.ps));
-                    blackJackLogic = new BlackJackLogic(p_stats);
+                   
+                    
+                    
+
+                    if (photonView.IsMine)
+                    {
+                        DeckData dd = new DeckData();
+                        var indexesRnd = dd.GenerateDeck();
+                        photonView.RPC("SetDeck", RpcTarget.All, indexesRnd);
+                    }
+                    
 
                     players.ForEach(p => ActivateGameButtons(false, false, false, false, p));
 
@@ -245,11 +276,21 @@ namespace Assets.Scipts.BackJack
             
             yield return null;
         }
+
+        [PunRPC]
+        protected void SetDeck(int[] indexes)
+        {
+            List<PlayerStats> p_stats = new List<PlayerStats>();
+            playersInGame.ForEach(p => p_stats.Add(p.ps));
+            blackJackLogic = new BlackJackLogic(p_stats, indexes);
+        }
+
         private IEnumerator CardsToPlyers()
         {
             int id;
             string nick;
             CardData card;
+
             if (playersInGame.Count != 0)
             {
                 for (var i = 0; i < 2; i++)
@@ -274,6 +315,18 @@ namespace Assets.Scipts.BackJack
                     id = players.Count;
                     nick = "Diler";
                     card = blackJackLogic.diler.BlackJackStaks[0].cards[i];
+
+                    if (i == 0)
+                    {
+                        BlackJackDilerCardFieldHidden.BlockField(true);
+                        BlackJackDilerCardFieldOpen.BlockField(false);
+                    }
+                    else
+                    {
+                        BlackJackDilerCardFieldHidden.BlockField(false);
+                        BlackJackDilerCardFieldOpen.BlockField(true);
+                    }
+                    
 
                     tms.SetText("card to " + nick);
                     Debug.Log("card to " + nick);
@@ -332,8 +385,10 @@ namespace Assets.Scipts.BackJack
 
                 foreach (var chip in playerField.bettingField.Stacks[0].Objects)
                 {
-                    bet += (int)chip.GetComponent<ChipData>().Cost;
+                    bet += (int)chip.GetComponent<ChipData>().Cost;                                     
                 }
+                playerField.bettingField.BlockField(true);
+
                 if (bet == 0)
                 {
                     tms.SetText("Players " + playersInGame[j].ps.PlayerNick + "removed from game 0 bet");
@@ -366,21 +421,6 @@ namespace Assets.Scipts.BackJack
 
             gameState = BlackJackGameStates.CardsToPlayers;
         }
-
-        //public void OnEvent(JackPlayersEvets Event_type, Component Sender, params object[] Param)
-        //{
-        //    switch (Event_type)
-        //    {
-        //        case JackPlayersEvets.PlayerSaved:
-        //            break;
-        //        case JackPlayersEvets.PlayerSplited:
-        //            break;
-        //        case JackPlayersEvets.PlayerSurrendered:
-        //            break;
-        //        case JackPlayersEvets.PlayerTakedCard:
-        //            break;
-        //    }
-        //}
        
         public void SkipTurn(PlayerStats player)
         {
@@ -419,17 +459,24 @@ namespace Assets.Scipts.BackJack
         }
         public void PlayerReady(PlayerStats player)
         {
-            
+            playerReady = true;
+            ActivateGameButtons(false, false, false, false, players.Find(p => p.ps == player));
         }
 
         IEnumerator GiveCardsToDealer()
         {
+            BlackJackDilerCardFieldHidden.BlockField(false);
+            BlackJackDilerCardFieldHidden.ExtractAllObjects();
+            BlackJackDilerCardFieldHidden.BlockField(true);
             blackJackLogic.DealerTakesCards();
 
+            BlackJackDilerCardFieldOpen.BlockField(false);
+
+            yield return new WaitForSeconds(OneSec);
             if (blackJackLogic.diler.BlackJackStaks[0].cards.Count > 2)
                 for (var i = 2; i < blackJackLogic.diler.BlackJackStaks[0].cards.Count; i++)
                 {
-                    yield return new WaitForSeconds(OneSec);
+                    
 
                     var id = players.Count;
                     var nick = "Diler";
@@ -439,8 +486,13 @@ namespace Assets.Scipts.BackJack
                     Debug.Log("card to " + nick);
                     cardCurveAnimator.StartAnimCardToPlayer(players.Count, nick, card);
 
-                    
+                    yield return new WaitForSeconds(OneSec);
+
+
                 }
+
+            yield return new WaitForSeconds(5f);
+
         }
         IEnumerator CheckResults()
         {

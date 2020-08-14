@@ -9,6 +9,8 @@ namespace Assets.Scipts
     public class CurveAnimator : MonoBehaviourPun
     {
         [SerializeField]
+        Vector3 rotation;
+        [SerializeField]
         bool RandomRotation = true;
         [SerializeField]
         protected BezierCurve[] curves;
@@ -64,6 +66,9 @@ namespace Assets.Scipts
             
             chip.GetComponent<Collider>().enabled = false;
             chip.GetComponent<Rigidbody>().isKinematic = true;
+
+            chip.transform.rotation = Quaternion.Euler(rotation);
+
             while (t != 1)
             {
                

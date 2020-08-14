@@ -18,10 +18,13 @@ namespace Assets.Scipts.Animators
         }
         public void StartAnimCardToPlayer(int curveNumber, string owner, CardData card)
         {
-            
-            var item = PhotonNetwork.Instantiate(CardUtils.Instance.GetPathToCard(card), transform.position, transform.rotation);
-            item.GetComponent<CardData>().SetOwner_Photon(owner);
-            photonView.RPC("StartAnimation_RPC", RpcTarget.All, curveNumber);
+
+            if (photonView.IsMine)
+            {
+                var item = PhotonNetwork.Instantiate(CardUtils.Instance.GetPathToCard(card), transform.position, transform.rotation);
+                item.GetComponent<CardData>().SetOwner_Photon(owner);
+                photonView.RPC("StartAnimation_RPC", RpcTarget.All, curveNumber);
+            }
         }
     }
 }
