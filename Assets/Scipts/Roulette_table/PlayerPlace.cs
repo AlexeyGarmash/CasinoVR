@@ -37,7 +37,7 @@ public class PlayerPlace : MonoBehaviourPun
         print("Button clikced");
         if (ps != null && !placeTaken)
         {
-            //placeTaken = true;
+            placeTaken = true;
             //this.ps = ps;
             photonView.RequestOwnership();
             sf.photonView.RequestOwnership();
@@ -57,9 +57,10 @@ public class PlayerPlace : MonoBehaviourPun
         if (ps != null && placeTaken)
         {
             placeTaken = false;
+            ps = GetComponent<PlayerStats>();
             print("Button clikced ps != null");
             photonView?.RPC("GoOutPlace_RPC", RpcTarget.All);
-            ps = null;
+          
             sf.ClearStacks();
         }
     }
@@ -68,7 +69,7 @@ public class PlayerPlace : MonoBehaviourPun
     public void TakePlace_RPC(string nickname, int money)
     {
 
-        //placeTaken = true;
+        placeTaken = true;
         ps.PlayerNick = nickname;
         ps.AllMoney = money;
         print("RPC TAKE PLACE!!!");
@@ -77,9 +78,12 @@ public class PlayerPlace : MonoBehaviourPun
     [PunRPC]
     public void GoOutPlace_RPC()
     {
-        placeTaken = false;
-        ps = null;
+
+        ps.PlayerNick = "";
+        ps.AllMoney = 0;
+
         print("RPC GO OUT FROM PLACE!!!");
+        sf.ClearStacks();
     }
 
    
@@ -99,7 +103,7 @@ public class PlayerPlace : MonoBehaviourPun
     {
         Debug.Log(sf);
         
-        int money = 500;
+        int money = ps.AllMoney;
         if (money > 0)
         {
 

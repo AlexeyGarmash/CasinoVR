@@ -15,6 +15,7 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase
         inGame = false;
         _imageReady.texture = _notReadyTexture;
         _textReady.text = "Not ready";
+        Debug.LogWarning("player InvokeClickOut_RPC rpc");
     }
 
 
