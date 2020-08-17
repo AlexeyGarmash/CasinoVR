@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Photon.Pun;
+
 namespace SlotMachine
 {
-    public class SlotMachineManager : MonoBehaviour, IListener<SLOT_MACHINE_EVENT>
+    public class SlotMachineManager : MonoBehaviourPun, IListener<SLOT_MACHINE_EVENT>
     {
         public EventManager<SLOT_MACHINE_EVENT> em = new EventManager<SLOT_MACHINE_EVENT>();
 
@@ -16,7 +18,7 @@ namespace SlotMachine
         public float minRellSpeed;
         public float deceleration;
        
-        private List<SymbolItem> predictedFruits;
+        
 
         private bool startRotate = false;
         private int currentReelNumber;
@@ -36,9 +38,28 @@ namespace SlotMachine
 
         public void StartSlotGame(bool alwaysJackpot = false)
         {
+            int sameRandom = slotMachine.GenerateSameResult();
+            int[] rands = slotMachine.GenerateRandomValues();
+            if (photonView.IsMine)
+            {
+                photonView.RPC("StartSlotGame_RPC", RpcTarget.All, alwaysJackpot, sameRandom, rands);
+            }
+        }
+
+        [PunRPC]
+        public void StartSlotGame_RPC(bool alwaysJackpot, int forSameResult, int[] randoms)
+        {
             if (slotMachine.StartGame())
             {
-                predictedFruits = alwaysJackpot ? slotMachine.SameResult() : slotMachine.RandomResult();
+                if(alwaysJackpot)
+                {
+                    slotMachine.SameResult(forSameResult);
+                }
+                else
+                {
+                    slotMachine.RandomResult(randoms);
+                }
+                //slotMachine.predictedFruits = alwaysJackpot ?  : ;
                 em.PostNotification(SLOT_MACHINE_EVENT.HANDLE_USED, this, null);
                 RotateReels();
             }
@@ -98,13 +119,13 @@ namespace SlotMachine
                 if (hinge != null)
                 {
                     hinge.useMotor = false;
-                    yield return new WaitUntil(() => i == currentReelNumber && currentTag == predictedFruits[i - 1].Tag);
+                    yield return new WaitUntil(() => i == currentReelNumber && currentTag == slotMachine.predictedFruits[i - 1].Tag);
 
                     if (i == 1)
-                        em.PostNotification(SLOT_MACHINE_EVENT.REELSTOP1, this, predictedFruits[i - 1].Symbol);
+                        em.PostNotification(SLOT_MACHINE_EVENT.REELSTOP1, this, slotMachine.predictedFruits[i - 1].Symbol);
                     if (i == 2)
                     {
-                        em.PostNotification(SLOT_MACHINE_EVENT.REELSTOP2, this, predictedFruits[i - 1].Symbol);
+                        em.PostNotification(SLOT_MACHINE_EVENT.REELSTOP2, this, slotMachine.predictedFruits[i - 1].Symbol);
                         em.PostNotification(SLOT_MACHINE_EVENT.JACKPOT_IS_POSSIBLE, this, null);
                     }
                     if (i == 3)
@@ -117,7 +138,7 @@ namespace SlotMachine
             }
             em.PostNotification(SLOT_MACHINE_EVENT.REEL_ROTATION_END, this, null);
             //Проверка на соответствие     
-            CheckIsWin(predictedFruits);
+            CheckIsWin(slotMachine.predictedFruits);
 
         }
 
@@ -143,7 +164,13 @@ namespace SlotMachine
             switch (Event_type)
             {
                 case SLOT_MACHINE_EVENT.COIN_INSERTED:
-                    slotMachine.InsertCoin();
+                    //photonView.RequestOwnership();
+                    //slotMachine.InsertCoin();
+                    if (photonView.IsMine)
+                    {
+                        photonView.RPC("InsertCoint_RPC", RpcTarget.All);
+                    }
+
                     break;
                 case SLOT_MACHINE_EVENT.REEL_SYMBOL_TRIGGERED:
                     currentReelNumber = (int)Param[0];
@@ -157,6 +184,12 @@ namespace SlotMachine
                     StartSlotGame(true);
                     break;
             }
+        }
+
+        [PunRPC]
+        public void InsertCoint_RPC()
+        {
+            slotMachine.InsertCoin();
         }
     }
 
