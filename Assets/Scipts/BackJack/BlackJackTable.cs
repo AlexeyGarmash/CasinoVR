@@ -152,19 +152,21 @@ namespace Assets.Scipts.BackJack
 
             var toRemove = new List<PlayerPlace>();
             bool endTurns = true;
-               
 
+            
             foreach (var p in playersInGame)
             {
-                currWaitTime = 0;
-                playerReady = false;
-                playerLose = false;
+
 
                 if (blackJackLogic.CanTakeCard(p.ps))
                 {
                     ActivateGameButtons(false, true, true, false, p);
                     endTurns = false;
-                  
+                    currWaitTime = 0;
+                    playerReady = false;
+                    playerLose = false;
+                    playerTakeCard = false;
+
                     while (currWaitTime != waitTimeInSec)
                     {
                         tms.SetText(p.ps.PlayerNick + " turn time ->" + (waitTimeInSec - currWaitTime).ToString());
@@ -179,30 +181,40 @@ namespace Assets.Scipts.BackJack
                         else if (playerLose)
                         {
                             toRemove.Add(p);
-                            Debug.Log(p.ps.PlayerNick + " Lose bet "+ lose + "so match points");
+                            Debug.Log(p.ps.PlayerNick + " Lose bet " + lose + "so match points");
                             tms.SetText(p.ps.PlayerNick + " Lose bet " + lose + "so match points");
+                            ActivateGameButtons(false, false, false, false, p);
                             break;
                         }
                         else if (playerTakeCard)
                         {
                             Debug.Log(p.ps.PlayerNick + " take card");
                             tms.SetText(p.ps.PlayerNick + " take card");
+                            ActivateGameButtons(false, false, false, false, p);
                             break;
+
+
                         }
+
                         currWaitTime++;
                         yield return new WaitForSeconds(OneSec);
 
-                    }  
-                    
-                    blackJackLogic.SkipTruns(p.ps);
+                    }
                     ActivateGameButtons(false, false, false, false, p);
+                    if (currWaitTime == waitTimeInSec)
+                    {
+                        
+                        blackJackLogic.SkipTruns(p.ps);
+                    }
+                        
 
                     yield return new WaitForSeconds(OneSec);
 
 
                 }
-              
+
             }
+            
 
             if (endTurns)
                 gameState = BlackJackGameStates.CheckResults;
@@ -507,7 +519,7 @@ namespace Assets.Scipts.BackJack
                     tms.SetText("player" + p.ps.PlayerNick + " WIN! -> " + win + "$");
                     Debug.Log("player" + p.ps.PlayerNick + " WIN! -> " + win + "$");
                     var animator = p.GetComponentInChildren<PlayerWinAnimation>();
-                    animator.StartAnimation(win, p.ps.PlayerNick);
+                    animator.StartAnimation(win*2, p.ps.PlayerNick);
                     yield return new WaitForSeconds(OneSec);
                 }
                 else {

@@ -205,6 +205,7 @@ namespace Assets.Scipts.BackJack
                 {
 
                     lose = Convert.ToInt32(bjPlayer.BlackJackStaks[0].bet * loseCoef);
+                    bjPlayer.endTakeCards = true;
                     player.AllMoney += lose;
                     return true;
 
@@ -330,8 +331,11 @@ namespace Assets.Scipts.BackJack
             BlackJackPlayer bjPlayer;
             if (CheckPlayer(player, out bjPlayer))
             {
+                if (bjPlayer.BlackJackStaks[0].GetSumOfPoints() < 20 && bjPlayer.endTakeCards == false)
+                    return !bjPlayer.endTakeCards;
 
                 return !bjPlayer.endTakeCards;
+
             }
             return false;
         }

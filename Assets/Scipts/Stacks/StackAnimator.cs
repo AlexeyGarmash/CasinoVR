@@ -37,7 +37,14 @@ public class StackAnimator : MonoBehaviour
 
 
     [SerializeField]
-    public float yOffsetForAnim = 0.2f;
+    public float OffsetForAnim = 0.2f;
+
+    [SerializeField]
+    public bool animByX = false;
+    [SerializeField]
+    public bool animByY = false;
+    [SerializeField]
+    public bool animByZ = false;
 
     [SerializeField]
     public float delayForCollidersEnabled = 2f;
@@ -168,16 +175,22 @@ public class StackAnimator : MonoBehaviour
        
 
         Vector3 Start, End;
-        Start = transform.position;
+        Start = Vector3.zero;
 
         if (useYOffset)       
             Start = new Vector3(Start.x, Start.y + currentY, Start.z);        
         if(useXOffset)
             Start = new Vector3(Start.x + currentX, Start.y, Start.z);
         if (useZOffset)
-            Start = new Vector3(Start.x, Start.y, Start.z + zOffset);
+            Start = new Vector3(Start.x, Start.y, Start.z + currentZ);
 
-        End = new Vector3(Start.x, Start.y + yOffsetForAnim, Start.z);
+        if(animByX)
+            End = new Vector3(Start.x + OffsetForAnim, Start.y , Start.z);
+        else if (animByY)
+            End = new Vector3(Start.x, Start.y + OffsetForAnim, Start.z);
+        else if (animByZ)
+            End = new Vector3(Start.x, Start.y, Start.z + OffsetForAnim);
+        else End = new Vector3(Start.x, Start.y, Start.z);
 
         currentY += yOffset;
         currentX += xOffset;
@@ -208,15 +221,15 @@ public class StackAnimator : MonoBehaviour
 
         var point = GetStartEndPointsForAnimation();
 
-        chip.transform.position = point.Start;
+        chip.transform.localPosition = point.Start;
 
-        while (point.End != chip.transform.position)
+        while (point.End != chip.transform.localPosition)
         {
             yield return null;
             chipsDropSpeed *= chipsDropMult;
 
 
-            chip.transform.position = Vector3.Lerp(point.Start, point.End, t);
+            chip.transform.localPosition = Vector3.Lerp(point.Start, point.End, t);
             t += chipsDropSpeed * Time.deltaTime;
         }
 
@@ -232,8 +245,7 @@ public class StackAnimator : MonoBehaviour
         StopAllCoroutines();
 
 
-        currentY = 0;
-        lastY = 0;
+       
         ZeroCurrentXYZ();
 
         for (var i = 0; i < stack.Objects.Count; i++)
@@ -245,7 +257,7 @@ public class StackAnimator : MonoBehaviour
             var pos = GetStartEndPointsForAnimation().End;
 
             stack.Objects[i].transform.localRotation = Quaternion.Euler(objectRotation.x, objectRotation.y, objectRotation.z);
-            stack.Objects[i].transform.position = pos;           
+            stack.Objects[i].transform.localPosition = pos;           
 
         }
         currentY -= yOffset;
@@ -256,8 +268,7 @@ public class StackAnimator : MonoBehaviour
     public void Clear()
     {
         StopAllCoroutines();
-        currentY = 0;
-        lastY = 0;
+        ZeroCurrentXYZ();
     }
 }
 

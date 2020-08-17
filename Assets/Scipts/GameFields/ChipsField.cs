@@ -15,14 +15,14 @@ public class ChipsField : AbstractField
     
     public override bool MagnetizeObject(GameObject Object, StackData Stack)
     {
-        var photonView = Object.GetComponent<PhotonView>();
-        //photonView.ObservedComponents.Clear();
+      
+       
         var rb = Object.GetComponent<Rigidbody>();
         var chip = Object.GetComponent<ChipData>();
 
 
         var stackData = Stack;
-        var transform = stackData.gameObject.transform;
+
         if (stackData.playerName.Equals(chip.Owner) || stackData.playerName == "")
         {
             if (stackData.playerName == "")
