@@ -25,8 +25,8 @@ public class RouletteRandom {
 public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
 {
     [SerializeField] private TableCell[] TableCells;
-    [SerializeField] private RouletteWheelManager RouletteWheelManager;
-    [SerializeField] private PlayerPlace[] plyers;
+    [SerializeField] public RouletteWheelManager RouletteWheelManager;
+    [SerializeField] public PlayerPlace[] plyers;
     [SerializeField] private PlayerInformer _playerInformer;
 
     private RouletteRandom random = new RouletteRandom();

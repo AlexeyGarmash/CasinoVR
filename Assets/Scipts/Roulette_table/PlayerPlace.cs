@@ -24,11 +24,16 @@ public class PlayerPlace : MonoBehaviourPun
     public int PlaceId { get => _placeId; }
     public bool PlayerOnPlace { get => ps.PlayerNick != ""; }
     public bool PlayerReady { get => true; }
-    private void Start()
+
+    private void Awake()
     {
-        ps = GetComponent<PlayerStats>();   
+        ps = GetComponent<PlayerStats>();
         playerWinAnim = GetComponentInChildren<PlayerWinAnimation>();
         sf = GetComponentInChildren<PlayerChipsField>();
+    }
+    private void Start()
+    {
+       
     }
 
 
