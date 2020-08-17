@@ -20,6 +20,6 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
-        PlayerNick = PhotonNetwork.LocalPlayer.NickName;
+       
     }
 }

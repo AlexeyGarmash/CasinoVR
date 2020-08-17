@@ -36,7 +36,9 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase
     protected override void InvokeClickIn()
     {
         photonView?.RequestOwnership();
-        _onLongClickIn?.Invoke(playerStats);
+
+        p_place.ps = lastCollider.GetComponentInParent<PlayerStats>();
+        _onLongClickIn?.Invoke(p_place.ps);
         inGame = true;
         _imageReady.texture = _readyTexture;
         _textReady.text = PhotonNetwork.LocalPlayer.NickName;

@@ -23,7 +23,7 @@ namespace Assets.Scipts.BackJack
         //public EventManager<JackPlayersEvets> gameEventManager;
         BlackJackLogic blackJackLogic;
         [SerializeField]
-        private List<PlayerPlace> players;
+        List<PlayerPlace> players;
 
         List<PlayerPlace> playersInGame;
         List<PlayerPlace> playersOutFromGame;
@@ -243,7 +243,7 @@ namespace Assets.Scipts.BackJack
         {
 
            
-            if (players.Exists(p => p.ps != null))
+            if (players.Exists(p => p.PlayerOnPlace))
             {
                 
                 tms.SetText("Waiting players" + (waitTimeInSec - currWaitTime).ToString());
@@ -258,7 +258,7 @@ namespace Assets.Scipts.BackJack
             }
             if (currWaitTime == waitTimeInSec)
             {
-                var result = players.FindAll(p => p.ps != null);
+                var result = players.FindAll(p => p.PlayerOnPlace);
                 if (result != null)
                 {
                     

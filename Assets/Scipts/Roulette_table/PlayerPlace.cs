@@ -10,6 +10,7 @@ using UnityEngine;
 public class PlayerPlace : MonoBehaviourPun
 {
     public PlayerStats ps;
+    [SerializeField]
     private bool placeTaken = false;
 
     private PlayerChipsField sf;
@@ -21,14 +22,11 @@ public class PlayerPlace : MonoBehaviourPun
     private int _placeId;
     
     public int PlaceId { get => _placeId; }
-    public bool PlayerOnPlace { get => ps != null; }
+    public bool PlayerOnPlace { get => ps.PlayerNick != ""; }
     public bool PlayerReady { get => true; }
     private void Start()
     {
-        ps = null;
-
-
-      
+        ps = GetComponent<PlayerStats>();   
         playerWinAnim = GetComponentInChildren<PlayerWinAnimation>();
         sf = GetComponentInChildren<PlayerChipsField>();
     }
@@ -39,11 +37,12 @@ public class PlayerPlace : MonoBehaviourPun
         print("Button clikced");
         if (ps != null && !placeTaken)
         {
-            placeTaken = true;
-            this.ps = ps;
+            //placeTaken = true;
+            //this.ps = ps;
             photonView.RequestOwnership();
             sf.photonView.RequestOwnership();
             print("Button clikced ps == null");
+          
             photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);          
             PreparePlayerPlace();           
            
@@ -69,8 +68,9 @@ public class PlayerPlace : MonoBehaviourPun
     public void TakePlace_RPC(string nickname, int money)
     {
 
-        placeTaken = true;
-        ps = new PlayerStats(nickname, money);
+        //placeTaken = true;
+        ps.PlayerNick = nickname;
+        ps.AllMoney = money;
         print("RPC TAKE PLACE!!!");
     }
 

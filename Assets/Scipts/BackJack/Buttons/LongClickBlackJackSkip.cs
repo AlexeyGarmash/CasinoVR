@@ -27,8 +27,8 @@ namespace Assets.Scipts.BackJack.Buttons
         }
         protected override void InvokeClickOut()
         {
-            //photonView?.RequestOwnership();
-            _onLongClickIn?.Invoke(playerStats);
+            p_place.ps = lastCollider.GetComponentInParent<PlayerStats>();
+            _onLongClickIn?.Invoke(p_place.ps);
             inGame = false;
             //photonView?.RPC("InvokeClickOut_RPC", RpcTarget.All);
 

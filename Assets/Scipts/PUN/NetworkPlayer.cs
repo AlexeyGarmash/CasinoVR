@@ -16,7 +16,14 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject LeftHand;
     [SerializeField] private TextMeshPro TextNickName;
     [SerializeField] private Component[] ComponentsToDisable;
-    
+
+    [PunRPC]
+    private void SetPlayerStatrs(int money, string nickname)
+    {      
+        var stats = GetComponent<PlayerStats>();
+        stats.AllMoney = money;
+        stats.PlayerNick = nickname;
+    }
     void Awake()
     {
         if(photonView != null && photonView.IsMine)
@@ -27,8 +34,10 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
                 Transform ovrControllerTransform = globalVRController.transform;
                 
                 OvrCameraRigTransform = ovrControllerTransform.Find("OVRCameraRig").transform;
+                            
 
-               
+                photonView.RPC("SetPlayerStatrs", RpcTarget.All, 1000, PhotonNetwork.LocalPlayer.NickName);
+
                 CenterEye = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/CenterEyeAnchor").transform;
                 RightHandAnchor = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/RightHandAnchor").transform;
                 LeftHandAnchor = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/LeftHandAnchor").transform;
