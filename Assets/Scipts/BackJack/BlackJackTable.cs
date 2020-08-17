@@ -411,6 +411,12 @@ namespace Assets.Scipts.BackJack
                 }
                 else {
 
+                    Debug.LogError("in game " + playersInGame[j].ps.PlayerNick);
+
+                    Debug.LogError("blackJackLogic players ");
+
+                    blackJackLogic.bjPlayers.ForEach(p => Debug.LogError(p.player.PlayerNick));
+
                     var bjP = blackJackLogic.bjPlayers.Find(bjp => bjp.player.PlayerNick == playersInGame[j].ps.PlayerNick);
                     if (bjP != null)
                     {
