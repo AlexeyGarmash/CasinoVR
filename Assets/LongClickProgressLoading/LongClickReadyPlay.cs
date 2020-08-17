@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class LongClickReadyPlay : MonoBehaviourPun
+public class LongClickReadyPlay : MonoBehaviourPun, IListener<ROULETTE_EVENT>
 {
     [SerializeField] private float _holdTime;
     [SerializeField] private Image _progressImage;
@@ -22,11 +22,22 @@ public class LongClickReadyPlay : MonoBehaviourPun
     private float currentHoldTime = 0f;
     private bool isReady = false;
     private PlayerStats playerStats;
+
+    private EventManager<ROULETTE_EVENT> eventMang;
     private void Start()
     {
         _imageReady.texture = _notReadyTexture;
         _progressImage.fillAmount = 0f;
         p_place = GetComponentInParent<PlayerPlace>();
+        p_place.actionJoinOut += PlayerLeavePlace;
+        eventMang = GetComponentInParent<TableBetsManager>().rouletteEventManager;
+        eventMang.AddListener(ROULETTE_EVENT.ROULETTE_GAME_START, this);
+        eventMang.AddListener(ROULETTE_EVENT.ROULETTE_GAME_END, this);
+    }
+
+    private void PlayerLeavePlace()
+    {
+        InvokeNotReadyBehaviour();
     }
 
     private void Update()
@@ -125,5 +136,15 @@ public class LongClickReadyPlay : MonoBehaviourPun
         isReady = true;
         _imageReady.texture = _readyTexture;
         _textReady.text = "Ready";
+    }
+
+    public void OnEvent(ROULETTE_EVENT Event_type, Component Sender, params object[] Param)
+    {
+        switch (Event_type)
+        {
+            case ROULETTE_EVENT.ROULETTE_GAME_END:
+                InvokeNotReadyBehaviour();
+                break;
+        }
     }
 }

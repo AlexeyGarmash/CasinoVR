@@ -20,6 +20,7 @@ public class PlayerAvatar : MonoBehaviour
     [SerializeField] private TMP_Text _avatarNameText;
     [SerializeField] private Button _buttonChoiceAvatar;
     [SerializeField] private RawImage _frameChosenAvatar;
+    [SerializeField] private string _resourceUiName;
 
 
     [SerializeField] private bool _avatarIsChosen = false;
@@ -27,6 +28,7 @@ public class PlayerAvatar : MonoBehaviour
     public GameObject AvatarPrefab { get => _avatarPrefab; }
     public string AvatarResoucePathName { get => _avatarResoucePathName; }
     public string AvatarDisplayName { get => _avatarDisplayName; }
+    public string AvatarResourceUI { get => _resourceUiName; }
 
     private void Start()
     {

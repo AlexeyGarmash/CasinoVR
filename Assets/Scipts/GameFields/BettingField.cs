@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
     private TableCell tableCell;
     public float yOffset = 0.0073f;
     EventManager<ROULETTE_EVENT> EventManager;
+    private GlowPart glowPart;
 
     bool canBet = true;
     protected new void Awake()
@@ -23,6 +25,7 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
     new void Start()
     {
         base.Start();
+        glowPart = GetComponentInChildren<GlowPart>();
 
         EventManager = GetComponentInParent<TableBetsManager>().rouletteEventManager;
 
@@ -40,6 +43,7 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
                
             case ROULETTE_EVENT.ROULETTE_GAME_END:
                 ClearStacks();
+                ClearGlow();
                 canBet = true;
                 break;
             case ROULETTE_EVENT.ROULETTE_GAME_START:
@@ -53,10 +57,12 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
                 break;
         }
     }
-    
-    
-  
-    
+
+    private void ClearGlow()
+    {
+        glowPart.GlowCell(false, true);
+    }
+
     private new void OnTriggerEnter(Collider other)
     {
 
@@ -65,23 +71,33 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
             var chip = other.gameObject.GetComponent<ChipData>();
             var bettingController = other.gameObject.GetComponentInParent<BetPositionController>();
 
+            if(chip != null && tableCell != null)
+            {
+                glowPart.GlowCell(true, true);
+            }
+
             if (chip != null && tableCell != null && bettingController == null)
             {
                 chip.Owner = PhotonNetwork.LocalPlayer.NickName;
                 var grabbadBy = other.gameObject.GetComponent<GrabbableChip>().grabbedBy;
-
-                if(grabbadBy == null && !Contain(chip.gameObject))                    
+                
+                if (grabbadBy == null && !Contain(chip.gameObject))
                 {
                     var chipPhotonView = chip.GetComponent<PhotonView>();
                     MagnetizeObject(other.gameObject, FindStackByName(chip.transform));
                     if (chipPhotonView != null && chipPhotonView.IsMine)
                     {
+                        glowPart.GlowCell(false, false);
                         tableCell.ReceiveBetData(new BetData(new PlayerStats(chip.Owner), (int)chip.Cost));
                     }
-                 }
                 }
             }
         }
+        else
+        {
+            glowPart.GlowCell(true, false);
+        }
+    }
 
     private new void OnTriggerStay(Collider other)
     {
@@ -102,9 +118,18 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
                 {
                     tableCell.RemoveBetData(new BetData(new PlayerStats(chip.Owner), (int)chip.Cost));
                 }
-                
             }
         }
-    }   
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var chip = other.gameObject.GetComponent<ChipData>();
+
+        if(chip != null)
+        {
+            glowPart.GlowCell(false, false);
+        }
+    }
 
 }

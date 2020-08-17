@@ -11,6 +11,7 @@ using UnityEngine;
 public class PlayerPlace : MonoBehaviourPun
 {
     public Action<bool, PlayerStats> actionReadyOrNot;
+    public Action actionJoinOut;
     public PlayerStats ps;
     private bool placeTaken = false;
 
@@ -41,6 +42,7 @@ public class PlayerPlace : MonoBehaviourPun
         if (ps != null && !placeTaken)
         {
             placeTaken = true;
+            actionJoinOut.Invoke();
             this.ps = ps;
             photonView.RequestOwnership();
             sf.photonView.RequestOwnership();

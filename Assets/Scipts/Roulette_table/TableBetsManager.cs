@@ -28,6 +28,7 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
     [SerializeField] private RouletteWheelManager RouletteWheelManager;
     [SerializeField] private PlayerPlace[] plyers;
     [SerializeField] private PlayerInformer _playerInformer;
+    [SerializeField] private CroupierNPC _croupierNPC;
 
     private RouletteRandom random = new RouletteRandom();
     public EventManager<ROULETTE_EVENT> rouletteEventManager = new EventManager<ROULETTE_EVENT>();
@@ -38,22 +39,48 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
     }
 
     private void Start() {
+        _croupierNPC.onCroupierPausedOff += startAnimationRoulette;
         foreach (var place in plyers)
         {
             place.actionReadyOrNot += playerClickReady;
         }
+
+    }
+
+    private void startAnimationRoulette()
+    {
+        StartSpinAllParts();
     }
 
     private void playerClickReady(bool isReady, PlayerStats ps) 
     {
-        bool allReady = plyers.All( player => player.IsReady);
+
+        bool allReady = plyers.Where( player => player.ps != null).All(joinedPlayer => joinedPlayer.IsReady);
         if(allReady) {
-            print("STUB!!! START SPIN ROULETTE!!!");
+            print("START SPIN ROULETTE!!!");
+            StartAllAnimations();
+        } else
+        {
+            print("not all players are ready");
         }
     }
 
     public bool checkPlaceTakenYet(PlayerStats pss) {
-        PlayerPlace findPlace = plyers.First(pl => pl.ps.name == pss.name);
+        PlayerPlace findPlace = null;
+        foreach (var place in plyers)
+        {
+            //print(string.Format("Player {0} joined => {1}", place.ps.name, place.IsPlaceTaken));
+
+            if(place.ps != null && place.ps.PlayerNick == pss.PlayerNick)
+            {
+                findPlace = place;
+                print(string.Format("Player {0} joined => {1}", place.ps.PlayerNick, place.IsPlaceTaken));
+                break;
+            }
+        }
+
+        //PlayerPlace findPlace = plyers.FirstOrDefault(pl => pl.ps != null && pl.ps.name == pss.name);
+        
         if(findPlace == null) {
             return false;
         } else {
@@ -67,6 +94,11 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
         {
             
         }
+    }
+
+    public void StartAllAnimations()
+    {
+        _croupierNPC.StartSpinAnimation();
     }
 
     public void StartSpinAllParts()

@@ -12,6 +12,8 @@ public class DraggableCanvas : MonoBehaviour
     [SerializeField] private OVRInput.Button DraggableButton;
     [SerializeField] private float MoveSpeed;
     [SerializeField] private float ZoomSpeed;
+    [SerializeField] private RadialMenuHand radialMenuHand;
+
 
     private Vector3 startCanvasPos;
 
@@ -22,6 +24,13 @@ public class DraggableCanvas : MonoBehaviour
         startCanvasPos = gameObject.transform.position;
         DistanceEyeCanvas = (transform.position - CenterEyeTransform.position).magnitude;
         print("Distance from center eye to canvas = " + DistanceEyeCanvas);
+
+        radialMenuHand.RadialSectorSelected += OnRadialMenuSelected;
+    }
+
+    private void OnRadialMenuSelected(RadialSector radialSector)
+    {
+        print("radial sector invoke + " + radialSector.radialMenuSector);
     }
 
     private void Update()
@@ -29,7 +38,10 @@ public class DraggableCanvas : MonoBehaviour
         
         if (OVRInput.Get(DraggableButton))
         {
-            if(OVRInput.Get(OVRInput.Button.PrimaryThumbstickUp))
+
+            radialMenuHand.InvokeMenu();
+
+            if (OVRInput.Get(OVRInput.Button.PrimaryThumbstickUp))
             {
                 MoveCanvasFarther();
             }
@@ -48,6 +60,10 @@ public class DraggableCanvas : MonoBehaviour
                 //}
 
             }
+        }
+        else
+        {
+            radialMenuHand.RevokeMenu();
         }
     }
 

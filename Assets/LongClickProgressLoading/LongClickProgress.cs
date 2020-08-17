@@ -107,9 +107,17 @@ public class LongClickProgress : MonoBehaviourPun, IListener<ROULETTE_EVENT>
         if (other.gameObject.GetComponent<LongClickHand>() != null && inProgress == false && canLeave)
         {
             playerStats = other.GetComponentInParent<PlayerStats>();
-            if(p_place.ps == null || p_place.ps == playerStats) 
+            if (p_place.ps == null && playerStats != null && GetComponentInParent<TableBetsManager>().checkPlaceTakenYet(playerStats))
             {
-                if(p_place.ps != null && GetComponentInParent<TableBetsManager>().checkPlaceTakenYet(p_place.ps)) return;
+                print("OTher place has been joined!");
+                return;
+            } else
+            {
+                print("Place by this player not joined on other place");
+            }
+
+            if (p_place.ps == null || p_place.ps.PlayerNick == playerStats.PlayerNick)
+            {
                 inProgress = true;
             }
         }
@@ -139,7 +147,7 @@ public class LongClickProgress : MonoBehaviourPun, IListener<ROULETTE_EVENT>
     {
         inGame = true;
         _imageReady.texture = _readyTexture;
-        _textReady.text = nickname;
+        _textReady.text = string.Format("Joined by {0}", nickname);
     }
 
     public void OnEvent(ROULETTE_EVENT Event_type, Component Sender, params object[] Param)
