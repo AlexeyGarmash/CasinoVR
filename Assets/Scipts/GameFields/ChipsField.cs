@@ -22,7 +22,7 @@ public class ChipsField : AbstractField
         var chip = Object.GetComponent<ChipData>();
 
         
-        Stack.stackType = (ChipUtils.Instance.GetStringOfType(chip.Cost));
+        Stack.stackType = ChipUtils.Instance.GetStringOfType(chip.Cost);
 
         var stackData = Stack;
 
@@ -65,8 +65,8 @@ public class ChipsField : AbstractField
             var stacks = FindPossibleFields(chip);
             StackData stack;
             if (stacks.Exists(s => s.stackType != ""))
-                stack = stacks.FirstOrDefault(s => s.stackType == "");
-            else stack = stacks[0];
+                stack = stacks[0];
+            else stack = stacks.FirstOrDefault(s => s.stackType == "");
             MagnetizeObject(gameObj, stack);
 
         }
