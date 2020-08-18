@@ -251,6 +251,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
         // Add the grabbable
         int refCount = 0;
+        grabbable.GetComponent<Outline>().enabled = true;
         m_grabCandidates.TryGetValue(grabbable, out refCount);
         m_grabCandidates[grabbable] = refCount + 1;
 
@@ -325,13 +326,13 @@ public class OVRGrabberCustom : MonoBehaviourPun
         UpdateCandidates();
         FindClosestGrabbableCandidate();
 
-        if (closestGrabbable != null && closestGrabbable.GetComponent<Outline>() != null && photonView.IsMine)
-        {
-            var outline = closestGrabbable.GetComponent<Outline>();
+        //if (closestGrabbable != null && closestGrabbable.GetComponent<Outline>() != null && photonView.IsMine)
+        //{
+        //    var outline = closestGrabbable.GetComponent<Outline>();
             
-            outline.enabled = true;          
-        }
-        DisableOutline(closestGrabbable);
+        //    outline.enabled = true;          
+        //}
+        //DisableOutline(closestGrabbable);
     }
 
     void ResetClosestObj()
@@ -341,7 +342,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         closestGrabbableCollider = null;
     }
 
-    float MaxDistance = 0.07f;
+    float MaxDistance = 0.15f;
     void UpdateCandidates()
     {
         var removeCandidaes = new List<OVRGrabbableCustom>();
@@ -355,7 +356,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
             //Debug.Log(Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position));
             if (Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position) > MaxDistance)
             {
-                if(grabbable.gameObject.GetComponent<OVRGrabbableCustom>() != null)
+                if (grabbable.gameObject.GetComponent<OVRGrabbableCustom>() != null)
                     removeCandidaes.Add(grabbable);
             }
         }
@@ -411,9 +412,10 @@ public class OVRGrabberCustom : MonoBehaviourPun
             closestGrabbable = result.Key;
         }
         else closestGrabbable = null;
-        {
+        
+        if(closestGrabbable == null)
             Debug.LogError("closestGrabbable candidate not found!!!!!!!!");
-        }
+        
 
         if (closestGrabbable != null)
         {
@@ -482,7 +484,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
             //MoveGrabbedObject(m_lastPos, m_lastRot, true);
 
 
-            m_grabCandidates.Clear();
+            //m_grabCandidates.Clear();
             SetPlayerIgnoreCollision(m_grabbedObj.gameObject, true);
             if (m_grabbedObjs.Count == max_grabbed_obj || closestGrabbable.tag == "Untagged")
                 GrabVolumeEnable(false);
