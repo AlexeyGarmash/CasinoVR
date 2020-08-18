@@ -407,11 +407,17 @@ public class OVRGrabberCustom : MonoBehaviourPun
     {
         var result = m_grabCandidates.FirstOrDefault(c => c.Key.GetComponent<PhotonView>().ViewID == viewID);
         if (result.Key != null)
+        {
             closestGrabbable = result.Key;
+        }
         else closestGrabbable = null;
+        {
+            Debug.LogError("closestGrabbable candidate not found!!!!!!!!");
+        }
 
         if (closestGrabbable != null)
         {
+            
             //условие для искоренение возможности единовременно брать разные предметы в руку 
             if (m_grabbedObjs.Count != 0 && m_grabbedObjs.Exists(go => go.tag != closestGrabbable.tag))
                 return;
