@@ -7,9 +7,19 @@ public class PlayerBlackJackFields : MonoBehaviour
 {
 
     [SerializeField]
-    public ChipsField bettingField;
+    public ChipsField bettingField1;
     [SerializeField]
-    public BlackJackPlayerCardField blackJackField;
+    public BlackJackPlayerCardField blackJackField1;
+
+    [SerializeField]
+    public ChipsField bettingFieldForSplit1;
+    [SerializeField]
+    public BlackJackPlayerCardField blackJackFieldForSplit1;
+
+    [SerializeField]
+    public ChipsField bettingFieldForSplit2;
+    [SerializeField]
+    public BlackJackPlayerCardField blackJackFieldForSplit2;
     void Start()
     {
         //bettingField = GetComponentInChildren<ChipsField>();

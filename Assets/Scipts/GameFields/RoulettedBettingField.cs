@@ -85,26 +85,26 @@ public class RoulettedBettingField : ChipsField, IListener<ROULETTE_EVENT>
 
     private new void OnTriggerStay(Collider other)
     {
-        if (canBet)
-        {
-            var chip = other.gameObject.GetComponent<ChipData>();
-            var grabbable = other.gameObject.GetComponent<OVRGrabbableCustom>();
+        //if (canBet)
+        //{
+        //    var chip = other.gameObject.GetComponent<ChipData>();
+        //    var grabbable = other.gameObject.GetComponent<OVRGrabbableCustom>();
 
-            if (chip != null && tableCell != null && grabbable.isGrabbed)
-            {
+        //    if (chip != null && tableCell != null && grabbable.isGrabbed)
+        //    {
 
                 
-                var chipPhotonView = chip.GetComponent<PhotonView>();
-                ExtranctObject(chipPhotonView.ViewID);
+        //        var chipPhotonView = chip.GetComponent<PhotonView>();
+        //        ExtranctObject(chipPhotonView.ViewID);
 
-                Debug.Log("OnTriggerStay");
-                if (chipPhotonView != null && chipPhotonView.IsMine /*&& ExtranctChipOnAll(chipPhotonView.ViewID)*/)
-                {
-                    tableCell.RemoveBetData(new BetData(new PlayerStats(chip.Owner), (int)chip.Cost));
-                }
+        //        Debug.Log("OnTriggerStay");
+        //        if (chipPhotonView != null && chipPhotonView.IsMine /*&& ExtranctChipOnAll(chipPhotonView.ViewID)*/)
+        //        {
+        //            tableCell.RemoveBetData(new BetData(new PlayerStats(chip.Owner), (int)chip.Cost));
+        //        }
                 
-            }
-        }
+        //    }
+        //}
     }   
 
 }

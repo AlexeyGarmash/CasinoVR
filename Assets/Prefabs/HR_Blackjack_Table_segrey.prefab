@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &377194578
@@ -147,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &636525211
@@ -3718,6 +3720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &1359712318
@@ -3819,6 +3822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &1370845298
@@ -3920,6 +3924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &1528347469
@@ -4021,6 +4026,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &1648652213
@@ -4122,6 +4128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &1768539273
@@ -4223,6 +4230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &1914812014
@@ -4324,6 +4332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &1964474334
@@ -4911,6 +4920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &5979875644160521905
@@ -5012,6 +5022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &9160846065514184452
@@ -5302,6 +5313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &1551524705166165651
@@ -5696,6 +5708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &7586848855734511816
@@ -6093,8 +6106,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf76a2e583c1304dbc962af259c8f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bettingField: {fileID: 6181536648349835620}
-  blackJackField: {fileID: 3248762939494663462}
+  bettingField1: {fileID: 6181536648349835620}
+  blackJackField1: {fileID: 3248762939494663462}
+  bettingFieldForSplit1: {fileID: 0}
+  blackJackFieldForSplit1: {fileID: 0}
+  bettingFieldForSplit2: {fileID: 0}
+  blackJackFieldForSplit2: {fileID: 0}
 --- !u!114 &1969381921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6136,13 +6153,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626314938446514915}
-  m_LocalRotation: {x: 0.00000010919756, y: 0.00000019987189, z: 0.6060035, w: 0.79546195}
-  m_LocalPosition: {x: -0.044, y: -0.459, z: 1.002}
-  m_LocalScale: {x: 0.73501533, y: 0.73501533, z: 0.7350154}
+  m_LocalRotation: {x: 0.000000066473135, y: 0.00000021120644, z: 0.6060036, w: 0.79546195}
+  m_LocalPosition: {x: -0.044000037, y: -0.45900017, z: 1.0020002}
+  m_LocalScale: {x: 0.7350152, y: 0.73501533, z: 0.73501545}
   m_Children:
   - {fileID: 7128004222189906282}
-  m_Father: {fileID: 1071524302177406172}
-  m_RootOrder: 5
+  m_Father: {fileID: 7582308596292831329}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 74.602005}
 --- !u!33 &6228030184574559048
 MeshFilter:
@@ -6294,6 +6311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &5556594459097382984
@@ -7273,6 +7291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &2116806068603540626
@@ -7448,6 +7467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &5920072672679212475
@@ -8174,6 +8194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &8041153520531621088
@@ -8256,13 +8277,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3894512589022668948}
-  m_LocalRotation: {x: 0.00000010919756, y: 0.00000019987189, z: 0.6060035, w: 0.79546195}
-  m_LocalPosition: {x: -0.038, y: -0.456, z: 1.002}
-  m_LocalScale: {x: 0.73501533, y: 0.73501533, z: 0.7350154}
+  m_LocalRotation: {x: 0.000000066473135, y: 0.00000021120644, z: 0.6060036, w: 0.79546195}
+  m_LocalPosition: {x: -0.038000047, y: -0.45600024, z: 1.0020002}
+  m_LocalScale: {x: 0.7350152, y: 0.73501533, z: 0.73501545}
   m_Children:
   - {fileID: 200906904404935508}
-  m_Father: {fileID: 1071524302177406172}
-  m_RootOrder: 4
+  m_Father: {fileID: 7582308596292831329}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 74.602005}
 --- !u!33 &8605490574782325092
 MeshFilter:
@@ -8521,6 +8542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &2395460312799028319
@@ -8720,6 +8742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &306655914729082416
@@ -8872,6 +8895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &4524282313474451988
@@ -10335,6 +10359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &5187833449561348127
@@ -11146,6 +11171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &5187833450418101478
@@ -11504,6 +11530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &9009619602253195769
@@ -11605,6 +11632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &5179613519838673353
@@ -11705,6 +11733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &5067070162811196595
@@ -11914,6 +11943,38 @@ MonoBehaviour:
   _readyTexture: {fileID: 2800000, guid: 98da384279f4e69438e887cd00d5d288, type: 3}
   _notReadyTexture: {fileID: 2800000, guid: 98da384279f4e69438e887cd00d5d288, type: 3}
   p_place: {fileID: 0}
+--- !u!1 &6102263022108656549
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7582308596292831329}
+  m_Layer: 0
+  m_Name: PlayerGameField1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7582308596292831329
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6102263022108656549}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4219278857431347747}
+  - {fileID: 4117456599616916017}
+  m_Father: {fileID: 1071524302177406172}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6115034077955620806
 GameObject:
   m_ObjectHideFlags: 0
@@ -12396,6 +12457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &6509402358266045040
@@ -12486,8 +12548,7 @@ Transform:
   - {fileID: 7684712551406237881}
   - {fileID: 1527218051198300004}
   - {fileID: 350703914033270415}
-  - {fileID: 4219278857431347747}
-  - {fileID: 4117456599616916017}
+  - {fileID: 7582308596292831329}
   m_Father: {fileID: 8205732871074016248}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -0.119, y: 0.056, z: 13.917001}
@@ -12541,8 +12602,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf76a2e583c1304dbc962af259c8f55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bettingField: {fileID: 648832188348209525}
-  blackJackField: {fileID: 3371522616298305218}
+  bettingField1: {fileID: 648832188348209525}
+  blackJackField1: {fileID: 3371522616298305218}
+  bettingFieldForSplit1: {fileID: 0}
+  blackJackFieldForSplit1: {fileID: 0}
+  bettingFieldForSplit2: {fileID: 0}
+  blackJackFieldForSplit2: {fileID: 0}
 --- !u!114 &1969381920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12633,6 +12698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &3256416027549857033
@@ -12858,6 +12924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &1812208544686952319
@@ -13117,6 +13184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &7589324619360381533
@@ -13218,6 +13286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &7589324619868178454
@@ -13319,6 +13388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &7589324620429552936
@@ -13420,6 +13490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &7589324620798615909
@@ -13521,6 +13592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &7589324621065862106
@@ -13621,6 +13693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &8329496735118414354
@@ -13769,6 +13842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &1725903666405102392
@@ -14014,6 +14088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &6197190682042729053
@@ -14115,6 +14190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+  stackType: 
   Objects: []
   animator: {fileID: 0}
 --- !u!114 &6711442461592255661

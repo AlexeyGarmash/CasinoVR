@@ -65,9 +65,9 @@ namespace Assets.Scipts.BackJack
                 var buttons = p.GetComponentInChildren<ButtonsHolder>();
                 ActivateGameButtons(true, false, false, false, p);
                 var fields = p.GetComponent<PlayerBlackJackFields>();
-                fields.bettingField.ClearStacks();
-                fields.bettingField.BlockField(false);
-                fields.blackJackField.ClearStacks();
+                fields.bettingField1.ClearStacks();
+                fields.bettingField1.BlockField(false);
+                fields.blackJackField1.ClearStacks();
 
 
             });
@@ -420,18 +420,18 @@ namespace Assets.Scipts.BackJack
 
                 var bet = 0;
 
-                foreach (var chip in playerField.bettingField.Stacks[0].Objects)
+                foreach (var chip in playerField.bettingField1.Stacks[0].Objects)
                 {
                     bet += (int)chip.GetComponent<ChipData>().Cost;                                     
                 }
-                playerField.bettingField.BlockField(true);
+                playerField.bettingField1.BlockField(true);
 
                 if (bet == 0)
                 {
                     tms.SetText("Players " + playersInGame[j].ps.PlayerNick + "removed from game 0 bet");
                     Debug.Log("Players " + playersInGame[j].ps.PlayerNick + "removed from game 0 bet");
 
-                    if (playersInGame[j].GetComponent<PlayerBlackJackFields>().bettingField.Stacks[0].Objects.Count == 0)
+                    if (playersInGame[j].GetComponent<PlayerBlackJackFields>().bettingField1.Stacks[0].Objects.Count == 0)
                         toRemove.Add(playersInGame[j]);
                 }
                 else {
