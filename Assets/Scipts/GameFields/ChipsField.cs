@@ -64,6 +64,7 @@ public class ChipsField : AbstractField
             chip.field = this;
             var stacks = FindPossibleFields(chip);
             StackData stack;
+
             if (stacks.Exists(s => s.stackType != ""))
                 stack = stacks[0];
             else stack = stacks.FirstOrDefault(s => s.stackType == "");
