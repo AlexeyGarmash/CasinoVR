@@ -24,7 +24,10 @@ namespace Assets.Scipts.Chips
         public void ExtractObject()
         {
             if (field != null)
+            {
                 field.ExtranctObject(photonView.ViewID);
+                field = null;
+            }
         }
     }
 }
