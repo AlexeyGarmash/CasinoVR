@@ -13,14 +13,13 @@ using UnityEngine;
 namespace Assets.Scipts.BackJack
 {
     public enum BlackJackGameStates{ CheckPlayer, CardsToPlayers, PlayersBetting, CheckResults, ResetGame, PlayerTurn }
-    //public enum JackPlayersEvets { PlayerSplited, PlayerSurrendered, PlayerTakedCard, PlayerSaved,
-    //    PlayerCanSplit, PlayerCanSurrendered, PlayerCanTakeCard, PlayerCanSave, PlayerWin, PlayerLose }
-    class BlackJackTable : MonoBehaviourPun/*, IListener<JackPlayersEvets>*/
+   
+    class BlackJackTable : MonoBehaviourPun
     {
         BlackJackGameStates gameState = BlackJackGameStates.ResetGame;
         [SerializeField]
         TMP_Text tms;
-        //public EventManager<JackPlayersEvets> gameEventManager;
+       
         BlackJackLogic blackJackLogic;
         [SerializeField]
         List<PlayerPlace> players;
@@ -51,12 +50,6 @@ namespace Assets.Scipts.BackJack
 
         private void Start()
         {
-            //gameEventManager = new EventManager<JackPlayersEvets>();
-
-            //gameEventManager.AddListener(JackPlayersEvets.PlayerSaved, this);
-            //gameEventManager.AddListener(JackPlayersEvets.PlayerSplited, this);
-            //gameEventManager.AddListener(JackPlayersEvets.PlayerSurrendered, this);
-            //gameEventManager.AddListener(JackPlayersEvets.PlayerTakedCard, this);
 
             playersOutFromGame = new List<PlayerPlace>();
             playersInGame = new List<PlayerPlace>();
@@ -66,18 +59,7 @@ namespace Assets.Scipts.BackJack
         //bool playerSkipTurn
         void ResetGame()       
         {
-            //playersInGame.ForEach(p => {
-            //    var fields = p.GetComponent<PlayerBlackJackFields>();
-            //    fields.bettingField.ClearStacks();
-            //    fields.bettingField.GetComponent<Collider>().isTrigger = true;
-            //    fields.blackJackField.ClearStacks();
-            //});
-            //playersOutFromGame.ForEach(p => {
-            //    var fields = p.GetComponent<PlayerBlackJackFields>();
-            //    fields.bettingField.ClearStacks();
-            //    fields.bettingField.GetComponent<Collider>().isTrigger = true;
-            //    fields.blackJackField.ClearStacks();
-            //});
+           
 
             players.ForEach(p => { 
                 var buttons = p.GetComponentInChildren<ButtonsHolder>();
@@ -97,8 +79,14 @@ namespace Assets.Scipts.BackJack
             playerLose = false;
             playersInGame.Clear();
             playersOutFromGame.Clear();
-            currWaitTime = 0;          
-            gameState = BlackJackGameStates.CheckPlayer;
+
+            if (photonView.IsMine)
+            {
+                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CheckPlayer);
+                photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
+            }
+                   
+           
 
              
         }
@@ -162,7 +150,10 @@ namespace Assets.Scipts.BackJack
                 {
                     ActivateGameButtons(false, true, true, false, p);
                     endTurns = false;
-                    currWaitTime = 0;
+                    if (photonView.IsMine)
+                    {                      
+                        photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
+                    }
                     playerReady = false;
                     playerLose = false;
                     playerTakeCard = false;
@@ -196,7 +187,9 @@ namespace Assets.Scipts.BackJack
 
                         }
 
-                        currWaitTime++;
+                        if (photonView.IsMine)
+                            photonView.RPC("TimerStep_RPC", RpcTarget.All);
+
                         yield return new WaitForSeconds(OneSec);
 
                     }
@@ -216,10 +209,10 @@ namespace Assets.Scipts.BackJack
             }
             
 
-            if (endTurns)
-                gameState = BlackJackGameStates.CheckResults;
-            if(playersInGame.Count == 0)
-                gameState =  BlackJackGameStates.ResetGame;
+            if (endTurns && photonView.IsMine)
+                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CheckResults);
+            if (playersInGame.Count == 0 && photonView.IsMine)
+                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
             yield return null;
             playersOutFromGame.AddRange(toRemove);
             toRemove.ForEach(p => playersInGame.Remove(p));
@@ -238,6 +231,23 @@ namespace Assets.Scipts.BackJack
 
             }
         }
+        [PunRPC]
+        public void TimerStep_RPC()
+        {
+            currWaitTime++;
+        }
+        [PunRPC]
+        public void SetZeroTimer_RPC()
+        {
+            currWaitTime = 0;
+        }
+
+        [PunRPC]
+        public void State_RPC(int state)
+        {
+            gameState = (BlackJackGameStates)state;
+        }
+
 
         private IEnumerator WaitingForSitPlayers()
         {
@@ -248,7 +258,9 @@ namespace Assets.Scipts.BackJack
                 
                 tms.SetText("Waiting players" + (waitTimeInSec - currWaitTime).ToString());
                 yield return new WaitForSeconds(OneSec);
-                currWaitTime++;
+
+                if (photonView.IsMine)
+                    photonView.RPC("TimerStep_RPC", RpcTarget.All);
 
             }
             else
@@ -261,32 +273,35 @@ namespace Assets.Scipts.BackJack
                 var result = players.FindAll(p => p.PlayerOnPlace);
                 if (result != null)
                 {
-                    
+
                     Debug.Log("to next state -> BlackJackGameStates.PlayersBetting | players=" + result.Count);
 
                     playersInGame.AddRange(result);
                     //получаем стату игроков
-                   
-                    
-                    
+
+
+
 
                     if (photonView.IsMine)
                     {
                         DeckData dd = new DeckData();
                         var indexesRnd = dd.GenerateDeck();
                         photonView.RPC("SetDeck", RpcTarget.All, indexesRnd);
+                        photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.PlayersBetting);
                     }
-                    
+
 
                     players.ForEach(p => ActivateGameButtons(false, false, false, false, p));
 
-                    gameState = BlackJackGameStates.PlayersBetting;
-                   
+
                 }
-                else currWaitTime = 0;
-            }                
-            
-            yield return null;
+                else if (photonView.IsMine)
+                {
+                   
+                    photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
+                }
+            }
+                yield return null;
         }
 
         [PunRPC]
@@ -338,7 +353,7 @@ namespace Assets.Scipts.BackJack
                         BlackJackDilerCardFieldHidden.BlockField(false);
                         BlackJackDilerCardFieldOpen.BlockField(true);
                     }
-                    
+
 
                     tms.SetText("card to " + nick);
                     Debug.Log("card to " + nick);
@@ -362,10 +377,13 @@ namespace Assets.Scipts.BackJack
                 playersOutFromGame.AddRange(PlayerToRemove);
                 PlayerToRemove.ForEach(p => playersInGame.Remove(p));
 
+                if (photonView.IsMine)
+                    photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.PlayerTurn);
 
-                gameState = BlackJackGameStates.PlayerTurn;
             }
-            else gameState = BlackJackGameStates.ResetGame;
+            else if(photonView.IsMine)
+                    photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
+            
 
             yield return null;
         }
@@ -375,14 +393,21 @@ namespace Assets.Scipts.BackJack
             List<PlayerPlace> toRemove = new List<PlayerPlace>();
             for (var j = 0; j < playersInGame.Count; j++)
             {
-                currWaitTime = 0;
+                if (photonView.IsMine)
+                {                  
+                    photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
+                }
+
                 ActivateGameButtons(false, false, false, true, playersInGame[j]);
 
                 while (currWaitTime != waitTimeInSec)
                 {
                     if (playerReady)
                         break;
-                    currWaitTime++;
+
+                    if (photonView.IsMine)
+                        photonView.RPC("TimerStep_RPC", RpcTarget.All);
+
                     tms.SetText("Players "+ playersInGame[j].ps.PlayerNick + "is betting" + (waitTimeInSec - currWaitTime).ToString());
                     Debug.Log("Players " + playersInGame[j].ps.PlayerNick + "is betting" + (waitTimeInSec - currWaitTime).ToString());
                     yield return new WaitForSeconds(OneSec);
@@ -437,7 +462,9 @@ namespace Assets.Scipts.BackJack
                 playersInGame.Remove(r);              
             });
 
-            gameState = BlackJackGameStates.CardsToPlayers;
+            if(photonView.IsMine)
+                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CardsToPlayers);
+           
         }
        
         public void SkipTurn(PlayerStats player)
@@ -534,8 +561,10 @@ namespace Assets.Scipts.BackJack
                     yield return new WaitForSeconds(OneSec);
                 }
             }
-                
-            gameState = BlackJackGameStates.ResetGame;
+
+            if (photonView.IsMine)
+                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
+
             yield return null;
         }
     }
