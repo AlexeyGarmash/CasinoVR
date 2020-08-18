@@ -427,7 +427,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
             
 
             //если мы взяли наш же предмет
-            if (closestGrabbable.isGrabbed)
+            if (closestGrabbable.isGrabbed && closestGrabbable.grabbedBy != this)
             {
                 closestGrabbable.grabbedBy.OffhandGrabbed(closestGrabbable);
             }
@@ -569,6 +569,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         m_grabbedObj.GrabEnd(linearVelocity, angularVelocity);
         if (m_parentHeldObject) m_grabbedObj.transform.parent = null;
         SetPlayerIgnoreCollision(m_grabbedObj.gameObject, false);
+
         m_grabbedObjs.Remove(m_grabbedObj);
         m_grabbedObj = null;
     }
