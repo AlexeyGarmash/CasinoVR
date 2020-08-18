@@ -106,12 +106,7 @@ class GrabbableChip : OVRGrabbableCustom
         }
 
 
-        grabbleObjSpawnPoint.parent = parent;
-
-
-        //берем аватар с игрока и задаем ему анимацию бля коректного отображения фишек в руке
-        //avatar = gameObject.transform.parent.parent.parent.GetComponentInChildren<OvrAvatar>();
-        //SetPose(hand);
+        grabbleObjSpawnPoint.parent = parent;   
        
     }
 
@@ -187,6 +182,7 @@ class GrabbableChip : OVRGrabbableCustom
         base.GrabEnd(linearVelocity, angularVelocity);
 
         var rb = GetComponent<Rigidbody>();
+
         rb.isKinematic = false;
         rb.useGravity = true;
 

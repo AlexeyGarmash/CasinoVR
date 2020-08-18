@@ -39,6 +39,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
     private OVRInput.Axis1D GrabAxis = OVRInput.Axis1D.PrimaryHandTrigger;
 
     //список предметов которые находяться в руке
+    [SerializeField]
     public List<OVRGrabbableCustom> m_grabbedObjs;
 
     //холдер для предметов руки находиться в TrackingSpace/LeftHandAnchor для левой руки TrackingSpace/RightHandAnchor для правой
@@ -407,15 +408,16 @@ public class OVRGrabberCustom : MonoBehaviourPun
     protected virtual void GrabBegin_RPC(int viewID)
     {
         var result = m_grabCandidates.FirstOrDefault(c => c.Key.GetComponent<PhotonView>().ViewID == viewID);
-        if (result.Key != null)
+
+        if (result.Key == null)
         {
-            closestGrabbable = result.Key;
-        }
-        else closestGrabbable = null;
-        
-        if(closestGrabbable == null)
+
             Debug.LogError("closestGrabbable candidate not found!!!!!!!!");
+            return;
+        }
         
+        closestGrabbable = result.Key;
+                
 
         if (closestGrabbable != null)
         {
@@ -488,10 +490,11 @@ public class OVRGrabberCustom : MonoBehaviourPun
             SetPlayerIgnoreCollision(m_grabbedObj.gameObject, true);
             if (m_grabbedObjs.Count == max_grabbed_obj || closestGrabbable.tag == "Untagged")
                 GrabVolumeEnable(false);
-            if (m_parentHeldObject)
-            {
-                m_grabbedObj.transform.parent = transform;
-            }
+
+            //if (m_parentHeldObject)
+            //{
+            //    m_grabbedObj.transform.parent = transform;
+            //}
         }
         else
         {
