@@ -117,7 +117,7 @@ public class PlayerPlace : MonoBehaviourPun
     {
         Debug.Log(sf);
         
-        int money = 20;
+        int money = ps.AllMoney;
         if (money > 0)
         {
 
@@ -125,36 +125,35 @@ public class PlayerPlace : MonoBehaviourPun
             
             while (money > 0)
             {
-                //if (starmoney / 2 < money)
-                //{
-                //    InstantiateToStackWithColor(Chips.PURPLE, ref money, ps.PlayerNick);
+                if (starmoney / 2 < money)
+                {
+                    InstantiateToStackWithColor(Chips.PURPLE, ref money, ps.PlayerNick);
                    
-                //}
-                //else if (starmoney / 4 < money)
-                //{
-                //    InstantiateToStackWithColor(Chips.BLACK, ref money, ps.PlayerNick);
+                }
+                else if (starmoney / 4 < money)
+                {
+                    InstantiateToStackWithColor(Chips.BLACK, ref money, ps.PlayerNick);
 
-                //}
-                //else if (starmoney / 8 < money)
-                //{
-                //    InstantiateToStackWithColor(Chips.GREEN, ref money, ps.PlayerNick);
+                }
+                else if (starmoney / 8 < money)
+                {
+                    InstantiateToStackWithColor(Chips.GREEN, ref money, ps.PlayerNick);
 
-                //}
-                //else if (starmoney / 16 < money)
-                //{
-                //    InstantiateToStackWithColor(Chips.BLUE, ref money, ps.PlayerNick);
+                }
+                else if (starmoney / 16 < money)
+                {
+                    InstantiateToStackWithColor(Chips.BLUE, ref money, ps.PlayerNick);
 
-                //}
-                //else if (starmoney / 32 < money)
-                //{
-                //    InstantiateToStackWithColor(Chips.RED, ref money, ps.PlayerNick);
+                }
+                else if (starmoney / 32 < money)
+                {
+                    InstantiateToStackWithColor(Chips.RED, ref money, ps.PlayerNick);
 
-                //}
-                //else 
-                InstantiateToStackWithColor(Chips.YELLOW, ref money, ps.PlayerNick);
+                }
+                else InstantiateToStackWithColor(Chips.YELLOW, ref money, ps.PlayerNick);
 
 
-                yield return new WaitForSeconds(1);
+                yield return null;
             }
         }
        

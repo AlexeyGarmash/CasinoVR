@@ -166,16 +166,16 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     {
         photonView.RPC("UpdateAllStacks", RpcTarget.All, true, true);
 
-        //for (var i = 0; i < Stacks.Length; i++)
-        //{
-        //    for (var j = 0; j < Stacks[i].Objects.Count; j++)
-        //    {
-        //        var position = Stacks[i].Objects[j].transform.position;
-        //        var viewID = Stacks[i].Objects[j].GetComponent<PhotonView>().ViewID;
+        for (var i = 0; i < Stacks.Length; i++)
+        {
+            for (var j = 0; j < Stacks[i].Objects.Count; j++)
+            {
+                var position = Stacks[i].Objects[j].transform.position;
+                var viewID = Stacks[i].Objects[j].GetComponent<PhotonView>().ViewID;
 
-        //        photonView.RPC("SyncGameObjects", RpcTarget.Others, viewID, position, i, j);
-        //    }
-        //}
+                photonView.RPC("SyncGameObjects", RpcTarget.Others, viewID, position, i, j);
+            }
+        }
 
 
 
@@ -202,8 +202,16 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     [PunRPC]
     public void SyncGameObjects(int viewID, Vector3 position, int stackIndex, int chipsIndex)
     {
-        Stacks[stackIndex].Objects[chipsIndex].GetComponent<PhotonView>().ViewID = viewID;
-        Stacks[stackIndex].Objects[chipsIndex].transform.position = position;       
+        try
+        {
+            
+            Stacks[stackIndex].Objects[chipsIndex].GetComponent<PhotonView>().ViewID = viewID;
+            Stacks[stackIndex].Objects[chipsIndex].transform.position = position;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("not fount in client -> stack index" + stackIndex + " chip index" + chipsIndex + "viewID=" + viewID);
+        }
     }
     protected void OnTriggerEnter(Collider other)
     {
