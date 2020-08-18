@@ -21,8 +21,8 @@ public class ChipsField : AbstractField
         var rb = Object.GetComponent<Rigidbody>();
         var chip = Object.GetComponent<ChipData>();
 
-        if (photonView.IsMine)
-            Stack.SetStackType(ChipUtils.Instance.GetStringOfType(chip.Cost));
+        
+        Stack.stackType = (ChipUtils.Instance.GetStringOfType(chip.Cost));
 
         var stackData = Stack;
 
@@ -62,8 +62,12 @@ public class ChipsField : AbstractField
         {
          
             chip.field = this;
-            var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
-            MagnetizeObject(gameObj, clossest);
+            var stacks = FindPossibleFields(chip);
+            StackData stack;
+            if (stacks.Exists(s => s.stackType != ""))
+                stack = stacks.FirstOrDefault(s => s.stackType == "");
+            else stack = stacks[0];
+            MagnetizeObject(gameObj, stack);
 
         }
 
