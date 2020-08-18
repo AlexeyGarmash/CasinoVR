@@ -14,6 +14,7 @@ ANY KIND, either express or implied. See the License for the specific language g
 permissions and limitations under the License.
 ************************************************************************************/
 
+using Assets.Scipts.Chips;
 using Photon.Pun;
 using System;
 using UnityEngine;
@@ -129,6 +130,8 @@ public class OVRGrabbableCustom : MonoBehaviourPun
             photonView.RequestOwnership();
             photonView.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();            
         }
+
+        GetComponent<OwnerData>().ExtractObject();
 
         //GetComponent<Collider>().isTrigger = true;
         GetComponent<Outline>().enabled = false;

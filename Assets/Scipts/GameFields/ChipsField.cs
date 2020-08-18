@@ -59,6 +59,7 @@ public class ChipsField : AbstractField
         {
 
             //Debug.Log("MagnetizeObject viewID=" + view.ViewID);
+            chip.field = this;
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);
 
@@ -68,17 +69,17 @@ public class ChipsField : AbstractField
     protected new void OnTriggerStay(Collider other)
     {
 
-        var gameObj = other.gameObject;
-        ChipData chip = other.gameObject.GetComponent<ChipData>();
-        var gc = other.gameObject.GetComponent<GrabbableChip>();
-        var rb = other.GetComponent<Rigidbody>();
-        var view = gameObj.GetComponent<PhotonView>();
+        //var gameObj = other.gameObject;
+        //ChipData chip = other.gameObject.GetComponent<ChipData>();
+        //var gc = other.gameObject.GetComponent<GrabbableChip>();
+        //var rb = other.GetComponent<Rigidbody>();
+        //var view = gameObj.GetComponent<PhotonView>();
 
-        if (chip != null && gc != null && gc.isGrabbed && rb.isKinematic && view != null && Contain(gameObj))
-        {
-            ExtranctObject(view.ViewID);
-            //SyncStacks();
-        }
+        //if (chip != null && gc != null && gc.isGrabbed && rb.isKinematic && view != null && Contain(gameObj))
+        //{
+        //    ExtranctObject(view.ViewID);
+        //    //SyncStacks();
+        //}
 
     }
 

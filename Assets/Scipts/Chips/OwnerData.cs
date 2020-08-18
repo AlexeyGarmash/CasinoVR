@@ -9,6 +9,7 @@ namespace Assets.Scipts.Chips
 {
     public class OwnerData : MonoBehaviourPun
     {
+        public AbstractField field;
         public string Owner;
         public void SetOwner_Photon(string owner)
         {
@@ -18,6 +19,12 @@ namespace Assets.Scipts.Chips
         public void SetOwner_RPC(string owner)
         {
             Owner = owner;
+        }
+
+        public void ExtractObject()
+        {
+            if (field != null)
+                field.ExtranctObject(photonView.ViewID);
         }
     }
 }
