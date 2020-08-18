@@ -19,28 +19,23 @@ public class PlayerChipsField : ChipsField
         var chip = (ChipData)data;
         var list = new List<StackData>();
 
-        for (var i = 0; i < Stacks.Length; i++)
-            if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == chip.Cost && maxObjectsOnField != Stacks[i].Objects.Count)
-                list.Add(Stacks[i]);
+        list = FindStackByType(ChipUtils.Instance.GetStringOfType(chip.Cost));
 
-        if (list.Count == 0)
-            for (var i = 0; i < Stacks.Length; i++)
-                if (Stacks[i].Objects.Count == 0)
-                    list.Add(Stacks[i]);
+       
 
-        if (list.Count == 0)
-        {
-            maxObjectsOnField += 1;
+        //if (list.Count == 0)
+        //{
+        //    maxObjectsOnField += 1;
 
-            for (var i = 0; i < Stacks.Length; i++)
-                if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == chip.Cost && maxObjectsOnField != Stacks[i].Objects.Count)
-                    list.Add(Stacks[i]);
+        //    for (var i = 0; i < Stacks.Length; i++)
+        //        if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == chip.Cost && maxObjectsOnField != Stacks[i].Objects.Count)
+        //            list.Add(Stacks[i]);
 
-            if (list.Count == 0)
-                for (var i = 0; i < Stacks.Length; i++)
-                    if (Stacks[i].Objects.Count == 0)
-                        list.Add(Stacks[i]);
-        }
+        //    if (list.Count == 0)
+        //        for (var i = 0; i < Stacks.Length; i++)
+        //            if (Stacks[i].Objects.Count == 0)
+        //                list.Add(Stacks[i]);
+        //}
 
         return list;
 

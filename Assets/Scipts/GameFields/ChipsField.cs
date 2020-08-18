@@ -13,6 +13,7 @@ public enum AbstractFieldEvents{ StackAnimationEnded, StackAnimationStarted }
 public class ChipsField : AbstractField
 {
     
+
     public override bool MagnetizeObject(GameObject Object, StackData Stack)
     {
       
@@ -20,8 +21,8 @@ public class ChipsField : AbstractField
         var rb = Object.GetComponent<Rigidbody>();
         var chip = Object.GetComponent<ChipData>();
 
-        if (Stack.objectType == "")
-        Stack.objectType = ChipUtils.Instance.GetStringOfType(chip.Cost);
+        if (photonView.IsMine)
+            Stack.SetStackType(ChipUtils.Instance.GetStringOfType(chip.Cost));
 
         var stackData = Stack;
 
@@ -61,7 +62,7 @@ public class ChipsField : AbstractField
         {
          
             chip.field = this;
-            var clossest = FindClossestField(chip.transform, FindStackByType(ChipUtils.Instance.GetStringOfType(chip.Cost)));
+            var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);
 
         }

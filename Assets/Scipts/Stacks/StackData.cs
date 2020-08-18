@@ -4,15 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(StackAnimator))]
-public class StackData : MonoBehaviour
+public class StackData : MonoBehaviourPun
 {
 
     public string playerName = "";
-    public string objectType = "";
+    public string stackType = "";
 
+
+    [PunRPC]
+    private void SetStackType_RPC(string _stackType)
+    {
+        stackType = _stackType;
+    }
+    public void SetStackType(string stackType)
+    {
+        photonView.RPC("SetStackType_RPC", RpcTarget.All, stackType);
+    }
     public List<GameObject> Objects = new List<GameObject>();
 
-  
+    
 
     public StackAnimator animator;
 
@@ -27,7 +37,7 @@ public class StackData : MonoBehaviour
         Objects.ForEach(o => o.GetComponent<Rigidbody>().isKinematic = false);
         Objects.Clear();
         playerName = "";
-        objectType = "";
+        stackType = "";
     }
     public virtual void ClearData()
     {
@@ -38,7 +48,7 @@ public class StackData : MonoBehaviour
 
         Objects.Clear();     
         playerName = "";
-        objectType = "";
+        stackType = "";
 
     }
     public void StartAnim(GameObject chip)

@@ -27,10 +27,10 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
     protected List<StackData> FindStackByType(string type)
     {
-        var stacks = Stacks.ToList().FindAll(s => s.objectType == type && s.Objects.Count < maxObjectsOnField);
-
-        if (stacks == null)
-            return Stacks.ToList().FindAll(s => s.objectType == "");
+        var stacks = Stacks.ToList().FindAll(s => s.stackType == type && s.Objects.Count < maxObjectsOnField);
+       
+        if (stacks.Count == 0)
+            return Stacks.ToList().FindAll(s => s.stackType == "");
         else return stacks;
 
     }
