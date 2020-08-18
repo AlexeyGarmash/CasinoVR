@@ -12,7 +12,7 @@ public class PlayerChipsField : ChipsField
 {
   
     [SerializeField]
-    private Transform SpawnPos;
+    public Transform SpawnPos;
 
     protected override List<StackData> FindPossibleFields(OwnerData data)
     {
@@ -47,14 +47,7 @@ public class PlayerChipsField : ChipsField
     }
 
 
-    public void InstantiateToStackWithColor(Chips chipsCost, ref int money, string playerNick)
-    {
-        var chip = PhotonNetwork.Instantiate(ChipUtils.Instance.GetPathToChip(chipsCost), SpawnPos.position, SpawnPos.rotation);
-        chip.GetComponent<OwnerData>().SetOwner_Photon(playerNick);
-        chip.GetComponent<PhotonView>().RequestOwnership();
-        chip.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
-        money -= (int)chipsCost;
-    }
+   
 
 
 }

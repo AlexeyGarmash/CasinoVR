@@ -57,8 +57,7 @@ public class ChipsField : AbstractField
 
         if (chip != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null)
         {
-
-            //Debug.Log("MagnetizeObject viewID=" + view.ViewID);
+         
             chip.field = this;
             var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
             MagnetizeObject(gameObj, clossest);

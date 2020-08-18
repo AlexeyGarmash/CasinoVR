@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using Assets.Scipts.Chips;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,12 +104,20 @@ public class PlayerPlace : MonoBehaviourPun
        
     }
 
+    public void InstantiateToStackWithColor(Chips chipsCost, ref int money, string playerNick)
+    {
+        var chip = PhotonNetwork.Instantiate(ChipUtils.Instance.GetPathToChip(chipsCost), sf.SpawnPos.position, sf.SpawnPos.rotation);
+        chip.GetComponent<OwnerData>().SetOwner_Photon(playerNick);
+        chip.GetComponent<PhotonView>().RequestOwnership();
+        chip.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+        money -= (int)chipsCost;
+    }
 
     public IEnumerator CreateChipWithDelay()
     {
         Debug.Log(sf);
         
-        int money = ps.AllMoney;
+        int money = 20;
         if (money > 0)
         {
 
@@ -116,34 +125,36 @@ public class PlayerPlace : MonoBehaviourPun
             
             while (money > 0)
             {
-                if (starmoney / 2 < money)
-                {
-                    sf.InstantiateToStackWithColor(Chips.PURPLE, ref money, ps.PlayerNick);
+                //if (starmoney / 2 < money)
+                //{
+                //    InstantiateToStackWithColor(Chips.PURPLE, ref money, ps.PlayerNick);
                    
-                }
-                else if (starmoney / 4 < money)
-                {
-                    sf.InstantiateToStackWithColor(Chips.BLACK, ref money, ps.PlayerNick);
+                //}
+                //else if (starmoney / 4 < money)
+                //{
+                //    InstantiateToStackWithColor(Chips.BLACK, ref money, ps.PlayerNick);
 
-                }
-                else if (starmoney / 8 < money)
-                {
-                    sf.InstantiateToStackWithColor(Chips.GREEN, ref money, ps.PlayerNick);
+                //}
+                //else if (starmoney / 8 < money)
+                //{
+                //    InstantiateToStackWithColor(Chips.GREEN, ref money, ps.PlayerNick);
 
-                }
-                else if (starmoney / 16 < money)
-                {
-                    sf.InstantiateToStackWithColor(Chips.BLUE, ref money, ps.PlayerNick);
+                //}
+                //else if (starmoney / 16 < money)
+                //{
+                //    InstantiateToStackWithColor(Chips.BLUE, ref money, ps.PlayerNick);
 
-                }
-                else if (starmoney / 32 < money)
-                {
-                    sf.InstantiateToStackWithColor(Chips.RED, ref money, ps.PlayerNick);
+                //}
+                //else if (starmoney / 32 < money)
+                //{
+                //    InstantiateToStackWithColor(Chips.RED, ref money, ps.PlayerNick);
 
-                }
-                else sf.InstantiateToStackWithColor(Chips.YELLOW, ref money, ps.PlayerNick);
+                //}
+                //else 
+                InstantiateToStackWithColor(Chips.YELLOW, ref money, ps.PlayerNick);
 
-                yield return null;
+
+                yield return new WaitForSeconds(1);
             }
         }
        
