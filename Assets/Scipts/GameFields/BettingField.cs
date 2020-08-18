@@ -42,8 +42,8 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
         {           
                
             case ROULETTE_EVENT.ROULETTE_GAME_END:
-                ClearStacks();
                 ClearGlow();
+                ClearStacks();
                 canBet = true;
                 break;
             case ROULETTE_EVENT.ROULETTE_GAME_START:
@@ -60,7 +60,8 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
 
     private void ClearGlow()
     {
-        glowPart.GlowCell(false, true);
+        if(glowPart != null)
+            glowPart.GlowCell(false, true);
     }
 
     private new void OnTriggerEnter(Collider other)
@@ -88,6 +89,7 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
                     if (chipPhotonView != null && chipPhotonView.IsMine)
                     {
                         glowPart.GlowCell(false, false);
+                        print(string.Format("Invoke RECEIVE bet at cell {0} by player {1}", tableCell.name, chip.Owner));
                         tableCell.ReceiveBetData(new BetData(new PlayerStats(chip.Owner), (int)chip.Cost));
                     }
                 }
@@ -116,6 +118,7 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
                 Debug.Log("OnTriggerStay");
                 if (chipPhotonView != null && chipPhotonView.IsMine /*&& ExtranctChipOnAll(chipPhotonView.ViewID)*/)
                 {
+                    print(string.Format("Invoke REMOVE bet at cell {0} by player {1}", tableCell.name, chip.Owner));
                     tableCell.RemoveBetData(new BetData(new PlayerStats(chip.Owner), (int)chip.Cost));
                 }
             }

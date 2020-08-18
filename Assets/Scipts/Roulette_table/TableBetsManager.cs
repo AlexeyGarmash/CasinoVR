@@ -122,15 +122,17 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
     {
         var player = plyers.ToList().Find(x => x.ps.PlayerNick == PhotonNetwork.LocalPlayer.NickName);
         if (player == null) return;
-            int win = 0; 
-            foreach (var tCell in TableCells)
+            int win = 0;
+        print(string.Format("Table cells count = {0}", TableCells.Length));
+        
+        foreach (var tCell in TableCells)
             {
+            print(string.Format("Bets count at table cell {0} = {1}", tCell.name, tCell.BetsData.Count));
                 if (tCell.CheckIsWinCell(obj))
                 {
                     foreach (var betData in tCell.BetsData)
                     {
-                        
-                      
+                        print(string.Format("Check WINN table cell {0} bet of player {1}", tCell.name, betData.PlayerStat.PlayerNick));
                         if (player.ps.PlayerNick.Equals(betData.PlayerStat.PlayerNick))
                         {
 
@@ -153,7 +155,9 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
                 {
                     foreach (var betData in tCell.BetsData)
                     {
-                        if (player.ps.PlayerNick.Equals(betData.PlayerStat.PlayerNick))
+                    print(string.Format("Check LOSE table cell {0} bet of player {1}", tCell.name, betData.PlayerStat.PlayerNick));
+
+                    if (player.ps.PlayerNick.Equals(betData.PlayerStat.PlayerNick))
                         {
                             win -= betData.BetValue;
                             print(string.Format("Player {0} Lose {1}", betData.PlayerStat.PlayerNick, betData.BetValue));
