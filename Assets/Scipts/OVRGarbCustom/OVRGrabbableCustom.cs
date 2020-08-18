@@ -132,7 +132,7 @@ public class OVRGrabbableCustom : MonoBehaviourPun
 
         //GetComponent<Collider>().isTrigger = true;
         GetComponent<Outline>().enabled = false;
-        grabPoint.transform.parent = hand.transform;
+        grabPoint.transform.parent = hand.grabbleObjSpawnPoint;
         m_grabbedBy = hand;
         m_grabbedCollider = grabPoint;
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
