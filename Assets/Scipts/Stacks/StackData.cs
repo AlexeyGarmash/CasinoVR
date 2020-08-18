@@ -8,7 +8,8 @@ public class StackData : MonoBehaviour
 {
 
     public string playerName = "";
-   
+    public string objectType = "";
+
     public List<GameObject> Objects = new List<GameObject>();
 
   
@@ -26,6 +27,7 @@ public class StackData : MonoBehaviour
         Objects.ForEach(o => o.GetComponent<Rigidbody>().isKinematic = false);
         Objects.Clear();
         playerName = "";
+        objectType = "";
     }
     public virtual void ClearData()
     {
@@ -35,7 +37,8 @@ public class StackData : MonoBehaviour
             Destroy(chip);
 
         Objects.Clear();     
-        playerName = "";      
+        playerName = "";
+        objectType = "";
 
     }
     public void StartAnim(GameObject chip)

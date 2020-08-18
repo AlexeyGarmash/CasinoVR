@@ -24,6 +24,16 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
             return _fieldEventManager;
         }
     }
+
+    protected List<StackData> FindStackByType(string type)
+    {
+        var stacks = Stacks.ToList().FindAll(s => s.objectType == type && s.Objects.Count < maxObjectsOnField);
+
+        if (stacks == null)
+            return Stacks.ToList().FindAll(s => s.objectType == "");
+        else return stacks;
+
+    }
     protected virtual List<StackData> FindPossibleFields(OwnerData data)
     {     
         var list = new List<StackData>();

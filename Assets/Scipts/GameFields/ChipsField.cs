@@ -20,6 +20,8 @@ public class ChipsField : AbstractField
         var rb = Object.GetComponent<Rigidbody>();
         var chip = Object.GetComponent<ChipData>();
 
+        if (Stack.objectType == "")
+        Stack.objectType = ChipUtils.Instance.GetStringOfType(chip.Cost);
 
         var stackData = Stack;
 
@@ -59,7 +61,7 @@ public class ChipsField : AbstractField
         {
          
             chip.field = this;
-            var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
+            var clossest = FindClossestField(chip.transform, FindStackByType(ChipUtils.Instance.GetStringOfType(chip.Cost)));
             MagnetizeObject(gameObj, clossest);
 
         }

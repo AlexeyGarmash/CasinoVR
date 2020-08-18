@@ -14,7 +14,29 @@ class ChipUtils : Singleton<ChipUtils>
     public GameObject blackChipPrefab;
     public GameObject purpleChipPrefab;
 
-  
+    public string GetStringOfType(Chips chip)
+    {
+        switch (chip)
+        {
+            case Chips.BLACK:
+                return "Black Chip";
+                
+            case Chips.YELLOW:
+                return "Yellow Chip";
+            case Chips.GREEN:
+                return "Green Chip";
+            case Chips.PURPLE:
+                return "Purple Chip";
+
+            case Chips.BLUE:
+                return "Blue Chip";
+            case Chips.RED:
+                return "Red Chip";
+
+        }
+
+        return null;
+    }
 
     private void Awake()
     {
