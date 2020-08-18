@@ -132,21 +132,18 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
                 {
                     foreach (var betData in tCell.BetsData)
                     {
-                        print(string.Format("Check WINN table cell {0} bet of player {1}", tCell.name, betData.PlayerStat.PlayerNick));
-                        if (player.ps.PlayerNick.Equals(betData.PlayerStat.PlayerNick))
+                        print(string.Format("Check WINN table cell {0} bet of player {1}", tCell.name, betData.PlayerStat));
+                        if (player.ps.PlayerNick.Equals(betData.PlayerStat))
                         {
 
                             win += (tCell.WinKoeff * betData.BetValue);
-                            print(string.Format("Player {0} win {1}", betData.PlayerStat.PlayerNick, betData.BetValue * tCell.WinKoeff));
+                            print(string.Format("Player {0} win {1}", betData.PlayerStat, betData.BetValue * tCell.WinKoeff));
 
                             //var localWin = (tCell.WinKoeff * betData.BetValue) - betData.BetValue;
                             //win += localWin;
-                            print(string.Format("Player {0} win {1}", betData.PlayerStat.PlayerNick, betData.BetValue * tCell.WinKoeff));
+                            print(string.Format("Player {0} win {1}", betData.PlayerStat, betData.BetValue * tCell.WinKoeff));
                             tCell.BetsData.Remove(betData);
                             break;
-
-
-
                         }
 
                     }
@@ -155,12 +152,12 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
                 {
                     foreach (var betData in tCell.BetsData)
                     {
-                    print(string.Format("Check LOSE table cell {0} bet of player {1}", tCell.name, betData.PlayerStat.PlayerNick));
+                    print(string.Format("Check LOSE table cell {0} bet of player {1}", tCell.name, betData.PlayerStat));
 
-                    if (player.ps.PlayerNick.Equals(betData.PlayerStat.PlayerNick))
+                    if (player.ps.PlayerNick.Equals(betData.PlayerStat))
                         {
                             win -= betData.BetValue;
-                            print(string.Format("Player {0} Lose {1}", betData.PlayerStat.PlayerNick, betData.BetValue));
+                            print(string.Format("Player {0} Lose {1}", betData.PlayerStat, betData.BetValue));
                         }
                     }
             }

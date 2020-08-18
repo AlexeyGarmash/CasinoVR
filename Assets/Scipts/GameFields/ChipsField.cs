@@ -136,7 +136,7 @@ public class ChipsField : AbstractField, IListener<ChipFieldEvents>
 
         if (data.chip == null)
         {
-            Debug.Log("chip not found! viewID = " + viewID);
+            //Debug.Log("chip not found! viewID = " + viewID);
             return;
         }
 

@@ -15,6 +15,8 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
     EventManager<ROULETTE_EVENT> EventManager;
     private GlowPart glowPart;
 
+    private bool isReadyRemoveBet = false;
+
     bool canBet = true;
     protected new void Awake()
     {
@@ -51,6 +53,7 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
                 canBet = false;
                 break;
             case ROULETTE_EVENT.PLAYER_LEAVE:
+                print("PLAYER LEAVE");
                 tableCell.ReceiveBetDataByName((string)Param[0]);
                 var stacks = Stacks.ToList().FindAll(s => s.playerName == (string)Param[0]);               
                 stacks.ForEach(s => { s.StopAllCoroutines();  s.ClearData(); });
@@ -88,9 +91,11 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
                     MagnetizeObject(other.gameObject, FindStackByName(chip.transform));
                     if (chipPhotonView != null && chipPhotonView.IsMine)
                     {
+                        isReadyRemoveBet = true;
                         glowPart.GlowCell(false, false);
-                        print(string.Format("Invoke RECEIVE bet at cell {0} by player {1}", tableCell.name, chip.Owner));
-                        tableCell.ReceiveBetData(new BetData(new PlayerStats(chip.Owner), (int)chip.Cost));
+                        print(string.Format("Invoke RECEIVE bet at cell {0} by player {1} chip {2}$", tableCell.name, chip.Owner, chip.Cost));
+                        //tableCell.ReceiveBetData(new BetData(new PlayerStats(chip.Owner), (int)chip.Cost));
+                        tableCell.ReceiveBetData(new BetData(chip.Owner, (int)chip.Cost));
                     }
                 }
             }
@@ -115,15 +120,20 @@ public class BettingField : ChipsField, IListener<ROULETTE_EVENT>
                 var chipPhotonView = chip.GetComponent<PhotonView>();
                 ExtranctChip(chipPhotonView.ViewID);
 
-                Debug.Log("OnTriggerStay");
-                if (chipPhotonView != null && chipPhotonView.IsMine /*&& ExtranctChipOnAll(chipPhotonView.ViewID)*/)
+                ///Debug.Log("OnTriggerStay");
+                
+                if (isReadyRemoveBet && chipPhotonView != null && chipPhotonView.IsMine /*&& ExtranctChipOnAll(chipPhotonView.ViewID)*/)
                 {
-                    print(string.Format("Invoke REMOVE bet at cell {0} by player {1}", tableCell.name, chip.Owner));
-                    tableCell.RemoveBetData(new BetData(new PlayerStats(chip.Owner), (int)chip.Cost));
+                    isReadyRemoveBet = false;
+                    print(string.Format("Invoke REMOVE bet at cell {0} by player {1} with chip {2}$", tableCell.name, chip.Owner, chip.Cost));
+                    //tableCell.RemoveBetData(new BetData(new PlayerStats(chip.Owner), (int)chip.Cost));
+                    tableCell.RemoveBetData(new BetData(chip.Owner, (int)chip.Cost));
                 }
             }
         }
     }
+
+    
 
     private void OnTriggerExit(Collider other)
     {
