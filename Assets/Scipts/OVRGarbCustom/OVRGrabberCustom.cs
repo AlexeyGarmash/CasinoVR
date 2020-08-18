@@ -348,10 +348,10 @@ public class OVRGrabberCustom : MonoBehaviourPun
         var removeCandidaes = new List<OVRGrabbableCustom>();
         foreach (OVRGrabbableCustom grabbable in m_grabCandidates.Keys)
         {
-            var itemNetInfo = grabbable.gameObject.GetComponent<OwnerData>();
-            if (itemNetInfo != null)
-                if (itemNetInfo.Owner != playerStat.PlayerNick)
-                    removeCandidaes.Add(grabbable);
+            //var itemNetInfo = grabbable.gameObject.GetComponent<OwnerData>();
+            //if (itemNetInfo != null)
+            //    if (itemNetInfo.Owner != playerStat.PlayerNick)
+            //        removeCandidaes.Add(grabbable);
 
             //Debug.Log(Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position));
             if (Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position) > MaxDistance)
@@ -608,7 +608,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         {
             foreach (OVRGrabbableCustom cand in m_grabCandidates.Keys)
                 DisableOutline(cand);
-            m_grabCandidates.Clear();
+            //m_grabCandidates.Clear();
            
         }
     }
