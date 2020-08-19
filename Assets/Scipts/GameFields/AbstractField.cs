@@ -185,10 +185,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     [PunRPC]
     public void UpdateAllStacks(bool col, bool updateInstantly)
     {
-        if (col)
-            Debug.LogError("colliders of is " + col);
-        else
-            Debug.LogError("colliders of is " + col);
+
 
         foreach (var stack in Stacks)
         {
