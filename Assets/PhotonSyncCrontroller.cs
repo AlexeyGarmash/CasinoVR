@@ -12,7 +12,6 @@ public class PhotonSyncCrontroller : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-
             //Debug.Log("SyncOff_RPC");
             photonView.RPC("SyncOff_RPC", RpcTarget.All);
         }
