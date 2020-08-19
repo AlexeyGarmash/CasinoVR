@@ -122,11 +122,7 @@ public class PlayerPlace : MonoBehaviourPun
         chip.GetComponent<PhotonSyncCrontroller>().SyncOff_RPC();
 
         photonView.RPC("InstatianeChip_RPC", RpcTarget.OthersBuffered, (int)chipsCost, playerNick, owner.photonView.ViewID);
-
-        //var chip = PhotonNetwork.Instantiate(ChipUtils.Instance.GetPathToChip(chipsCost), sf.SpawnPos.position, sf.SpawnPos.rotation);
-        //chip.GetComponent<OwnerData>().SetOwner_Photon(playerNick);
-        //chip.GetComponent<PhotonView>().RequestOwnership();
-        //chip.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+     
         money -= (int)chipsCost;
     }
 
