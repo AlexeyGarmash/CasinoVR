@@ -189,9 +189,9 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
 
 
-        foreach (var stack in Stacks)
-            foreach (var chip in stack.Objects)
-                chip.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
+        //foreach (var stack in Stacks)
+        //    foreach (var chip in stack.Objects)
+        //        chip.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
 
 
        
