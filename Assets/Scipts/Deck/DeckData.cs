@@ -71,11 +71,6 @@ namespace Cards
                 Deck.Push(listOfCards[index]);             
                 listOfCards.RemoveAt(index);
             }
-                
-
-               
-            
-
            
         }
 
