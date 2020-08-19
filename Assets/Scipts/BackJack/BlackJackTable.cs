@@ -188,7 +188,7 @@ namespace Assets.Scipts.BackJack
                         if (photonView.IsMine)
                             photonView.RPC("TimerStep_RPC", RpcTarget.All);
 
-                        yield return new WaitForSeconds(OneSec);
+                        yield return new WaitForSeconds(OneSec*3);
 
                     }
 
@@ -417,7 +417,7 @@ namespace Assets.Scipts.BackJack
 
                     DebugLog("Players " + playersInGame[j].ps.PlayerNick + "is betting" + (waitTimeInSec - currWaitTime).ToString());
 
-                    yield return new WaitForSeconds(OneSec);
+                    yield return new WaitForSeconds(OneSec*2);
 
                 }
 
@@ -544,7 +544,7 @@ namespace Assets.Scipts.BackJack
 
             BlackJackDilerCardFieldOpen.BlockField(false);
 
-            yield return new WaitForSeconds(OneSec);
+            yield return new WaitForSeconds(OneSec*2);
             if (blackJackLogic.diler.BlackJackStaks[0].cards.Count > 2)
                 for (var i = 2; i < blackJackLogic.diler.BlackJackStaks[0].cards.Count; i++)
                 {
@@ -558,7 +558,7 @@ namespace Assets.Scipts.BackJack
                                      
                     cardCurveAnimator.StartAnimCardToPlayer(idCurve, nick, card);
 
-                    yield return new WaitForSeconds(OneSec);
+                    yield return new WaitForSeconds(OneSec*2);
 
 
                 }
@@ -580,12 +580,12 @@ namespace Assets.Scipts.BackJack
                   
                     var animator = p.GetComponentInChildren<PlayerWinAnimation>();
                     animator.StartAnimation(win*2, p.ps.PlayerNick);
-                    yield return new WaitForSeconds(OneSec);
+                    yield return new WaitForSeconds(OneSec*2);
                 }
                 else {
                     DebugLog("player" + p.ps.PlayerNick + " LOSE! -> " + win + "$");
                   
-                    yield return new WaitForSeconds(OneSec);
+                    yield return new WaitForSeconds(OneSec*2);
                 }
             }
 

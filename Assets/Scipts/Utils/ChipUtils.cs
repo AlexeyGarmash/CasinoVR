@@ -19,15 +19,13 @@ class ChipUtils : Singleton<ChipUtils>
         switch (chip)
         {
             case Chips.BLACK:
-                return "Black Chip";
-                
+                return "Black Chip";              
             case Chips.YELLOW:
                 return "Yellow Chip";
             case Chips.GREEN:
                 return "Green Chip";
             case Chips.PURPLE:
                 return "Purple Chip";
-
             case Chips.BLUE:
                 return "Blue Chip";
             case Chips.RED:
@@ -54,24 +52,22 @@ class ChipUtils : Singleton<ChipUtils>
         {
             case Chips.BLACK:
                 return "Chips/Casino_Chip_Black";
-                break;
+               
             case Chips.BLUE:
                 return "Chips/Casino_Chip_Blue";
-                break;
+             
             case Chips.GREEN:
                 return "Chips/Casino_Chip_G";
-                break;
+               
             case Chips.PURPLE:
                 return "Chips/Casino_Chip_P";
-                break;
+              
             case Chips.RED:
                 return "Chips/Casino_Chip_R";
-                break;
+             
             case Chips.YELLOW:
                 return "Chips/Casino_Chip_Y";
-                break;
-
-           
+   
         }
         return null;
     }
@@ -81,24 +77,21 @@ class ChipUtils : Singleton<ChipUtils>
         {
             case Chips.BLACK:
                 return blackChipPrefab;
-                break;
+             
             case Chips.BLUE:
                 return blueChipPrefab;
-                break;
+              
             case Chips.GREEN:
                 return greenChipPrefab;
-                break;
+              
             case Chips.PURPLE:
                 return purpleChipPrefab;
-                break;
+                
             case Chips.RED:
                 return redChipPrefab;
-                break;
+              
             case Chips.YELLOW:
                 return yellowChipPrefab;
-                break;
-
-
         }
         return null;
     }
