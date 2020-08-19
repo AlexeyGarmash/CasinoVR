@@ -14,7 +14,7 @@ public class PlayerPlace : MonoBehaviourPun
     [SerializeField]
     private bool placeTaken = false;
 
-    private PlayerChipsField sf;
+    public PlayerChipsField sf;
     private PlayerWinAnimation playerWinAnim;
    
     public bool canLeave;

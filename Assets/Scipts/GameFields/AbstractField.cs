@@ -47,13 +47,17 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
     public void BlockField(bool blockUnblock)
     {
+        BlockItems(blockUnblock);
+        GetComponent<Collider>().isTrigger = !blockUnblock;
+    }
+    public void BlockItems(bool blockUnblock)
+    {
         foreach (var stack in Stacks)
             foreach (var chip in stack.Objects)
-        {          
-            chip.GetComponent<Collider>().enabled = !blockUnblock;
+            {
+                chip.GetComponent<Collider>().enabled = !blockUnblock;
 
-        }
-        GetComponent<Collider>().isTrigger = !blockUnblock;
+            }
     }
 
     protected void Awake()
@@ -175,54 +179,26 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     void UnblockAllStacks()
     {
         photonView.RPC("UpdateAllStacks", RpcTarget.All, true, true);
-
-        //for (var i = 0; i < Stacks.Length; i++)
-        //{
-        //    for (var j = 0; j < Stacks[i].Objects.Count; j++)
-        //    {
-        //        var position = Stacks[i].Objects[j].transform.position;
-        //        var viewID = Stacks[i].Objects[j].GetComponent<PhotonView>().ViewID;
-
-        //        photonView.RPC("SyncGameObjects", RpcTarget.Others, viewID, position, i, j);
-        //    }
-        //}
-
-
-
-        //foreach (var stack in Stacks)
-        //    foreach (var chip in stack.Objects)
-        //        chip.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
-
-
-       
-
+             
     }   
 
     [PunRPC]
     public void UpdateAllStacks(bool col, bool updateInstantly)
     {
+        if (col)
+            Debug.LogError("colliders of is " + col);
+        else
+            Debug.LogError("colliders of is " + col);
+
         foreach (var stack in Stacks)
         {
             if(updateInstantly)
              stack.UpdateStackInstantly();
-            stack.animator.ChangeStateOfItem(col);
+            BlockItems(!col);
         }
+        
     }
 
-    [PunRPC]
-    public void SyncGameObjects(int viewID, Vector3 position, int stackIndex, int chipsIndex)
-    {
-        try
-        {
-            
-            Stacks[stackIndex].Objects[chipsIndex].GetComponent<PhotonView>().ViewID = viewID;
-            Stacks[stackIndex].Objects[chipsIndex].transform.position = position;
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("not fount in client -> stack index" + stackIndex + " chip index" + chipsIndex + "viewID=" + viewID);
-        }
-    }
     protected void OnTriggerEnter(Collider other)
     {
 

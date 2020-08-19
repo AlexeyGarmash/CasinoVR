@@ -251,8 +251,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
       
 
         // Add the grabbable
-        int refCount = 0;
-        grabbable.GetComponent<Outline>().enabled = true;
+        int refCount = 0;     
         m_grabCandidates.TryGetValue(grabbable, out refCount);
         m_grabCandidates[grabbable] = refCount + 1;
 
@@ -327,13 +326,16 @@ public class OVRGrabberCustom : MonoBehaviourPun
         UpdateCandidates();
         FindClosestGrabbableCandidate();
 
-        //if (closestGrabbable != null && closestGrabbable.GetComponent<Outline>() != null && photonView.IsMine)
-        //{
-        //    var outline = closestGrabbable.GetComponent<Outline>();
-            
-        //    outline.enabled = true;          
-        //}
-        //DisableOutline(closestGrabbable);
+        if (photonView.IsMine)
+        {
+            if (closestGrabbable != null && closestGrabbable.GetComponent<Outline>() != null && photonView.IsMine)
+            {
+                var outline = closestGrabbable.GetComponent<Outline>();
+
+                outline.enabled = true;
+            }
+        }
+        
     }
 
     void ResetClosestObj()
@@ -408,15 +410,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
     protected virtual void GrabBegin_RPC(int viewID, int colliderIndex)
     {
         var result = m_grabCandidates.FirstOrDefault(c => c.Key.GetComponent<PhotonView>().ViewID == viewID);
-        Collider grabbableCollider = result.Key.grabPoints[colliderIndex];
-        // Store the closest grabbable
        
-        
-        Vector3 closestPointOnBounds = grabbableCollider.ClosestPointOnBounds(m_gripTransform.position);
-        float grabbableMagSq = (m_gripTransform.position - closestPointOnBounds).sqrMagnitude;
-        
-        closestMagSq = grabbableMagSq;
-        closestGrabbableCollider = grabbableCollider;
         
         
         if (result.Key == null)
@@ -427,7 +421,18 @@ public class OVRGrabberCustom : MonoBehaviourPun
         }
         
         closestGrabbable = result.Key;
-                
+        Collider grabbableCollider = closestGrabbable.grabPoints[colliderIndex];
+        // Store the closest grabbable
+
+
+        Vector3 closestPointOnBounds = grabbableCollider.ClosestPointOnBounds(m_gripTransform.position);
+        float grabbableMagSq = (m_gripTransform.position - closestPointOnBounds).sqrMagnitude;
+
+        closestMagSq = grabbableMagSq;
+        closestGrabbableCollider = grabbableCollider;
+
+        DisableOutline(closestGrabbable);
+        m_grabCandidates.Clear();
 
         if (closestGrabbable != null)
         {
@@ -496,7 +501,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
             //MoveGrabbedObject(m_lastPos, m_lastRot, true);
 
 
-            //m_grabCandidates.Clear();
+         
             SetPlayerIgnoreCollision(m_grabbedObj.gameObject, true);
             if (m_grabbedObjs.Count == max_grabbed_obj || closestGrabbable.tag == "Untagged")
                 GrabVolumeEnable(false);
@@ -564,10 +569,13 @@ public class OVRGrabberCustom : MonoBehaviourPun
             linearVelocity *= throwForce;
 
 
-            //GrabbableRelease(linearVelocity, angularVelocity);
+           
             GrabbableReleaseAll(linearVelocity, angularVelocity);
-        }
 
+        }
+        DisableOutline(null);
+        m_grabCandidates.Clear();
+       
         // Re-enable grab volumes to allow overlap events
         GrabVolumeEnable(true);
     }
@@ -599,7 +607,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
             
         }
 
-        //m_grabCandidates.Clear();
+      
         m_grabbedObjs.Clear();
         m_grabbedObj = null;
 
@@ -624,7 +632,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         {
             foreach (OVRGrabbableCustom cand in m_grabCandidates.Keys)
                 DisableOutline(cand);
-            //m_grabCandidates.Clear();
+          
            
         }
     }

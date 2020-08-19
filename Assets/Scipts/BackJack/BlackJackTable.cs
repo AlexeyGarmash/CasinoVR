@@ -68,7 +68,7 @@ namespace Assets.Scipts.BackJack
                 fields.bettingField1.ClearStacks();
                 fields.bettingField1.BlockField(false);
                 fields.blackJackField1.ClearStacks();
-
+                
 
             });
 
@@ -130,8 +130,7 @@ namespace Assets.Scipts.BackJack
                     
                     ResetGame();
                 }
-                
-                
+                               
             }
         }
 
