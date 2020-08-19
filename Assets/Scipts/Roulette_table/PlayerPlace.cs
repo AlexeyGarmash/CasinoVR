@@ -105,9 +105,10 @@ public class PlayerPlace : MonoBehaviourPun
     }
 
     [PunRPC]
-    void InstatianeChip_RPC(int chipCost, string playerNick)
+    void InstatianeChip_RPC(int chipCost, string playerNick, int viewID)
     {
         var chip = Instantiate(ChipUtils.Instance.GetPrefabByColor((Chips)chipCost), sf.SpawnPos.position, sf.SpawnPos.rotation);
+        chip.GetComponent<PhotonView>().ViewID = viewID;
         chip.GetComponent<OwnerData>().Owner = playerNick;
         chip.GetComponent<PhotonSyncCrontroller>().SyncOff_RPC();
 
@@ -115,10 +116,12 @@ public class PlayerPlace : MonoBehaviourPun
     public void InstantiateToStackWithColor(Chips chipsCost, ref int money, string playerNick)
     {
         var chip = Instantiate(ChipUtils.Instance.GetPrefabByColor(chipsCost), sf.SpawnPos.position, sf.SpawnPos.rotation);
-        chip.GetComponent<OwnerData>().Owner = playerNick;
+        var owner = chip.GetComponent<OwnerData>();
+        owner.Owner = playerNick;
+        PhotonNetwork.AllocateViewID(owner.photonView);
         chip.GetComponent<PhotonSyncCrontroller>().SyncOff_RPC();
 
-        photonView.RPC("InstatianeChip_RPC", RpcTarget.OthersBuffered, (int)chipsCost, playerNick);
+        photonView.RPC("InstatianeChip_RPC", RpcTarget.OthersBuffered, (int)chipsCost, playerNick, owner.photonView.ViewID);
 
         //var chip = PhotonNetwork.Instantiate(ChipUtils.Instance.GetPathToChip(chipsCost), sf.SpawnPos.position, sf.SpawnPos.rotation);
         //chip.GetComponent<OwnerData>().SetOwner_Photon(playerNick);
