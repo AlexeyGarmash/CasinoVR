@@ -279,19 +279,14 @@ namespace Assets.Scipts.BackJack
                     playersInGame.AddRange(result);
                     //получаем стату игроков
 
-
-
-                    if(!photonView.IsMine)
-                        yield return new WaitForSeconds(0.1f);
-
-
                     if (photonView.IsMine)
                     {
+                        yield return new WaitForSeconds(0.1f);
                         DeckData dd = new DeckData();
                         
                         var indexesRnd = dd.GenerateDeck();
                         photonView.RPC("SetDeck", RpcTarget.All, indexesRnd);
-                        photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.PlayersBetting);
+                        //photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.PlayersBetting);
                     }
 
                     
@@ -299,7 +294,8 @@ namespace Assets.Scipts.BackJack
 
                     players.ForEach(p => ActivateGameButtons(false, false, false, false, p));
 
-
+                    currWaitTime = 0;
+                    gameState = BlackJackGameStates.PlayersBetting;
                 }
                 else if (photonView.IsMine)
                 {
