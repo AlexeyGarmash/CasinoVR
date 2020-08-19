@@ -405,10 +405,20 @@ public class OVRGrabberCustom : MonoBehaviourPun
         }
     }
     [PunRPC]
-    protected virtual void GrabBegin_RPC(int viewID)
+    protected virtual void GrabBegin_RPC(int viewID, int colliderIndex)
     {
         var result = m_grabCandidates.FirstOrDefault(c => c.Key.GetComponent<PhotonView>().ViewID == viewID);
-
+        Collider grabbableCollider = result.Key.grabPoints[colliderIndex];
+        // Store the closest grabbable
+       
+        
+        Vector3 closestPointOnBounds = grabbableCollider.ClosestPointOnBounds(m_gripTransform.position);
+        float grabbableMagSq = (m_gripTransform.position - closestPointOnBounds).sqrMagnitude;
+        
+        closestMagSq = grabbableMagSq;
+        closestGrabbableCollider = grabbableCollider;
+        
+        
         if (result.Key == null)
         {
 
@@ -508,7 +518,9 @@ public class OVRGrabberCustom : MonoBehaviourPun
     {
         if (photonView.IsMine && closestGrabbable != null)
         {
-            photonView.RPC("GrabBegin_RPC", RpcTarget.All, closestGrabbable.GetComponent<PhotonView>().ViewID);
+
+            var colliderIndex = closestGrabbable.grabPoints.ToList().IndexOf(closestGrabbableCollider);
+            photonView.RPC("GrabBegin_RPC", RpcTarget.All, closestGrabbable.GetComponent<PhotonView>().ViewID, colliderIndex);
         }
         
     }
