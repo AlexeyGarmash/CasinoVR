@@ -159,7 +159,7 @@ public class OVRGrabbableCustom : MonoBehaviourPun
         gameObject.transform.parent = null;
         GetComponent<Collider>().isTrigger = false;
 
-        photonView.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
+        //photonView.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
 
     }
 
