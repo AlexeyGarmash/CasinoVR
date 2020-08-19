@@ -281,7 +281,8 @@ namespace Assets.Scipts.BackJack
 
 
 
-                    yield return new WaitForSeconds(0.1f);
+                    if(!photonView.IsMine)
+                        yield return new WaitForSeconds(0.1f);
 
 
                     if (photonView.IsMine)

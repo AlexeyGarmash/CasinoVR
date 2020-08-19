@@ -56,7 +56,7 @@ namespace Assets.Scipts.BackJack
             {
 
                 Debug.Log("MagnetizeObject viewID=" + view.ViewID);
-                var clossest = FindClossestField(card.transform, FindPossibleFields(card));
+                var clossest = Stacks[0];
                 MagnetizeObject(gameObj, clossest);
 
             }
