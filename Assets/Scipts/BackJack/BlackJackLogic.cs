@@ -214,14 +214,16 @@ namespace Assets.Scipts.BackJack
             }
             return false;
         }
-        public bool IsWinVersusDiler(string player, out int betWin)
+        public bool IsWinVersusDiler(string player, out int betWin, out int bet)
         {
             betWin = -9999999;
+            bet = -999999;
             BlackJackPlayer bjPlayer;
             bool isWin = false;
 
             if (CheckPlayer(player, out bjPlayer))
             {
+                bet = bjPlayer.BlackJackStaks[0].bet;
                 if (!IsPlunk(player, out betWin))
                 {
 

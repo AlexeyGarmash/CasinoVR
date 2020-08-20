@@ -574,12 +574,13 @@ namespace Assets.Scipts.BackJack
             foreach (var p in playersInGame)
             {
                 var win = 0;
-                if (blackJackLogic.IsWinVersusDiler(p.ps.PlayerNick, out win))
+                var bet = 0;
+                if (blackJackLogic.IsWinVersusDiler(p.ps.PlayerNick, out win, out bet))
                 {
                     DebugLog("player" + p.ps.PlayerNick + " WIN! -> " + win + "$");
                   
                     var animator = p.GetComponentInChildren<PlayerWinAnimation>();
-                    animator.StartAnimation(win*2, p.ps.PlayerNick);
+                    animator.StartAnimation(win + bet, p.ps.PlayerNick);
                     yield return new WaitForSeconds(OneSec*2);
                 }
                 else {

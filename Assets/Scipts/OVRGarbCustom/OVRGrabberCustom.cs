@@ -334,13 +334,14 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
                 outline.enabled = true;
             }
+            DisableOutline(closestGrabbable);
         }
         
     }
 
     void ResetClosestObj()
     {
-        closestMagSq = float.MaxValue;
+        closestMagSq = float.MaxValue;      
         closestGrabbable = null;
         closestGrabbableCollider = null;
     }
@@ -397,7 +398,8 @@ public class OVRGrabberCustom : MonoBehaviourPun
                     Vector3 closestPointOnBounds = grabbableCollider.ClosestPointOnBounds(m_gripTransform.position);
                     float grabbableMagSq = (m_gripTransform.position - closestPointOnBounds).sqrMagnitude;
                     if (grabbableMagSq < closestMagSq)
-                    {
+                    {                     
+
                         closestMagSq = grabbableMagSq;
                         closestGrabbable = grabbable;
                         closestGrabbableCollider = grabbableCollider;

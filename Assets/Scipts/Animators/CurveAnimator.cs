@@ -29,6 +29,7 @@ namespace Assets.Scipts
             curves = GetComponentsInChildren<BezierCurve>();
 
         }
+
         protected List<GameObject> ObjectToAnimation;
 
         [PunRPC]
