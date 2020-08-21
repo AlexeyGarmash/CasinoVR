@@ -132,7 +132,7 @@ public class OVRGrabbableCustom : MonoBehaviourPun
         }
 
         GetComponent<OwnerData>().ExtractObject();
-
+        GetComponent<SoundsPlayer>().PlayDefaultClip();
         //GetComponent<Collider>().isTrigger = true;
         GetComponent<Outline>().enabled = false;
         grabPoint.transform.parent = hand.grabbleObjSpawnPoint;

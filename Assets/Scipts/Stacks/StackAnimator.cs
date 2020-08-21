@@ -231,6 +231,8 @@ public class StackAnimator : MonoBehaviour
 
             chip.transform.localPosition = Vector3.Lerp(point.Start, point.End, t);
             t += chipsDropSpeed * Time.deltaTime;
+
+            chip.GetComponent<SoundsPlayer>().PlayRandomClip();
         }
 
         yield return null;

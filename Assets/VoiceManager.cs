@@ -1,52 +1,59 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
 
-public class VoiceManager : MonoBehaviour
+public class VoiceManager : MonoBehaviourPun
 {
+    private PlayerPlace pp;
     private KeywordRecognizer keywordRecognizer;
-    private Dictionary<string, Action> actions = new Dictionary<string, Action>();
+    private Dictionary<string, Action<PlayerStats>> actions = new Dictionary<string, Action<PlayerStats>>();
 
     private void Start()
     {
-        actions.Add("black jack", Forward);
-        actions.Add("give me card", Forward);
-        actions.Add("skip", Forward);
-        actions.Add("use split", Up);
-        actions.Add("double bet", Down);
-        actions.Add("ready", Back);
-        actions.Add("not ready", Back);
-      
-        keywordRecognizer = new KeywordRecognizer(actions.Keys.ToArray());
-        keywordRecognizer.OnPhraseRecognized += RecognizedSpeech;
-        keywordRecognizer.Start();
+
+        pp = GetComponent<PlayerPlace>();
+       
+    }
+
+    public void StopRecognize()
+    {
+        if (photonView.IsMine)
+        {
+            keywordRecognizer.Stop();
+            actions.Clear();
+        }
+    }
+    public void StartRecognize()
+    {
+        if (photonView.IsMine)
+        {
+            if(keywordRecognizer != null)
+                keywordRecognizer.Dispose();
+
+            keywordRecognizer = new KeywordRecognizer(actions.Keys.ToArray());
+
+            keywordRecognizer.OnPhraseRecognized += RecognizedSpeech;
+            keywordRecognizer.Start();
+        }
+    }
+
+    public void AddVoiceAction(string words, Action<PlayerStats> action)
+    {
+        if (photonView.IsMine)
+        {
+            actions.Add(words, action);
+        }
     }
 
     private void RecognizedSpeech(PhraseRecognizedEventArgs speech)
     {
         Debug.Log(speech.text);
-        //actions[speech.text].Invoke();
+        actions[speech.text].Invoke(pp.ps);
     }
 
-    private void Forward()
-    {
-        transform.Translate(1, 0, 0);
-    }
-
-   
-    private void Up()
-    {
-        transform.Translate(0, 1, 0);
-    }
-    private void Down()
-    {
-        transform.Translate(0, -1, 0);
-    }
-    private void Back()
-    {
-        transform.Translate(-1, 0, 0);
-    }
+    
 }

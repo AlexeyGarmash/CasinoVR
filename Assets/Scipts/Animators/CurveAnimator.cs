@@ -8,6 +8,7 @@ namespace Assets.Scipts
 {
     public class CurveAnimator : MonoBehaviourPun
     {
+
         [SerializeField]
         Vector3 rotation;
         [SerializeField]
@@ -27,6 +28,7 @@ namespace Assets.Scipts
         {
             ObjectToAnimation = new List<GameObject>();
             curves = GetComponentsInChildren<BezierCurve>();
+          
 
         }
 
@@ -64,12 +66,13 @@ namespace Assets.Scipts
             t += Time.deltaTime * speed;
             chip.SetActive(true);
 
-            
+            chip.GetComponent<SoundsPlayer>().PlayRandomClip();
             chip.GetComponent<Collider>().enabled = false;
             chip.GetComponent<Rigidbody>().isKinematic = true;
 
             chip.transform.rotation = Quaternion.Euler(rotation);
 
+            
             while (t != 1)
             {
                

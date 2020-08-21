@@ -40,6 +40,10 @@ namespace Assets.Scipts.BackJack
         const int waitTimeInSec = 10;
         const int OneSec = 1;
 
+        const string ready = "ready";
+        const string giveMeCard = "give me card";
+        const string skip = "skip";
+
         int currWaitTime = 0;
 
 
@@ -48,8 +52,11 @@ namespace Assets.Scipts.BackJack
         int lose;
         bool playerReady;
 
+        
+
         private void Start()
         {
+           
 
             playersOutFromGame = new List<PlayerPlace>();
             playersInGame = new List<PlayerPlace>();
@@ -59,7 +66,9 @@ namespace Assets.Scipts.BackJack
         //bool playerSkipTurn
         void ResetGame()
         {
-
+            playerReady = false;
+            playerTakeCard = false;
+            playerLose = false;
 
             players.ForEach(p => {
                 var buttons = p.GetComponentInChildren<ButtonsHolder>();
@@ -148,11 +157,20 @@ namespace Assets.Scipts.BackJack
                 if (blackJackLogic.CanTakeCard(p.ps.PlayerNick))
                 {
                     ActivateGameButtons(false, true, true, false, p);
+
+                    var recognizer = p.GetComponent<VoiceManager>();
+
+                    recognizer.AddVoiceAction(skip, SkipTurn);
+                    recognizer.AddVoiceAction(giveMeCard, TakeCard);
+                    recognizer.StartRecognize();
+
                     endTurns = false;
+
                     if (photonView.IsMine)
                     {
                         photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
                     }
+
                     playerReady = false;
                     playerLose = false;
                     playerTakeCard = false;
@@ -163,7 +181,7 @@ namespace Assets.Scipts.BackJack
 
                         if (playerReady)
                         {
-                            ActivateGameButtons(false, false, false, false, p);
+                           
                             DebugLog(p.ps.PlayerNick + " skiped turn");
                             
                             break;
@@ -173,13 +191,12 @@ namespace Assets.Scipts.BackJack
                             toRemove.Add(p);
                             DebugLog(p.ps.PlayerNick + " Lose bet " + lose + "so match points");
 
-                            ActivateGameButtons(false, false, false, false, p);
                             break;
                         }
                         else if (playerTakeCard)
                         {                          
 
-                            ActivateGameButtons(false, false, false, false, p);
+                           
                             break;
 
 
@@ -187,11 +204,14 @@ namespace Assets.Scipts.BackJack
 
                         if (photonView.IsMine)
                             photonView.RPC("TimerStep_RPC", RpcTarget.All);
-
-                        yield return new WaitForSeconds(OneSec*3);
+                        yield return new WaitForSeconds(OneSec);
 
                     }
+                   
 
+                    yield return new WaitForSeconds(OneSec * 3);
+
+                    recognizer.StopRecognize();
                     ActivateGameButtons(false, false, false, false, p);
                     if (currWaitTime == waitTimeInSec)
                     {
@@ -406,7 +426,9 @@ namespace Assets.Scipts.BackJack
                 }
 
                 ActivateGameButtons(false, false, false, true, playersInGame[j]);
-
+                var voiceRecognizer = playersInGame[j].GetComponent<VoiceManager>();
+                voiceRecognizer.AddVoiceAction(ready, PlayerReady);
+                voiceRecognizer.StartRecognize();
                 while (currWaitTime != waitTimeInSec)
                 {
                     if (playerReady)
@@ -421,6 +443,7 @@ namespace Assets.Scipts.BackJack
 
                 }
 
+                voiceRecognizer.StopRecognize();
                 ActivateGameButtons(false, false, false, false, playersInGame[j]);
 
                 var playerField = playersInGame[j].GetComponent<PlayerBlackJackFields>();
