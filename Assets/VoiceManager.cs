@@ -12,12 +12,14 @@ public class VoiceManager : MonoBehaviour
 
     private void Start()
     {
-        actions.Add("ready", Forward);
-        actions.Add("black jack", Up);
+        actions.Add("black jack", Forward);
+        actions.Add("give me card", Forward);
+        actions.Add("skip", Forward);
+        actions.Add("use split", Up);
         actions.Add("double bet", Down);
+        actions.Add("ready", Back);
         actions.Add("not ready", Back);
-
-        
+      
         keywordRecognizer = new KeywordRecognizer(actions.Keys.ToArray());
         keywordRecognizer.OnPhraseRecognized += RecognizedSpeech;
         keywordRecognizer.Start();
@@ -26,13 +28,15 @@ public class VoiceManager : MonoBehaviour
     private void RecognizedSpeech(PhraseRecognizedEventArgs speech)
     {
         Debug.Log(speech.text);
-        actions[speech.text].Invoke();
+        //actions[speech.text].Invoke();
     }
 
     private void Forward()
     {
         transform.Translate(1, 0, 0);
     }
+
+   
     private void Up()
     {
         transform.Translate(0, 1, 0);
