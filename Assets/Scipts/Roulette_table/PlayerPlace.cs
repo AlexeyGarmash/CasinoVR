@@ -44,7 +44,7 @@ public class PlayerPlace : MonoBehaviourPun
 
     private void Start()
     {
-        ps = null;
+      
         playerWinAnim = GetComponentInChildren<PlayerWinAnimation>();
         sf = GetComponentInChildren<PlayerChipsField>();
     }
@@ -55,7 +55,7 @@ public class PlayerPlace : MonoBehaviourPun
         if (ps != null && !placeTaken)
         {
             placeTaken = true;
-            actionJoinOut.Invoke();
+            //actionJoinOut.Invoke();
             this.ps = ps;
 
             photonView.RequestOwnership();

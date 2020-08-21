@@ -215,6 +215,7 @@ namespace Assets.Scipts.BackJack
                     ActivateGameButtons(false, false, false, false, p);
 
                     yield return new WaitForSeconds(OneSec * 3);
+
                     if (currWaitTime == waitTimeInSec)
                     {
 
