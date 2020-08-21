@@ -16,7 +16,15 @@ public class VoiceManager : MonoBehaviourPun
     {
 
         pp = GetComponent<PlayerPlace>();
-       
+
+        //actions.Add("test", (ps) => { });
+        //keywordRecognizer = new KeywordRecognizer(actions.Keys.ToArray());
+
+        //keywordRecognizer.OnPhraseRecognized += RecognizedSpeech;
+        //keywordRecognizer.Start();
+        //keywordRecognizer.Stop();
+        //keywordRecognizer.Dispose();
+        //actions.Clear();
     }
 
     public void StopRecognize()
@@ -31,8 +39,10 @@ public class VoiceManager : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            if(keywordRecognizer != null)
+            if (keywordRecognizer != null)
+            {
                 keywordRecognizer.Dispose();
+            }
 
             keywordRecognizer = new KeywordRecognizer(actions.Keys.ToArray());
 

@@ -352,6 +352,8 @@ public class OVRGrabberCustom : MonoBehaviourPun
         var removeCandidaes = new List<OVRGrabbableCustom>();
         foreach (OVRGrabbableCustom grabbable in m_grabCandidates.Keys)
         {
+            if (m_grabCandidates == null)
+                continue;
             var itemNetInfo = grabbable.gameObject.GetComponent<OwnerData>();
             if (itemNetInfo != null)
                 if (itemNetInfo.Owner != playerStat.PlayerNick)

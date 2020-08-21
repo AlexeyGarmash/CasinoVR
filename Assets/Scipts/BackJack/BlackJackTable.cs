@@ -40,9 +40,13 @@ namespace Assets.Scipts.BackJack
         const int waitTimeInSec = 10;
         const int OneSec = 1;
 
-        const string ready = "ready";
+       
         const string giveMeCard = "give me card";
         const string skip = "skip";
+        const string giveUp = "give up";
+        const string split = "split";
+        const string save = "save";
+        const string doubleBet = "double bet";
 
         int currWaitTime = 0;
 
@@ -106,39 +110,37 @@ namespace Assets.Scipts.BackJack
             {
 
                 i++;
-                if (gameState == BlackJackGameStates.CheckPlayer)
+                switch (gameState)
                 {
-                    yield return WaitingForSitPlayers();
-                }
-                else if (gameState == BlackJackGameStates.PlayersBetting)
-                {
-                    yield return PlayersBetting();
-                }
-                else if (gameState == BlackJackGameStates.CardsToPlayers)
-                {
-                    yield return CardsToPlyers();
-                }
-                else if (gameState == BlackJackGameStates.CheckResults)
-                {
-                    yield return CheckResults();
-                }
-                else if (gameState == BlackJackGameStates.PlayerTurn)
-                {
-                    yield return PlayersTurns();
-                }
-                else if (gameState == BlackJackGameStates.ResetGame)
-                {
-                    yield return new WaitForSeconds(OneSec);
-                    for (var i = 0; i < 5; i++)
-                    {
-
-                        DebugLog("reset game in" + ((4) - i).ToString());
-
+                    case BlackJackGameStates.CheckPlayer:
+                        yield return WaitingForSitPlayers();
+                        break;
+                    case BlackJackGameStates.PlayersBetting:
+                        yield return PlayersBetting();
+                        break;
+                    case BlackJackGameStates.CardsToPlayers:
+                        yield return CardsToPlyers();
+                        break;
+                    case BlackJackGameStates.PlayerTurn:
+                        yield return PlayersTurns();
+                        break;                  
+                    case BlackJackGameStates.CheckResults:
+                        yield return CheckResults();
+                        break;
+                    case BlackJackGameStates.ResetGame:
                         yield return new WaitForSeconds(OneSec);
-                    }
+                        for (var i = 0; i < 5; i++)
+                        {
 
-                    ResetGame();
+                            DebugLog("reset game in" + ((4) - i).ToString());
+
+                            yield return new WaitForSeconds(OneSec);
+                        }
+
+                        ResetGame();
+                        break;
                 }
+              
 
             }
         }
@@ -207,12 +209,12 @@ namespace Assets.Scipts.BackJack
                         yield return new WaitForSeconds(OneSec);
 
                     }
-                   
-
-                    yield return new WaitForSeconds(OneSec * 3);
+                                      
 
                     recognizer.StopRecognize();
                     ActivateGameButtons(false, false, false, false, p);
+
+                    yield return new WaitForSeconds(OneSec * 3);
                     if (currWaitTime == waitTimeInSec)
                     {
 
@@ -291,6 +293,7 @@ namespace Assets.Scipts.BackJack
                 DebugLog("no one players waiting=" + i.ToString());
                 yield return new WaitForSeconds(OneSec);
             }
+
             if (currWaitTime == waitTimeInSec)
             {
                 if (photonView.IsMine)
@@ -427,7 +430,7 @@ namespace Assets.Scipts.BackJack
 
                 ActivateGameButtons(false, false, false, true, playersInGame[j]);
                 var voiceRecognizer = playersInGame[j].GetComponent<VoiceManager>();
-                voiceRecognizer.AddVoiceAction(ready, PlayerReady);
+                voiceRecognizer.AddVoiceAction(skip, PlayerReady);
                 voiceRecognizer.StartRecognize();
                 while (currWaitTime != waitTimeInSec)
                 {

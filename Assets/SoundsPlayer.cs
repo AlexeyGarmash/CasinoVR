@@ -11,12 +11,12 @@ public class SoundsPlayer : MonoBehaviour
 
     private AudioSource source;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         source = GetComponent<AudioSource>();
         defaultClip = source.clip;
     }
-
+  
     public void PlayRandomClip()
     {
         if(source.isPlaying)

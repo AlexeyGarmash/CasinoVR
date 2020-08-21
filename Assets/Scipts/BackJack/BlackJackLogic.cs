@@ -336,6 +336,8 @@ namespace Assets.Scipts.BackJack
                 if (bjPlayer.BlackJackStaks[0].GetSumOfPoints() < 20 && bjPlayer.endTakeCards == false)
                     return !bjPlayer.endTakeCards;
 
+                bjPlayer.endTakeCards = true;
+
                 return !bjPlayer.endTakeCards;
 
             }
