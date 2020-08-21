@@ -19,7 +19,8 @@ public class SoundsPlayer : MonoBehaviour
 
     public void PlayRandomClip()
     {
-        source.Stop();
+        if(source.isPlaying)
+            source.Stop();
 
         if (clips.Count > 0)
         {
