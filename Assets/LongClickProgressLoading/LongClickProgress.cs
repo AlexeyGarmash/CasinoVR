@@ -7,8 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-[Serializable]
-public class TakePlaceUnityEvent : UnityEvent<PlayerStats> { }
+
 public class LongClickProgress : MonoBehaviourPun, IListener<ROULETTE_EVENT>
 {
     [SerializeField] private TakePlaceUnityEvent _onLongClickTalePlace;
