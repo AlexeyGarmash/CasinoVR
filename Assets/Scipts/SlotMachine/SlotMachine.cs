@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,7 +33,7 @@ namespace SlotMachine
             return Tag;
         }
     }
-    public class SlotMachine : MonoBehaviour
+    public class SlotMachine : MonoBehaviourPun
     {
         public static List<SymbolItem> Slots = new List<SymbolItem> {
         new SymbolItem(SYMBOL.BAR, "bar"),
@@ -54,6 +55,7 @@ namespace SlotMachine
         public bool CoinInMachine { get; private set; } = false;
         public int NumberOfCoins { get; private set; } = 0;
 
+        public List<SymbolItem> predictedFruits = new List<SymbolItem>();
         public bool StartGame()
         {
             //CoinInMachine = true;
@@ -73,33 +75,34 @@ namespace SlotMachine
             return false;
         }
 
-        public List<SymbolItem> RandomResult()
+        public void RandomResult(int[] randomF)
         {
-            List<SymbolItem> sls = new List<SymbolItem>();
+            predictedFruits.Clear();
+            predictedFruits.Add(Slots[randomF[0]]);
+            predictedFruits.Add(Slots[randomF[0]]);
+            predictedFruits.Add(Slots[randomF[0]]);
 
-            sls.Add(Slots[Random.Range(0, Slots.Count)]);
-            sls.Add(Slots[Random.Range(0, Slots.Count)]);
-            sls.Add(Slots[Random.Range(0, Slots.Count)]);
+            //Debug.Log(sls[0] + " " + sls[1] + " " + sls[2]);
 
-            Debug.Log(sls[0] + " " + sls[1] + " " + sls[2]);
-
-            return sls;
+            //return sls;
 
         }
 
-        public List<SymbolItem> SameResult()
+
+        public void SameResult(int sameRandom)
         {
-            List<SymbolItem> sls = new List<SymbolItem>();
+            //List<SymbolItem> sls = new List<SymbolItem>();
 
-            int sameRandom = Random.Range(0, Slots.Count);
+            //int sameRandom = Random.Range(0, Slots.Count);
 
-            sls.Add(Slots[sameRandom]);
-            sls.Add(Slots[sameRandom]);
-            sls.Add(Slots[sameRandom]);
+            predictedFruits.Clear();
+            predictedFruits.Add(Slots[sameRandom]);
+            predictedFruits.Add(Slots[sameRandom]);
+            predictedFruits.Add(Slots[sameRandom]);
 
-            Debug.Log(sls[0] + " " + sls[1] + " " + sls[2]);
+            //Debug.Log(sls[0] + " " + sls[1] + " " + sls[2]);
 
-            return sls;
+            //return sls;
         }
         public void InsertCoin()
         {
@@ -115,6 +118,22 @@ namespace SlotMachine
                 NumberOfCoins = 0;
             }
             return !GameInProgress;
+        }
+
+        public int GenerateSameResult()
+        {
+            return Random.Range(0, Slots.Count);
+        }
+
+        public int[] GenerateRandomValues()
+        {
+            int[] rands = new int[3];
+
+            rands[0] = Random.Range(0, Slots.Count);
+            rands[1] = Random.Range(0, Slots.Count);
+            rands[2] = Random.Range(0, Slots.Count);
+
+            return rands;
         }
     }
 

@@ -30,22 +30,23 @@ public abstract class TableCell : MonoBehaviourPun
     }
     public void ReceiveBetDataByName(string name)
     {      
-        BetsData.RemoveAll(b => b.PlayerStat.PlayerNick == name);
+        BetsData.RemoveAll(b => b.PlayerStat == name);
     }
 
     private void AddNewBet(BetData betData)
     {
         //BetsData.Add(betData);
+        print(string.Format("New Player {0} add bet {1}", betData.PlayerStat, betData.BetValue));
+        photonView.RPC("AddNewBet_RPC", RpcTarget.All, betData.ToByteArray());
         
-        photonView?.RPC("AddNewBet_RPC", RpcTarget.All, betData.ToByteArray());
-        print(string.Format("New Player {0} add bet {1}", betData.PlayerStat.PlayerNick, betData.BetValue));
     }
 
     private void UpdateExistBet(int index, BetData betData)
     {
         //BetsData[index].AddBetValue(betData.BetValue);
-        photonView?.RPC("UpdateExistBet_RPC", RpcTarget.All, index, betData.ToByteArray());
-        print(string.Format("Exiested Player {0} add bet {1}", betData.PlayerStat.PlayerNick, betData.BetValue));
+        print(string.Format("Exiested Player {0} add bet {1}", betData.PlayerStat, betData.BetValue));
+        photonView.RPC("UpdateExistBet_RPC", RpcTarget.All, index, betData.ToByteArray());
+        
     }
 
     public void RemoveBetData(BetData betData)
@@ -56,11 +57,11 @@ public abstract class TableCell : MonoBehaviourPun
             if(!BetsData[findDataIndex].RemoveBetValue(betData.BetValue))
             {
                 ResetBets(betData);
-                print(string.Format("Player {0} reset all bets", betData.PlayerStat.PlayerNick));
+                print(string.Format("Player {0} reset all bets", betData.PlayerStat));
             } else
             {
                 RemoveExistBetValues(findDataIndex, betData);
-                print(string.Format("Player {0} remove bet {1}", betData.PlayerStat.PlayerNick, betData.BetValue));
+                print(string.Format("Player {0} remove bet {1}", betData.PlayerStat, betData.BetValue));
             }
         }
     }
@@ -81,7 +82,7 @@ public abstract class TableCell : MonoBehaviourPun
         //BetsData.RemoveAll(data => data.PlayerStat.PlayerNick.Equals(betData.PlayerStat.PlayerNick));
         photonView?.RPC("ResetBetsByNickname_RPC", RpcTarget.All, nickname);
     }
-    private int FindBetDataIndex(BetData betData) => BetsData.FindIndex(data => data.PlayerStat.PlayerNick.Equals(betData.PlayerStat.PlayerNick));
+    private int FindBetDataIndex(BetData betData) => BetsData.FindIndex(data => data.PlayerStat.Equals(betData.PlayerStat));
 
     
     //}
@@ -94,25 +95,29 @@ public abstract class TableCell : MonoBehaviourPun
     [PunRPC]
     public void AddNewBet_RPC(byte[] betData)
     {
-        BetsData.Add(betData.FromByteArray() as BetData);
+        BetData receivedBetData = betData.FromByteArray() as BetData;
+        print(string.Format("RPC_Received NEW bet data {0}", receivedBetData));
+        BetsData.Add(receivedBetData);
     }
 
     [PunRPC]
     public void UpdateExistBet_RPC(int index, byte[] betData)
     {
-        BetsData[index].AddBetValue((betData.FromByteArray() as BetData).BetValue);
+        BetData receivedBetData = betData.FromByteArray() as BetData;
+        print(string.Format("RPC_Received UPDATE bet data {0}", receivedBetData));
+        BetsData[index].AddBetValue(receivedBetData.BetValue);
     }
 
     [PunRPC]
     public void ResetBets_RPC(byte[] betData)
     {
-        BetsData.RemoveAll(data => data.PlayerStat.PlayerNick.Equals((betData.FromByteArray() as BetData).PlayerStat.PlayerNick));
+        BetsData.RemoveAll(data => data.PlayerStat.Equals((betData.FromByteArray() as BetData).PlayerStat));
     }
 
     [PunRPC]
     public void ResetBetsByNickname_RPC(string nickname)
     {
-        BetsData.RemoveAll(data => data.PlayerStat.PlayerNick == nickname);
+        BetsData.RemoveAll(data => data.PlayerStat == nickname);
     }
 
     [PunRPC]

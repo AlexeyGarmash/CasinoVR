@@ -28,6 +28,7 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
     [SerializeField] public RouletteWheelManager RouletteWheelManager;
     [SerializeField] public PlayerPlace[] plyers;
     [SerializeField] private PlayerInformer _playerInformer;
+    [SerializeField] private CroupierNPC _croupierNPC;
 
     private RouletteRandom random = new RouletteRandom();
     public EventManager<ROULETTE_EVENT> rouletteEventManager = new EventManager<ROULETTE_EVENT>();
@@ -37,12 +38,67 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
         rouletteEventManager.AddListener(ROULETTE_EVENT.CHECK_WINNERS, this);
     }
 
+    private void Start() {
+        _croupierNPC.onCroupierPausedOff += startAnimationRoulette;
+        foreach (var place in plyers)
+        {
+            place.actionReadyOrNot += playerClickReady;
+        }
+
+    }
+
+    private void startAnimationRoulette()
+    {
+        StartSpinAllParts();
+    }
+
+    private void playerClickReady(bool isReady, PlayerStats ps) 
+    {
+
+        bool allReady = plyers.Where( player => player.ps != null).All(joinedPlayer => joinedPlayer.IsReady);
+        if(allReady) {
+            print("START SPIN ROULETTE!!!");
+            StartAllAnimations();
+        } else
+        {
+            print("not all players are ready");
+        }
+    }
+
+    public bool checkPlaceTakenYet(PlayerStats pss) {
+        PlayerPlace findPlace = null;
+        foreach (var place in plyers)
+        {
+            //print(string.Format("Player {0} joined => {1}", place.ps.name, place.IsPlaceTaken));
+
+            if(place.ps != null && place.ps.PlayerNick == pss.PlayerNick)
+            {
+                findPlace = place;
+                print(string.Format("Player {0} joined => {1}", place.ps.PlayerNick, place.IsPlaceTaken));
+                break;
+            }
+        }
+
+        //PlayerPlace findPlace = plyers.FirstOrDefault(pl => pl.ps != null && pl.ps.name == pss.name);
+        
+        if(findPlace == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     private void Update()
     {
         if (OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.LTouch))
         {
             
         }
+    }
+
+    public void StartAllAnimations()
+    {
+        _croupierNPC.StartSpinAnimation();
     }
 
     public void StartSpinAllParts()
@@ -66,29 +122,28 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
     {
         var player = plyers.ToList().Find(x => x.ps.PlayerNick == PhotonNetwork.LocalPlayer.NickName);
         if (player == null) return;
-            int win = 0; 
-            foreach (var tCell in TableCells)
+            int win = 0;
+        print(string.Format("Table cells count = {0}", TableCells.Length));
+        
+        foreach (var tCell in TableCells)
             {
+            print(string.Format("Bets count at table cell {0} = {1}", tCell.name, tCell.BetsData.Count));
                 if (tCell.CheckIsWinCell(obj))
                 {
                     foreach (var betData in tCell.BetsData)
                     {
-                        
-                      
-                        if (player.ps.PlayerNick.Equals(betData.PlayerStat.PlayerNick))
+                        print(string.Format("Check WINN table cell {0} bet of player {1}", tCell.name, betData.PlayerStat));
+                        if (player.ps.PlayerNick.Equals(betData.PlayerStat))
                         {
 
                             win += (tCell.WinKoeff * betData.BetValue);
-                            print(string.Format("Player {0} win {1}", betData.PlayerStat.PlayerNick, betData.BetValue * tCell.WinKoeff));
+                            print(string.Format("Player {0} win {1}", betData.PlayerStat, betData.BetValue * tCell.WinKoeff));
 
                             //var localWin = (tCell.WinKoeff * betData.BetValue) - betData.BetValue;
                             //win += localWin;
-                            print(string.Format("Player {0} win {1}", betData.PlayerStat.PlayerNick, betData.BetValue * tCell.WinKoeff));
+                            print(string.Format("Player {0} win {1}", betData.PlayerStat, betData.BetValue * tCell.WinKoeff));
                             tCell.BetsData.Remove(betData);
                             break;
-
-
-
                         }
 
                     }
@@ -97,10 +152,12 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
                 {
                     foreach (var betData in tCell.BetsData)
                     {
-                        if (player.ps.PlayerNick.Equals(betData.PlayerStat.PlayerNick))
+                    print(string.Format("Check LOSE table cell {0} bet of player {1}", tCell.name, betData.PlayerStat));
+
+                    if (player.ps.PlayerNick.Equals(betData.PlayerStat))
                         {
                             win -= betData.BetValue;
-                            print(string.Format("Player {0} Lose {1}", betData.PlayerStat.PlayerNick, betData.BetValue));
+                            print(string.Format("Player {0} Lose {1}", betData.PlayerStat, betData.BetValue));
                         }
                     }
             }

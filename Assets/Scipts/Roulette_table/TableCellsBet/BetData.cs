@@ -6,10 +6,10 @@ using UnityEngine;
 [Serializable]
 public class BetData
 {
-    public PlayerStats PlayerStat { get; set; }
+    public string PlayerStat { get; set; }
     public int BetValue { get; set; }
     
-    public BetData (PlayerStats playerStat, int betValue)
+    public BetData (string playerStat, int betValue)
     {
         PlayerStat = playerStat;
         BetValue = betValue;
@@ -33,9 +33,14 @@ public class BetData
         }
     }
 
-    public void AddWinnedMoney(int koef)
+    /*public void AddWinnedMoney(int koef)
     {
         PlayerStat.AllMoney += BetValue * koef;
+    }*/
+
+    public override string ToString()
+    {
+        return string.Format("Bet by {0} is = {1}", PlayerStat, BetValue);
     }
 
 }

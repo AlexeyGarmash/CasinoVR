@@ -37,8 +37,12 @@ namespace Assets.Scipts.BackJack.Buttons
         protected override void InvokeClickIn()
         {
             //photonView?.RequestOwnership();
+
             p_place.ps = lastCollider.GetComponentInParent<PlayerStats>();
             _onLongClickIn?.Invoke(p_place.ps);
+
+            _onLongClickIn?.Invoke(playerStats);
+
             inGame = true;
             //_imageReady.texture = _readyTexture;
             //_textReady.text = PhotonNetwork.LocalPlayer.NickName;

@@ -1,5 +1,8 @@
+
 ﻿using Assets.Scipts.Chips;
-using Photon.Pun;
+﻿using Photon.Pun;
+using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +13,8 @@ using UnityEngine;
 
 public class PlayerPlace : MonoBehaviourPun
 {
+    public Action<bool, PlayerStats> actionReadyOrNot;
+    public Action actionJoinOut;
     public PlayerStats ps;
     [SerializeField]
     private bool placeTaken = false;
@@ -29,14 +34,20 @@ public class PlayerPlace : MonoBehaviourPun
     private void Awake()
     {
         ps = GetComponent<PlayerStats>();
+
+    }
+    public bool IsPlaceTaken {get => placeTaken;}
+    private bool readyToPlay = false;
+    public bool IsReady {get => readyToPlay; }
+   
+
+
+    private void Start()
+    {
+        ps = null;
         playerWinAnim = GetComponentInChildren<PlayerWinAnimation>();
         sf = GetComponentInChildren<PlayerChipsField>();
     }
-    private void Start()
-    {
-       
-    }
-
 
     public void TakePlace(PlayerStats ps)
     {
@@ -44,7 +55,9 @@ public class PlayerPlace : MonoBehaviourPun
         if (ps != null && !placeTaken)
         {
             placeTaken = true;
-            //this.ps = ps;
+            actionJoinOut.Invoke();
+            this.ps = ps;
+
             photonView.RequestOwnership();
             sf.photonView.RequestOwnership();
             print("Button clikced ps == null");
@@ -69,6 +82,33 @@ public class PlayerPlace : MonoBehaviourPun
           
             sf.ClearStacks();
         }
+    }
+
+    public void ReadyToPlay() {
+        if(ps != null && !readyToPlay) {
+            readyToPlay = true;
+            photonView?.RPC("ReadyPlay_RPC", RpcTarget.All);
+            actionReadyOrNot.Invoke(true, ps);
+        }
+    }
+
+    public void NotReadyToPlay() {
+        if(ps != null && readyToPlay) {
+            readyToPlay = false;
+            photonView?.RPC("NotReadyToPlay_RPC", RpcTarget.All);
+            actionReadyOrNot.Invoke(false, ps);
+        }
+    }
+
+    [PunRPC]
+    public void ReadyPlay_RPC() {
+        readyToPlay = true;
+    }
+
+
+    [PunRPC]
+    public void NotReadyToPlay_RPC() {
+        readyToPlay = false;
     }
 
     [PunRPC]

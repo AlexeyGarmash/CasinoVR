@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,12 @@ public class PlayerAvatarChoiceManager : MonoBehaviour
 {
     [SerializeField] private PlayerAvatar[] _playerAvatars;
     [SerializeField] private Transform _avatarPreviewSpawnPoint;
-    
+
+    private ExitGames.Client.Photon.Hashtable customProps;
+
     private void Start()
     {
+        customProps = new ExitGames.Client.Photon.Hashtable();
         foreach (var avatar in _playerAvatars)
         {
             avatar.OnAvatarChosen += OnAvatarChosen;
@@ -22,6 +26,13 @@ public class PlayerAvatarChoiceManager : MonoBehaviour
         ClearNotSelectedSelection(avatar);
         SpawnPreviewAvatar(avatar);
         SetPlayerAvatarResourcePath(avatar);
+        SetPlayerCustomPropsAvatar(avatar);
+    }
+
+    private void SetPlayerCustomPropsAvatar(PlayerAvatar avatar)
+    {
+        customProps[PlayerItem.KEY_PLAYER_AVATAR] = avatar.AvatarResourceUI;
+        PhotonNetwork.SetPlayerCustomProperties(customProps);
     }
 
     private void SetPlayerAvatarResourcePath(PlayerAvatar avatar)

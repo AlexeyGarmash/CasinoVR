@@ -15,7 +15,9 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase
         inGame = false;
         _imageReady.texture = _notReadyTexture;
         _textReady.text = "Not ready";
+
         Debug.LogWarning("player InvokeClickOut_RPC rpc");
+
     }
 
 
@@ -38,8 +40,10 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase
     {
         photonView?.RequestOwnership();
 
+
         p_place.ps = lastCollider.GetComponentInParent<PlayerStats>();
         _onLongClickIn?.Invoke(p_place.ps);
+
         inGame = true;
         _imageReady.texture = _readyTexture;
         _textReady.text = PhotonNetwork.LocalPlayer.NickName;

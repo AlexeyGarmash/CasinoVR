@@ -10,11 +10,14 @@ using UnityEngine.UI;
 public class PlayerItem : MonoBehaviourPunCallbacks
 {
     public const string KEY_PLAYER_READY = "player_ready";
+    public const string KEY_PLAYER_AVATAR = "player_avatar";
 
     [SerializeField] private TMP_Text TextPlayer;
     [SerializeField] private RawImage _imageReady;
     [SerializeField] private Texture _readySprite;
     [SerializeField] private Texture _notReadySprite;
+    [SerializeField] private RawImage _imageAvatar;
+    
 
     public Player PlayerInfo { get; set; }
 
@@ -23,6 +26,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
         PlayerInfo = player;
         SetPLayerText(player);
         SetPlayerInfoReady(player);
+        SetPlayerAvatar(player);
     }
 
     
@@ -43,6 +47,22 @@ public class PlayerItem : MonoBehaviourPunCallbacks
         _imageReady.texture = playerReady ? _readySprite : _notReadySprite;
     }
 
+    private void SetPlayerAvatar(Player playerChangesInfo)
+    {
+        if(playerChangesInfo.CustomProperties.ContainsKey(KEY_PLAYER_AVATAR))
+        {
+            string avatarNameRes = (string)playerChangesInfo.CustomProperties[KEY_PLAYER_AVATAR];
+            if (avatarNameRes != null)
+            {
+                _imageAvatar.texture = Resources.Load(avatarNameRes) as Texture;
+            }
+            else
+            {
+                print("Cannot set avatar image");
+            }
+        }
+    }
+
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         print("Props changes at player -> " + targetPlayer.NickName);
@@ -50,8 +70,14 @@ public class PlayerItem : MonoBehaviourPunCallbacks
         {
             if(changedProps.ContainsKey(KEY_PLAYER_READY))
             {
-                print("Props confirmed!");
+                print("Props player ready confirmed!");
                 SetPlayerInfoReady(targetPlayer);
+            }
+
+            if(changedProps.ContainsKey(KEY_PLAYER_AVATAR))
+            {
+                print("Props avatar confirmed!");
+                SetPlayerAvatar(targetPlayer);
             }
         }
     }

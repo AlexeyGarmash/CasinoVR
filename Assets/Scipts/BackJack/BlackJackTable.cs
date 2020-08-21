@@ -12,7 +12,7 @@ using TMPro;
 using UnityEngine;
 namespace Assets.Scipts.BackJack
 {
-    public enum BlackJackGameStates{ CheckPlayer, CardsToPlayers, PlayersBetting, CheckResults, ResetGame, PlayerTurn }
+    public enum BlackJackGameStates { CheckPlayer, CardsToPlayers, PlayersBetting, CheckResults, ResetGame, PlayerTurn }
 
     class BlackJackTable : MonoBehaviourPun
     {
@@ -40,7 +40,7 @@ namespace Assets.Scipts.BackJack
         const int waitTimeInSec = 10;
         const int OneSec = 1;
 
-       
+
         const string giveMeCard = "give me card";
         const string skip = "skip";
         const string giveUp = "give up";
@@ -56,11 +56,11 @@ namespace Assets.Scipts.BackJack
         int lose;
         bool playerReady;
 
-        
+
 
         private void Start()
         {
-           
+
 
             playersOutFromGame = new List<PlayerPlace>();
             playersInGame = new List<PlayerPlace>();
@@ -123,7 +123,7 @@ namespace Assets.Scipts.BackJack
                         break;
                     case BlackJackGameStates.PlayerTurn:
                         yield return PlayersTurns();
-                        break;                  
+                        break;
                     case BlackJackGameStates.CheckResults:
                         yield return CheckResults();
                         break;
@@ -140,7 +140,7 @@ namespace Assets.Scipts.BackJack
                         ResetGame();
                         break;
                 }
-              
+
 
             }
         }
@@ -183,9 +183,9 @@ namespace Assets.Scipts.BackJack
 
                         if (playerReady)
                         {
-                           
+
                             DebugLog(p.ps.PlayerNick + " skiped turn");
-                            
+
                             break;
                         }
                         else if (playerLose)
@@ -196,9 +196,9 @@ namespace Assets.Scipts.BackJack
                             break;
                         }
                         else if (playerTakeCard)
-                        {                          
+                        {
 
-                           
+
                             break;
 
 
@@ -209,7 +209,7 @@ namespace Assets.Scipts.BackJack
                         yield return new WaitForSeconds(OneSec);
 
                     }
-                                      
+
 
                     recognizer.StopRecognize();
                     ActivateGameButtons(false, false, false, false, p);
@@ -378,7 +378,7 @@ namespace Assets.Scipts.BackJack
                         BlackJackDilerCardFieldOpen.BlockField(true);
                     }
                     DebugLog("card to " + nick + " card face = " + card.Face + " card sign=  " + card.Sign);
-                   
+
 
                     cardCurveAnimator.StartAnimCardToPlayer(players.Count, nick, card);
 
@@ -442,7 +442,7 @@ namespace Assets.Scipts.BackJack
 
                     DebugLog("Players " + playersInGame[j].ps.PlayerNick + "is betting" + (waitTimeInSec - currWaitTime).ToString());
 
-                    yield return new WaitForSeconds(OneSec*2);
+                    yield return new WaitForSeconds(OneSec * 2);
 
                 }
 
@@ -467,7 +467,8 @@ namespace Assets.Scipts.BackJack
                     if (playersInGame[j].GetComponent<PlayerBlackJackFields>().bettingField1.Stacks[0].Objects.Count == 0)
                         toRemove.Add(playersInGame[j]);
                 }
-                else {
+                else
+                {
 
                     DebugLog("in game " + playersInGame[j].ps.PlayerNick);
                     var bjP = blackJackLogic.bjPlayers.FirstOrDefault(bjp => bjp.player.PlayerNick == playersInGame[j].ps.PlayerNick);
@@ -528,7 +529,7 @@ namespace Assets.Scipts.BackJack
                     playerLose = true;
                     ActivateGameButtons(false, false, false, false, players.Find(p => p.ps.PlayerNick == player));
                 }
-               
+
                 playerTakeCard = true;
 
                 var playerPlace = playersInGame.Find(p => p.ps.PlayerNick == player);
@@ -570,21 +571,21 @@ namespace Assets.Scipts.BackJack
 
             BlackJackDilerCardFieldOpen.BlockField(false);
 
-            yield return new WaitForSeconds(OneSec*2);
+            yield return new WaitForSeconds(OneSec * 2);
             if (blackJackLogic.diler.BlackJackStaks[0].cards.Count > 2)
                 for (var i = 2; i < blackJackLogic.diler.BlackJackStaks[0].cards.Count; i++)
                 {
-                    
+
 
                     var idCurve = players.Count;
                     var nick = "Diler";
                     var card = blackJackLogic.diler.BlackJackStaks[0].cards[i];
 
                     DebugLog("card to " + nick + " card face = " + card.Face + " card sign=  " + card.Sign);
-                                     
+
                     cardCurveAnimator.StartAnimCardToPlayer(idCurve, nick, card);
 
-                    yield return new WaitForSeconds(OneSec*2);
+                    yield return new WaitForSeconds(OneSec * 2);
 
 
                 }
@@ -604,15 +605,16 @@ namespace Assets.Scipts.BackJack
                 if (blackJackLogic.IsWinVersusDiler(p.ps.PlayerNick, out win, out bet))
                 {
                     DebugLog("player" + p.ps.PlayerNick + " WIN! -> " + win + "$");
-                  
+
                     var animator = p.GetComponentInChildren<PlayerWinAnimation>();
                     animator.StartAnimation(win + bet, p.ps.PlayerNick);
-                    yield return new WaitForSeconds(OneSec*2);
+                    yield return new WaitForSeconds(OneSec * 2);
                 }
-                else {
+                else
+                {
                     DebugLog("player" + p.ps.PlayerNick + " LOSE! -> " + win + "$");
-                  
-                    yield return new WaitForSeconds(OneSec*2);
+
+                    yield return new WaitForSeconds(OneSec * 2);
                 }
             }
 

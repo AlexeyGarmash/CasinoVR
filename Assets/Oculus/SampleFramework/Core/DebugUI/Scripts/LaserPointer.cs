@@ -55,6 +55,8 @@ public class LaserPointer : OVRCursor
     private bool _hitTarget;
     private LineRenderer lineRenderer;
 
+    public bool IsHitTarger { get => _hitTarget; }
+
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();

@@ -57,7 +57,7 @@ namespace Assets.Scipts.BackJack
         public BlackJackCards()
         {
             cards = new List<CardData>();
-        }      
+        }
         public int GetSumOfPoints()
         {
             int sum = 0;
@@ -114,7 +114,7 @@ namespace Assets.Scipts.BackJack
 
         public BlackJackPlayer diler;
         public DeckData deckData { get; private set; }
-        public BlackJackLogic(List<PlayerStats> players , int[] indexes)
+        public BlackJackLogic(List<PlayerStats> players, int[] indexes)
         {
             bjPlayers = new List<BlackJackPlayer>();
 
@@ -133,12 +133,12 @@ namespace Assets.Scipts.BackJack
             //первая очередь
             bjPlayers.ForEach(p => {
                 p.BlackJackStaks.Add(new BlackJackCards());
-                p.BlackJackStaks[0].cards.Add(deckData.Deck.Pop());            
+                p.BlackJackStaks[0].cards.Add(deckData.Deck.Pop());
 
             });
             diler.BlackJackStaks.Add(new BlackJackCards());
             diler.BlackJackStaks[0].cards.Add(deckData.Deck.Pop());
-            bjPlayers.ForEach(p => {              
+            bjPlayers.ForEach(p => {
                 p.BlackJackStaks[0].cards.Add(deckData.Deck.Pop());
 
             });
@@ -253,7 +253,7 @@ namespace Assets.Scipts.BackJack
                     bjPlayer.player.AllMoney += betWin;
                 }
 
-                
+
             }
 
             return isWin;

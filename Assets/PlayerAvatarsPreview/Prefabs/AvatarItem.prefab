@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 7412443507749559633}
   - component: {fileID: 3272863841668888123}
   - component: {fileID: -2485363304945529965}
+  - component: {fileID: 1624887593663656779}
   m_Layer: 5
   m_Name: AvatarItem
   m_TagString: Untagged
@@ -223,7 +224,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -268,7 +269,27 @@ MonoBehaviour:
   _avatarNameText: {fileID: 2337669886657902026}
   _buttonChoiceAvatar: {fileID: 3272863841668888123}
   _frameChosenAvatar: {fileID: 3950610368946692827}
+  _resourceUiName: UI/Avatars/
   _avatarIsChosen: 0
+--- !u!95 &1624887593663656779
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2943961688684734100}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8862077063949484119
 GameObject:
   m_ObjectHideFlags: 0

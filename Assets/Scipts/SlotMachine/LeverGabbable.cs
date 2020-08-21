@@ -1,4 +1,5 @@
 ﻿using OVRTouchSample;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,11 @@ public class LeverGabbable : OVRGrabbableCustom
 
     public Transform handler;
 
+    public override void GrabBegin(OVRGrabberCustom hand, Collider grabPoint)
+    {
+        base.GrabBegin(hand, grabPoint);
+        GetComponentInParent<PhotonView>().RequestOwnership();
+    }
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
         base.GrabEnd(Vector3.zero, Vector3.zero);

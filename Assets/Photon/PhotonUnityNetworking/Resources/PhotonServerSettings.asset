@@ -27,61 +27,56 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: ru
+  DevRegion: 
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
-  - AddNewBet_RPC
   - ClickRpc
-  - DestroyBall_RPC
   - DestroyRpc
   - DestroySpaceship
   - Fire
+  - RespawnSpaceship
+  - AddNewBet_RPC
+  - DestroyBall_RPC
+  - ExtranctChipOnAll_RPC
+  - FindPlayers
   - GoOutPlace_RPC
-  - JoinTable_RPC
-  - LeaveTable_RPC
+  - GrabBegin_RPC
+  - GrabEnd_RPC
+  - InsertCoint_RPC
+  - InstatianeChip_RPC
+  - InvokeClickIn_RPC
+  - InvokeClickOut_RPC
+  - NotReady_RPC
+  - NotReadyToPlay_RPC
+  - PlayerReady_RPC
+  - Ready_RPC
+  - ReadyPlay_RPC
   - RemoveBetValues_RPC
   - ResetBets_RPC
   - ResetBetsByNickname_RPC
-  - RespawnSpaceship
+  - SetDeck
+  - SetOwner_RPC
+  - SetPlayerStatrs
+  - SetStackType_RPC
+  - SetZeroTimer_RPC
+  - SkipTurn_RPC
   - SpawnBall_RPC
-  - StartSpin_RPC
-  - TakePlace_RPC
-  - UpdateExistBet_RPC
-  - UpdateChipsList_RPC
-  - InstantiateChip_RPC
-  - ExtranctChipOnAll_RPC
-  - ExtranctChipOnAll
+  - Start
   - StartAnimation_RPC
+  - StartSlotGame_RPC
+  - StartSpin_RPC
+  - StartSpinAnimation_RPC
+  - State_RPC
   - SyncOff_RPC
   - SyncOn_RPC
-  - GrabBegin_RPC
-  - SetOwner_RPC
-  - IsGragged_RPC
-  - InitSyncObjects
-  - SetInfo
-  - SyncGameObjects
-  - UpdateAllStacks
-  - GrabEnd_RPC
-  - Start
-  - InvokeClickIn_RPC
-  - InvokeClickOut_RPC
-  - CardsToPlyers
-  - GenerateDeck
-  - SetDeck
-  - SetPlayerStatrs
-  - Stat_RPC
-  - TimerStep_RPC
-  - State_RPC
-  - SetZeroTimer_RPC
-  - SetStackType_RPC
-  - InstatianeChip_RPC
-  - FindPlayers
-  - SkipTurn_RPC
-  - PlayerReady_RPC
   - TakeCard_RPC
+  - TakePlace_RPC
+  - TimerStep_RPC
+  - UpdateAllStacks
+  - UpdateExistBet_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
-  DevRegionSetOnce: 1
+  DevRegionSetOnce: 0
