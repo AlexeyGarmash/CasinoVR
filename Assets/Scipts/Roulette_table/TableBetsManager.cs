@@ -55,7 +55,7 @@ public class TableBetsManager : MonoBehaviour, IListener<ROULETTE_EVENT>
     private void playerClickReady(bool isReady, PlayerStats ps) 
     {
 
-        bool allReady = plyers.Where( player => player.ps != null).All(joinedPlayer => joinedPlayer.IsReady);
+        bool allReady = plyers.Where( player => player.PlayerOnPlace).All(joinedPlayer => joinedPlayer.IsReady);
         if(allReady) {
             print("START SPIN ROULETTE!!!");
             StartAllAnimations();

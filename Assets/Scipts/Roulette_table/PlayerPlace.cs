@@ -86,6 +86,7 @@ public class PlayerPlace : MonoBehaviourPun
 
     public void ReadyToPlay() {
         if(ps != null && !readyToPlay) {
+            print("");
             readyToPlay = true;
             photonView?.RPC("ReadyPlay_RPC", RpcTarget.All);
             actionReadyOrNot.Invoke(true, ps);
