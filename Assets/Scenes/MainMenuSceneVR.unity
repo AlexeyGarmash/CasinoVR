@@ -569,7 +569,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 6fd4f57e676d7fa43b4c47ddc751bd17, type: 2}
+      objectReference: {fileID: 9100000, guid: b1c48863642ee8e42816744dae60d3ab, type: 2}
     - target: {fileID: 2337669886657902026, guid: 00187477ee01f82438f3a2d3711a92c7,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -1362,7 +1362,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 6fd4f57e676d7fa43b4c47ddc751bd17, type: 2}
+      objectReference: {fileID: 9100000, guid: b1c48863642ee8e42816744dae60d3ab, type: 2}
     - target: {fileID: 2337669886657902026, guid: 00187477ee01f82438f3a2d3711a92c7,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -2465,7 +2465,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 6fd4f57e676d7fa43b4c47ddc751bd17, type: 2}
+      objectReference: {fileID: 9100000, guid: b1c48863642ee8e42816744dae60d3ab, type: 2}
     - target: {fileID: 2337669886657902026, guid: 00187477ee01f82438f3a2d3711a92c7,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -4724,6 +4724,37 @@ MonoBehaviour:
   _iteration: 40
   _frequency: 2
   _strength: 255
+--- !u!1 &1140322796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1561707097}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1140322797}
+  m_Layer: 0
+  m_Name: RadialMenu (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1140322797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1561707097}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140322796}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1841707382}
+  m_Father: {fileID: 1627764067}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1158848057
 GameObject:
   m_ObjectHideFlags: 0
@@ -6306,6 +6337,37 @@ MonoBehaviour:
   JoinOrCreateRoomPanel: {fileID: 921756759}
   CurrentRoomPanel: {fileID: 1188624800}
   LoadingWithProgressManager: {fileID: 498756367}
+--- !u!1 &1841707381
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1561707097}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1841707382}
+  - component: {fileID: 2092605684}
+  m_Layer: 0
+  m_Name: Missing Prefab (Dummy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1841707382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1561707097}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841707381}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1140322797}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1876156070
 GameObject:
   m_ObjectHideFlags: 0
@@ -7135,18 +7197,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2078044849}
   m_CullTransparentMesh: 0
---- !u!114 &2092605684 stripped
+--- !u!114 &2092605684
 MonoBehaviour:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 8794713795637838213, guid: b26b6028f0614884fb9583231107ef0e,
     type: 3}
   m_PrefabInstance: {fileID: 1561707097}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1841707381}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03a7c65773852bf4b887e48f55158601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _radialMenu: {fileID: 0}
 --- !u!1 &2122352738
 GameObject:
   m_ObjectHideFlags: 0
