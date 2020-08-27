@@ -75,7 +75,7 @@ public class StackAnimator : MonoBehaviour
 
 
     }
-    IEnumerator MoveLastChips(float chipsDropSpeed, float chipsDropMult, float pause)
+    IEnumerator MoveLastObject(float chipsDropSpeed, float chipsDropMult, float pause)
     {
         bool haveUnactiveObjects = true;
 
@@ -90,7 +90,7 @@ public class StackAnimator : MonoBehaviour
                     currentObjects[i].SetActive(true);
 
                     stack.StartCoroutine(
-                            MoveChip(chipsDropSpeed, chipsDropMult, currentObjects[i])
+                            MoveObject(chipsDropSpeed, chipsDropMult, currentObjects[i])
                         );
                     haveUnactiveObjects = true;
                     yield return new WaitForSeconds(pause);
@@ -114,13 +114,9 @@ public class StackAnimator : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         currentObjects.Clear();
-        //stack.Objects.ForEach(s =>
-        //{
-        //    s.GetComponent<PhotonSyncCrontroller>().SyncOn_Photon();
-        //    s.GetComponent<Collider>().enabled = true;
-        //    s.GetComponent<ChipData>().InAnimation = false;
-        //});
-        evenmManager.PostNotification(AbstractFieldEvents.StackAnimationEnded, this);
+
+        if(evenmManager != null)
+         evenmManager.PostNotification(AbstractFieldEvents.StackAnimationEnded, this);
         AnimationEnded = true;
 
     }
@@ -164,9 +160,10 @@ public class StackAnimator : MonoBehaviour
 
         if (prevMoveLastChips == null)
         {
-            //UpdateStackInstantly();          
-            evenmManager.PostNotification(AbstractFieldEvents.StackAnimationStarted, this);
-            prevMoveLastChips = StartCoroutine(MoveLastChips(chipsDropSpeed, chipsDropMult, pauseBeetwenChips));
+            //UpdateStackInstantly();
+            if(evenmManager != null)
+                evenmManager.PostNotification(AbstractFieldEvents.StackAnimationStarted, this);
+            prevMoveLastChips = StartCoroutine(MoveLastObject(chipsDropSpeed, chipsDropMult, pauseBeetwenChips));
         }
     }
 
@@ -205,7 +202,7 @@ public class StackAnimator : MonoBehaviour
         currentX = 0;
         currentZ = 0;
     }
-    IEnumerator MoveChip(float chipsDropSpeed, float chipsDropMult, GameObject chip)
+    IEnumerator MoveObject(float chipsDropSpeed, float chipsDropMult, GameObject chip)
     {
         
         //var currOffsetX = Random.Range(-xOffset, xOffset);
@@ -271,6 +268,7 @@ public class StackAnimator : MonoBehaviour
     {
         StopAllCoroutines();
         ZeroCurrentXYZ();
+        currentObjects.Clear();
     }
 }
 
