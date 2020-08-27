@@ -6,7 +6,7 @@ using UnityEngine;
 public enum Chips { YELLOW = 1, RED = 5, BLUE = 10, GREEN = 25, BLACK = 100, PURPLE = 250 }
 class ChipUtils : Singleton<ChipUtils>
 {
-    
+
     public GameObject yellowChipPrefab;
     public GameObject redChipPrefab;
     public GameObject blueChipPrefab;
@@ -14,6 +14,34 @@ class ChipUtils : Singleton<ChipUtils>
     public GameObject blackChipPrefab;
     public GameObject purpleChipPrefab;
 
+    public GameObject GetChipByChipEnum(Chips chip)
+    {
+        GameObject chipObj = null;
+        switch (chip)
+        {
+            case Chips.BLACK:
+                chipObj =  blackChipPrefab;
+                break;
+            case Chips.PURPLE:
+                chipObj = purpleChipPrefab;
+                break;
+            case Chips.BLUE:
+                chipObj = blueChipPrefab;
+                break;
+            case Chips.GREEN:
+                chipObj = greenChipPrefab;
+                break;
+            case Chips.YELLOW:
+                chipObj = yellowChipPrefab;
+                break;
+            case Chips.RED:
+                chipObj = redChipPrefab;
+                break;
+        }
+
+        return chipObj;
+    }
+       
     public string GetStringOfType(Chips chip)
     {
         switch (chip)

@@ -10,7 +10,7 @@ public class SoundsPlayer : MonoBehaviour
     private AudioClip defaultClip;
 
     private AudioSource source;
-    // Start is called before the first frame update
+ 
     void Awake()
     {
         source = GetComponent<AudioSource>();
@@ -41,5 +41,11 @@ public class SoundsPlayer : MonoBehaviour
         }
 
         source.Play();
+    }
+
+    public void StopPlaing()
+    {
+        if(source.isPlaying)
+            source.Stop();
     }
 }

@@ -11,14 +11,22 @@ using Assets.Scipts.BackJack;
 public class CroupierBlackJackNPC : MonoBehaviourPun
 {
     Animator animator;
+  
+    const int numberOfDancingsForWin = 8;
 
     [SerializeField]
     float percentageOfTakeCardToSpawnCards = 0.55f;
 
-    const string triggerTakeCard = "toTakeCard";
-    const string triggerGiveCard = "toGiveCard";
-    const string triggerToDefIdleCard = "toDefaultIdle";
+    //animator triggers
+    const string toTakeCard = "toTakeCard";
+    const string toGiveCard = "toGiveCard";
+    const string toDefaultIdle = "toDefaultIdle";
+    const string WinDance = "WinDance";
+    const string LoseDance = "LoseDance";
+    const string EndDance = "EndDance";
 
+    //animators float
+    const string DanceNumber = "DanceNumber";
     [SerializeField]
     private Vector3 rotationTOPos1;
     [SerializeField]
@@ -68,8 +76,10 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
     [SerializeField]
     public BlackJackPlayerCardField BlackJackDilerCardFieldHidden;
 
-    TakeCardBehaviour takeCardBehaviour;
-    GiveCardAnimBehavior giveCardBehavour;
+    public TakeCardBehaviour takeCardBehaviour;
+    public GiveCardAnimBehavior giveCardBehavour;
+    public WinDanceBehavour winDanceBehavour;
+    public LoseDanceBehaviour loseDanceBehavour;
 
     GameObject instantiaterdCardObj;
     void Start()
@@ -79,10 +89,45 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
         takeCardBehaviour = animator.GetBehaviour<TakeCardBehaviour>();
         giveCardBehavour = animator.GetBehaviour<GiveCardAnimBehavior>();
+        winDanceBehavour = animator.GetBehaviour<WinDanceBehavour>();
+        loseDanceBehavour = animator.GetBehaviour<LoseDanceBehaviour>();
 
         InitDictionarys();
+
+    }
+    [PunRPC]
+    void GenerateRandomDanceForRemotePlayers(int danceNumber)
+    {
+        animator.SetFloat(DanceNumber, danceNumber);
+    }
+    public IEnumerator StartRandomWinDance()
+    {
+        if (photonView.IsMine)
+        {
+            var rnd = UnityEngine.Random.Range(0, numberOfDancingsForWin - 1);
+            animator.SetInteger(DanceNumber, rnd);
+
+            photonView.RPC("GenerateRandomDanceForRemotePlayers",  RpcTarget.OthersBuffered, rnd);
+        }
+
+        yield return new WaitForSeconds(3f);
+
+        animator.SetTrigger(EndDance);
+    }
+    public void WinAnimation()
+    {
+        animator.SetTrigger(WinDance);
     }
 
+    public void LoseAnimation()
+    {
+        animator.SetTrigger(LoseDance);
+    }
+
+    public void EndDanceAnimation()
+    {
+        animator.SetTrigger(EndDance);
+    }
     public void ResetValues()
     {
         BlackJackDilerCardFieldOpen.ClearStacks();
@@ -166,7 +211,7 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
     private IEnumerator TakeCardsToRightHand()
     {
         if(photonView.IsMine)
-            animator.SetTrigger(triggerTakeCard);
+            animator.SetTrigger(toTakeCard);
 
        
         while (true)
@@ -304,7 +349,7 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
                     yield return null;
 
                     if(photonView.IsMine)
-                        animator.SetTrigger(triggerGiveCard);
+                        animator.SetTrigger(toGiveCard);
                    
 
                     while (true)

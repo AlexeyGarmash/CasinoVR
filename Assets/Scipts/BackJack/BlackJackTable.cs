@@ -20,6 +20,8 @@ namespace Assets.Scipts.BackJack
 
         [SerializeField]
         CroupierBlackJackNPC bjNPC;
+
+        private WinLoseAudioPlayer bjNPCWinLosePlayer;
         [SerializeField]
         TMP_Text tms;
 
@@ -61,7 +63,7 @@ namespace Assets.Scipts.BackJack
         private void Start()
         {
 
-
+            bjNPCWinLosePlayer = bjNPC.GetComponent<WinLoseAudioPlayer>();
             playersOutFromGame = new List<PlayerPlace>();
             playersInGame = new List<PlayerPlace>();
             StartCoroutine(BlackJackLoop());
@@ -620,31 +622,90 @@ namespace Assets.Scipts.BackJack
         IEnumerator CheckResults()
         {
 
-            yield return GiveCardsToDealer();
+            yield return GiveCardsToDealer();      
+
+            var winners = new List<PlayerPlace>();
+            var winNumbers = new Dictionary<PlayerPlace, int>();
 
             foreach (var p in playersInGame)
             {
                 var win = 0;
                 var bet = 0;
+
                 if (blackJackLogic.IsWinVersusDiler(p.ps.PlayerNick, out win, out bet))
                 {
+                    winners.Add(p);
+                    winNumbers.Add(p, win + bet);
                     DebugLog("player" + p.ps.PlayerNick + " WIN! -> " + win + "$");
 
-                    var animator = p.GetComponentInChildren<PlayerWinAnimation>();
-                    animator.StartAnimation(win + bet, p.ps.PlayerNick);
-                    yield return new WaitForSeconds(OneSec * 2);
                 }
                 else
                 {
                     DebugLog("player" + p.ps.PlayerNick + " LOSE! -> " + win + "$");
 
-                    yield return new WaitForSeconds(OneSec * 2);
                 }
             }
 
-            if (photonView.IsMine)
-                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
+            if (winners.Count > 0)
+            {
+                bjNPCWinLosePlayer.winPlayer.PlayRandomClip();
 
+               
+
+                if (photonView.IsMine)
+                    bjNPC.WinAnimation();
+
+                yield return bjNPC.StartRandomWinDance();
+
+                yield return new WaitForSeconds(0.1f);
+
+                while (bjNPC.winDanceBehavour.currentPercentage < 0.9f)
+                {
+                    yield return null;
+                }
+                List<PlayerWinAnimation> animations = new List<PlayerWinAnimation>();
+
+                winners.ForEach(w =>
+                {
+                    var animation = w.GetComponentInChildren<PlayerWinAnimation>();                  
+                    animation.StartAnimation(winNumbers[w], w.ps.PlayerNick);
+
+                    animations.Add(animation);
+                });
+
+                while (animations.Exists(a => a.animStarted))
+                {
+                    yield return null;
+                }
+
+
+                if (photonView.IsMine)                                  
+                    bjNPC.EndDanceAnimation();
+
+                bjNPCWinLosePlayer.winPlayer.StopPlaing();
+            }
+            else {
+
+                bjNPCWinLosePlayer.losePlayer.PlayRandomClip();
+
+                if (photonView.IsMine)
+                {
+                    bjNPC.LoseAnimation();
+
+                    bjNPC.EndDanceAnimation();
+                }
+
+                while (bjNPC.loseDanceBehavour.currentPercentage < 0.9)
+                    yield return null;
+
+                bjNPCWinLosePlayer.losePlayer.StopPlaing();
+            }
+
+            if (photonView.IsMine)
+            {
+                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
+            }
+           
             yield return null;
         }
     }
