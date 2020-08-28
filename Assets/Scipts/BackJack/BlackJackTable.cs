@@ -422,6 +422,9 @@ namespace Assets.Scipts.BackJack
 
                 if (photonView.IsMine)
                     photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.PlayerTurn);
+
+                while (BlackJackGameStates.PlayerTurn != gameState)
+                    yield return null;
             }
             else if (photonView.IsMine)
                 photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
