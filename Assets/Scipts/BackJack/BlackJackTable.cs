@@ -100,10 +100,9 @@ namespace Assets.Scipts.BackJack
                 photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CheckPlayer);
                 photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
                 PhotonNetwork.SendAllOutgoingCommands();
+
+                
             }
-
-
-
 
         }
         int i = 0;
@@ -252,15 +251,31 @@ namespace Assets.Scipts.BackJack
             yield return WaitDistributionOfCards();
 
 
-            if (endTurns && photonView.IsMine)
+            if (endTurns)
             {
-                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CheckResults);
-                PhotonNetwork.SendAllOutgoingCommands();
+                if (photonView.IsMine)
+                {
+                    photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CheckResults);
+                    PhotonNetwork.SendAllOutgoingCommands();
+                }
+                else {
+                    while (BlackJackGameStates.CheckResults != gameState)
+                        yield return null;
+                }
             }
-            if (playersInGame.Count == 0 && photonView.IsMine)
+
+            if (playersInGame.Count == 0)
             {
-                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
-                PhotonNetwork.SendAllOutgoingCommands();
+                if (photonView.IsMine)
+                {
+                    photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
+                    PhotonNetwork.SendAllOutgoingCommands();
+                }
+                else
+                {
+                    while (BlackJackGameStates.ResetGame != gameState)
+                        yield return null;
+                }
             }
             yield return null;
             playersOutFromGame.AddRange(toRemove);
@@ -352,6 +367,9 @@ namespace Assets.Scipts.BackJack
                         PhotonNetwork.SendAllOutgoingCommands();
 
                     }
+
+                    while (BlackJackGameStates.PlayersBetting != gameState)
+                        yield return null;
 
                     players.ForEach(p => ActivateGameButtons(false, false, false, false, p));
 
@@ -448,10 +466,16 @@ namespace Assets.Scipts.BackJack
                 while (BlackJackGameStates.PlayerTurn != gameState)
                     yield return null;
             }
-            else if (photonView.IsMine)
+            else 
             {
-                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
-                PhotonNetwork.SendAllOutgoingCommands();
+                if (photonView.IsMine)
+                {
+                    photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
+                    PhotonNetwork.SendAllOutgoingCommands();
+                }
+
+                while (BlackJackGameStates.ResetGame != gameState)
+                    yield return null;
             }
 
 
@@ -760,6 +784,9 @@ namespace Assets.Scipts.BackJack
                 photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
                 PhotonNetwork.SendAllOutgoingCommands();
             }
+
+            while (BlackJackGameStates.ResetGame != gameState)
+                yield return null;
            
             yield return null;
         }
