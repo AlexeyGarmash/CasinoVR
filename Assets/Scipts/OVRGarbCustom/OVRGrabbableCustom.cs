@@ -128,7 +128,10 @@ public class OVRGrabbableCustom : MonoBehaviourPun
         if(photonView != null)
         {
             photonView.RequestOwnership();
-            photonView.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();            
+            if (photonView.GetComponent<PhotonSyncCrontroller>() != null)
+            {
+                photonView.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+            }
         }
 
         if (GetComponent<OwnerData>() != null)

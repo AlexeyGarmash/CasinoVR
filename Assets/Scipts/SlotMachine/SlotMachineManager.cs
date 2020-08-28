@@ -42,6 +42,7 @@ namespace SlotMachine
             int[] rands = slotMachine.GenerateRandomValues();
             if (photonView.IsMine)
             {
+                print("START SLOT GAME IN BEFORE RPC");
                 photonView.RPC("StartSlotGame_RPC", RpcTarget.All, alwaysJackpot, sameRandom, rands);
             }
         }
@@ -51,7 +52,8 @@ namespace SlotMachine
         {
             if (slotMachine.StartGame())
             {
-                if(alwaysJackpot)
+                print("START SLOT GAME IN RPC");
+                if (alwaysJackpot)
                 {
                     slotMachine.SameResult(forSameResult);
                 }
@@ -144,6 +146,7 @@ namespace SlotMachine
 
         private void CheckIsWin(List<SymbolItem> predictedFruits)
         {
+            print("check is win in bandit");
             var firstSymbTag = predictedFruits.First().Tag;
             var allAreSame = predictedFruits.All(x => x.Tag == firstSymbTag);
             if (allAreSame)

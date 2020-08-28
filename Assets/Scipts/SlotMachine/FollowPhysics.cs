@@ -11,7 +11,10 @@ public class FollowPhysics : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        target = GetComponentInChildren<FortuneOfWheelGrabbable>().transform;
+        if (target == null)
+        {
+            target = GetComponentInChildren<FortuneOfWheelGrabbable>().transform;
+        }
     }
 
     // Update is called once per frame
