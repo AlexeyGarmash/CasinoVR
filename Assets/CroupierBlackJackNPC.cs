@@ -229,21 +229,20 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
                         CardCurve.StopAllCoroutines();
 
                         //cardObj = PhotonNetwork.Instantiate(CardUtils.Instance.GetPathToCard(card), Vector3.zero, Quaternion.identity);
-                        if (photonView.IsMine)
-                        {
+                       
 
 
                             instantiaterdCardObj = Instantiate(CardUtils.Instance.GetCard(card.Face, card.Sign));
                             var view = instantiaterdCardObj.GetComponent<PhotonView>();
                             instantiaterdCardObj.GetComponent<PhotonSyncCrontroller>().SyncOff_RPC();
-                            PhotonNetwork.AllocateViewID(view);
+                            ////PhotonNetwork.AllocateViewID(view);
 
-                            photonView.RPC("InstantiateRemote", RpcTarget.Others, view.ViewID, (int)card.Face, (int)card.Sign);
+                            //photonView.RPC("InstantiateRemote", RpcTarget.Others, view.ViewID, (int)card.Face, (int)card.Sign);
 
-                        }
+                        
 
-                        while (instantiaterdCardObj == null)
-                            yield return null;
+                        //while (instantiaterdCardObj == null)
+                        //    yield return null;
 
                         CardsToPlayersGObj[players].Add(instantiaterdCardObj);
 
@@ -259,7 +258,7 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
                         RightHandNPCStack.Objects.Add(instantiaterdCardObj);
                         RightHandNPCStack.StartAnim(instantiaterdCardObj);
 
-                        instantiaterdCardObj = null;
+                        //instantiaterdCardObj = null;
                     }
 
                 }
@@ -343,7 +342,6 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
                     CardCurve.animStarted = false;
                     Debug.Log("CNP give card to " + playerPos);
 
-
                     var card = playerCards[0];
                     playerCards.Remove(card);
                     LeftHandNPCStack.ExtractOne(card);
@@ -413,8 +411,6 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
         yield return GiveCardsToPlayers(hideCard);
 
         yield return new WaitForSeconds(1f);
-
-
 
         distributionOfCards = false;
 
