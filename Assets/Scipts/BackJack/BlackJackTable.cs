@@ -362,6 +362,7 @@ namespace Assets.Scipts.BackJack
 
             DebugLog("Players in game" + playersInGame.Count);
 
+
             if (playersInGame.Count != 0)
             {
                 for (var i = 0; i < 2; i++)
@@ -412,13 +413,15 @@ namespace Assets.Scipts.BackJack
                 playersOutFromGame.AddRange(PlayerToRemove);
                 PlayerToRemove.ForEach(p => playersInGame.Remove(p));
 
-                if (photonView.IsMine)
-                    photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.PlayerTurn);
+               
 
                 yield return bjNPC.TakeCardsToPlayers(true);
                 
 
                 yield return WaitDistributionOfCards();
+
+                if (photonView.IsMine)
+                    photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.PlayerTurn);
             }
             else if (photonView.IsMine)
                 photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
