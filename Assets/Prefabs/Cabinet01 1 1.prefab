@@ -1215,6 +1215,7 @@ GameObject:
   - component: {fileID: 1344420070716894213}
   - component: {fileID: 1344420070716894212}
   - component: {fileID: 7574367587400424450}
+  - component: {fileID: 4036160135440030549}
   m_Layer: 0
   m_Name: Slotmachine01
   m_TagString: Untagged
@@ -1312,6 +1313,28 @@ MonoBehaviour:
   ReelStop3: {fileID: 1344420069050940700}
   Handle: {fileID: 1344420069635432471}
   Coin: {fileID: 1344420070203975769}
+--- !u!114 &4036160135440030549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344420069214819031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 2
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1344420069240932527
 GameObject:
   m_ObjectHideFlags: 0
@@ -6417,7 +6440,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8194263788127831091}
-  - component: {fileID: 8194263788127831090}
   m_Layer: 0
   m_Name: LightSystem
   m_TagString: Untagged
@@ -6478,66 +6500,6 @@ Transform:
   m_Father: {fileID: 1344420069214819030}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &8194263788127831090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8194263788127831100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2258f32b442da7f4fb2909af5bb0415d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Lamps:
-  - {fileID: 8380139441486791927}
-  - {fileID: 8380139441380062943}
-  - {fileID: 8380139442373810709}
-  - {fileID: 8380139443024748467}
-  - {fileID: 8380139441319960018}
-  - {fileID: 8380139441210722543}
-  - {fileID: 8380139442032882310}
-  - {fileID: 8380139443068645341}
-  - {fileID: 8380139442804128222}
-  - {fileID: 8380139441540867511}
-  - {fileID: 8380139442353655201}
-  - {fileID: 8380139441691359348}
-  - {fileID: 8380139442039058940}
-  - {fileID: 8380139441892746845}
-  - {fileID: 8380139442103099391}
-  - {fileID: 8380139443065889874}
-  - {fileID: 8380139443154129864}
-  - {fileID: 8380139441369555044}
-  - {fileID: 8380139441579005781}
-  - {fileID: 8380139443268254162}
-  - {fileID: 8380139441636005306}
-  - {fileID: 8380139442992442754}
-  - {fileID: 8380139441275214779}
-  - {fileID: 8380139441732838642}
-  - {fileID: 8380139442795737926}
-  - {fileID: 8380139441805846597}
-  - {fileID: 8380139442777572387}
-  - {fileID: 8380139441607412991}
-  - {fileID: 8380139441400794621}
-  - {fileID: 8380139441689122767}
-  - {fileID: 8380139441190528213}
-  - {fileID: 8380139441221254776}
-  - {fileID: 8380139442262641545}
-  - {fileID: 8380139442956832557}
-  - {fileID: 8380139441210290008}
-  - {fileID: 8380139441622072818}
-  - {fileID: 8380139442640242108}
-  - {fileID: 8380139442178609546}
-  - {fileID: 8380139441357811793}
-  HaloColors:
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 0.19215687, g: 0, b: 1, a: 1}
-  - {r: 1, g: 0.7882353, b: 0, a: 1}
-  MaterialColors:
-  - {r: 1, g: 0.21226418, b: 0.21226418, a: 0.49803922}
-  - {r: 0.2117647, g: 0.25177422, b: 1, a: 0.49803922}
-  - {r: 1, g: 0.65933627, b: 0.2117647, a: 0.49803922}
 --- !u!1 &8194263788132133501
 GameObject:
   m_ObjectHideFlags: 0
@@ -8881,6 +8843,8 @@ MonoBehaviour:
   m_snapOrientation: 0
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
+  m_grabbedKinematic: 0
+  m_grabbedBy: {fileID: 0}
   handler: {fileID: 8380139442228857989}
 --- !u!1 &8380139441486791927
 GameObject:
@@ -10387,6 +10351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 8380139441483061089}
+  startGrab: 0
 --- !u!1 &8380139442262641545
 GameObject:
   m_ObjectHideFlags: 0
