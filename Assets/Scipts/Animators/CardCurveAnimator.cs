@@ -30,11 +30,11 @@ namespace Assets.Scipts.Animators
         public void StartAnimCardToPlayer(int curveNumber)
         {
 
-            if (photonView.IsMine)
-            {
-                animStarted = true;
-                photonView.RPC("StartAnimation_RPC", RpcTarget.All, curveNumber);
-            }
+            
+            animStarted = true;
+            StartAnimation_RPC(curveNumber);
+            //photonView.RPC("StartAnimation_RPC", RpcTarget.All, curveNumber);
+            
         }
     }
 }
