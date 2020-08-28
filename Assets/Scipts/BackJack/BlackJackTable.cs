@@ -85,7 +85,6 @@ namespace Assets.Scipts.BackJack
                 fields.bettingField1.BlockField(false);
                 fields.blackJackField1.ClearStacks();
 
-
             });
 
             
@@ -100,8 +99,7 @@ namespace Assets.Scipts.BackJack
                 photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CheckPlayer);
                 photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
                 PhotonNetwork.SendAllOutgoingCommands();
-
-                
+               
             }
 
         }
@@ -130,7 +128,7 @@ namespace Assets.Scipts.BackJack
                         yield return CheckResults();
                         break;
                     case BlackJackGameStates.ResetGame:
-                        yield return new WaitForSeconds(OneSec);
+                        
                         for (var i = 0; i < 5; i++)
                         {
 
@@ -708,19 +706,22 @@ namespace Assets.Scipts.BackJack
             {
                 var win = 0;
                 var bet = 0;
-
-                if (blackJackLogic.IsWinVersusDiler(p.ps.PlayerNick, out win, out bet))
+                var pointsPlayer = 0;
+                var pointsDiller = 0;
+                if (blackJackLogic.IsWinVersusDiler(p.ps.PlayerNick, out win, out bet, out pointsPlayer, out pointsDiller))
                 {
                     winners.Add(p);
                     winNumbers.Add(p, win + bet);
-                    DebugLog("player" + p.ps.PlayerNick + " WIN! -> " + win + "$");
+                    DebugLog("player " + pointsPlayer + " vs diller " + pointsDiller+ "  " + p.ps.PlayerNick + " WIN! -> " + win + "$");
 
                 }
                 else
                 {
-                    DebugLog("player" + p.ps.PlayerNick + " LOSE! -> " + win + "$");
+                    DebugLog("player " + pointsPlayer + " vs diller " + pointsDiller + "  " + p.ps.PlayerNick + " LOSE! -> " + win + "$");
 
                 }
+
+                yield return new WaitForSeconds(3f);
             }
 
             if (winners.Count > 0)

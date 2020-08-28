@@ -214,30 +214,34 @@ namespace Assets.Scipts.BackJack
             }
             return false;
         }
-        public bool IsWinVersusDiler(string player, out int betWin, out int bet)
+        public bool IsWinVersusDiler(string player, out int betWin, out int bet, out int playerPoints, out int diller)
         {
             betWin = -9999999;
             bet = -999999;
             BlackJackPlayer bjPlayer;
             bool isWin = false;
+            playerPoints =0;
+            diller = 0;
 
             if (CheckPlayer(player, out bjPlayer))
             {
                 bet = bjPlayer.BlackJackStaks[0].bet;
                 if (!IsPlunk(player, out betWin))
                 {
+                    playerPoints = bjPlayer.BlackJackStaks[0].GetSumOfPoints();
+                    diller = diler.BlackJackStaks[0].GetSumOfPoints();
 
-                    if (diler.BlackJackStaks[0].GetSumOfPoints() < bjPlayer.BlackJackStaks[0].GetSumOfPoints() || IsPlunk(diler.player.PlayerNick, out betWin))
+                    if (diler.BlackJackStaks[0].GetSumOfPoints() < playerPoints || IsPlunk(diler.player.PlayerNick, out betWin))
                     {
                         Debug.Log(diler.player.PlayerNick + " " + diler.BlackJackStaks[0].GetSumOfPoints());
-                        Debug.Log(bjPlayer.player.PlayerNick + " " + bjPlayer.BlackJackStaks[0].GetSumOfPoints());
+                        Debug.Log(bjPlayer.player.PlayerNick + " " + playerPoints);
                         betWin = Convert.ToInt32(bjPlayer.BlackJackStaks[0].bet * simpleWinCoef);
                         isWin = true;
                     }
-                    else if (diler.BlackJackStaks[0].GetSumOfPoints() == bjPlayer.BlackJackStaks[0].GetSumOfPoints())
+                    else if (diler.BlackJackStaks[0].GetSumOfPoints() == playerPoints)
                     {
                         Debug.Log(diler.player.PlayerNick + " " + diler.BlackJackStaks[0].GetSumOfPoints());
-                        Debug.Log(bjPlayer.player.PlayerNick + " " + bjPlayer.BlackJackStaks[0].GetSumOfPoints());
+                        Debug.Log(bjPlayer.player.PlayerNick + " " + playerPoints;
                         betWin = Convert.ToInt32(bjPlayer.BlackJackStaks[0].bet * nobodyCoef);
                         Debug.Log(bjPlayer.player.PlayerNick + " not win not lose -> " + betWin);
                     }
@@ -245,13 +249,18 @@ namespace Assets.Scipts.BackJack
                     else
                     {
                         Debug.Log(diler.player.PlayerNick + " " + diler.BlackJackStaks[0].GetSumOfPoints());
-                        Debug.Log(bjPlayer.player.PlayerNick + " " + bjPlayer.BlackJackStaks[0].GetSumOfPoints());
+                        Debug.Log(bjPlayer.player.PlayerNick + " " + playerPoints);
                         betWin = Convert.ToInt32(bjPlayer.BlackJackStaks[0].bet * loseCoef);
                         Debug.Log(bjPlayer.player.PlayerNick + " lose -> " + betWin);
                     }
 
                     bjPlayer.player.AllMoney += betWin;
                 }
+                else {
+                    playerPoints = bjPlayer.BlackJackStaks[0].GetSumOfPoints();
+                    diller = diler.BlackJackStaks[0].GetSumOfPoints();
+                }
+
 
 
             }
