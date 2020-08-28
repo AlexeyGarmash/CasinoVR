@@ -216,6 +216,7 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
         animator.SetTrigger(toTakeCard);
         takeCardBehaviour.currentPercentage = 0;
 
+        Debug.Log("TakeCardsToRightHand npc started");
         while (true)
         {         
             if (takeCardBehaviour.currentPercentage > percentageOfTakeCardToSpawnCards)
@@ -268,6 +269,7 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
     private IEnumerator TakeCardToLeftHand()
     {
+        Debug.Log("TakeCardToLeftHand npc started");
         while (true)
         {
             if(takeCardBehaviour.currentPercentage < 0.9f)
@@ -305,6 +307,7 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
     private IEnumerator GiveCardsToPlayers(bool hideCard)
     {
+        Debug.Log("GiveCardsToPlayers npc started");
         int i = 0;
 
         while (CardsToPlayersGObj.Values.ToList().Exists(cards => cards.Count != 0))

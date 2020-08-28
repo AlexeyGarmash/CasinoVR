@@ -339,7 +339,6 @@ namespace Assets.Scipts.BackJack
                 }
                 else if (photonView.IsMine)
                 {
-
                     photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
                 }
             }
@@ -360,13 +359,14 @@ namespace Assets.Scipts.BackJack
             string nick;
             CardData card;
 
+            DebugLog("Players in game" + playersInGame.Count);
+
             if (playersInGame.Count != 0)
             {
                 for (var i = 0; i < 2; i++)
                 {
                     for (var j = 0; j < playersInGame.Count; j++)
-                    {
-                        //yield return new WaitForSeconds(3f);
+                    {                      
 
 
 
@@ -415,7 +415,7 @@ namespace Assets.Scipts.BackJack
                     photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.PlayerTurn);
 
                 yield return bjNPC.TakeCardsToPlayers(true);
-                //bjNPC.TakeCards(true);
+                
 
                 yield return WaitDistributionOfCards();
             }
