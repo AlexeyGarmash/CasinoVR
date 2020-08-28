@@ -231,16 +231,16 @@ namespace Assets.Scipts.BackJack
                     playerPoints = bjPlayer.BlackJackStaks[0].GetSumOfPoints();
                     diller = diler.BlackJackStaks[0].GetSumOfPoints();
 
-                    if (diler.BlackJackStaks[0].GetSumOfPoints() < playerPoints || IsPlunk(diler.player.PlayerNick, out betWin))
+                    if (diller < playerPoints || IsPlunk(diler.player.PlayerNick, out betWin))
                     {
-                        Debug.Log(diler.player.PlayerNick + " " + diler.BlackJackStaks[0].GetSumOfPoints());
+                        Debug.Log(diler.player.PlayerNick + " " + diller);
                         Debug.Log(bjPlayer.player.PlayerNick + " " + playerPoints);
                         betWin = Convert.ToInt32(bjPlayer.BlackJackStaks[0].bet * simpleWinCoef);
                         isWin = true;
                     }
-                    else if (diler.BlackJackStaks[0].GetSumOfPoints() == playerPoints)
+                    else if (diller == playerPoints)
                     {
-                        Debug.Log(diler.player.PlayerNick + " " + diler.BlackJackStaks[0].GetSumOfPoints());
+                        Debug.Log(diler.player.PlayerNick + " " + diller);
                         Debug.Log(bjPlayer.player.PlayerNick + " " + playerPoints);
                         betWin = Convert.ToInt32(bjPlayer.BlackJackStaks[0].bet * nobodyCoef);
                         Debug.Log(bjPlayer.player.PlayerNick + " not win not lose -> " + betWin);
@@ -248,7 +248,7 @@ namespace Assets.Scipts.BackJack
 
                     else
                     {
-                        Debug.Log(diler.player.PlayerNick + " " + diler.BlackJackStaks[0].GetSumOfPoints());
+                        Debug.Log(diler.player.PlayerNick + " " + diller);
                         Debug.Log(bjPlayer.player.PlayerNick + " " + playerPoints);
                         betWin = Convert.ToInt32(bjPlayer.BlackJackStaks[0].bet * loseCoef);
                         Debug.Log(bjPlayer.player.PlayerNick + " lose -> " + betWin);
