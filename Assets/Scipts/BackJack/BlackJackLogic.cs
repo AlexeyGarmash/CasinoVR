@@ -241,7 +241,7 @@ namespace Assets.Scipts.BackJack
                     else if (diler.BlackJackStaks[0].GetSumOfPoints() == playerPoints)
                     {
                         Debug.Log(diler.player.PlayerNick + " " + diler.BlackJackStaks[0].GetSumOfPoints());
-                        Debug.Log(bjPlayer.player.PlayerNick + " " + playerPoints;
+                        Debug.Log(bjPlayer.player.PlayerNick + " " + playerPoints);
                         betWin = Convert.ToInt32(bjPlayer.BlackJackStaks[0].bet * nobodyCoef);
                         Debug.Log(bjPlayer.player.PlayerNick + " not win not lose -> " + betWin);
                     }
