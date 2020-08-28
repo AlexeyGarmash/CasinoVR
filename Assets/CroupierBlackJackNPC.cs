@@ -242,6 +242,9 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
                         }
 
+                        while (instantiaterdCardObj == null)
+                            yield return null;
+
                         CardsToPlayersGObj[players].Add(instantiaterdCardObj);
 
                         instantiaterdCardObj.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
