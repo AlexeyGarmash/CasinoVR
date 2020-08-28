@@ -17,6 +17,11 @@ namespace Assets.Scipts.BackJack
     class BlackJackTable : MonoBehaviourPun
     {
         BlackJackGameStates gameState = BlackJackGameStates.ResetGame;
+
+        [SerializeField]
+        CroupierBlackJackNPC bjNPC;
+
+        private WinLoseAudioPlayer bjNPCWinLosePlayer;
         [SerializeField]
         TMP_Text tms;
 
@@ -28,10 +33,7 @@ namespace Assets.Scipts.BackJack
         List<PlayerPlace> playersOutFromGame;
 
 
-        [SerializeField]
-        BlackJackPlayerCardField BlackJackDilerCardFieldOpen;
-        [SerializeField]
-        BlackJackPlayerCardField BlackJackDilerCardFieldHidden;
+       
 
         [SerializeField]
         private CardCurveAnimator cardCurveAnimator;
@@ -61,7 +63,7 @@ namespace Assets.Scipts.BackJack
         private void Start()
         {
 
-
+            bjNPCWinLosePlayer = bjNPC.GetComponent<WinLoseAudioPlayer>();
             playersOutFromGame = new List<PlayerPlace>();
             playersInGame = new List<PlayerPlace>();
             StartCoroutine(BlackJackLoop());
@@ -73,7 +75,8 @@ namespace Assets.Scipts.BackJack
             playerReady = false;
             playerTakeCard = false;
             playerLose = false;
-
+            bjNPC.ResetValues();
+            
             players.ForEach(p => {
                 var buttons = p.GetComponentInChildren<ButtonsHolder>();
                 ActivateGameButtons(true, false, false, false, p);
@@ -85,8 +88,7 @@ namespace Assets.Scipts.BackJack
 
             });
 
-            BlackJackDilerCardFieldOpen.ClearStacks();
-            BlackJackDilerCardFieldHidden.ClearStacks();
+            
 
             lose = -99999;
             playerLose = false;
@@ -180,15 +182,7 @@ namespace Assets.Scipts.BackJack
                     while (currWaitTime != waitTimeInSec)
                     {
                         DebugLog(p.ps.PlayerNick + " turn time ->" + (waitTimeInSec - currWaitTime).ToString());
-
-                        if (playerReady)
-                        {
-
-                            DebugLog(p.ps.PlayerNick + " skiped turn");
-
-                            break;
-                        }
-                        else if (playerLose)
+                        if (playerLose)
                         {
                             toRemove.Add(p);
                             DebugLog(p.ps.PlayerNick + " Lose bet " + lose + "so match points");
@@ -196,18 +190,38 @@ namespace Assets.Scipts.BackJack
                             break;
                         }
                         else if (playerTakeCard)
+                        {                          
+                            break;
+                        }
+
+                        else if (playerReady)
                         {
 
+                            DebugLog(p.ps.PlayerNick + " skiped turn");
 
                             break;
-
-
                         }
+                       
+                       
 
                         if (photonView.IsMine)
                             photonView.RPC("TimerStep_RPC", RpcTarget.All);
                         yield return new WaitForSeconds(OneSec);
 
+                    }
+
+                   
+                    if (playerTakeCard)
+                    {                       
+                        bjNPC.AddCardToHand(p.PlaceId, takedCard);
+                        
+
+                        yield return bjNPC.TakeCardsToPlayers(false);
+
+
+                        takedCard = null;
+
+                        playerTakeCard = false;
                     }
 
 
@@ -229,6 +243,8 @@ namespace Assets.Scipts.BackJack
                 }
 
             }
+
+            yield return WaitDistributionOfCards();
 
 
             if (endTurns && photonView.IsMine)
@@ -350,7 +366,7 @@ namespace Assets.Scipts.BackJack
                 {
                     for (var j = 0; j < playersInGame.Count; j++)
                     {
-                        yield return new WaitForSeconds(3f);
+                        //yield return new WaitForSeconds(3f);
 
 
 
@@ -358,30 +374,23 @@ namespace Assets.Scipts.BackJack
                         nick = playersInGame[j].ps.PlayerNick;
                         card = blackJackLogic.bjPlayers[j].BlackJackStaks[0].cards[i];
                         DebugLog("card to " + playersInGame[j].ps.PlayerNick + " card face = " + card.Face + " card sign=  " + card.Sign);
-                        cardCurveAnimator.StartAnimCardToPlayer(id, nick, card);
+
+                        bjNPC.AddCardToHand(id, card);
+                        //cardCurveAnimator.StartAnimCardToPlayerWithInstantiate(id, nick, card);
 
                     }
 
-                    yield return new WaitForSeconds(3f);
+                    //yield return new WaitForSeconds(3f);
 
                     id = players.Count;
                     nick = "Diler";
                     card = blackJackLogic.diler.BlackJackStaks[0].cards[i];
-
-                    if (i == 0)
-                    {
-                        BlackJackDilerCardFieldHidden.BlockField(true);
-                        BlackJackDilerCardFieldOpen.BlockField(false);
-                    }
-                    else
-                    {
-                        BlackJackDilerCardFieldHidden.BlockField(false);
-                        BlackJackDilerCardFieldOpen.BlockField(true);
-                    }
+                    bjNPC.AddCardToHand(2, card);
+                   
                     DebugLog("card to " + nick + " card face = " + card.Face + " card sign=  " + card.Sign);
 
 
-                    cardCurveAnimator.StartAnimCardToPlayer(players.Count, nick, card);
+                   // cardCurveAnimator.StartAnimCardToPlayerWithInstantiate(players.Count, nick, card);
 
                 }
 
@@ -405,6 +414,10 @@ namespace Assets.Scipts.BackJack
                 if (photonView.IsMine)
                     photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.PlayerTurn);
 
+                yield return bjNPC.TakeCardsToPlayers(true);
+                //bjNPC.TakeCards(true);
+
+                yield return WaitDistributionOfCards();
             }
             else if (photonView.IsMine)
                 photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
@@ -517,39 +530,55 @@ namespace Assets.Scipts.BackJack
             photonView.RPC("SkipTurn_RPC", RpcTarget.All, player.PlayerNick);
         }
 
+
+        CardData takedCard;
         [PunRPC]
         private void TakeCard_RPC(string player)
         {
-            if (blackJackLogic.TakeCard(player))
+            if (!playerTakeCard)
             {
-
-
-                if (blackJackLogic.IsPlunk(player, out lose))
+                if (blackJackLogic.TakeCard(player))
                 {
 
-                    playerLose = true;
-                    ActivateGameButtons(false, false, false, false, players.Find(p => p.ps.PlayerNick == player));
+
+                    if (blackJackLogic.IsPlunk(player, out lose))
+                    {
+
+                        playerLose = true;
+                        ActivateGameButtons(false, false, false, false, players.Find(p => p.ps.PlayerNick == player));
+                    }
+
+                    playerTakeCard = true;
+
+                    var playerPlace = playersInGame.Find(p => p.ps.PlayerNick == player);
+                    var id = playerPlace.PlaceId;
+                    var nick = playerPlace.ps.PlayerNick;
+
+                    var bjPlayer = blackJackLogic.bjPlayers.Find(bjP => bjP.player.PlayerNick == nick);
+                    takedCard = bjPlayer.BlackJackStaks[0].cards[bjPlayer.BlackJackStaks[0].cards.Count - 1];
+
+                    DebugLog("Give me card button ->  card to " + player + " card face = " + takedCard.Face + " card sign=  " + takedCard.Sign);
+
+
+
+
+
+                    //if (photonView.IsMine)
+                    //    cardCurveAnimator.StartAnimCardToPlayerWithInstantiate(id, nick, card);
                 }
-
-                playerTakeCard = true;
-
-                var playerPlace = playersInGame.Find(p => p.ps.PlayerNick == player);
-                var id = playerPlace.PlaceId;
-                var nick = playerPlace.ps.PlayerNick;
-
-                var bjPlayer = blackJackLogic.bjPlayers.Find(bjP => bjP.player.PlayerNick == nick);
-                var card = bjPlayer.BlackJackStaks[0].cards[bjPlayer.BlackJackStaks[0].cards.Count - 1];
-
-                DebugLog("card to " + player + " card face = " + card.Face + " card sign=  " + card.Sign);
-
-                if (photonView.IsMine)
-                    cardCurveAnimator.StartAnimCardToPlayer(id, nick, card);
             }
         }
         public void TakeCard(PlayerStats player)
         {
 
             photonView.RPC("TakeCard_RPC", RpcTarget.All, player.PlayerNick);
+          
+        }
+
+        IEnumerator WaitDistributionOfCards()
+        {
+            while (bjNPC.distributionOfCards)
+                yield return null;
         }
 
         [PunRPC]
@@ -565,15 +594,16 @@ namespace Assets.Scipts.BackJack
 
         IEnumerator GiveCardsToDealer()
         {
-            BlackJackDilerCardFieldHidden.BlockField(false);
-            BlackJackDilerCardFieldHidden.ExtractAllObjects();
-            BlackJackDilerCardFieldHidden.BlockField(true);
+            bjNPC.BlackJackDilerCardFieldHidden.BlockField(false);
+            bjNPC.BlackJackDilerCardFieldHidden.ExtractAllObjects();
+            bjNPC.BlackJackDilerCardFieldHidden.BlockField(true);
             blackJackLogic.DealerTakesCards();
 
-            BlackJackDilerCardFieldOpen.BlockField(false);
+            bjNPC.BlackJackDilerCardFieldOpen.BlockField(false);
 
             yield return new WaitForSeconds(OneSec * 2);
             if (blackJackLogic.diler.BlackJackStaks[0].cards.Count > 2)
+            {
                 for (var i = 2; i < blackJackLogic.diler.BlackJackStaks[0].cards.Count; i++)
                 {
 
@@ -581,47 +611,108 @@ namespace Assets.Scipts.BackJack
                     var idCurve = players.Count;
                     var nick = "Diler";
                     var card = blackJackLogic.diler.BlackJackStaks[0].cards[i];
+                    bjNPC.AddCardToHand(2, card);
 
                     DebugLog("card to " + nick + " card face = " + card.Face + " card sign=  " + card.Sign);
-
-                    cardCurveAnimator.StartAnimCardToPlayer(idCurve, nick, card);
-
-                    yield return new WaitForSeconds(OneSec * 2);
 
 
                 }
 
-            yield return new WaitForSeconds(5f);
+                yield return bjNPC.TakeCardsToPlayers(false);
+
+                yield return WaitDistributionOfCards();
+            }
+
+            yield return new WaitForSeconds(3f);
 
         }
         IEnumerator CheckResults()
         {
 
-            yield return GiveCardsToDealer();
+            yield return GiveCardsToDealer();      
+
+            var winners = new List<PlayerPlace>();
+            var winNumbers = new Dictionary<PlayerPlace, int>();
 
             foreach (var p in playersInGame)
             {
                 var win = 0;
                 var bet = 0;
+
                 if (blackJackLogic.IsWinVersusDiler(p.ps.PlayerNick, out win, out bet))
                 {
+                    winners.Add(p);
+                    winNumbers.Add(p, win + bet);
                     DebugLog("player" + p.ps.PlayerNick + " WIN! -> " + win + "$");
 
-                    var animator = p.GetComponentInChildren<PlayerWinAnimation>();
-                    animator.StartAnimation(win + bet, p.ps.PlayerNick);
-                    yield return new WaitForSeconds(OneSec * 2);
                 }
                 else
                 {
                     DebugLog("player" + p.ps.PlayerNick + " LOSE! -> " + win + "$");
 
-                    yield return new WaitForSeconds(OneSec * 2);
                 }
             }
 
-            if (photonView.IsMine)
-                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
+            if (winners.Count > 0)
+            {
+                bjNPCWinLosePlayer.winPlayer.PlayRandomClip();
 
+               
+
+                if (photonView.IsMine)
+                    bjNPC.WinAnimation();
+
+                yield return bjNPC.StartRandomWinDance();
+
+                yield return new WaitForSeconds(0.1f);
+
+                while (bjNPC.winDanceBehavour.currentPercentage < 0.9f)
+                {
+                    yield return null;
+                }
+                List<PlayerWinAnimation> animations = new List<PlayerWinAnimation>();
+
+                winners.ForEach(w =>
+                {
+                    var animation = w.GetComponentInChildren<PlayerWinAnimation>();                  
+                    animation.StartAnimation(winNumbers[w], w.ps.PlayerNick);
+
+                    animations.Add(animation);
+                });
+
+                while (animations.Exists(a => a.animStarted))
+                {
+                    yield return null;
+                }
+
+
+                if (photonView.IsMine)                                  
+                    bjNPC.EndDanceAnimation();
+
+                bjNPCWinLosePlayer.winPlayer.StopPlaing();
+            }
+            else {
+
+                bjNPCWinLosePlayer.losePlayer.PlayRandomClip();
+
+                if (photonView.IsMine)
+                {
+                    bjNPC.LoseAnimation();
+
+                    bjNPC.EndDanceAnimation();
+                }
+
+                while (bjNPC.loseDanceBehavour.currentPercentage < 0.9)
+                    yield return null;
+
+                bjNPCWinLosePlayer.losePlayer.StopPlaing();
+            }
+
+            if (photonView.IsMine)
+            {
+                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
+            }
+           
             yield return null;
         }
     }

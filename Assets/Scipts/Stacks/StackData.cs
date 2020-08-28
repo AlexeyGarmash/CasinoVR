@@ -30,7 +30,15 @@ public class StackData : MonoBehaviourPun
     {
         animator = GetComponent<StackAnimator>();
     }
-
+    public void ExtractOne(GameObject obj)
+    {
+        if (Objects.Contains(obj))
+        {
+            obj.transform.parent = null;
+            Objects.Remove(obj);
+            UpdateStackInstantly();
+        }
+    }
     public void ExtractAll()
     {
         animator.Clear();

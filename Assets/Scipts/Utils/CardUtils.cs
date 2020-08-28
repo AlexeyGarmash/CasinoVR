@@ -161,19 +161,19 @@ namespace Cards
         }
         private void LoadClovers()
         {
-             CardsPrefabs.Add(Resources.Load("Cards/Clover/Card_Clover_B_02") as GameObject);
-             CardsPrefabs.Add( Resources.Load("Cards/Clover/Card_Clover_B_03") as GameObject);
-             CardsPrefabs.Add( Resources.Load("Cards/Clover/Card_Clover_B_04") as GameObject);
-             CardsPrefabs.Add( Resources.Load("Cards/Clover/Card_Clover_B_05") as GameObject);
-             CardsPrefabs.Add(Resources.Load("Cards/Clover/Card_Clover_B_06") as GameObject);
-             CardsPrefabs.Add( Resources.Load("Cards/Clover/Card_Clover_B_07") as GameObject);
-             CardsPrefabs.Add( Resources.Load("Cards/Clover/Card_Clover_B_08") as GameObject);
-             CardsPrefabs.Add( Resources.Load("Cards/Clover/Card_Clover_B_09") as GameObject);
-             CardsPrefabs.Add(Resources.Load("Cards/Clover/Card_Clover_B_10") as GameObject);
-             CardsPrefabs.Add( Resources.Load("Cards/Clover/Card_Clover_B_King") as GameObject);
-             CardsPrefabs.Add(Resources.Load("Cards/Clover/Card_Clover_B_Ace") as GameObject);
-             CardsPrefabs.Add( Resources.Load("Cards/Clover/Card_Clover_B_Jack") as GameObject);
-             CardsPrefabs.Add( Resources.Load("Cards/Clover/Card_Clover_B_Queen") as GameObject);
+             CardsPrefabs.Add(Resources.Load("Cards/Clovers/Card_Clover_B_02") as GameObject);
+             CardsPrefabs.Add( Resources.Load("Cards/Clovers/Card_Clover_B_03") as GameObject);
+             CardsPrefabs.Add( Resources.Load("Cards/Clovers/Card_Clover_B_04") as GameObject);
+             CardsPrefabs.Add( Resources.Load("Cards/Clovers/Card_Clover_B_05") as GameObject);
+             CardsPrefabs.Add(Resources.Load("Cards/Clovers/Card_Clover_B_06") as GameObject);
+             CardsPrefabs.Add( Resources.Load("Cards/Clovers/Card_Clover_B_07") as GameObject);
+             CardsPrefabs.Add( Resources.Load("Cards/Clovers/Card_Clover_B_08") as GameObject);
+             CardsPrefabs.Add( Resources.Load("Cards/Clovers/Card_Clover_B_09") as GameObject);
+             CardsPrefabs.Add(Resources.Load("Cards/Clovers/Card_Clover_B_10") as GameObject);
+             CardsPrefabs.Add( Resources.Load("Cards/Clovers/Card_Clover_B_King") as GameObject);
+             CardsPrefabs.Add(Resources.Load("Cards/Clovers/Card_Clover_B_Ace") as GameObject);
+             CardsPrefabs.Add( Resources.Load("Cards/Clovers/Card_Clover_B_Jack") as GameObject);
+             CardsPrefabs.Add( Resources.Load("Cards/Clovers/Card_Clover_B_Queen") as GameObject);
         }
 
         private void LoadDiamond()
@@ -212,24 +212,32 @@ namespace Cards
 
         private void LoadSpades()
         {
-            CardsPrefabs.Add(Resources.Load("Cards/Spades/Card_Spades_B_02") as GameObject);
-            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spades_B_03") as GameObject);
-            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spades_B_04") as GameObject);
-            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spades_B_05") as GameObject);
-            CardsPrefabs.Add(Resources.Load("Cards/Spades/Card_Spades_B_06") as GameObject);
-            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spades_B_07") as GameObject);
-            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spades_B_08") as GameObject);
-            CardsPrefabs.Add(Resources.Load("Cards/Spades/Card_Spades_B_09") as GameObject);
-            CardsPrefabs.Add(Resources.Load("Cards/Spades/Card_Spades_B_10") as GameObject);
-            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spades_B_King") as GameObject);
-            CardsPrefabs.Add(Resources.Load("Cards/Spades/Card_Spades_B_Ace") as GameObject);
-            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spades_B_Jack") as GameObject);
-            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spades_B_Queen") as GameObject);
+            CardsPrefabs.Add(Resources.Load("Cards/Spades/Card_Spade_B_02") as GameObject);
+            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spade_B_03") as GameObject);
+            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spade_B_04") as GameObject);
+            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spade_B_05") as GameObject);
+            CardsPrefabs.Add(Resources.Load("Cards/Spades/Card_Spade_B_06") as GameObject);
+            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spade_B_07") as GameObject);
+            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spade_B_08") as GameObject);
+            CardsPrefabs.Add(Resources.Load("Cards/Spades/Card_Spade_B_09") as GameObject);
+            CardsPrefabs.Add(Resources.Load("Cards/Spades/Card_Spade_B_10") as GameObject);
+            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spade_B_King") as GameObject);
+            CardsPrefabs.Add(Resources.Load("Cards/Spades/Card_Spade_B_Ace") as GameObject);
+            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spade_B_Jack") as GameObject);
+            CardsPrefabs.Add( Resources.Load("Cards/Spades/Card_Spade_B_Queen") as GameObject);
         }
 
         public GameObject GetCard(Card_Face face, Card_Sign sign)
         {
-            return CardsPrefabs.Find(card => card.GetComponent<CardData>().Face == face && card.GetComponent<CardData>().Sign == sign);
+            try
+            {
+                return CardsPrefabs.Find(card => card.GetComponent<CardData>().Face == face && card.GetComponent<CardData>().Sign == sign);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(face + " " + sign);
+                return null;
+            }
         }
 
         public float yOffset = 0.0002f;

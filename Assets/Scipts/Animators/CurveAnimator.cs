@@ -8,16 +8,12 @@ namespace Assets.Scipts
 {
     public class CurveAnimator : MonoBehaviourPun
     {
-
-
-
-
         [SerializeField]
         Vector3 rotation;
         [SerializeField]
         bool RandomRotation = true;
         [SerializeField]
-        protected BezierCurve[] curves;
+        public BezierCurve[] curves;
 
         [SerializeField]
         protected float speed = 0.1f;
@@ -27,8 +23,11 @@ namespace Assets.Scipts
         [SerializeField]
         protected float speedSlowingStep = 0.5f;
 
-        protected List<GameObject> ObjectToAnimation;
+        [SerializeField]
+        public List<GameObject> ObjectToAnimation;
 
+        [SerializeField]
+        public bool animStarted = true;
         protected void Start()
         {
             ObjectToAnimation = new List<GameObject>();
@@ -63,6 +62,7 @@ namespace Assets.Scipts
             }
             ObjectToAnimation.Clear();
 
+            animStarted = false;
             yield return null;
 
         }
@@ -118,17 +118,24 @@ namespace Assets.Scipts
         private void OnTriggerEnter(Collider other)
         {
 
-            var chip = other.gameObject.GetComponent<OwnerData>();
-            var view = other.gameObject.GetComponent<PhotonView>();
-
-            if (chip != null && view != null && !ObjectToAnimation.Contains(other.gameObject))
+            if (animStarted)
             {
-                ObjectToAnimation.Add(other.gameObject);
-                chip.GetComponent<Collider>().enabled = false;
-                chip.GetComponent<Rigidbody>().isKinematic = true;
-                other.gameObject.SetActive(false);
-                view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+            
+                var chip = other.gameObject.GetComponent<OwnerData>();
+                var view = other.gameObject.GetComponent<PhotonView>();
 
+                if (chip != null && view != null && !ObjectToAnimation.Contains(other.gameObject))
+                {
+                   
+                    
+                    chip.ExtractObject();
+                    ObjectToAnimation.Add(other.gameObject);
+                    chip.GetComponent<Collider>().enabled = false;
+                    chip.GetComponent<Rigidbody>().isKinematic = true;
+                    other.gameObject.SetActive(false);
+                    view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+
+                }
             }
 
         }
