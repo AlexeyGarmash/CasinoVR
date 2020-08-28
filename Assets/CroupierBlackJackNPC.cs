@@ -210,37 +210,37 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
     }
     private IEnumerator TakeCardsToRightHand()
     {
-        if(photonView.IsMine)
-            animator.SetTrigger(toTakeCard);
+        RightHandNPCStack.ClearData();
 
-        yield return new WaitForSeconds(1f);
+       
+        animator.SetTrigger(toTakeCard);
+        takeCardBehaviour.currentPercentage = 0;
 
         while (true)
-        {
-
+        {         
             if (takeCardBehaviour.currentPercentage > percentageOfTakeCardToSpawnCards)
             {
                 foreach (var players in CardsToPlayers.Keys)
                 {
-                   
-                    CardsToPlayers[players].ForEach(card =>
+
+                    foreach (var card in CardsToPlayers[players])
                     {
                         CardCurve.StopAllCoroutines();
 
                         //cardObj = PhotonNetwork.Instantiate(CardUtils.Instance.GetPathToCard(card), Vector3.zero, Quaternion.identity);
                         if (photonView.IsMine)
                         {
-                           
+
 
                             instantiaterdCardObj = Instantiate(CardUtils.Instance.GetCard(card.Face, card.Sign));
                             var view = instantiaterdCardObj.GetComponent<PhotonView>();
                             instantiaterdCardObj.GetComponent<PhotonSyncCrontroller>().SyncOff_RPC();
                             PhotonNetwork.AllocateViewID(view);
 
-                            photonView.RPC("InstantiateRemote", RpcTarget.OthersBuffered, view.ViewID, (int)card.Face, (int)card.Sign);
+                            photonView.RPC("InstantiateRemote", RpcTarget.Others, view.ViewID, (int)card.Face, (int)card.Sign);
 
                         }
-                       
+
                         CardsToPlayersGObj[players].Add(instantiaterdCardObj);
 
                         instantiaterdCardObj.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
@@ -251,9 +251,10 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
                         rb.isKinematic = true;
                         chip.transform.parent = RightHandNPCStack.transform;
 
+                       
                         RightHandNPCStack.Objects.Add(instantiaterdCardObj);
                         RightHandNPCStack.StartAnim(instantiaterdCardObj);
-                    });
+                    }
 
                 }
 
@@ -269,6 +270,9 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
     {
         while (true)
         {
+            if(takeCardBehaviour.currentPercentage < 0.9f)
+                takeCardBehaviour.currentPercentage = 0;
+
             if (takeCardBehaviour.currentPercentage >= 1f)
             {
                 var objecksToExtract = new List<GameObject>();
@@ -305,25 +309,26 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
         while (CardsToPlayersGObj.Values.ToList().Exists(cards => cards.Count != 0))
         {
+            if (hideCard)
+            {
+                if (i == 0)
+                {
+                    BlackJackDilerCardFieldHidden.BlockField(true);
+                    BlackJackDilerCardFieldOpen.BlockField(false);
+                }
+                else
+                {
+                    BlackJackDilerCardFieldHidden.BlockField(false);
+                    BlackJackDilerCardFieldOpen.BlockField(true);
+                }
+            }
 
             foreach (var playerPos in CardsToPlayersGObj.Keys)
             {
 
                 var playerCards = CardsToPlayersGObj[playerPos];
 
-                if (hideCard)
-                {
-                    if (i == 0)
-                    {
-                        BlackJackDilerCardFieldHidden.BlockField(true);
-                        BlackJackDilerCardFieldOpen.BlockField(false);
-                    }
-                    else
-                    {
-                        BlackJackDilerCardFieldHidden.BlockField(false);
-                        BlackJackDilerCardFieldOpen.BlockField(true);
-                    }
-                }
+               
 
                 if (playerCards.Count != 0)
                 {
@@ -351,16 +356,15 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
                     RightHandNPCStack.StartAnim(card);
 
                     yield return null;
-
-                    if(photonView.IsMine)
-                        animator.SetTrigger(toGiveCard);
-                   
+                 
+                    animator.SetTrigger(toGiveCard);
+                    giveCardBehavour.currentPercentage = 0;                   
 
                     while (true)
                     {
                        
 
-                        if (giveCardBehavour.animEnded)
+                        if (giveCardBehavour.currentPercentage > 0.7f)
                         {
 
                             RightHandNPCStack.ExtractOne(card);

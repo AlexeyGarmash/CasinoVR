@@ -658,13 +658,15 @@ namespace Assets.Scipts.BackJack
                 bjNPCWinLosePlayer.winPlayer.PlayRandomClip();
 
                
-
-                if (photonView.IsMine)
-                    bjNPC.WinAnimation();
+             
+                bjNPC.WinAnimation();
 
                 yield return bjNPC.StartRandomWinDance();
 
                 yield return new WaitForSeconds(0.1f);
+
+                if (bjNPC.winDanceBehavour.currentPercentage >= 1)
+                    bjNPC.winDanceBehavour.currentPercentage = 0;
 
                 while (bjNPC.winDanceBehavour.currentPercentage < 0.9f)
                 {
@@ -686,8 +688,8 @@ namespace Assets.Scipts.BackJack
                 }
 
 
-                if (photonView.IsMine)                                  
-                    bjNPC.EndDanceAnimation();
+                                            
+                bjNPC.EndDanceAnimation();
 
                 bjNPCWinLosePlayer.winPlayer.StopPlaing();
             }
@@ -695,12 +697,11 @@ namespace Assets.Scipts.BackJack
 
                 bjNPCWinLosePlayer.losePlayer.PlayRandomClip();
 
-                if (photonView.IsMine)
-                {
-                    bjNPC.LoseAnimation();
+               
+                bjNPC.LoseAnimation();
 
-                    bjNPC.EndDanceAnimation();
-                }
+                bjNPC.EndDanceAnimation();
+                bjNPC.loseDanceBehavour.currentPercentage = 0;
 
                 while (bjNPC.loseDanceBehavour.currentPercentage < 0.9)
                     yield return null;
