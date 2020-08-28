@@ -283,6 +283,7 @@ namespace Assets.Scipts.BackJack
         [PunRPC]
         public void State_RPC(int state)
         {
+            Debug.Log("to state State_RPC" + (BlackJackGameStates)state);
             gameState = (BlackJackGameStates)state;
         }
 
@@ -513,6 +514,12 @@ namespace Assets.Scipts.BackJack
 
             if (photonView.IsMine)
                 photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CardsToPlayers);
+            else {
+                while (gameState != BlackJackGameStates.CardsToPlayers)
+                {
+                    yield return null;
+                }
+            }
 
         }
 
