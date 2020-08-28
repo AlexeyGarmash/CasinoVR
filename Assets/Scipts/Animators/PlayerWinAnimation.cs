@@ -14,7 +14,7 @@ public class PlayerWinAnimation : CurveAnimator
         var chipObj = Instantiate(ChipUtils.Instance.GetChipByChipEnum((Chips)chip), transform.position, transform.rotation);
         chipObj.GetComponent<PhotonView>().ViewID = viewID;
         chipObj.GetComponent<OwnerData>().Owner = owner;
-
+        chipObj.SetActive(false);
         ObjectToAnimation.Add(chipObj);
     }
     public void StartAnimation(int win, string nickName)
@@ -57,6 +57,7 @@ public class PlayerWinAnimation : CurveAnimator
                 ObjectToAnimation.Add(chip);
 
                 PhotonNetwork.AllocateViewID(view);
+                chip.SetActive(false);
 
                 photonView.RPC("InstantiateChip", RpcTarget.OthersBuffered, view.ViewID, (int)chipCost, nickName);
                 money -= (int)chipCost;

@@ -218,7 +218,10 @@ namespace Assets.Scipts.BackJack
 
                         yield return bjNPC.TakeCardsToPlayers(false);
 
+
                         takedCard = null;
+
+                        playerTakeCard = false;
                     }
 
 
@@ -527,38 +530,42 @@ namespace Assets.Scipts.BackJack
             photonView.RPC("SkipTurn_RPC", RpcTarget.All, player.PlayerNick);
         }
 
+
         CardData takedCard;
         [PunRPC]
         private void TakeCard_RPC(string player)
         {
-            if (blackJackLogic.TakeCard(player))
+            if (!playerTakeCard)
             {
-
-
-                if (blackJackLogic.IsPlunk(player, out lose))
+                if (blackJackLogic.TakeCard(player))
                 {
 
-                    playerLose = true;
-                    ActivateGameButtons(false, false, false, false, players.Find(p => p.ps.PlayerNick == player));
+
+                    if (blackJackLogic.IsPlunk(player, out lose))
+                    {
+
+                        playerLose = true;
+                        ActivateGameButtons(false, false, false, false, players.Find(p => p.ps.PlayerNick == player));
+                    }
+
+                    playerTakeCard = true;
+
+                    var playerPlace = playersInGame.Find(p => p.ps.PlayerNick == player);
+                    var id = playerPlace.PlaceId;
+                    var nick = playerPlace.ps.PlayerNick;
+
+                    var bjPlayer = blackJackLogic.bjPlayers.Find(bjP => bjP.player.PlayerNick == nick);
+                    takedCard = bjPlayer.BlackJackStaks[0].cards[bjPlayer.BlackJackStaks[0].cards.Count - 1];
+
+                    DebugLog("Give me card button ->  card to " + player + " card face = " + takedCard.Face + " card sign=  " + takedCard.Sign);
+
+
+
+
+
+                    //if (photonView.IsMine)
+                    //    cardCurveAnimator.StartAnimCardToPlayerWithInstantiate(id, nick, card);
                 }
-
-                playerTakeCard = true;
-
-                var playerPlace = playersInGame.Find(p => p.ps.PlayerNick == player);
-                var id = playerPlace.PlaceId;
-                var nick = playerPlace.ps.PlayerNick;
-
-                var bjPlayer = blackJackLogic.bjPlayers.Find(bjP => bjP.player.PlayerNick == nick);
-                takedCard = bjPlayer.BlackJackStaks[0].cards[bjPlayer.BlackJackStaks[0].cards.Count - 1];
-
-                DebugLog("card to " + player + " card face = " + takedCard.Face + " card sign=  " + takedCard.Sign);
-
-
-               
-
-              
-                //if (photonView.IsMine)
-                //    cardCurveAnimator.StartAnimCardToPlayerWithInstantiate(id, nick, card);
             }
         }
         public void TakeCard(PlayerStats player)

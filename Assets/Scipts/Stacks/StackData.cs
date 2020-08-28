@@ -34,6 +34,7 @@ public class StackData : MonoBehaviourPun
     {
         if (Objects.Contains(obj))
         {
+            obj.transform.parent = null;
             Objects.Remove(obj);
             UpdateStackInstantly();
         }

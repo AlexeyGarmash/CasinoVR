@@ -213,7 +213,8 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
         if(photonView.IsMine)
             animator.SetTrigger(toTakeCard);
 
-       
+        yield return new WaitForSeconds(1f);
+
         while (true)
         {
 
@@ -224,10 +225,13 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
                    
                     CardsToPlayers[players].ForEach(card =>
                     {
+                        CardCurve.StopAllCoroutines();
 
                         //cardObj = PhotonNetwork.Instantiate(CardUtils.Instance.GetPathToCard(card), Vector3.zero, Quaternion.identity);
                         if (photonView.IsMine)
                         {
+                           
+
                             instantiaterdCardObj = Instantiate(CardUtils.Instance.GetCard(card.Face, card.Sign));
                             var view = instantiaterdCardObj.GetComponent<PhotonView>();
                             instantiaterdCardObj.GetComponent<PhotonSyncCrontroller>().SyncOff_RPC();
