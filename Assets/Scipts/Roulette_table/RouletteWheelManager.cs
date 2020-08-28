@@ -38,7 +38,10 @@ public class RouletteWheelManager : MonoBehaviourPun, IListener<ROULETTE_EVENT>
         if (RouletteWheelLogic.IsPossibleStartGame)
         {
             //
-            photonView.RPC("StartSpin_RPC", RpcTarget.All, winNumber);
+            if (photonView.IsMine)
+            {
+                photonView.RPC("StartSpin_RPC", RpcTarget.All, winNumber);
+            }
             
         }
         else

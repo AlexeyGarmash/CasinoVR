@@ -132,11 +132,8 @@ public class OVRGrabberCustom : MonoBehaviourPun
     }
 
     public void ForceRelease(OVRGrabbableCustom grabbable)
-    {
-        bool canRelease = (
-            (m_grabbedObj != null) &&
-            (m_grabbedObj == grabbable)
-        );
+    {//m_grabbedObj == grabbable &&
+        bool canRelease = ((m_grabbedObj != null) && m_grabbedObjs.Contains(grabbable));
         if (canRelease)
         {
             GrabEnd();

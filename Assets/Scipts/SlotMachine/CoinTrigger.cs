@@ -16,7 +16,10 @@ namespace SlotMachine
         {
             if (other.gameObject.tag == COIN_TAG)
             {
+                var grabbedCoin = other.gameObject.GetComponent<OVRGrabbableCustom>();
+                grabbedCoin.grabbedBy.ForceRelease(grabbedCoin);
                 Destroy(other.gameObject);
+
                 //TODO: Play music
 
                 em.PostNotification(SLOT_MACHINE_EVENT.COIN_INSERTED, this, null);
