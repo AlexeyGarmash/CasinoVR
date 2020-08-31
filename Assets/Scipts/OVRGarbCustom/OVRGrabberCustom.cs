@@ -145,19 +145,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         m_anchorOffsetPosition = transform.localPosition;
         m_anchorOffsetRotation = transform.localRotation;
 
-        //if (photonView.IsMine)
-        //{
-        //    if (!m_moveHandPosition)
-        //    {
-        //        // If we are being used with an OVRCameraRig, let it drive input updates, which may come from Update or FixedUpdate.
-        //        OVRCameraRig rig = transform.GetComponentInParent<OVRCameraRig>();
-        //        if (rig != null)
-        //        {
-        //            rig.UpdatedAnchors += (r) => { OnUpdatedAnchors(); };
-        //            m_operatingWithoutOVRCameraRig = false;
-        //        }
-        //    }
-        //}
+       
     }
 
     [PunRPC]
@@ -221,14 +209,17 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
         float prevFlex = m_prevFlex;
 
-        // Update values from inputs
-        m_prevFlex = OVRInput.Get(GrabAxis, m_controller);
-        add_chip = OVRInput.GetDown(GrabButton, m_controller);
+        if (photonView.IsMine)
+        {
+            // Update values from inputs
+            m_prevFlex = OVRInput.Get(GrabAxis, m_controller);
+            add_chip = OVRInput.GetDown(GrabButton, m_controller);
 
-        
-        if(m_grabCandidates.Count != 0)
-            SetOutlineForClosest();
-        CheckForGrabOrRelease(prevFlex);
+       
+            if (m_grabCandidates.Count != 0)
+                SetOutlineForClosest();
+            CheckForGrabOrRelease(prevFlex);
+        }
     }
 
     void OnDestroy()
@@ -410,27 +401,25 @@ public class OVRGrabberCustom : MonoBehaviourPun
     [PunRPC]
     protected virtual void GrabBegin_RPC(int viewID, int colliderIndex)
     {
-        var result = m_grabCandidates.FirstOrDefault(c => c.Key.GetComponent<PhotonView>().ViewID == viewID);
-       
-        
-        
-        if (result.Key == null)
+        if (!photonView.IsMine)
         {
 
-            Debug.LogError("closestGrabbable candidate not found!!!!!!!!");
-            return;
+            var grabbableCollidrs = Physics.OverlapSphere(transform.position, 1f).FirstOrDefault(g => g.GetComponent<PhotonView>().ViewID == viewID);
+          
+            closestGrabbable = grabbableCollidrs.GetComponent<OVRGrabbableCustom>();
+            Collider grabbableCollider = closestGrabbable.grabPoints[colliderIndex];
+            // Store the closest grabbable
+
+
+            Vector3 closestPointOnBounds = grabbableCollider.ClosestPointOnBounds(m_gripTransform.position);
+            float grabbableMagSq = (m_gripTransform.position - closestPointOnBounds).sqrMagnitude;
+
+            closestMagSq = grabbableMagSq;
+            closestGrabbableCollider = grabbableCollider;
         }
         
-        closestGrabbable = result.Key;
-        Collider grabbableCollider = closestGrabbable.grabPoints[colliderIndex];
-        // Store the closest grabbable
-
-
-        Vector3 closestPointOnBounds = grabbableCollider.ClosestPointOnBounds(m_gripTransform.position);
-        float grabbableMagSq = (m_gripTransform.position - closestPointOnBounds).sqrMagnitude;
-
-        closestMagSq = grabbableMagSq;
-        closestGrabbableCollider = grabbableCollider;
+        
+       
 
         DisableOutline(closestGrabbable);
         m_grabCandidates.Clear();

@@ -268,6 +268,23 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
     }
 
+    public void MagnetizeObject_RPC(int viewId,int stackIndex)
+    {
+        var magnetizedObject = Physics.OverlapSphere(transform.position, 1f).FirstOrDefault(g => g.GetComponent<PhotonView>().ViewID == viewId).gameObject;
+        var rb = magnetizedObject.GetComponent<Rigidbody>();
+        var stackData = Stacks[stackIndex];
+
+        if (stackData.playerName == "")
+            stackData.playerName = magnetizedObject.GetComponent<OwnerData>().Owner;
+
+        rb.isKinematic = true;
+        magnetizedObject.transform.parent = stackData.transform;
+
+        //Debug.Break();
+
+        stackData.Objects.Add(magnetizedObject);
+        stackData.animator.StartAnim(magnetizedObject);
+    }
     public abstract bool MagnetizeObject(GameObject Object, StackData Stack);
 
 }

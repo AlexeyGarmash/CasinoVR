@@ -16,8 +16,7 @@ public class ChipsField : AbstractField
 
     public override bool MagnetizeObject(GameObject Object, StackData Stack)
     {
-      
-       
+            
         var rb = Object.GetComponent<Rigidbody>();
         var chip = Object.GetComponent<ChipData>();
 
@@ -38,7 +37,9 @@ public class ChipsField : AbstractField
 
             stackData.Objects.Add(Object);
             stackData.animator.StartAnim(Object);
-        
+
+
+            photonView.RPC("MagnetizeObject_RPC", RpcTarget.OthersBuffered, chip.photonView.ViewID, Stacks.ToList().IndexOf(Stack));
 
             return true;
 
@@ -58,7 +59,7 @@ public class ChipsField : AbstractField
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
 
-        if (chip != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null)
+        if (chip != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null && photonView.IsMine)
         {
          
             chip.field = this;
@@ -68,6 +69,7 @@ public class ChipsField : AbstractField
             if (stacks.Exists(s => s.stackType != ""))
                 stack = stacks[0];
             else stack = stacks.FirstOrDefault(s => s.stackType == "");
+
             MagnetizeObject(gameObj, stack);
 
         }
