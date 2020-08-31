@@ -7,7 +7,8 @@ using UnityEngine;
 [Serializable]
 public class PlayerStats : MonoBehaviour
 {
-    
+    public PlayerPlace currcentPlace;
+
     public string PlayerNick;
 
     public int AllMoney;
@@ -18,8 +19,12 @@ public class PlayerStats : MonoBehaviour
         AllMoney = allMoney;
     }
 
-    private void Start()
+    private void OnDestroy()
     {
-       
+        if (currcentPlace != null)
+        {
+            currcentPlace.GoOutFromPlace();
+        }
     }
+
 }

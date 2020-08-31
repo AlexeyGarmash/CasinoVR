@@ -89,7 +89,7 @@ public class RoulettedBettingField : ChipsField, IListener<ROULETTE_EVENT>
                 if (grabbadBy == null && !Contain(chip.gameObject))
                 {
                     var chipPhotonView = chip.GetComponent<PhotonView>();
-                    MagnetizeObject(other.gameObject, FindStackByName(chip.transform));
+                    MagnetizeObject(other.gameObject, FindStackByName(chip.transform), "betField");
                     if (chipPhotonView != null && chipPhotonView.IsMine)
                     {
                         isReadyRemoveBet = true;

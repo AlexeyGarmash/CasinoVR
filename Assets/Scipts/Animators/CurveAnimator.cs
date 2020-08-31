@@ -133,7 +133,7 @@ namespace Assets.Scipts
                     chip.GetComponent<Collider>().enabled = false;
                     chip.GetComponent<Rigidbody>().isKinematic = true;
                     other.gameObject.SetActive(false);
-                    view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+                    //view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
 
                 }
             }

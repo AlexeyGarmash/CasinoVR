@@ -11,39 +11,9 @@ namespace Assets.Scipts.BackJack
 {
     public class BlackJackPlayerCardField : AbstractField
     {
-        public override bool MagnetizeObject(GameObject Object, StackData Stack)
-        {
-            var photonView = Object.GetComponent<PhotonView>();
-            //photonView.ObservedComponents.Clear();
-            var rb = Object.GetComponent<Rigidbody>();
-            var chip = Object.GetComponent<CardData>();
+        
 
-
-            var stackData = Stack;
-            
-            if (stackData.playerName.Equals(chip.Owner) || stackData.playerName == "")
-            {
-                if (stackData.playerName == "")
-                    stackData.playerName = chip.Owner;
-
-                rb.isKinematic = true;
-                chip.transform.parent = stackData.transform;
-
-                //Debug.Break();
-
-                stackData.Objects.Add(Object);
-                stackData.animator.StartAnim(Object);
-
-
-                return true;
-
-
-            }
-
-            return false;
-        }
-
-        private new void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {    
 
             var gameObj = other.gameObject;
@@ -57,11 +27,30 @@ namespace Assets.Scipts.BackJack
 
                 Debug.Log("MagnetizeObject viewID=" + view.ViewID);
                 var clossest = FindClossestField(card.transform, FindPossibleFields(card));
-                MagnetizeObject(gameObj, clossest);
+                MagnetizeObject(gameObj, clossest, "CardField");
 
             }
 
             
+        }
+
+        public GameObject ExtractObject(CardData cost)
+        {
+            StackData stack = null;
+            GameObject Obj = null;
+            Stacks.ToList().ForEach(s => s.Objects.ForEach(o => {
+                CardData cd = o.GetComponent<CardData>();
+                if (cd.Sign == cost.Sign && cd.Face == cost.Face)
+                {
+                    stack = s;
+                    Obj = o;
+                }
+
+            }));
+
+            stack?.ExtractOne(Obj);
+
+            return Obj;
         }
         
     }

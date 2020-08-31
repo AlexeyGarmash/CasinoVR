@@ -76,9 +76,13 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
     [SerializeField]
     public BlackJackPlayerCardField BlackJackDilerCardFieldHidden;
 
+    [HideInInspector]
     public TakeCardBehaviour takeCardBehaviour;
+    [HideInInspector]
     public GiveCardAnimBehavior giveCardBehavour;
+    [HideInInspector]
     public WinDanceBehavour winDanceBehavour;
+    [HideInInspector]
     public LoseDanceBehaviour loseDanceBehavour;
 
     GameObject instantiaterdCardObj;

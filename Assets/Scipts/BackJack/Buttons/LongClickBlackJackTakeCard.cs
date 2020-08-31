@@ -41,7 +41,7 @@ namespace Assets.Scipts.BackJack.Buttons
             p_place.ps = lastCollider.GetComponentInParent<PlayerStats>();
             _onLongClickIn?.Invoke(p_place.ps);
 
-            _onLongClickIn?.Invoke(playerStats);
+            
 
             inGame = true;
             //_imageReady.texture = _readyTexture;

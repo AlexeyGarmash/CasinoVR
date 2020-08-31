@@ -17,7 +17,7 @@ namespace Assets.Scipts.BackJack
      * ...
      * 10)2 - 2 очка
      * ---------------------Конец-игры-и-коефициенты--------
-     * 1) После второй очереди 21 очко (коеф 1.5)
+     * 1) После первой раздачи 21 очко (коеф 1.5)
      * 2) Очков больше чем у дилера (коеф 1)
      * 3) очков равное кол с дилером (коеф 0)
      * 4) Очков меньше чем у дилера (коеф -1)
@@ -26,7 +26,7 @@ namespace Assets.Scipts.BackJack
      *1) две очереди карт по 1 штуке (2 карта дилера скрываетьсяч от игроков)
      *2) "Дубль" - дабл ставка если 9-11 то нужно напомнить про нее 
      * если 4-8 или 12-19 то не нужно но далб ставка возможна
-     * 3) "спли" - если при первой раздаче две карты по 10 очков - то 
+     * 3) "сплит" - если при первой раздаче две карты по одной стоимости - то 
      *  игрок имеет право разделить это краты по отдельности и получить по 1 карты на разделенные
      *  и добавить такую же ставку которая тояла
      *  4) отказ - если при раздаче карты не нравяться игроку то от может сделать отменту ставки,
@@ -34,13 +34,13 @@ namespace Assets.Scipts.BackJack
      * 5) страховка если у дилера на верху при раздаче 10 очков или 11 
      * игрок может застраховать ставку от блекджека, страховка половина от ставки или меньше 
      *  коеф страховки 1
-     *  6) если у тебя блек джек то ты должне заявить о нем иначе если у дилера блек джек то ничия
+     *  6) если у тебя блек джек то вы должны заявить о нем иначе если у дилера блек джек то ничия
      */
     public class BlackJackPlayer
     {
         public PlayerStats player;
         public List<BlackJackCards> BlackJackStaks;
-        public bool endTakeCards;
+       
 
         public BlackJackPlayer(PlayerStats _player)
         {
@@ -53,7 +53,7 @@ namespace Assets.Scipts.BackJack
     {
         public int bet;
         public List<CardData> cards;
-
+        public bool endTakeCards;
         public BlackJackCards()
         {
             cards = new List<CardData>();
@@ -62,12 +62,15 @@ namespace Assets.Scipts.BackJack
         {
             int sum = 0;
 
-            cards.ForEach(c => sum += PointsForCard(c.Face));
+            cards.ForEach(c => {
+                Debug.Log("Points= " + PointsForCard(c.Face));
+                sum += PointsForCard(c.Face);
+                });
 
             return sum;
         }
 
-        int PointsForCard(Card_Face face)
+        public static int PointsForCard(Card_Face face)
         {
             switch (face)
             {
@@ -131,14 +134,16 @@ namespace Assets.Scipts.BackJack
         private void InitGame()
         {
             //первая очередь
-            bjPlayers.ForEach(p => {
+            bjPlayers.ForEach(p =>
+            {
                 p.BlackJackStaks.Add(new BlackJackCards());
                 p.BlackJackStaks[0].cards.Add(deckData.Deck.Pop());
 
             });
             diler.BlackJackStaks.Add(new BlackJackCards());
             diler.BlackJackStaks[0].cards.Add(deckData.Deck.Pop());
-            bjPlayers.ForEach(p => {
+            bjPlayers.ForEach(p =>
+            {
                 p.BlackJackStaks[0].cards.Add(deckData.Deck.Pop());
 
             });
@@ -169,7 +174,7 @@ namespace Assets.Scipts.BackJack
         /// </summary>
         /// <param name="player"> игрок </param>
         /// <returns> был ли блек джек </returns>
-        public bool CheckBlackJack(string player, out int betWin)
+        public bool CheckBlackJack(string player, out int betWin, int stackIndex)
         {
             BlackJackPlayer bjPlayer;
             betWin = -999999999;
@@ -179,7 +184,7 @@ namespace Assets.Scipts.BackJack
                 {
                     betWin = Convert.ToInt32(bjPlayer.BlackJackStaks[0].bet * blackJackCoef);
                     bjPlayer.player.AllMoney += betWin;
-                    bjPlayer.endTakeCards = true;
+                    bjPlayer.BlackJackStaks[stackIndex].endTakeCards = true;
                 }
             }
 
@@ -194,7 +199,7 @@ namespace Assets.Scipts.BackJack
                 bjPlayer.BlackJackStaks[0].bet += bet;
             }
         }
-        public bool IsPlunk(string player, out int lose)
+        public bool IsPlunk(string player, out int lose, int stackIndex)
         {
             lose = -9999999;
             BlackJackPlayer bjPlayer;
@@ -205,7 +210,7 @@ namespace Assets.Scipts.BackJack
                 {
 
                     lose = Convert.ToInt32(bjPlayer.BlackJackStaks[0].bet * loseCoef);
-                    bjPlayer.endTakeCards = true;
+                    bjPlayer.BlackJackStaks[stackIndex].endTakeCards = true;
                     bjPlayer.player.AllMoney += lose;
                     return true;
 
@@ -214,35 +219,35 @@ namespace Assets.Scipts.BackJack
             }
             return false;
         }
-        public bool IsWinVersusDiler(string player, out int betWin, out int bet, out int playerPoints, out int diller)
+        public bool IsWinVersusDiler(string player, int stackNumber, out int betWin, out int bet, out int playerPoints, out int diller)
         {
             betWin = -9999999;
             bet = -999999;
             BlackJackPlayer bjPlayer;
             bool isWin = false;
-            playerPoints =0;
+            playerPoints = 0;
             diller = 0;
 
             if (CheckPlayer(player, out bjPlayer))
             {
-                bet = bjPlayer.BlackJackStaks[0].bet;
-                if (!IsPlunk(player, out betWin))
+                bet = bjPlayer.BlackJackStaks[stackNumber].bet;
+                if (!IsPlunk(player, out betWin, stackNumber))
                 {
-                    playerPoints = bjPlayer.BlackJackStaks[0].GetSumOfPoints();
+                    playerPoints = bjPlayer.BlackJackStaks[stackNumber].GetSumOfPoints();
                     diller = diler.BlackJackStaks[0].GetSumOfPoints();
 
-                    if (diller < playerPoints || IsPlunk(diler.player.PlayerNick, out betWin))
+                    if (diller < playerPoints || IsPlunk(diler.player.PlayerNick, out betWin, 0))
                     {
                         Debug.Log(diler.player.PlayerNick + " " + diller);
                         Debug.Log(bjPlayer.player.PlayerNick + " " + playerPoints);
-                        betWin = Convert.ToInt32(bjPlayer.BlackJackStaks[0].bet * simpleWinCoef);
+                        betWin = Convert.ToInt32(bjPlayer.BlackJackStaks[stackNumber].bet * simpleWinCoef);
                         isWin = true;
                     }
                     else if (diller == playerPoints)
                     {
                         Debug.Log(diler.player.PlayerNick + " " + diller);
                         Debug.Log(bjPlayer.player.PlayerNick + " " + playerPoints);
-                        betWin = Convert.ToInt32(bjPlayer.BlackJackStaks[0].bet * nobodyCoef);
+                        betWin = Convert.ToInt32(bjPlayer.BlackJackStaks[stackNumber].bet * nobodyCoef);
                         Debug.Log(bjPlayer.player.PlayerNick + " not win not lose -> " + betWin);
                     }
 
@@ -250,14 +255,15 @@ namespace Assets.Scipts.BackJack
                     {
                         Debug.Log(diler.player.PlayerNick + " " + diller);
                         Debug.Log(bjPlayer.player.PlayerNick + " " + playerPoints);
-                        betWin = Convert.ToInt32(bjPlayer.BlackJackStaks[0].bet * loseCoef);
+                        betWin = Convert.ToInt32(bjPlayer.BlackJackStaks[stackNumber].bet * loseCoef);
                         Debug.Log(bjPlayer.player.PlayerNick + " lose -> " + betWin);
                     }
 
                     bjPlayer.player.AllMoney += betWin;
                 }
-                else {
-                    playerPoints = bjPlayer.BlackJackStaks[0].GetSumOfPoints();
+                else
+                {
+                    playerPoints = bjPlayer.BlackJackStaks[stackNumber].GetSumOfPoints();
                     diller = diler.BlackJackStaks[0].GetSumOfPoints();
                 }
 
@@ -289,7 +295,7 @@ namespace Assets.Scipts.BackJack
 
             return false;
         }
-        public void PlayerSurrender(string player, out int lose)
+        public void PlayerSurrender(string player, out int lose, int stackIndex)
         {
             BlackJackPlayer bjPlayer;
             lose = -999999999;
@@ -297,7 +303,7 @@ namespace Assets.Scipts.BackJack
             {
                 lose = Convert.ToInt32(bjPlayer.BlackJackStaks[0].bet * surrenderCoef);
                 bjPlayer.player.AllMoney += lose;
-                bjPlayer.endTakeCards = true;
+                bjPlayer.BlackJackStaks[stackIndex].endTakeCards = true;
             }
         }
         /// <summary>
@@ -305,23 +311,23 @@ namespace Assets.Scipts.BackJack
         /// </summary>
         /// <param name="player"></param>
         /// <returns> false - перебор карт</returns>
-        public bool TakeCard(string player)
+        public bool TakeCard(string player, int stackIndex)
         {
             BlackJackPlayer bjPlayer;
             if (CheckPlayer(player, out bjPlayer))
             {
-                bjPlayer.BlackJackStaks[0].cards.Add(deckData.Deck.Pop());
+                bjPlayer.BlackJackStaks[stackIndex].cards.Add(deckData.Deck.Pop());
                 return true;
             }
 
             return false;
         }
-        public bool SkipTruns(string player)
+        public bool SkipTruns(string player, int stackIndex)
         {
             BlackJackPlayer bjPlayer;
             if (CheckPlayer(player, out bjPlayer))
             {
-                bjPlayer.endTakeCards = true;
+                bjPlayer.BlackJackStaks[stackIndex].endTakeCards = true;
                 return true;
             }
             return false;
@@ -337,17 +343,17 @@ namespace Assets.Scipts.BackJack
             }
             return false;
         }
-        public bool CanTakeCard(string player)
+        public bool CanTakeCard(string player, int stackIndex)
         {
             BlackJackPlayer bjPlayer;
             if (CheckPlayer(player, out bjPlayer))
             {
-                if (bjPlayer.BlackJackStaks[0].GetSumOfPoints() < 20 && bjPlayer.endTakeCards == false)
-                    return !bjPlayer.endTakeCards;
+                if (bjPlayer.BlackJackStaks[stackIndex].GetSumOfPoints() < 21 && bjPlayer.BlackJackStaks[stackIndex].endTakeCards == false)
+                    return !bjPlayer.BlackJackStaks[stackIndex].endTakeCards;
 
-                bjPlayer.endTakeCards = true;
+                bjPlayer.BlackJackStaks[stackIndex].endTakeCards = true;
 
-                return !bjPlayer.endTakeCards;
+                return !bjPlayer.BlackJackStaks[stackIndex].endTakeCards;
 
             }
             return false;
@@ -358,6 +364,52 @@ namespace Assets.Scipts.BackJack
             while (diler.BlackJackStaks[0].GetSumOfPoints() < 18)
             {
                 diler.BlackJackStaks[0].cards.Add(deckData.Deck.Pop());
+            }
+        }
+
+        public bool CanSplit(string player)
+        {
+            BlackJackPlayer bjPlayer;
+
+            if (CheckPlayer(player, out bjPlayer))
+            {
+                if (bjPlayer.BlackJackStaks[0].cards.Count == 2 &&
+                    BlackJackCards.PointsForCard(bjPlayer.BlackJackStaks[0].cards[0].Face) ==
+                    BlackJackCards.PointsForCard(bjPlayer.BlackJackStaks[0].cards[1].Face))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public void UseSplit(string player)
+        {
+            BlackJackPlayer bjPlayer;
+
+            if (CheckPlayer(player, out bjPlayer))
+            {
+                //if (CanSplit(player))
+                //{
+                    bjPlayer.BlackJackStaks.Add(new BlackJackCards());
+
+                    var card1 = bjPlayer.BlackJackStaks[0].cards[0];
+                    var card2 = bjPlayer.BlackJackStaks[0].cards[1];
+                    bjPlayer.BlackJackStaks[1].bet = bjPlayer.BlackJackStaks[0].bet;
+
+                    bjPlayer.BlackJackStaks[1].cards.Add(card2);
+
+                    bjPlayer.BlackJackStaks[0].cards.Clear();
+                    bjPlayer.BlackJackStaks[0].cards.Add(card1);
+
+                    bjPlayer.BlackJackStaks[0].cards.Add(deckData.Deck.Pop());
+
+                    bjPlayer.BlackJackStaks[1].cards.Add(deckData.Deck.Pop());
+
+                Debug.LogError("Stack1 " + BlackJackCards.PointsForCard(bjPlayer.BlackJackStaks[0].cards[0].Face) + 
+                    " + " + BlackJackCards.PointsForCard(bjPlayer.BlackJackStaks[0].cards[1].Face));
+
+                Debug.LogError("Stack2 " + BlackJackCards.PointsForCard(bjPlayer.BlackJackStaks[1].cards[0].Face) +
+                   " + " + BlackJackCards.PointsForCard(bjPlayer.BlackJackStaks[1].cards[1].Face));
             }
         }
 

@@ -9,15 +9,7 @@ public class ButtonsHolder : MonoBehaviour
     [SerializeField] public LongClickBlackJackReady Ready;
     [SerializeField] public LongClickBlackJackTakeCard takeCard;
     [SerializeField] public LongClickBlackJackSkip Skip;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] public LongClickBlackJackReady Split;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  
 }

@@ -62,9 +62,8 @@ public class BetPositionController : MonoBehaviour
                 {
                     chip.gameObject.transform.parent = null;
                     //chip.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-                    currentField.MagnetizeObject(chip.gameObject, currentField.Stacks[0]);
-                    
-                    
+                    currentField.MagnetizeObject(chip.gameObject, currentField.Stacks[0], "betStack");
+                                       
                 }
                 GetComponent<PlayerBettingChipsField>().Stacks[0].Objects.Clear();
                 transform.position = StartPos;

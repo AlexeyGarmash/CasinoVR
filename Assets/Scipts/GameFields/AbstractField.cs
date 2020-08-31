@@ -48,7 +48,9 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     public void BlockField(bool blockUnblock)
     {
         BlockItems(blockUnblock);
-        GetComponent<Collider>().isTrigger = !blockUnblock;
+        var collider = GetComponent<Collider>();
+        if (collider)
+            collider.enabled = !blockUnblock;
     }
     public void BlockItems(bool blockUnblock)
     {
@@ -196,25 +198,25 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
         
     }
 
-    protected void OnTriggerEnter(Collider other)
-    {
+    //protected void OnTriggerEnter(Collider other)
+    //{
 
-        var gameObj = other.gameObject;
-        var chip = other.gameObject.GetComponent<OwnerData>();
-        var gc = other.gameObject.GetComponent<OVRGrabbableCustom>();
-        var rb = other.GetComponent<Rigidbody>();
-        var view = gameObj.GetComponent<PhotonView>();
+    //    var gameObj = other.gameObject;
+    //    var chip = other.gameObject.GetComponent<OwnerData>();
+    //    var gc = other.gameObject.GetComponent<OVRGrabbableCustom>();
+    //    var rb = other.GetComponent<Rigidbody>();
+    //    var view = gameObj.GetComponent<PhotonView>();
 
-        if (chip != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null)
-        {
+    //    if (chip != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null)
+    //    {
 
-            Debug.Log("MagnetizeObject viewID=" + view.ViewID);
-            var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
-            MagnetizeObject(gameObj, clossest);
+    //        Debug.Log("MagnetizeObject viewID=" + view.ViewID);
+    //        var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
+    //        MagnetizeObject(gameObj, clossest, );
 
-        }
+    //    }
 
-    }
+    //}
 
     protected void OnTriggerStay(Collider other)
     {
@@ -285,7 +287,41 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
         stackData.Objects.Add(magnetizedObject);
         stackData.animator.StartAnim(magnetizedObject);
     }
-    public abstract bool MagnetizeObject(GameObject Object, StackData Stack);
+    public virtual bool MagnetizeObject(GameObject Object, StackData Stack, string StackType = "")
+    {
+
+        var rb = Object.GetComponent<Rigidbody>();
+        var chip = Object.GetComponent<OwnerData>();
+
+
+        if (Stack.stackType == "")
+            Stack.stackType = StackType;
+
+        var stackData = Stack;
+
+        if (stackData.playerName.Equals(chip.Owner) || stackData.playerName == "")
+        {
+            if (stackData.playerName == "")
+                stackData.playerName = chip.Owner;
+
+            rb.isKinematic = true;
+            chip.transform.parent = stackData.transform;
+
+            //Debug.Break();
+
+            stackData.Objects.Add(Object);
+            stackData.animator.StartAnim(Object);
+
+
+            photonView.RPC("MagnetizeObject_RPC", RpcTarget.OthersBuffered, chip.photonView.ViewID, Stacks.ToList().IndexOf(Stack));
+
+            return true;
+
+
+        }
+
+        return false;
+    }
 
 }
 

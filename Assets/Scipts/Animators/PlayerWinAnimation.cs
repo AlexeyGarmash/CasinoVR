@@ -33,7 +33,7 @@ public class PlayerWinAnimation : CurveAnimator
             while (money > 0)
             {
 
-                chipCost = Chips.YELLOW;
+                chipCost = Chips.RED;
                 if (starmoney / 2 < money && money > (int)Chips.PURPLE)
                     chipCost = Chips.PURPLE;
 
@@ -46,10 +46,11 @@ public class PlayerWinAnimation : CurveAnimator
                 else if (starmoney / 16 < money && money > (int)Chips.BLUE)
                     chipCost = Chips.BLUE;
 
-                else if (starmoney / 32 < money && money > (int)Chips.RED)
-                    chipCost = Chips.RED;
-
-
+                if (money < 5)
+                {
+                    chipCost = Chips.YELLOW;
+                }
+                
                 var chip = Instantiate(ChipUtils.Instance.GetChipByChipEnum(chipCost), transform.position, transform.rotation);
                 var view = chip.GetComponent<PhotonView>();
                 chip.GetComponent<OwnerData>().Owner = nickName;
@@ -63,6 +64,8 @@ public class PlayerWinAnimation : CurveAnimator
                 money -= (int)chipCost;
                 
             }
+
+           
         }
 
        

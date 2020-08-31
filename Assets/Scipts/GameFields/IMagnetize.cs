@@ -7,6 +7,6 @@ using UnityEngine;
 
 interface IMagnetize
 {
-    bool MagnetizeObject(GameObject Object, StackData Stack);
+    bool MagnetizeObject(GameObject Object, StackData Stack, string StackType);
 }
 

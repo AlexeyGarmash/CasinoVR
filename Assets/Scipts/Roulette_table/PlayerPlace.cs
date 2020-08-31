@@ -179,32 +179,24 @@ public class PlayerPlace : MonoBehaviourPun
             
             while (money > 0)
             {
-                if (starmoney / 2 < money)
-                {
+                if(money < 5)
+                    InstantiateToStackWithColor(Chips.YELLOW, ref money, ps.PlayerNick);
+                else if (starmoney / 2 < money)               
                     InstantiateToStackWithColor(Chips.PURPLE, ref money, ps.PlayerNick);
-                   
-                }
-                else if (starmoney / 4 < money)
-                {
+             
+                else if (starmoney / 4 < money)               
                     InstantiateToStackWithColor(Chips.BLACK, ref money, ps.PlayerNick);
-
-                }
-                else if (starmoney / 8 < money)
-                {
+                
+                else if (starmoney / 8 < money)              
                     InstantiateToStackWithColor(Chips.GREEN, ref money, ps.PlayerNick);
-
-                }
-                else if (starmoney / 16 < money)
-                {
+                
+                else if (starmoney / 16 < money)                
                     InstantiateToStackWithColor(Chips.BLUE, ref money, ps.PlayerNick);
+                
+                else InstantiateToStackWithColor(Chips.RED, ref money, ps.PlayerNick);
 
-                }
-                else if (starmoney / 32 < money)
-                {
-                    InstantiateToStackWithColor(Chips.RED, ref money, ps.PlayerNick);
-
-                }
-                else InstantiateToStackWithColor(Chips.YELLOW, ref money, ps.PlayerNick);
+                
+               
 
 
                 yield return null;
@@ -213,6 +205,27 @@ public class PlayerPlace : MonoBehaviourPun
        
 
         
+    }
+
+    public bool ExtractChipByCost(Chips cost, out GameObject chip)
+    {
+
+        chip = null;
+        foreach (var stack in sf.Stacks)
+        {
+
+            chip = stack.Objects.FirstOrDefault(o => o.GetComponent<ChipData>().Cost == cost);
+            if (chip != null)
+            {
+                chip.GetComponent<OwnerData>().ExtractObject();
+
+                return true;
+                
+            }
+ 
+        }
+        return false;
+       
     }
 
 }

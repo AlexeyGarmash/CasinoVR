@@ -8,7 +8,7 @@ using Unity;
 
 namespace Cards
 {
-    class DeckData 
+    public class DeckData 
     {     
         private int numberOfDecks = 5;
         public Stack<CardData> Deck;
