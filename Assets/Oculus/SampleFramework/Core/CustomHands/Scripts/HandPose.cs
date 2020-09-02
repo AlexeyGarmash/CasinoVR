@@ -20,7 +20,13 @@ namespace OVRTouchSample
         PingPongBall,
         Controller,
         ChipPose,
-        CardPose
+        CardPose,
+        BJ_DoubleBet,
+        BJ_GiveCard,
+        BJ_Split,
+        BJ_Surrender,        
+        BJ_Ready,
+        BJ_Stop
     }
 
 	// Stores pose-specific data such as the animation id and allowing gestures.
