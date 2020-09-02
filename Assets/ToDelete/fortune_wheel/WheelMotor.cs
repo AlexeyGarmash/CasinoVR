@@ -32,12 +32,42 @@ public class WheelMotor : MonoBehaviour
 
     private FortuneWheelMotorState motorState;
 
+    private bool rotateMotorByHand = false;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         hingeJoint = GetComponent<HingeJoint>();
         startSmoothMult = smoothMult;
     }
+    
+    public void RotateMotorByHand()
+    {
+        if(hingeJoint != null && !rotateMotorByHand)
+        {
+            var motor = hingeJoint.motor;
+            motor.force = 10;
+            motor.targetVelocity = 20;
+            hingeJoint.motor = motor;
+            hingeJoint.useMotor = true;
+            rotateMotorByHand = true;
+        }
+    }
+
+    public void StopRotateByHand()
+    {
+        if (hingeJoint != null && rotateMotorByHand)
+        {
+            var motor = hingeJoint.motor;
+            motor.force = 0;
+            motor.targetVelocity = 0;
+            hingeJoint.motor = motor;
+            //_rigidbody.angularVelocity = Vector3.zero;
+            rotateMotorByHand = false;
+        }
+    }
+
+
 
     public void StartMotor()
     {
@@ -62,6 +92,7 @@ public class WheelMotor : MonoBehaviour
         motorTotalStoped = true;
         motor.targetVelocity = 0;
         hingeJoint.motor = motor;*/
+        
         invokeForceStopMotor = true;
     }
 
@@ -111,9 +142,10 @@ public class WheelMotor : MonoBehaviour
         if(invokeForceStopMotor)
         {
             float calcTargetVelocity = motor.targetVelocity - (smoothForceMult * Time.fixedDeltaTime);
-            if (calcTargetVelocity <= 0)
+            if (calcTargetVelocity <= 0.2f)
             {
                 motor.targetVelocity = 0;
+                _rigidbody.angularVelocity = Vector3.zero;
             }
             else
             {
@@ -122,6 +154,4 @@ public class WheelMotor : MonoBehaviour
             hingeJoint.motor = motor;
         }
     }
-
-    
 }
