@@ -145,18 +145,24 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
         npcRotations = new Dictionary<int, Vector3>();
 
         npcRotations.Add(0, rotationTOPos1);
-        npcRotations.Add(1, rotationTOPos3);
+        npcRotations.Add(1, rotationTOPos2);
         npcRotations.Add(2, rotationTOPos3);
+        npcRotations.Add(3, rotationTOPos4);
+        npcRotations.Add(4, rotationTOPos5);
+        npcRotations.Add(5, defaultRotation);
+
 
         playersPositions = new Dictionary<int, Transform>();
 
 
         playersPositions.Add(0, pleyer1Pos);
         playersPositions.Add(1, pleyer2Pos);
-        playersPositions.Add(2, dillerPos);
-        //playersPositions.Add(3, dillerPos);
-        //playersPositions.Add(4, pleyer4Pos);
-        //playersPositions.Add(5, pleyer5Pos);
+        playersPositions.Add(2, pleyer3Pos);
+        playersPositions.Add(3, pleyer4Pos);
+        playersPositions.Add(4, pleyer5Pos);
+
+        playersPositions.Add(5, dillerPos);
+      
 
 
         CardsToPlayers = new Dictionary<int, List<CardData>>();
@@ -165,19 +171,21 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
         CardsToPlayers.Add(0, new List<CardData>());
         CardsToPlayers.Add(1, new List<CardData>());
         CardsToPlayers.Add(2, new List<CardData>());
-        //CardsToPlayers.Add(3, new List<CardData>());
-        //CardsToPlayers.Add(4, new List<CardData>());
-        //CardsToPlayers.Add(5, new List<CardData>());
+        CardsToPlayers.Add(3, new List<CardData>());
+        CardsToPlayers.Add(4, new List<CardData>());
 
+        CardsToPlayers.Add(5, new List<CardData>());
+        
         CardsToPlayersGObj = new Dictionary<int, List<GameObject>>();
 
 
         CardsToPlayersGObj.Add(0, new List<GameObject>());
         CardsToPlayersGObj.Add(1, new List<GameObject>());
         CardsToPlayersGObj.Add(2, new List<GameObject>());
-        //CardsToPlayersGObj.Add(3, new List<GameObject>());
-        //CardsToPlayersGObj.Add(4, new List<GameObject>());
-        //CardsToPlayersGObj.Add(5, new List<GameObject>());
+        CardsToPlayersGObj.Add(3, new List<GameObject>());
+        CardsToPlayersGObj.Add(4, new List<GameObject>());
+
+        CardsToPlayersGObj.Add(5, new List<GameObject>());
     }
     public void AddCardToHand(int player, CardData card)
     {
@@ -368,7 +376,9 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
                     yield return null;
                  
                     animator.SetTrigger(toGiveCard);
-                    giveCardBehavour.currentPercentage = 0;                   
+                    giveCardBehavour.currentPercentage = 0;
+
+                    yield return null;
 
                     while (true)
                     {
@@ -390,12 +400,12 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
                 }
 
-                yield return new WaitForSeconds(1f);
 
+                yield return new WaitForSeconds(1f);
             }
            
             i++;
-            yield return null;
+            
         }
     }
     public IEnumerator TakeCardsToPlayers(bool hideCard)

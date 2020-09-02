@@ -27,6 +27,8 @@ namespace OVRTouchSample
         public const string ANIM_LAYER_NAME_THUMB = "Thumb Layer";
         public const string ANIM_PARAM_NAME_FLEX = "Flex";
         public const string ANIM_PARAM_NAME_POSE = "Pose";
+        public const string ANIM_PARAM_NAME_ITEM_IN_HAND = "ItemsInHand";
+
         public const float THRESH_COLLISION_FLEX = 0.9f;
 
         public const float INPUT_RATE_CHANGE = 20.0f;
@@ -55,6 +57,7 @@ namespace OVRTouchSample
         private int m_animLayerIndexPoint = -1;
         private int m_animParamIndexFlex = -1;
         private int m_animParamIndexPose = -1;
+        private int m_animItemInHand = -1;
 
         private bool m_isPointing = false;
         private bool m_isGivingThumbsUp = false;
@@ -81,6 +84,7 @@ namespace OVRTouchSample
             m_animLayerIndexThumb = m_animator.GetLayerIndex(ANIM_LAYER_NAME_THUMB);
             m_animParamIndexFlex = Animator.StringToHash(ANIM_PARAM_NAME_FLEX);
             m_animParamIndexPose = Animator.StringToHash(ANIM_PARAM_NAME_POSE);
+            m_animItemInHand = Animator.StringToHash(ANIM_PARAM_NAME_ITEM_IN_HAND);
 
             OVRManager.InputFocusAcquired += OnInputFocusAcquired;
             OVRManager.InputFocusLost += OnInputFocusLost;
@@ -191,9 +195,13 @@ namespace OVRTouchSample
                 if (customPose != null) grabPose = customPose;
             }
             // Pose
+           
             HandPoseId handPoseId = grabPose.PoseId;
+          
             m_animator.SetInteger(m_animParamIndexPose, (int)handPoseId);
 
+            if(m_grabber.m_grabbedObjs.Count != 0)
+             m_animator.SetFloat(m_animItemInHand, m_grabber.m_grabbedObjs.Count - 1);
             // Flex
             // blend between open hand and fully closed fist
             float flex = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller);

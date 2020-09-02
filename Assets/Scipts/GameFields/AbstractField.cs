@@ -7,14 +7,19 @@ using UnityEngine;
 using Photon.Pun;
 using Assets.Scipts.Chips;
 
+public enum AbstractFieldEvents { StackAnimationEnded, StackAnimationStarted, UpdateUI, ExtractObject, FieldBloked, FieldUnbloked }
+
 public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<AbstractFieldEvents>
-{ 
+{
+    protected int StackAnimEndedCounter = 0;
+    protected int StackAnimStartedCounter = 0;
+
     [SerializeField]
     public StackData[] Stacks;
    
     [SerializeField]
     protected int maxObjectsOnField = 20;
-    EventManager<AbstractFieldEvents> _fieldEventManager;
+    protected EventManager<AbstractFieldEvents> _fieldEventManager;
     public EventManager<AbstractFieldEvents> FieldEventManager
     {
         get
@@ -51,6 +56,12 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
         var collider = GetComponent<Collider>();
         if (collider)
             collider.enabled = !blockUnblock;
+
+        if(blockUnblock)
+            _fieldEventManager.PostNotification(AbstractFieldEvents.FieldBloked, this);
+
+        else
+            _fieldEventManager.PostNotification(AbstractFieldEvents.FieldUnbloked, this);
     }
     public void BlockItems(bool blockUnblock)
     {
@@ -134,9 +145,8 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
 
     }
-    int StackAnimEndedCounter = 0;
-    int StackAnimStartedCounter = 0;
-    public void OnEvent(AbstractFieldEvents Event_type, Component Sender, params object[] Param)
+   
+    public virtual void OnEvent(AbstractFieldEvents Event_type, Component Sender, params object[] Param)
     {
         if (photonView.IsMine)
         {
@@ -150,6 +160,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
                     {
                         Debug.Log("UnblockAllStacks");
                         UnblockAllStacks();
+                        
                         StackAnimEndedCounter = 0;
                         StackAnimStartedCounter = 0;
                     }
@@ -167,9 +178,9 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
             }
         }
     }
-       
 
-    void BlockAllStacks()
+
+    protected void BlockAllStacks()
     {       
         photonView.RPC("UpdateAllStacks", RpcTarget.All, false, false);
 
@@ -178,7 +189,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
                 chip.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
     }
 
-    void UnblockAllStacks()
+    protected void UnblockAllStacks()
     {
         photonView.RPC("UpdateAllStacks", RpcTarget.All, true, true);
              
@@ -248,19 +259,21 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
         data.stack.UpdateStackInstantly();
     }
-    public void ExtranctObject(int viewID)
+    public virtual GameObject ExtranctObject(int viewID)
     {
         var data = GetChipAndHisStack(viewID);
 
         if (data.chip == null)
         {
             Debug.Log("chip not found! viewID = " + viewID);
-            return;
+            return null;
         }
 
         data.stack.Objects.Remove(data.chip);
 
         data.stack.animator.UpdateStackInstantly();
+
+        return data.chip;
     }
 
     public void ExtractAllObjects()

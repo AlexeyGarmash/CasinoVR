@@ -56,7 +56,7 @@ namespace Assets.Scipts.BackJack
         bool playerTakeCard;
         bool playerLose;
         private bool needSplit;
-
+        private bool playerSurrendered;
         bool playerReady;
 
         int lose;
@@ -464,10 +464,12 @@ namespace Assets.Scipts.BackJack
 
                     }
 
+                    players.ForEach(p => ActivateGameButtons(false, false, false, false, p));
+
                     while (BlackJackGameStates.PlayersBetting != gameState)
                         yield return null;
 
-                    players.ForEach(p => ActivateGameButtons(false, false, false, false, p));
+                    
 
                 }
                 else if (photonView.IsMine)
@@ -520,7 +522,7 @@ namespace Assets.Scipts.BackJack
                     id = players.Count;
                     nick = "Diler";
                     card = blackJackLogic.diler.BlackJackStaks[0].cards[i];
-                    bjNPC.AddCardToHand(2, card);
+                    bjNPC.AddCardToHand(5, card);
 
                     DebugLog("card to " + nick + " card face = " + card.Face + " card sign=  " + card.Sign);
 
@@ -715,7 +717,7 @@ namespace Assets.Scipts.BackJack
                     var idCurve = players.Count;
                     var nick = "Diler";
                     var card = blackJackLogic.diler.BlackJackStaks[0].cards[i];
-                    bjNPC.AddCardToHand(2, card);
+                    bjNPC.AddCardToHand(5, card);
 
                     DebugLog("card to " + nick + " card face = " + card.Face + " card sign=  " + card.Sign);
 
@@ -903,10 +905,12 @@ namespace Assets.Scipts.BackJack
             private void SplitTurn_RPC(string nick)
             {
                 needSplit = true;
-
-               
-                
-        }
+            }
+            [PunRPC]
+            private void SurrenderedTurn_RPC(string nick)
+            {
+                playerSurrendered = true;
+            }
         #endregion
 
 
@@ -927,6 +931,10 @@ namespace Assets.Scipts.BackJack
         public void Split(PlayerStats player)
         {
             photonView.RPC("SplitTurn_RPC", RpcTarget.All, player.PlayerNick);
+        }
+        public void Surrentered(PlayerStats player)
+        {
+            photonView.RPC("SurrenderedTurn_RPC", RpcTarget.All, player.PlayerNick);
         }
         #endregion
     }

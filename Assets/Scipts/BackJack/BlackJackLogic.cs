@@ -54,6 +54,8 @@ namespace Assets.Scipts.BackJack
         public int bet;
         public List<CardData> cards;
         public bool endTakeCards;
+        public bool surrendered;
+        public int saveValue;
         public BlackJackCards()
         {
             cards = new List<CardData>();
@@ -283,7 +285,6 @@ namespace Assets.Scipts.BackJack
                 bjPlayer.BlackJackStaks[0].bet -= bet;
             }
         }
-
         public bool IsPlayerCanSurrender(string player)
         {
             BlackJackPlayer bjPlayer;
@@ -358,7 +359,6 @@ namespace Assets.Scipts.BackJack
             }
             return false;
         }
-
         public void DealerTakesCards()
         {
             while (diler.BlackJackStaks[0].GetSumOfPoints() < 18)
@@ -366,7 +366,15 @@ namespace Assets.Scipts.BackJack
                 diler.BlackJackStaks[0].cards.Add(deckData.Deck.Pop());
             }
         }
+        public void PlayerSurrendered(string player)
+        {
+            BlackJackPlayer bjPlayer;
 
+            if (CheckPlayer(player, out bjPlayer))
+            {
+
+            }
+        }
         public bool CanSplit(string player)
         {
             BlackJackPlayer bjPlayer;
@@ -381,7 +389,6 @@ namespace Assets.Scipts.BackJack
 
             return false;
         }
-
         public void UseSplit(string player)
         {
             BlackJackPlayer bjPlayer;

@@ -19,7 +19,8 @@ namespace OVRTouchSample
         Generic,
         PingPongBall,
         Controller,
-        OkGesture
+        ChipPose,
+        CardPose
     }
 
 	// Stores pose-specific data such as the animation id and allowing gestures.

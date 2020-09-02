@@ -2,45 +2,12 @@
 using System.Linq;
 using UnityEngine;
 
-public enum AbstractFieldEvents{ StackAnimationEnded, StackAnimationStarted }
+
 public class ChipsField : AbstractField
 {
     
 
-    //public override bool MagnetizeObject(GameObject Object, StackData Stack)
-    //{
-            
-    //    var rb = Object.GetComponent<Rigidbody>();
-    //    var chip = Object.GetComponent<ChipData>();
-
-        
-    //    Stack.stackType = ChipUtils.Instance.GetStringOfType(chip.Cost);
-
-    //    var stackData = Stack;
-
-    //    if (stackData.playerName.Equals(chip.Owner) || stackData.playerName == "")
-    //    {
-    //        if (stackData.playerName == "")
-    //            stackData.playerName = chip.Owner;
-
-    //        rb.isKinematic = true;
-    //        chip.transform.parent = stackData.transform;
-
-    //        //Debug.Break();
-
-    //        stackData.Objects.Add(Object);
-    //        stackData.animator.StartAnim(Object);
-
-
-    //        photonView.RPC("MagnetizeObject_RPC", RpcTarget.OthersBuffered, chip.photonView.ViewID, Stacks.ToList().IndexOf(Stack));
-
-    //        return true;
-
-
-    //    }
-
-    //    return false;
-    //}
+   
 
 
     protected void OnTriggerEnter(Collider other)
@@ -69,7 +36,54 @@ public class ChipsField : AbstractField
 
     }
 
+    public override void OnEvent(AbstractFieldEvents Event_type, Component Sender, params object[] Param)
+    {
+        base.OnEvent(Event_type, Sender, Param);
 
+
+        if (photonView.IsMine)
+        {
+            switch (Event_type)
+            {
+                case AbstractFieldEvents.StackAnimationEnded:
+
+                   
+                    if (StackAnimStartedCounter == StackAnimEndedCounter)
+                    {
+                        
+
+                        float maxZ = Stacks.Max(ss => ss.animator.currentZ);
+
+
+                        int money = 0;
+
+                        Stacks.ToList().ForEach(s => {
+                            s.Objects.ForEach(o => {
+                                money += (int)o.GetComponent<ChipData>().Cost;
+                            });
+                        });
+
+                        _fieldEventManager.PostNotification(AbstractFieldEvents.UpdateUI, this, maxZ, money);
+                    }
+
+                    break;
+                
+            }
+        }
+    }
+
+    public override GameObject ExtranctObject(int viewID)
+    {
+        var chip = base.ExtranctObject(viewID);
+
+        
+
+        float maxZ = Stacks.Max(ss => ss.animator.currentZ);
+
+        _fieldEventManager.PostNotification(AbstractFieldEvents.ExtractObject, this, (int)chip.GetComponent<ChipData>().Cost, maxZ);
+
+        return chip;
+    }
     #region Unity Callbacks
 
 
