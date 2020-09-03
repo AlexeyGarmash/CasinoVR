@@ -218,11 +218,25 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
     }
 
     [PunRPC]
-    void InstantiateRemote(int viewID, int face, int sign)
+    void InstantiateRemote(int viewID, int face, int sign, int players)
     {
         instantiaterdCardObj = Instantiate(CardUtils.Instance.GetCard((Card_Face)face, (Card_Sign)sign));
         instantiaterdCardObj.GetComponent<PhotonView>().ViewID = viewID;
         instantiaterdCardObj.GetComponent<PhotonSyncCrontroller>().SyncOff_RPC();
+
+        CardsToPlayersGObj[players].Add(instantiaterdCardObj);
+
+        instantiaterdCardObj.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+
+        var rb = instantiaterdCardObj.GetComponent<Rigidbody>();
+        var chip = instantiaterdCardObj.GetComponent<CardData>();
+
+        rb.isKinematic = true;
+        chip.transform.parent = RightHandNPCStack.transform;
+
+
+        RightHandNPCStack.Objects.Add(instantiaterdCardObj);
+        RightHandNPCStack.StartAnim(instantiaterdCardObj);
     }
     private IEnumerator TakeCardsToRightHand()
     {
@@ -239,6 +253,7 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
             {
                 foreach (var players in CardsToPlayers.Keys)
                 {
+                    instantiaterdCardObj = null;
 
                     foreach (var card in CardsToPlayers[players])
                     {
@@ -246,37 +261,33 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
                         //cardObj = PhotonNetwork.Instantiate(CardUtils.Instance.GetPathToCard(card), Vector3.zero, Quaternion.identity);
 
-
-
                         if (photonView.IsMine)
                         {
                             instantiaterdCardObj = Instantiate(CardUtils.Instance.GetCard(card.Face, card.Sign));
                             var view = instantiaterdCardObj.GetComponent<PhotonView>();
                             instantiaterdCardObj.GetComponent<PhotonSyncCrontroller>().SyncOff_RPC();
+
                             PhotonNetwork.AllocateViewID(view);
 
-                            photonView.RPC("InstantiateRemote", RpcTarget.Others, view.ViewID, (int)card.Face, (int)card.Sign);
+                            CardsToPlayersGObj[players].Add(instantiaterdCardObj);
+
+                            instantiaterdCardObj.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+
+                            var rb = instantiaterdCardObj.GetComponent<Rigidbody>();
+                            var chip = instantiaterdCardObj.GetComponent<CardData>();
+
+                            rb.isKinematic = true;
+                            chip.transform.parent = RightHandNPCStack.transform;
+
+
+                            RightHandNPCStack.Objects.Add(instantiaterdCardObj);
+                            RightHandNPCStack.StartAnim(instantiaterdCardObj);
+
+                            photonView.RPC("InstantiateRemote", RpcTarget.Others, view.ViewID, (int)card.Face, (int)card.Sign, players);
+                            PhotonNetwork.SendAllOutgoingCommands();
                         }
                         
-
-                        while (instantiaterdCardObj == null)
-                            yield return null;
-
-                        CardsToPlayersGObj[players].Add(instantiaterdCardObj);
-
-                        instantiaterdCardObj.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
-
-                        var rb = instantiaterdCardObj.GetComponent<Rigidbody>();
-                        var chip = instantiaterdCardObj.GetComponent<CardData>();
-
-                        rb.isKinematic = true;
-                        chip.transform.parent = RightHandNPCStack.transform;
-
-                       
-                        RightHandNPCStack.Objects.Add(instantiaterdCardObj);
-                        RightHandNPCStack.StartAnim(instantiaterdCardObj);
-
-                        //instantiaterdCardObj = null;
+                        
                     }
 
                 }
