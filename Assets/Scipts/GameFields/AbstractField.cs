@@ -286,7 +286,8 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     [PunRPC]
     public void MagnetizeObject_RPC(int viewId,int stackIndex, Vector3 ObjPosition)
     {
-        var magnetizedObject = Physics.OverlapSphere(ObjPosition, 2f).FirstOrDefault(g => g.GetComponent<PhotonView>().ViewID == viewId).gameObject;
+        Debug.LogError(viewId);
+        var magnetizedObject = Physics.OverlapSphere(ObjPosition, 1f).FirstOrDefault(g => g.GetComponent<PhotonView>()?.ViewID == viewId).gameObject;
         var rb = magnetizedObject.GetComponent<Rigidbody>();
         var stackData = Stacks[stackIndex];
 
@@ -318,16 +319,16 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
             if (stackData.playerName == "")
                 stackData.playerName = chip.Owner;
 
-            photonView.RPC("MagnetizeObject_RPC", RpcTarget.OthersBuffered, chip.photonView.ViewID, Stacks.ToList().IndexOf(Stack), chip.transform.position);
+            photonView.RPC("MagnetizeObject_RPC", RpcTarget.All, chip.photonView.ViewID, Stacks.ToList().IndexOf(Stack), chip.transform.position);
 
-            rb.isKinematic = true;
-            chip.transform.parent = stackData.transform;
+            //rb.isKinematic = true;
+            //chip.transform.parent = stackData.transform;
 
-            //Debug.Break();
+            ////Debug.Break();
            
 
-            stackData.Objects.Add(Object);
-            stackData.animator.StartAnim(Object);
+            //stackData.Objects.Add(Object);
+            //stackData.animator.StartAnim(Object);
 
 
            

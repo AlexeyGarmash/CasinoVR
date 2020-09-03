@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class ChipsField : AbstractField
 {
-    
-
-   
-
 
     protected void OnTriggerEnter(Collider other)
     {
