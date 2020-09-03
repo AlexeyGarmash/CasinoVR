@@ -283,6 +283,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
     }
 
+    [PunRPC]
     public void MagnetizeObject_RPC(int viewId,int stackIndex)
     {
         var magnetizedObject = Physics.OverlapSphere(transform.position, 1f).FirstOrDefault(g => g.GetComponent<PhotonView>().ViewID == viewId).gameObject;
