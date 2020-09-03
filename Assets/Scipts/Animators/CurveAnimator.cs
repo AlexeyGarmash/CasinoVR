@@ -2,6 +2,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scipts
@@ -28,15 +29,18 @@ namespace Assets.Scipts
 
         [SerializeField]
         public bool animStarted = true;
+
+        protected Dictionary<int, bool> playerdCoroutinesEnded;
         protected void Start()
         {
             ObjectToAnimation = new List<GameObject>();
             curves = GetComponentsInChildren<BezierCurve>();
-
+            playerdCoroutinesEnded = new Dictionary<int, bool>();
 
 
         }
 
+      
 
 
 
@@ -47,6 +51,7 @@ namespace Assets.Scipts
         }
         IEnumerator MoveObjectWithCurve(int curveIndex)
         {
+            playerdCoroutinesEnded.Clear();
             yield return new WaitForSeconds(0.1f);
             int i = 0;
             while (ObjectToAnimation.Count > i)
@@ -56,18 +61,24 @@ namespace Assets.Scipts
                 i++;
                 //winChips.Remove(chip);
 
-                StartCoroutine(MoveOneObject(curvePurpel, g_object));
+                StartCoroutine(MoveOneObject(curvePurpel, g_object, i));
                 yield return new WaitForSeconds(0.1f);
 
             }
+
+            while (playerdCoroutinesEnded.Values.ToList().Exists(c => !c))
+                yield return null;
+
             ObjectToAnimation.Clear();
 
             animStarted = false;
-            yield return null;
 
         }
-        IEnumerator MoveOneObject(BezierCurve curvePurpel, GameObject chip)
+
+        IEnumerator MoveOneObject(BezierCurve curvePurpel, GameObject chip, int i)
         {
+            playerdCoroutinesEnded.Add(i, false);
+            
             var localSpeed = speed;
             float t = 0;
             t += Time.deltaTime * speed;
@@ -113,6 +124,8 @@ namespace Assets.Scipts
             chip.GetComponent<Rigidbody>().isKinematic = false;
 
             yield return null;
+
+            playerdCoroutinesEnded[i] = true;
 
         }
         private void OnTriggerEnter(Collider other)

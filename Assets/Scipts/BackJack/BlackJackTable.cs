@@ -464,12 +464,15 @@ namespace Assets.Scipts.BackJack
 
                     }
 
-                    players.ForEach(p => ActivateGameButtons(false, false, false, false, p));
+
 
                     while (BlackJackGameStates.PlayersBetting != gameState)
-                        yield return null;
+                    {
 
-                    
+                        yield return null;
+                    }
+
+                    players.ForEach(p => ActivateGameButtons(false, false, false, false, p));
 
                 }
                 else if (photonView.IsMine)
@@ -598,9 +601,9 @@ namespace Assets.Scipts.BackJack
                 }
 
                 ActivateGameButtons(false, false, false, true, playersInGame[j]);
-                var voiceRecognizer = playersInGame[j].GetComponent<VoiceManager>();
-                voiceRecognizer.AddVoiceAction(skip, PlayerReady);
-                voiceRecognizer.StartRecognize();
+                //var voiceRecognizer = playersInGame[j].GetComponent<VoiceManager>();
+                //voiceRecognizer.AddVoiceAction(skip, PlayerReady);
+                //voiceRecognizer.StartRecognize();
                 while (currWaitTime != waitTimeInSec)
                 {
                     if (playerReady)
@@ -614,11 +617,11 @@ namespace Assets.Scipts.BackJack
 
                     DebugLog("Players " + playersInGame[j].ps.PlayerNick + "is betting" + (waitTimeInSec - currWaitTime).ToString());
 
-                    yield return new WaitForSeconds(OneSec * 2);
+                    yield return new WaitForSeconds(OneSec);
 
                 }
 
-                voiceRecognizer.StopRecognize();
+                //voiceRecognizer.StopRecognize();
                 ActivateGameButtons(false, false, false, false, playersInGame[j]);
 
                 var playerField = playersInGame[j].GetComponent<PlayerBlackJackFields>();

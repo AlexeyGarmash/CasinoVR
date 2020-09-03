@@ -14,6 +14,7 @@ namespace Assets.Scipts.Animators
 
         private new void Start()
         {
+            playerdCoroutinesEnded = new Dictionary<int, bool>();
             ObjectToAnimation = new List<GameObject>();
         }
         public void StartAnimCardToPlayerWithInstantiate(int curveNumber, string owner, CardData card)

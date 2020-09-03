@@ -25,7 +25,7 @@ public class BettingFieldUIElements : MonoBehaviour, IListener<AbstractFieldEven
     private TextMeshPro text;
 
     private Vector3 defaultHightText;
-   
+
 
    
 
@@ -84,5 +84,10 @@ public class BettingFieldUIElements : MonoBehaviour, IListener<AbstractFieldEven
                 TMP_3D.transform.position = new Vector3(defaultHightText.x, defaultHightText.y + currentHightByZ + currentHightOffsetByZ, defaultHightText.z);
                 break;
         }
+    }
+
+    private void Update()
+    {
+        TMP_3D.transform.LookAt(Camera.main.transform.position);
     }
 }

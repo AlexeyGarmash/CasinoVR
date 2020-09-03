@@ -16,6 +16,8 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
     [SerializeField]
     float percentageOfTakeCardToSpawnCards = 0.55f;
+    [SerializeField]
+    float defaultDelay = 0.1f;
 
     //animator triggers
     const string toTakeCard = "toTakeCard";
@@ -86,6 +88,8 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
     public LoseDanceBehaviour loseDanceBehavour;
 
     GameObject instantiaterdCardObj;
+
+   
     void Start()
     {
         defaultRotation = transform.localEulerAngles;
@@ -373,8 +377,8 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
                     RightHandNPCStack.Objects.Add(card);
                     RightHandNPCStack.StartAnim(card);
 
-                    yield return null;
-                 
+                   
+                   
                     animator.SetTrigger(toGiveCard);
                     giveCardBehavour.currentPercentage = 0;
 
@@ -390,7 +394,10 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
                             RightHandNPCStack.ExtractOne(card);
 
                             CardCurve.ObjectToAnimation.Add(card);
-                            CardCurve.StartAnimCardToPlayer(playerPos);                          
+                            CardCurve.StartAnimCardToPlayer(playerPos);
+
+                            while (CardCurve.animStarted)
+                                yield return null;
 
                             break;
 
@@ -401,7 +408,7 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
                 }
 
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(defaultDelay);
             }
            
             i++;
@@ -415,16 +422,16 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
         yield return TakeCardsToRightHand();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(defaultDelay);
 
         yield return TakeCardToLeftHand();
        
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(defaultDelay);
 
         yield return GiveCardsToPlayers(hideCard);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(defaultDelay);
 
         distributionOfCards = false;
 
