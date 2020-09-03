@@ -813,6 +813,7 @@ namespace Assets.Scipts.BackJack
                     animations.Add(animation);
                 });
 
+
                 while (animations.Exists(a => a.animStarted))
                 {
                     yield return null;
