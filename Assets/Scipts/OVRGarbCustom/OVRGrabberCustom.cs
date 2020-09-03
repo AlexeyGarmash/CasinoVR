@@ -410,7 +410,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         if (!photonView.IsMine)
         {
 
-            var grabbableCollidrs = Physics.OverlapSphere(transform.position, 1f).FirstOrDefault(g => g.GetComponent<PhotonView>().ViewID == viewID);
+            var grabbableCollidrs = Physics.OverlapSphere(transform.position, 1f).FirstOrDefault(g => g.GetComponent<PhotonView>()?.ViewID == viewID);
           
             closestGrabbable = grabbableCollidrs.GetComponent<OVRGrabbableCustom>();
             Collider grabbableCollider = closestGrabbable.grabPoints[colliderIndex];
