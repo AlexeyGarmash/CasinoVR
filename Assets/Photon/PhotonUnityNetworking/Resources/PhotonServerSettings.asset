@@ -41,10 +41,13 @@ MonoBehaviour:
   - ExtranctChipOnAll_RPC
   - FindPlayers
   - Fire
+  - GenerateRandomDanceForRemotePlayers
   - GoOutPlace_RPC
   - GrabBegin_RPC
   - GrabEnd_RPC
   - InsertCoint_RPC
+  - InstantiateChip
+  - InstantiateRemote
   - InstatianeChip_RPC
   - InvokeClickIn_RPC
   - InvokeClickOut_RPC
@@ -64,6 +67,7 @@ MonoBehaviour:
   - SetZeroTimer_RPC
   - SkipTurn_RPC
   - SpawnBall_RPC
+  - SplitTurn_RPC
   - Start
   - StartAnimation_RPC
   - StartSlotGame_RPC
@@ -77,11 +81,7 @@ MonoBehaviour:
   - TimerStep_RPC
   - UpdateAllStacks
   - UpdateExistBet_RPC
-  - InstantiateRemote
-  - InstantiateChip
-  - GenerateRandomDanceForRemotePlayers
-  - SplitTurn_RPC
-  - SurrenderedTurn_RPC
+  - MagnetizeObject_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
