@@ -128,30 +128,30 @@ namespace Assets.Scipts
             playerdCoroutinesEnded[i] = true;
 
         }
-        private void OnTriggerEnter(Collider other)
-        {
+        //private void OnTriggerEnter(Collider other)
+        //{
 
-            if (animStarted)
-            {
+        //    if (animStarted)
+        //    {
             
-                var chip = other.gameObject.GetComponent<OwnerData>();
-                var view = other.gameObject.GetComponent<PhotonView>();
+        //        var chip = other.gameObject.GetComponent<OwnerData>();
+        //        var view = other.gameObject.GetComponent<PhotonView>();
 
-                if (chip != null && view != null && !ObjectToAnimation.Contains(other.gameObject))
-                {
+        //        if (chip != null && view != null && !ObjectToAnimation.Contains(other.gameObject))
+        //        {
                    
                     
-                    chip.ExtractObject();
-                    ObjectToAnimation.Add(other.gameObject);
-                    chip.GetComponent<Collider>().enabled = false;
-                    chip.GetComponent<Rigidbody>().isKinematic = true;
-                    other.gameObject.SetActive(false);
-                    //view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+        //            chip.ExtractObject();
+        //            ObjectToAnimation.Add(other.gameObject);
+        //            chip.GetComponent<Collider>().enabled = false;
+        //            chip.GetComponent<Rigidbody>().isKinematic = true;
+        //            other.gameObject.SetActive(false);
+        //            //view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
 
-                }
-            }
+        //        }
+        //    }
 
-        }
+        //}
 
     }
 }

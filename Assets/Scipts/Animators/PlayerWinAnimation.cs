@@ -20,7 +20,7 @@ public class PlayerWinAnimation : CurveAnimator
     public void StartAnimation(int win, string nickName)
     {
         CreateWinChips(win, nickName);
-        photonView.RPC("StartAnimation_RPC", RpcTarget.All, 0);    
+       
     }
     private void CreateWinChips(int money, string nickName)
     {
@@ -62,10 +62,19 @@ public class PlayerWinAnimation : CurveAnimator
 
                 photonView.RPC("InstantiateChip", RpcTarget.OthersBuffered, view.ViewID, (int)chipCost, nickName);
                 money -= (int)chipCost;
-                
+
+                chip.GetComponent<OwnerData>().ExtractObject();
+                ObjectToAnimation.Add(chip);
+                chip.GetComponent<Collider>().enabled = false;
+                chip.GetComponent<Rigidbody>().isKinematic = true;
+                chip.SetActive(false);
+                //view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
+
+                photonView.RPC("StartAnimation_RPC", RpcTarget.All, 0);
+
             }
 
-           
+
         }
 
        
