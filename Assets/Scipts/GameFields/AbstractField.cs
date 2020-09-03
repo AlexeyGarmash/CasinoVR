@@ -286,21 +286,27 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     [PunRPC]
     public void MagnetizeObject_RPC(int viewId,int stackIndex, Vector3 ObjPosition)
     {
+        try
+        {
+            var magnetizedObject = Physics.OverlapSphere(ObjPosition, 10f).FirstOrDefault(g => g.GetComponent<PhotonView>()?.ViewID == viewId).gameObject;
+            var rb = magnetizedObject.GetComponent<Rigidbody>();
+            var stackData = Stacks[stackIndex];
 
-        var magnetizedObject = Physics.OverlapSphere(ObjPosition, 1f).FirstOrDefault(g => g.GetComponent<PhotonView>()?.ViewID == viewId).gameObject;
-        var rb = magnetizedObject.GetComponent<Rigidbody>();
-        var stackData = Stacks[stackIndex];
+            if (stackData.playerName == "")
+                stackData.playerName = magnetizedObject.GetComponent<OwnerData>().Owner;
 
-        if (stackData.playerName == "")
-            stackData.playerName = magnetizedObject.GetComponent<OwnerData>().Owner;
+            rb.isKinematic = true;
+            magnetizedObject.transform.parent = stackData.transform;
 
-        rb.isKinematic = true;
-        magnetizedObject.transform.parent = stackData.transform;
+            //Debug.Break();
 
-        //Debug.Break();
-
-        stackData.Objects.Add(magnetizedObject);
-        stackData.animator.StartAnim(magnetizedObject);
+            stackData.Objects.Add(magnetizedObject);
+            stackData.animator.StartAnim(magnetizedObject);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("MagnetizeObject_RPC exaption");
+        }
     }
     public virtual bool MagnetizeObject(GameObject Object, StackData Stack, string StackType = "")
     {
