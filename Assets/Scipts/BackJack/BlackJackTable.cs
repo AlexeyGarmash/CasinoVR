@@ -909,11 +909,11 @@ namespace Assets.Scipts.BackJack
             {
                 needSplit = true;
             }
-            [PunRPC]
-            private void SurrenderedTurn_RPC(string nick)
-            {
-                playerSurrendered = true;
-            }
+            //[PunRPC]
+            //private void SurrenderedTurn_RPC(string nick)
+            //{
+            //    playerSurrendered = true;
+            //}
         #endregion
 
 
@@ -935,10 +935,10 @@ namespace Assets.Scipts.BackJack
         {
             photonView.RPC("SplitTurn_RPC", RpcTarget.All, player.PlayerNick);
         }
-        public void Surrentered(PlayerStats player)
-        {
-            photonView.RPC("SurrenderedTurn_RPC", RpcTarget.All, player.PlayerNick);
-        }
+        //public void Surrentered(PlayerStats player)
+        //{
+        //    photonView.RPC("SurrenderedTurn_RPC", RpcTarget.All, player.PlayerNick);
+        //}
         #endregion
     }
 
