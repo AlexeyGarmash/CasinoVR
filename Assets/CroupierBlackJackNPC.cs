@@ -269,6 +269,12 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
                             PhotonNetwork.AllocateViewID(view);
 
+
+                            photonView.RPC("InstantiateRemote", RpcTarget.Others, view.ViewID, (int)card.Face, (int)card.Sign, players);
+                            PhotonNetwork.SendAllOutgoingCommands();
+
+                           
+
                             CardsToPlayersGObj[players].Add(instantiaterdCardObj);
 
                             instantiaterdCardObj.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
@@ -282,9 +288,6 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
                             RightHandNPCStack.Objects.Add(instantiaterdCardObj);
                             RightHandNPCStack.StartAnim(instantiaterdCardObj);
-
-                            photonView.RPC("InstantiateRemote", RpcTarget.Others, view.ViewID, (int)card.Face, (int)card.Sign, players);
-                            PhotonNetwork.SendAllOutgoingCommands();
                         }
                         
                         
