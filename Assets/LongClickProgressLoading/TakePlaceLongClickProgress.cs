@@ -31,6 +31,7 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase
     protected override void InvokeClickOut()
     {
         photonView?.RequestOwnership();
+        p_place.hand = null;
         _onLongClickOut?.Invoke();
         photonView?.RPC("InvokeClickOut_RPC", RpcTarget.All);
 
@@ -42,6 +43,7 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase
 
 
         p_place.ps = lastCollider.GetComponentInParent<PlayerStats>();
+        p_place.hand = lastCollider.GetComponentInParent<OVRGrabberCustom>();
         _onLongClickIn?.Invoke(p_place.ps);
 
         inGame = true;

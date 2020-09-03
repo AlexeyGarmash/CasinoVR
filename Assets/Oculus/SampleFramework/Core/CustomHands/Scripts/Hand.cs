@@ -63,6 +63,9 @@ namespace OVRTouchSample
 
         private bool m_restoreOnInputAcquired = false;
 
+        private bool m_useOuterHandPose = false;
+        private HandPoseId currcentPose = HandPoseId.Default;
+
         private void Awake()
         {
             m_grabber = GetComponent<OVRGrabber>();
@@ -154,6 +157,17 @@ namespace OVRTouchSample
             }
         }
 
+        public void SetHandPose(HandPoseId pose)
+        {
+            m_useOuterHandPose = true;
+            currcentPose = pose;
+        }
+
+        public void ClearHandPose()
+        {
+            m_useOuterHandPose = false;
+            currcentPose = HandPoseId.Default;
+        }
         private void OnInputFocusAcquired()
         {
             if (m_restoreOnInputAcquired)
@@ -190,8 +204,14 @@ namespace OVRTouchSample
                 HandPose customPose = m_grabber.grabbedObject.GetComponent<HandPose>();
                 if (customPose != null) grabPose = customPose;
             }
+
             // Pose
             HandPoseId handPoseId = grabPose.PoseId;
+
+            if (m_useOuterHandPose)
+                handPoseId = currcentPose;
+
+
             m_animator.SetInteger(m_animParamIndexPose, (int)handPoseId);
 
             // Flex
