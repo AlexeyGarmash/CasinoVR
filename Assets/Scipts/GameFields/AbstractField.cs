@@ -325,19 +325,20 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
             if (stackData.playerName == "")
                 stackData.playerName = chip.Owner;
 
-            photonView.RPC("MagnetizeObject_RPC", RpcTarget.All, chip.photonView.ViewID, Stacks.ToList().IndexOf(Stack), chip.transform.position);
+            //photonView.RPC("MagnetizeObject_RPC", RpcTarget.All, chip.photonView.ViewID, Stacks.ToList().IndexOf(Stack), chip.transform.position);
 
-            //rb.isKinematic = true;
-            //chip.transform.parent = stackData.transform;
+            rb.isKinematic = true;
+            chip.transform.parent = stackData.transform;
 
-            ////Debug.Break();
-           
-
-            //stackData.Objects.Add(Object);
-            //stackData.animator.StartAnim(Object);
+            //Debug.Break();
 
 
-           
+            stackData.Objects.Add(Object);
+            stackData.animator.StartAnim(Object);
+
+         
+
+
 
             return true;
 
