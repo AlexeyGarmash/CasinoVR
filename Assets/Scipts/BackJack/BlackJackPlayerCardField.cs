@@ -22,7 +22,7 @@ namespace Assets.Scipts.BackJack
             var rb = other.GetComponent<Rigidbody>();
             var view = gameObj.GetComponent<PhotonView>();
 
-            if (card != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null)
+            if (card != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null && photonView.IsMine)
             {
 
                 Debug.Log("MagnetizeObject viewID=" + view.ViewID);

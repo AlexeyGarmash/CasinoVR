@@ -16,6 +16,10 @@ public class PlayerWinAnimation : CurveAnimator
         chipObj.GetComponent<OwnerData>().Owner = owner;
         chipObj.SetActive(false);
         ObjectToAnimation.Add(chipObj);
+        chipObj.GetComponent<OwnerData>().ExtractObject();     
+        chipObj.GetComponent<Collider>().enabled = false;
+        chipObj.GetComponent<Rigidbody>().isKinematic = true;
+     
     }
     public void StartAnimation(int win, string nickName)
     {
@@ -27,8 +31,8 @@ public class PlayerWinAnimation : CurveAnimator
         
         if(photonView.IsMine)
         { 
-        var starmoney = money;
-        Chips chipCost;
+            var starmoney = money;
+            Chips chipCost;
 
             while (money > 0)
             {
@@ -54,13 +58,13 @@ public class PlayerWinAnimation : CurveAnimator
                 var chip = Instantiate(ChipUtils.Instance.GetChipByChipEnum(chipCost), transform.position, transform.rotation);
                 var view = chip.GetComponent<PhotonView>();
                 chip.GetComponent<OwnerData>().Owner = nickName;
-
-                ObjectToAnimation.Add(chip);
+               
 
                 PhotonNetwork.AllocateViewID(view);
                 chip.SetActive(false);
 
                 photonView.RPC("InstantiateChip", RpcTarget.OthersBuffered, view.ViewID, (int)chipCost, nickName);
+                PhotonNetwork.SendAllOutgoingCommands();
                 money -= (int)chipCost;
 
                 chip.GetComponent<OwnerData>().ExtractObject();
@@ -70,11 +74,11 @@ public class PlayerWinAnimation : CurveAnimator
                 chip.SetActive(false);
                 //view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
 
-                photonView.RPC("StartAnimation_RPC", RpcTarget.All, 0);
+               
 
             }
 
-
+            photonView.RPC("StartAnimation_RPC", RpcTarget.All, 0);
         }
 
        
