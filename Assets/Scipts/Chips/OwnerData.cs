@@ -11,7 +11,7 @@ namespace Assets.Scipts.Chips
     {
 
         public AbstractField field;
-
+        public CurveAnimator animator;
 
         public string Owner;
         public void SetOwner_Photon(string owner)
@@ -31,6 +31,11 @@ namespace Assets.Scipts.Chips
             {
                 field.ExtranctObject(photonView.ViewID);
                 field = null;
+            }
+            if (animator)
+            {
+                animator.StopObjectAnimation(photonView.ViewID);
+                animator = null;
             }
         }
 

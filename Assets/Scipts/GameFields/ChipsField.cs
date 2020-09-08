@@ -15,7 +15,7 @@ public class ChipsField : AbstractField
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
 
-        if (chip != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null)
+        if (chip != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null && view.IsMine)
         {
          
             chip.field = this;

@@ -31,17 +31,27 @@ namespace Assets.Scipts
         public bool animStarted = true;
 
         protected Dictionary<int, bool> playerdCoroutinesEnded;
+        protected Dictionary<int, Coroutine> movingCoroutines;
         protected void Start()
         {
             ObjectToAnimation = new List<GameObject>();
             curves = GetComponentsInChildren<BezierCurve>();
             playerdCoroutinesEnded = new Dictionary<int, bool>();
-
+            movingCoroutines = new Dictionary<int, Coroutine>();
 
         }
-
-      
-
+    
+        public void StopObjectAnimation(int viewID)
+        {
+            Coroutine coroutine;
+         
+            if (movingCoroutines.TryGetValue(viewID, out coroutine))
+            {
+                StopCoroutine(coroutine);
+                movingCoroutines[viewID] = null;
+                playerdCoroutinesEnded[viewID] = true;
+            }
+        }
 
 
         [PunRPC]
@@ -51,7 +61,9 @@ namespace Assets.Scipts
         }
         IEnumerator MoveObjectWithCurve(int curveIndex)
         {
-            playerdCoroutinesEnded.Clear();
+            playerdCoroutinesEnded = new Dictionary<int, bool>();
+            movingCoroutines = new Dictionary<int, Coroutine>();
+
             yield return new WaitForSeconds(0.1f);
             int i = 0;
             while (ObjectToAnimation.Count > i)
@@ -60,8 +72,9 @@ namespace Assets.Scipts
                 var g_object = ObjectToAnimation[i];
                 i++;
                 //winChips.Remove(chip);
+                var viewID = g_object.GetComponent<PhotonView>().ViewID;
 
-                StartCoroutine(MoveOneObject(curvePurpel, g_object, i));
+                movingCoroutines.Add(viewID,  StartCoroutine(MoveOneObject(curvePurpel, g_object, viewID)));
                 yield return new WaitForSeconds(0.1f);
 
             }
@@ -70,15 +83,18 @@ namespace Assets.Scipts
                 yield return null;
 
             ObjectToAnimation.Clear();
-
+            playerdCoroutinesEnded.Clear();
+            movingCoroutines.Clear();
             animStarted = false;
 
         }
 
-        IEnumerator MoveOneObject(BezierCurve curvePurpel, GameObject chip, int i)
+        IEnumerator MoveOneObject(BezierCurve curvePurpel, GameObject chip, int viewID)
         {
-            playerdCoroutinesEnded.Add(i, false);
-            
+            playerdCoroutinesEnded.Add(viewID, false);
+
+            chip.GetComponent<OwnerData>().animator = this;
+
             var localSpeed = speed;
             float t = 0;
             t += Time.deltaTime * speed;
@@ -125,33 +141,12 @@ namespace Assets.Scipts
 
             yield return null;
 
-            playerdCoroutinesEnded[i] = true;
-
-        }
-        //private void OnTriggerEnter(Collider other)
-        //{
-
-        //    if (animStarted)
-        //    {
+           
+            playerdCoroutinesEnded[viewID] = true;
             
-        //        var chip = other.gameObject.GetComponent<OwnerData>();
-        //        var view = other.gameObject.GetComponent<PhotonView>();
-
-        //        if (chip != null && view != null && !ObjectToAnimation.Contains(other.gameObject))
-        //        {
-                   
-                    
-        //            chip.ExtractObject();
-        //            ObjectToAnimation.Add(other.gameObject);
-        //            chip.GetComponent<Collider>().enabled = false;
-        //            chip.GetComponent<Rigidbody>().isKinematic = true;
-        //            other.gameObject.SetActive(false);
-        //            //view.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
-
-        //        }
-        //    }
-
-        //}
+            chip.GetComponent<OwnerData>().animator = null;
+        }
+     
 
     }
 }

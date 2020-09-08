@@ -142,7 +142,7 @@ public class RadialMenuHandV2 : MonoBehaviour
         if (currentChosenSector != null && stickRelease)
         {
             currentChosenSector.ResolveSelectSector(false);
-            //OnRadialSectorChangeListener.Invoke(currentChosenSector);
+            OnRadialSectorChangeListener.Invoke(currentChosenSector);
             print(string.Format("Invoked {0}!!!", currentChosenSector.name));
             currentChosenSector = null;
             
