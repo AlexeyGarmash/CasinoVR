@@ -52,6 +52,8 @@ namespace OVRTouchSample
         public HandPoseId PoseId
         {
             get { return m_poseId; }
+            set { m_poseId = value; }
         }
+        
     }
 }

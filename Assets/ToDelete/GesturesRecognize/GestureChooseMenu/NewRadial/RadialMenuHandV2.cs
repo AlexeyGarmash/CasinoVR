@@ -62,6 +62,7 @@ public class RadialMenuHandV2 : MonoBehaviour
             if (OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick) != Vector2.zero)
             {
                 Vector2 thumb = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
+                //Debug.Log(thumb);
                 if(thumb.x >= 0.7 && thumb.x <= 0.9 && thumb.y >= -0.5 && thumb.y <= 0.5)
                 {
                     //print("RIGHT");

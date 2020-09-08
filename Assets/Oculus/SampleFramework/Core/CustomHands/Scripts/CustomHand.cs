@@ -45,7 +45,7 @@ namespace OVRTouchSample
         [SerializeField]
         private Animator m_animator = null;
         [SerializeField]
-        private HandPose m_defaultGrabPose = null;
+        HandPose m_defaultGrabPose = null;
 
         private Collider[] m_colliders = null;
         private bool m_collisionEnabled = true;
@@ -185,6 +185,10 @@ namespace OVRTouchSample
             return Mathf.Clamp01(value + rateDelta * sign);
         }
 
+        public void SetPose(HandPoseId pose)
+        {
+            m_defaultGrabPose.PoseId = pose;
+        }
         private void UpdateAnimStates()
         {
             bool grabbing = m_grabber.grabbedObject != null;
@@ -202,23 +206,24 @@ namespace OVRTouchSample
 
             if(m_grabber.m_grabbedObjs.Count != 0)
              m_animator.SetFloat(m_animItemInHand, m_grabber.m_grabbedObjs.Count - 1);
+
             // Flex
             // blend between open hand and fully closed fist
             float flex = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller);
             m_animator.SetFloat(m_animParamIndexFlex, flex);
 
-            // Point
-            bool canPoint = !grabbing || grabPose.AllowPointing;
-            float point = canPoint ? m_pointBlend : 0.0f;
-            m_animator.SetLayerWeight(m_animLayerIndexPoint, point);
+            //// Point
+            //bool canPoint = !grabbing || grabPose.AllowPointing;
+            //float point = canPoint ? m_pointBlend : 0.0f;
+            //m_animator.SetLayerWeight(m_animLayerIndexPoint, point);
 
-            // Thumbs up
-            bool canThumbsUp = !grabbing || grabPose.AllowThumbsUp;
-            float thumbsUp = canThumbsUp ? m_thumbsUpBlend : 0.0f;
-            m_animator.SetLayerWeight(m_animLayerIndexThumb, thumbsUp);
+            //// Thumbs up
+            //bool canThumbsUp = !grabbing || grabPose.AllowThumbsUp;
+            //float thumbsUp = canThumbsUp ? m_thumbsUpBlend : 0.0f;
+            //m_animator.SetLayerWeight(m_animLayerIndexThumb, thumbsUp);
 
-            float pinch = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller);
-            m_animator.SetFloat("Pinch", pinch);
+            //float pinch = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, m_controller);
+            //m_animator.SetFloat("Pinch", pinch);
         }
 
         private float m_collisionScaleCurrent = 0.0f;
