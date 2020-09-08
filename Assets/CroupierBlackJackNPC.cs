@@ -253,10 +253,12 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
             {
                 foreach (var players in CardsToPlayers.Keys)
                 {
-                    instantiaterdCardObj = null;
+                    
 
                     foreach (var card in CardsToPlayers[players])
                     {
+                        //instantiaterdCardObj = null;
+
                         CardCurve.StopAllCoroutines();
 
 
@@ -290,12 +292,12 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
                           
                         }
 
-                        while (instantiaterdCardObj == null)
-                            yield return null;
+                        //while (instantiaterdCardObj == null)
+                        //    yield return null;
        
                     }
 
-                    yield return new WaitForSeconds(0.1f);
+                    
 
                 }
 
@@ -436,7 +438,7 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
         }
     }
     public IEnumerator TakeCardsToPlayers(bool hideCard)
-    {
+    {       
         distributionOfCards = true;
 
 
