@@ -13,7 +13,7 @@ using UnityEngine;
 
 public class PlayerPlace : MonoBehaviourPun
 {
-    public OVRGrabberCustom hand;
+    public RadialMenuHandV2 handMenu;
     public Action<bool, PlayerStats> actionReadyOrNot;
     public Action actionJoinOut;
     public PlayerStats ps;

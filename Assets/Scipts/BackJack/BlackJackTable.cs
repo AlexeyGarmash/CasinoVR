@@ -185,6 +185,15 @@ namespace Assets.Scipts.BackJack
                             
                             //if (blackJackLogic.CanSplit(p.ps.PlayerNick))
                             ActivateGameButtons(false, true, true, false, p, true);
+
+                            var handMenu = p.handMenu;
+                            //handMenu.RevokeMenu();
+
+                            handMenu.AddAction(new RadialActionInfo(() => { TakeCard(playersInGame[j].ps); }, "TakeCard"));
+                            handMenu.AddAction(new RadialActionInfo(() => { Split(playersInGame[j].ps); }, "Split"));                                                     
+                            handMenu.AddAction(new RadialActionInfo(() => { SkipTurn(playersInGame[j].ps); }, "Skip"));
+
+                            handMenu.InvokeMenu();
                             //else ActivateGameButtons(false, true, true, false, p);
                             var recognizer = p.GetComponent<VoiceManager>();
 
@@ -248,6 +257,8 @@ namespace Assets.Scipts.BackJack
                             }
 
                             ActivateGameButtons(false, false, false, false, p);
+                            handMenu.RevokeMenu();
+
                             var field = p.GetComponent<PlayerBlackJackFields>();
 
                             if (playerTakeCard)
@@ -600,6 +611,13 @@ namespace Assets.Scipts.BackJack
                     PhotonNetwork.SendAllOutgoingCommands();
                 }
 
+                var handMenu = playersInGame[j].handMenu;
+
+                //handMenu.RevokeMenu();
+                handMenu.AddAction(new RadialActionInfo(() => { PlayerReady(playersInGame[j].ps); }, "Ready"));
+              
+                handMenu.InvokeMenu();
+
                 ActivateGameButtons(false, false, false, true, playersInGame[j]);
                 //var voiceRecognizer = playersInGame[j].GetComponent<VoiceManager>();
                 //voiceRecognizer.AddVoiceAction(skip, PlayerReady);
@@ -622,6 +640,7 @@ namespace Assets.Scipts.BackJack
                 }
 
                 //voiceRecognizer.StopRecognize();
+                playersInGame[j].handMenu.RevokeMenu();
                 ActivateGameButtons(false, false, false, false, playersInGame[j]);
 
                 var playerField = playersInGame[j].GetComponent<PlayerBlackJackFields>();

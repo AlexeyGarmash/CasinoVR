@@ -105,6 +105,7 @@ public abstract class LongClickProgerssBase : MonoBehaviourPun
     {
         photonView?.RequestOwnership();
         p_place.ps = lastCollider.GetComponentInParent<PlayerStats>();
+        p_place.handMenu = lastCollider.GetComponentInChildren<RadialMenuHandV2>();
         _onLongClickIn?.Invoke(p_place.ps);
         inGame = true;
         _imageReady.texture = _readyTexture;
