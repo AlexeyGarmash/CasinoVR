@@ -189,6 +189,11 @@ namespace OVRTouchSample
         {
             m_defaultGrabPose.PoseId = pose;
         }
+
+        public void ClearPose()
+        {
+            m_defaultGrabPose.PoseId = HandPoseId.Default;
+        }
         private void UpdateAnimStates()
         {
             bool grabbing = m_grabber.grabbedObject != null;

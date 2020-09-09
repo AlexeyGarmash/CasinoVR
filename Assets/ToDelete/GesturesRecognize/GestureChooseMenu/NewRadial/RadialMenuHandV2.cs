@@ -8,7 +8,6 @@ public enum RadialMenuSectors { ONE = 1, TWO = 2, THREE = 3, FOUR = 4, FIVE = 5,
 
 public class RadialMenuHandV2 : MonoBehaviour
 {
-   
 
     [SerializeField] private RadialMenuV2 radialMenu;
 
@@ -263,7 +262,9 @@ public class RadialMenuHandV2 : MonoBehaviour
     {
         if(menuInvoke)
         {
-            if(!keyPressed)
+            transform.LookAt(Camera.main.transform.position);
+
+            if (!keyPressed)
             {
                 ResolveShowMenu(true);
                 keyPressed = true;

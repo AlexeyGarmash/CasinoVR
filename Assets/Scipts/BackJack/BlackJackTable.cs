@@ -1,6 +1,7 @@
 ﻿using Assets.Scipts.Animators;
 using Assets.Scipts.BackJack.Buttons;
 using Cards;
+using OVRTouchSample;
 using Photon.Pun;
 using System;
 using System.Collections;
@@ -162,6 +163,11 @@ namespace Assets.Scipts.BackJack
             }
         }
 
+        IEnumerator ClearPoseWithDilay(CustomHand hand, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            hand.ClearPose();
+        }
         private IEnumerator PlayersTurns()
         {
 
@@ -188,10 +194,26 @@ namespace Assets.Scipts.BackJack
 
                             var handMenu = p.handMenu;
                             //handMenu.RevokeMenu();
+                            var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
 
-                            handMenu.AddAction(new RadialActionInfo(() => { TakeCard(playersInGame[j].ps); }, "TakeCard"));
-                            handMenu.AddAction(new RadialActionInfo(() => { Split(playersInGame[j].ps); }, "Split"));                                                     
-                            handMenu.AddAction(new RadialActionInfo(() => { SkipTurn(playersInGame[j].ps); }, "Skip"));
+                            handMenu.AddAction(
+                                new RadialActionInfo(() => {
+                                    TakeCard(playersInGame[j].ps);
+                                   
+                                    animatorHolder.hand.SetPose(animatorHolder.give);
+                                }, 
+                                "Give card")
+                            );
+                            handMenu.AddAction(new RadialActionInfo(() => {
+                                Split(playersInGame[j].ps);
+                                
+                                animatorHolder.hand.SetPose(animatorHolder.split);
+                            }, "Split"));
+                            handMenu.AddAction(new RadialActionInfo(() => {
+                                SkipTurn(playersInGame[j].ps);
+                               
+                                animatorHolder.hand.SetPose(animatorHolder.stop);
+                            }, "Skip"));
 
                             handMenu.InvokeMenu();
                             //else ActivateGameButtons(false, true, true, false, p);
@@ -257,6 +279,8 @@ namespace Assets.Scipts.BackJack
                             }
 
                             ActivateGameButtons(false, false, false, false, p);
+                            yield return ClearPoseWithDilay(animatorHolder.hand, 1f);
+
                             handMenu.RevokeMenu();
 
                             var field = p.GetComponent<PlayerBlackJackFields>();
@@ -612,13 +636,18 @@ namespace Assets.Scipts.BackJack
                 }
 
                 var handMenu = playersInGame[j].handMenu;
-
+                var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
                 //handMenu.RevokeMenu();
-                handMenu.AddAction(new RadialActionInfo(() => { PlayerReady(playersInGame[j].ps); }, "Ready"));
-              
+                handMenu.AddAction(new RadialActionInfo(() => {
+                    PlayerReady(playersInGame[j].ps);
+                    
+                    animatorHolder.hand.SetPose(animatorHolder.ready);
+                }, "Ready"));
+
                 handMenu.InvokeMenu();
 
                 ActivateGameButtons(false, false, false, true, playersInGame[j]);
+
                 //var voiceRecognizer = playersInGame[j].GetComponent<VoiceManager>();
                 //voiceRecognizer.AddVoiceAction(skip, PlayerReady);
                 //voiceRecognizer.StartRecognize();
@@ -639,7 +668,10 @@ namespace Assets.Scipts.BackJack
 
                 }
 
+
                 //voiceRecognizer.StopRecognize();
+                yield return ClearPoseWithDilay(animatorHolder.hand, 1f);
+              
                 playersInGame[j].handMenu.RevokeMenu();
                 ActivateGameButtons(false, false, false, false, playersInGame[j]);
 
