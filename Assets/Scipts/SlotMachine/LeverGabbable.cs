@@ -9,6 +9,9 @@ public class LeverGabbable : OVRGrabbableCustom
 
     public Transform handler;
 
+    private Vector3 startPosition;
+    
+
     public override void GrabBegin(OVRGrabberCustom hand, Collider grabPoint)
     {
         base.GrabBegin(hand, grabPoint);
@@ -26,6 +29,11 @@ public class LeverGabbable : OVRGrabbableCustom
         Rigidbody rbhandler = handler.GetComponent<Rigidbody>();
         rbhandler.velocity = Vector3.zero;
         rbhandler.angularVelocity = Vector3.zero;
+
+       
+
+        transform.parent = handler.transform;
+
     }
 
     private void Update()

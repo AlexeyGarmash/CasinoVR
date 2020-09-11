@@ -51,7 +51,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
     public int max_grabbed_obj = 5;
 
     // нажатие кнопки GrabButton
-    private bool add_chip;
+    private bool dropItems;
 
 
     [SerializeField, Header("Closes object outline color")]
@@ -137,12 +137,14 @@ public class OVRGrabberCustom : MonoBehaviourPun
         if (canRelease)
         {
             GrabEnd();
+            
         }
 
         int value;
         if (m_grabCandidates.TryGetValue(grabbable, out value))
         {
             m_grabCandidates.Remove(grabbable);
+
         }
     }
 
@@ -219,7 +221,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         {
             // Update values from inputs
             m_prevFlex = OVRInput.Get(GrabAxis, m_controller);
-            add_chip = OVRInput.GetDown(GrabButton, m_controller);
+            dropItems = OVRInput.GetDown(GrabButton, m_controller);
 
        
             if (m_grabCandidates.Count != 0)
@@ -286,11 +288,11 @@ public class OVRGrabberCustom : MonoBehaviourPun
     protected void CheckForGrabOrRelease(float prevFlex)
     {
 
-        if ((m_prevFlex >= grabBegin) && max_grabbed_obj > m_grabbedObjs.Count && add_chip)
+        if ((m_prevFlex >= grabBegin) && max_grabbed_obj > m_grabbedObjs.Count)
         {
             GrabBegin();
         }
-        else if ((m_prevFlex <= grabEnd) && (prevFlex > grabEnd))
+        else if (dropItems)
         {
             GrabEnd();
         }

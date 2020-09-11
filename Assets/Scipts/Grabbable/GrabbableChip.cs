@@ -7,32 +7,7 @@ using UnityEngine;
 
 class GrabbableChip : OVRGrabbableCustom
 {
-    [Header("Позиции лувой руки с фишками 1-5 штуками"), Space(10)]
-
-    [SerializeField]
-    private  Transform GrabPos1ChipLeft;
-    [SerializeField]
-    private Transform GrabPos2ChipLeft;
-    [SerializeField]
-    private Transform GrabPos3ChipLeft;
-    [SerializeField]
-    private Transform GrabPos4ChipLeft;
-    [SerializeField]
-    private Transform GrabPos5ChipLeft;
-
-
-    [Header("Позиции правой руки с фишками 1-5 штуками"), Space(10)]
-    [SerializeField]
-    private Transform GrabPos1ChipRight;
-    [SerializeField]
-    private Transform GrabPos2ChipRight;
-    [SerializeField]
-    private Transform GrabPos3ChipRight;
-    [SerializeField]
-    private Transform GrabPos4ChipRight;
-    [SerializeField]
-    private Transform GrabPos5ChipRight;
-
+    
 
     [Header("Сдвиг холдера для каждой новой фишки правой руки 1-5 штуками"), Space(10)]
 
@@ -58,7 +33,7 @@ class GrabbableChip : OVRGrabbableCustom
 
 
     float yOffset = 0.0075f;
-    private OvrAvatar avatar;
+
 
     protected override void Start()
     {
@@ -110,72 +85,7 @@ class GrabbableChip : OVRGrabbableCustom
        
     }
 
-    void SetPose(OVRGrabberCustom hand)
-    {
-        
-        var holder = hand.grabbleObjSpawnPoint;
-        if (hand.m_controller == OVRInput.Controller.RTouch)
-        {
-            
-            if (hand.m_grabbedObjs.Count == 1)
-            {
-                avatar.RightHandCustomPose = GrabPos1ChipRight;
-                holder.localPosition = offsetPosR;
-            }
-            else if (hand.m_grabbedObjs.Count == 2)
-            {
-                avatar.RightHandCustomPose = GrabPos2ChipRight;
-                holder.localPosition = offsetPosR;
-            }
-            else if (hand.m_grabbedObjs.Count == 3)
-            {
-                avatar.RightHandCustomPose = GrabPos3ChipRight;
-                holder.localPosition = offsetPosR;
-            }
-            else if (hand.m_grabbedObjs.Count == 4)
-            {
-                avatar.RightHandCustomPose = GrabPos4ChipRight;
-                holder.localPosition = offsetPosR;
-            }
-            else if (hand.m_grabbedObjs.Count == 5)
-            {
-                avatar.RightHandCustomPose = GrabPos5ChipRight;
-                holder.localPosition = offsetPosR;
-            }
-
-            holder.localRotation = offsetRotR;
-        }
-        else if (hand.m_controller == OVRInput.Controller.LTouch)
-        {
-            if (hand.m_grabbedObjs.Count == 1)
-            {
-                avatar.RightHandCustomPose = GrabPos1ChipLeft;
-                holder.localPosition = offsetPosL;
-            }
-            else if (hand.m_grabbedObjs.Count == 2)
-            {
-                avatar.RightHandCustomPose = GrabPos2ChipLeft;
-                holder.localPosition = offsetPosL;
-            }
-            else if (hand.m_grabbedObjs.Count == 3)
-            {
-                avatar.RightHandCustomPose = GrabPos3ChipLeft;
-                holder.localPosition = offsetPosL;
-            }
-            else if (hand.m_grabbedObjs.Count == 4)
-            {
-                avatar.RightHandCustomPose = GrabPos4ChipLeft;
-                holder.localPosition = offsetPosL;
-            }
-            else if (hand.m_grabbedObjs.Count == 5)
-            {
-                avatar.RightHandCustomPose = GrabPos5ChipLeft;
-                holder.localPosition = offsetPosL;
-            }
-
-            holder.localRotation = offsetRotL;
-        }
-    }
+   
 
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
