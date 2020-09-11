@@ -13,6 +13,8 @@ public class LeverGabbable : OVRGrabbableCustom
     {
         base.GrabBegin(hand, grabPoint);
         GetComponentInParent<PhotonView>().RequestOwnership();
+
+        Debug.Log("handle Grabbed");
     }
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {

@@ -39,11 +39,11 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
                 photonView.RPC("SetPlayerStatrs", RpcTarget.All, 1000, PhotonNetwork.LocalPlayer.NickName);
 
                 CenterEye = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/CenterEyeAnchor").transform;
-                RightHandAnchor = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/RightHandAnchor").transform;
-                LeftHandAnchor = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/LeftHandAnchor").transform;
+                RightHandAnchor = ovrControllerTransform.Find("OVRCameraRig/Robot Kyle/VRConstraints/Right Arm IK/RightHandTarget").transform;
+                LeftHandAnchor = ovrControllerTransform.Find("OVRCameraRig/Robot Kyle/VRConstraints/Left Arm IK/LeftHandTarget").transform;
                 SetHeadAvatar();
-                SetHand(LeftHand, LeftHandAnchor, 180f, 90f);
-                SetHand(RightHand, RightHandAnchor, -180f, -90f);
+                SetHand(LeftHand, LeftHandAnchor, 0, 0);
+                SetHand(RightHand, RightHandAnchor, 0, 0);
 
                 OvrCameraRigTransform.parent = transform;
                 transform.parent = globalVRController.transform;

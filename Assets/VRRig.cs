@@ -23,6 +23,8 @@ public class VRRig : MonoBehaviour
     public VRMap head;   
     public VRMap leftHand;
     public VRMap RightHand;
+    public VRMap leftHand2;
+    public VRMap RightHand2;
 
     public Transform headConstraint;
     private Vector3 headBodyOffset;
@@ -41,7 +43,8 @@ public class VRRig : MonoBehaviour
         head.Map();
         leftHand.Map();
         RightHand.Map();
-       
+        leftHand2.Map();
+        RightHand2.Map();
     }
 
 }

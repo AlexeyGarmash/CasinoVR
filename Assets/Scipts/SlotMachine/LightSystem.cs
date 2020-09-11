@@ -7,8 +7,8 @@ using System;
 
 namespace SlotMachine
 {
-    /*public enum SLOT_MACHINE_LAMP_MODS { IDLE, FAST,  ALL_LAMP_RANDOM_SINGLE_COLOR_ONCE, ALL_LAMP_RANDOM_SINGLE_COLOR, STOP, ALL_LAMP_RANDOM_ONCE, ALL_LAMP_RANDOM, NONE, MIXED }
-    public class LightSystem : MonoBehaviour, IListener<EVENT_TYPE>
+    public enum SLOT_MACHINE_LAMP_MODS { IDLE, FAST, ALL_LAMP_RANDOM_SINGLE_COLOR_ONCE, ALL_LAMP_RANDOM_SINGLE_COLOR, STOP, ALL_LAMP_RANDOM_ONCE, ALL_LAMP_RANDOM, NONE, MIXED }
+    public class LightSystem : MonoBehaviour, IListener<SLOT_MACHINE_EVENT>
     {
 
         SLOT_MACHINE_LAMP_MODS prev = SLOT_MACHINE_LAMP_MODS.NONE;
@@ -23,10 +23,10 @@ namespace SlotMachine
         public Color[] HaloColors;
         public Color[] MaterialColors;
 
-        EventManager em;
+        EventManager<SLOT_MACHINE_EVENT> em;
         void Start()
         {
-            em = gameObject.transform.parent.GetComponent<EventManager>();
+            em = gameObject.transform.parent.GetComponent<SlotMachineManager>().em;
 
             AddListeners();
             GetLamps();
@@ -43,15 +43,15 @@ namespace SlotMachine
         }
         private void AddListeners()
         {
-            em.AddListener(EVENT_TYPE.REEL_ROTATION_START, this);
-            em.AddListener(EVENT_TYPE.REEL_ROTATION_END, this);
-            em.AddListener(EVENT_TYPE.REELSTOP1, this);
-            em.AddListener(EVENT_TYPE.REELSTOP2, this);
-            em.AddListener(EVENT_TYPE.REELSTOP3, this);
-            em.AddListener(EVENT_TYPE.NO_JACKPOT, this);
-            em.AddListener(EVENT_TYPE.JACKPOT_IS_POSSIBLE, this);
-            em.AddListener(EVENT_TYPE.JACKPOT_START, this);
-            em.AddListener(EVENT_TYPE.JACKPOT_END, this);
+            em.AddListener(SLOT_MACHINE_EVENT.REEL_ROTATION_START, this);
+            em.AddListener(SLOT_MACHINE_EVENT.REEL_ROTATION_END, this);
+            em.AddListener(SLOT_MACHINE_EVENT.REELSTOP1, this);
+            em.AddListener(SLOT_MACHINE_EVENT.REELSTOP2, this);
+            em.AddListener(SLOT_MACHINE_EVENT.REELSTOP3, this);
+            em.AddListener(SLOT_MACHINE_EVENT.NO_JACKPOT, this);
+            em.AddListener(SLOT_MACHINE_EVENT.JACKPOT_IS_POSSIBLE, this);
+            em.AddListener(SLOT_MACHINE_EVENT.JACKPOT_START, this);
+            em.AddListener(SLOT_MACHINE_EVENT.JACKPOT_END, this);
         }
 
 
@@ -60,13 +60,14 @@ namespace SlotMachine
             prev = current;
             current = mod;
 
+           
             StopAllCoroutines();
 
-            if (mod == SLOT_MACHINE_LAMP_MODS.IDLE)           
-                IdleMode();            
-            else if (mod == SLOT_MACHINE_LAMP_MODS.FAST)           
-                FastMode();            
-            else if (mod == SLOT_MACHINE_LAMP_MODS.ALL_LAMP_RANDOM_SINGLE_COLOR_ONCE)           
+            if (mod == SLOT_MACHINE_LAMP_MODS.IDLE)
+                IdleMode();
+            else if (mod == SLOT_MACHINE_LAMP_MODS.FAST)
+                FastMode();
+            else if (mod == SLOT_MACHINE_LAMP_MODS.ALL_LAMP_RANDOM_SINGLE_COLOR_ONCE)
                 OneColorShot(NORMAL_DELAY);
             else if (mod == SLOT_MACHINE_LAMP_MODS.ALL_LAMP_RANDOM_SINGLE_COLOR)
                 AllLampsRandomSingleColor(LOW_DELAY);
@@ -77,8 +78,8 @@ namespace SlotMachine
             else if (mod == SLOT_MACHINE_LAMP_MODS.MIXED)
                 MixedMode(LOW_DELAY);
             else StopMode();
-            
-            
+
+
         }
 
         private void SetAllSingleColor(Color Halo, Color Lamp)
@@ -117,8 +118,11 @@ namespace SlotMachine
             int c = 0;
             int count = Lamps.Length;
 
+
             while (true)
             {
+
+
                 for (int i = 0; i < count; i++)
                 {
 
@@ -139,12 +143,12 @@ namespace SlotMachine
 
         private void IdleMode()
         {
-            
+
             StartCoroutine(SequenceChange(NORMAL_DELAY));
         }
         private void FastMode()
         {
-            
+
             StartCoroutine(SequenceChange(LOW_DELAY));
         }
 
@@ -159,7 +163,7 @@ namespace SlotMachine
         }
         private void OneColorShot(float delay)
         {
-            
+
             StartCoroutine(_OneShotColor(delay));
         }
 
@@ -179,7 +183,7 @@ namespace SlotMachine
                 prevC = randC;
 
                 yield return new WaitForSeconds(delay);
-                
+
             }
         }
         private void AllLampsRandomSingleColor(float delay)
@@ -189,8 +193,8 @@ namespace SlotMachine
         }
         private IEnumerator _AllLampsRandomSingleColorOnce(float delay)
         {
-            int randC;       
-            randC = UnityEngine.Random.Range(0, HaloColors.Length);            
+            int randC;
+            randC = UnityEngine.Random.Range(0, HaloColors.Length);
             SetAllSingleColor(HaloColors[randC], MaterialColors[randC]);
             yield return new WaitForSeconds(delay);
             ModChanger(prev);
@@ -203,7 +207,7 @@ namespace SlotMachine
 
         private void StopMode()
         {
-            
+
             StartCoroutine(_StopMode());
         }
         private IEnumerator _StopMode()
@@ -212,7 +216,7 @@ namespace SlotMachine
             ModChanger(SLOT_MACHINE_LAMP_MODS.IDLE);
         }
 
-        
+
         private void AllLampsRandom(float delay)
         {
 
@@ -220,7 +224,7 @@ namespace SlotMachine
         }
         private IEnumerator _AllLampsRandom(float delay)
         {
-            
+
             while (true)
             {
                 SetAllRandomColor();
@@ -254,7 +258,7 @@ namespace SlotMachine
                     int randC;
                     randC = UnityEngine.Random.Range(0, HaloColors.Length);
                     SetAllSingleColor(HaloColors[randC], MaterialColors[randC]);
-                    
+
                 }
                 else SetAllRandomColor();
                 yield return new WaitForSeconds(delay);
@@ -262,36 +266,36 @@ namespace SlotMachine
         }
 
 
-        public void OnEvent(EVENT_TYPE Event_type, Component Sender, params object[] Param)
+        public void OnEvent(SLOT_MACHINE_EVENT SLOT_MACHINE_EVENT, Component Sender, params object[] Param)
         {
 
-            switch (Event_type)
+            switch (SLOT_MACHINE_EVENT)
             {
-                case EVENT_TYPE.REEL_ROTATION_START:
-                    ModChanger(SLOT_MACHINE_LAMP_MODS.FAST);                   
+                case SLOT_MACHINE_EVENT.REEL_ROTATION_START:
+                    ModChanger(SLOT_MACHINE_LAMP_MODS.FAST);
                     break;
-                case EVENT_TYPE.REEL_ROTATION_END:
-                    ModChanger(SLOT_MACHINE_LAMP_MODS.IDLE);                    
+                case SLOT_MACHINE_EVENT.REEL_ROTATION_END:
+                    ModChanger(SLOT_MACHINE_LAMP_MODS.IDLE);
                     break;
-                case EVENT_TYPE.REELSTOP1:
+                case SLOT_MACHINE_EVENT.REELSTOP1:
                     ModChanger(SLOT_MACHINE_LAMP_MODS.ALL_LAMP_RANDOM_SINGLE_COLOR_ONCE);
                     break;
-                                
-                case EVENT_TYPE.JACKPOT_IS_POSSIBLE:
+
+                case SLOT_MACHINE_EVENT.JACKPOT_IS_POSSIBLE:
                     ModChanger(SLOT_MACHINE_LAMP_MODS.ALL_LAMP_RANDOM_SINGLE_COLOR);
                     break;
-                case EVENT_TYPE.NO_JACKPOT:
+                case SLOT_MACHINE_EVENT.NO_JACKPOT:
                     ModChanger(SLOT_MACHINE_LAMP_MODS.STOP);
                     break;
-                case EVENT_TYPE.JACKPOT_START:
+                case SLOT_MACHINE_EVENT.JACKPOT_START:
                     ModChanger(SLOT_MACHINE_LAMP_MODS.MIXED);
 
                     break;
-                case EVENT_TYPE.JACKPOT_END:
+                case SLOT_MACHINE_EVENT.JACKPOT_END:
                     ModChanger(SLOT_MACHINE_LAMP_MODS.IDLE);
                     break;
             }
         }
-    }*/
+    }
 
 }
