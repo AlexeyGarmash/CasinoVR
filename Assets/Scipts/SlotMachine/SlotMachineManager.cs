@@ -180,11 +180,11 @@ namespace SlotMachine
                     currentTag = (string)Param[1];
                     break;
                 case SLOT_MACHINE_EVENT.BUTTON_PRESSED:
-                    StartSlotGame();
+                    //StartSlotGame();
                     Debug.Log("Button pressed");
                     break;
                 case SLOT_MACHINE_EVENT.BUTTON_PRESSED_JACKPOT:
-                    StartSlotGame(true);
+                    //StartSlotGame(true);
                     break;
             }
         }

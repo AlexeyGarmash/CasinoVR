@@ -51,7 +51,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
     public int max_grabbed_obj = 5;
 
     // нажатие кнопки GrabButton
-    private bool dropItems;
+    private bool add_chip;
 
 
     [SerializeField, Header("Closes object outline color")]
@@ -156,7 +156,6 @@ public class OVRGrabberCustom : MonoBehaviourPun
        
     }
 
-    [PunRPC]
 
     protected virtual void Start()
     {
@@ -221,7 +220,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         {
             // Update values from inputs
             m_prevFlex = OVRInput.Get(GrabAxis, m_controller);
-            dropItems = OVRInput.GetDown(GrabButton, m_controller);
+            add_chip = OVRInput.GetDown(GrabButton, m_controller);
 
        
             if (m_grabCandidates.Count != 0)
@@ -288,11 +287,11 @@ public class OVRGrabberCustom : MonoBehaviourPun
     protected void CheckForGrabOrRelease(float prevFlex)
     {
 
-        if ((m_prevFlex >= grabBegin) && max_grabbed_obj > m_grabbedObjs.Count)
+        if ((m_prevFlex >= grabBegin) && max_grabbed_obj > m_grabbedObjs.Count && add_chip)
         {
             GrabBegin();
         }
-        else if (dropItems)
+        else if ((m_prevFlex <= grabEnd) && (prevFlex > grabEnd))
         {
             GrabEnd();
         }
@@ -461,6 +460,9 @@ public class OVRGrabberCustom : MonoBehaviourPun
             m_lastRot = transform.rotation;
 
             // Set up offsets for grabbed object desired position relative to hand.
+
+
+
             if (m_grabbedObj.snapPosition)
             {
                 m_grabbedObjectPosOff = m_gripTransform.localPosition;
@@ -496,10 +498,10 @@ public class OVRGrabberCustom : MonoBehaviourPun
             // speed and sends them flying. The grabbed object may still teleport inside of other objects, but fixing that
             // is beyond the scope of this demo.
 
-            //MoveGrabbedObject(m_lastPos, m_lastRot, true);
+            MoveGrabbedObject(m_lastPos, m_lastRot, true);
 
 
-         
+
             SetPlayerIgnoreCollision(m_grabbedObj.gameObject, true);
             if (m_grabbedObjs.Count == max_grabbed_obj || closestGrabbable.tag == "Untagged")
                 GrabVolumeEnable(false);
@@ -539,16 +541,19 @@ public class OVRGrabberCustom : MonoBehaviourPun
         Vector3 grabbablePosition = pos + rot * m_grabbedObjectPosOff;
         Quaternion grabbableRotation = rot * m_grabbedObjectRotOff;
 
-        if (forceTeleport)
-        {
-            grabbedRigidbody.transform.position = grabbablePosition;
-            grabbedRigidbody.transform.rotation = grabbableRotation;
-        }
-        else
-        {
-            grabbedRigidbody.MovePosition(grabbablePosition);
-            grabbedRigidbody.MoveRotation(grabbableRotation);
-        }
+        grabbedRigidbody.transform.localPosition = m_grabbedObj.snapOffset.localPosition;
+        grabbedRigidbody.transform.rotation = grabbableRotation;
+
+        //if (forceTeleport)
+        //{
+        //    grabbedRigidbody.transform.position = grabbablePosition;
+        //    grabbedRigidbody.transform.rotation = grabbableRotation;
+        //}
+        //else
+        //{
+        //    grabbedRigidbody.MovePosition(grabbablePosition);
+        //    grabbedRigidbody.MoveRotation(grabbableRotation);
+        //}
     }
 
     [PunRPC]

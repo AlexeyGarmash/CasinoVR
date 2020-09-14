@@ -548,6 +548,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CustomHandRight
       objectReference: {fileID: 0}
+    - target: {fileID: 3365850014651645357, guid: 0c8d928ed66b94b41a90a293e25b86e8,
+        type: 3}
+      propertyPath: m_gripTransform
+      value: 
+      objectReference: {fileID: 1392410094658457981}
     - target: {fileID: 7116954413262729994, guid: 0c8d928ed66b94b41a90a293e25b86e8,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -691,6 +696,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 7275258099490945027, guid: 19b420f7d000b6a43bb124c9120d4baa,
+        type: 3}
+      propertyPath: m_gripTransform
+      value: 
+      objectReference: {fileID: 1392410094658457981}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19b420f7d000b6a43bb124c9120d4baa, type: 3}
 --- !u!1 &3818607642996902188 stripped
@@ -717,3 +727,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb88b5c5d22eb0479a780153a867409, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1392410094658457981 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7357867711779941156, guid: 19b420f7d000b6a43bb124c9120d4baa,
+    type: 3}
+  m_PrefabInstance: {fileID: 8452887244271565401}
+  m_PrefabAsset: {fileID: 0}

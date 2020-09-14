@@ -7,11 +7,13 @@ namespace SlotMachine
     public class LeverTrigger : MonoBehaviour
     {
         public SlotMachineManager slotMachineManager;
-        
+        private string correctTag = "lever";
+
         void OnTriggerEnter(Collider other)
         {
-            Debug.LogWarning("Trigger Enter");
-           if(other.gameObject.tag == "lever")
+
+            Debug.LogWarning("you see me?");
+           if(other.gameObject.tag == correctTag)
                 slotMachineManager.StartSlotGame();
         }
 

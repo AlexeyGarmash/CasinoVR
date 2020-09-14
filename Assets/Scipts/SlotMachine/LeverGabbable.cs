@@ -8,41 +8,91 @@ public class LeverGabbable : OVRGrabbableCustom
 {
 
     public Transform handler;
+    private Rigidbody handlerRB;
 
     private Vector3 startPosition;
-    
+    Vector3 handlePosition;
 
+    Quaternion handRotation;
+    Quaternion snapOffsetRotation;
+    Quaternion handleRotation;
+
+    [SerializeField]
+    float leverDistanceMax = 0.1f;
+    protected override void Start()
+    {
+        base.Start();
+        handlePosition = handler.position;
+        handleRotation = handler.rotation;
+        handlerRB = handler.GetComponent<Rigidbody>();
+    }
+
+    
     public override void GrabBegin(OVRGrabberCustom hand, Collider grabPoint)
     {
+
+        handRotation = hand.transform.rotation;
+
         base.GrabBegin(hand, grabPoint);
         GetComponentInParent<PhotonView>().RequestOwnership();
 
-        Debug.Log("handle Grabbed");
+       
+        startPosition = handler.transform.position;      
+        handRotation = hand.transform.localRotation;
+
+        hand.transform.rotation = snapOffsetRotation;
+
+        transform.parent = hand.transform.parent;
+      
+        hand.transform.parent = handlerRB.transform;
+       
     }
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
+        handler.position = handlePosition;
+        handler.rotation = handleRotation;
+
+        var gb = grabbedBy;
+
+        
+
+        gb.transform.parent = transform.parent;
+        transform.parent = handler.transform;
+
+        gb.transform.localPosition = Vector3.zero;
+        gb.transform.localRotation = handRotation;
+
         base.GrabEnd(Vector3.zero, Vector3.zero);
 
         transform.position = handler.transform.position;
         transform.rotation = handler.transform.rotation;
+       
 
         Rigidbody rbhandler = handler.GetComponent<Rigidbody>();
         rbhandler.velocity = Vector3.zero;
         rbhandler.angularVelocity = Vector3.zero;
 
-       
-
-        transform.parent = handler.transform;
-
+      
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        if(grabbedBy != null)
-        if (Vector3.Distance(handler.position, transform.position) > 0.2f)
+        
+        if (isGrabbed)
         {
-            grabbedBy.ForceRelease(this);
+            if (Vector3.Distance(handler.position, transform.position) > leverDistanceMax)
+            {
+                grabbedBy.ForceRelease(this);
+            }
+            else
+            {
+                grabbedBy.transform.position = snapOffset.position;
+                grabbedBy.transform.rotation = snapOffset.rotation;
+            }
+
+
         }
+
     }
 
 

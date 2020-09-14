@@ -6,7 +6,7 @@ using System;
 
 public class ButtonPad : MonoBehaviour
 {
-    public float pressLength;
+    public float pressLength = 0.005f;
     public bool pressed;
     EventManager<SLOT_MACHINE_EVENT> em;
     [SerializeField] private SLOT_MACHINE_EVENT ButtonEvent;
