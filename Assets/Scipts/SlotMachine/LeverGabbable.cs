@@ -9,8 +9,7 @@ public class LeverGabbable : OVRGrabbableCustom
 
     public Transform handler;
     private Rigidbody handlerRB;
-
-    private Vector3 startPosition;
+  
     Vector3 handlePosition;
 
     Quaternion handRotation;
@@ -22,8 +21,9 @@ public class LeverGabbable : OVRGrabbableCustom
     protected override void Start()
     {
         base.Start();
-        handlePosition = handler.position;
+        handlePosition = handler.localPosition;
         handleRotation = handler.rotation;
+
         handlerRB = handler.GetComponent<Rigidbody>();
     }
 
@@ -36,8 +36,7 @@ public class LeverGabbable : OVRGrabbableCustom
         base.GrabBegin(hand, grabPoint);
         GetComponentInParent<PhotonView>().RequestOwnership();
 
-       
-        startPosition = handler.transform.position;      
+      
         handRotation = hand.transform.localRotation;
 
         hand.transform.rotation = snapOffsetRotation;
@@ -49,7 +48,8 @@ public class LeverGabbable : OVRGrabbableCustom
     }
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
-        handler.position = handlePosition;
+        handler.localPosition = handlePosition;
+       
         handler.rotation = handleRotation;
 
         var gb = grabbedBy;
@@ -64,6 +64,7 @@ public class LeverGabbable : OVRGrabbableCustom
 
         base.GrabEnd(Vector3.zero, Vector3.zero);
 
+        transform.parent = handler;
         transform.position = handler.transform.position;
         transform.rotation = handler.transform.rotation;
        

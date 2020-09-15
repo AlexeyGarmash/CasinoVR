@@ -636,10 +636,35 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1927839863008807808}
     m_Modifications:
+    - target: {fileID: 2340192930791268101, guid: 19b420f7d000b6a43bb124c9120d4baa,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2340192930791268101, guid: 19b420f7d000b6a43bb124c9120d4baa,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[3].Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2340192930791268101, guid: 19b420f7d000b6a43bb124c9120d4baa,
+        type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[3].Name
+      value: ItemsInHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 4733524287838786277, guid: 19b420f7d000b6a43bb124c9120d4baa,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4733524287838794613, guid: 19b420f7d000b6a43bb124c9120d4baa,
         type: 3}
       propertyPath: m_Name
       value: CustomHandLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 4733524287838953237, guid: 19b420f7d000b6a43bb124c9120d4baa,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4733524287839065729, guid: 19b420f7d000b6a43bb124c9120d4baa,
         type: 3}

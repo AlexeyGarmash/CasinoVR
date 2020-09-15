@@ -463,46 +463,48 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
 
 
-            if (m_grabbedObj.snapPosition)
-            {
-                m_grabbedObjectPosOff = m_gripTransform.localPosition;
-                if (m_grabbedObj.snapOffset)
-                {
-                    Vector3 snapOffset = m_grabbedObj.snapOffset.position;
-                    if (m_controller == OVRInput.Controller.LTouch) snapOffset.x = -snapOffset.x;
-                    m_grabbedObjectPosOff += snapOffset;
-                }
-            }
-            else
-            {
-                Vector3 relPos = m_grabbedObj.transform.position - transform.position;
-                relPos = Quaternion.Inverse(transform.rotation) * relPos;
-                m_grabbedObjectPosOff = relPos;
-            }
+            //if (m_grabbedObj.snapPosition)
+            //{
+            //    m_grabbedObjectPosOff = m_gripTransform.localPosition;
+            //    if (m_grabbedObj.snapOffset)
+            //    {
+            //        Vector3 snapOffset = m_grabbedObj.snapOffset.position;
+            //        if (m_controller == OVRInput.Controller.LTouch) snapOffset.x = -snapOffset.x;
+            //        m_grabbedObjectPosOff += snapOffset;
+            //    }
+            //}
+            //else
+            //{
+            //    Vector3 relPos = m_grabbedObj.transform.position - transform.position;
+            //    relPos = Quaternion.Inverse(transform.rotation) * relPos;
+            //    m_grabbedObjectPosOff = relPos;
+            //}
 
-            if (m_grabbedObj.snapOrientation)
-            {
-                m_grabbedObjectRotOff = m_gripTransform.localRotation;
-                if (m_grabbedObj.snapOffset)
-                {
-                    m_grabbedObjectRotOff = m_grabbedObj.snapOffset.rotation * m_grabbedObjectRotOff;
-                }
-            }
-            else
-            {
-                Quaternion relOri = Quaternion.Inverse(transform.rotation) * m_grabbedObj.transform.rotation;
-                m_grabbedObjectRotOff = relOri;
-            }
+            //if (m_grabbedObj.snapOrientation)
+            //{
+            //    m_grabbedObjectRotOff = m_gripTransform.localRotation;
+            //    if (m_grabbedObj.snapOffset)
+            //    {
+            //        m_grabbedObjectRotOff = m_grabbedObj.snapOffset.rotation * m_grabbedObjectRotOff;
+            //    }
+            //}
+            //else
+            //{
+            //    Quaternion relOri = Quaternion.Inverse(transform.rotation) * m_grabbedObj.transform.rotation;
+            //    m_grabbedObjectRotOff = relOri;
+            //}
 
             // Note: force teleport on grab, to avoid high-speed travel to dest which hits a lot of other objects at high
             // speed and sends them flying. The grabbed object may still teleport inside of other objects, but fixing that
             // is beyond the scope of this demo.
 
-            MoveGrabbedObject(m_lastPos, m_lastRot, true);
+            if(m_grabbedObj.snapOffset)
+                MoveGrabbedObject(grabbleObjSpawnPoint.position, grabbleObjSpawnPoint.rotation, true);
 
 
 
             SetPlayerIgnoreCollision(m_grabbedObj.gameObject, true);
+
             if (m_grabbedObjs.Count == max_grabbed_obj || closestGrabbable.tag == "Untagged")
                 GrabVolumeEnable(false);
 
@@ -537,12 +539,14 @@ public class OVRGrabberCustom : MonoBehaviourPun
             return;
         }
 
+        //Rigidbody grabbedRigidbody = m_grabbedObj.grabbedRigidbody;
+        //Vector3 grabbablePosition = pos + rot * m_grabbedObjectPosOff;
+        //Quaternion grabbableRotation = rot * m_grabbedObjectRotOff;
+
         Rigidbody grabbedRigidbody = m_grabbedObj.grabbedRigidbody;
-        Vector3 grabbablePosition = pos + rot * m_grabbedObjectPosOff;
-        Quaternion grabbableRotation = rot * m_grabbedObjectRotOff;
 
         grabbedRigidbody.transform.localPosition = m_grabbedObj.snapOffset.localPosition;
-        grabbedRigidbody.transform.rotation = grabbableRotation;
+        grabbedRigidbody.transform.localRotation = m_grabbedObj.snapOffset.localRotation;
 
         //if (forceTeleport)
         //{
