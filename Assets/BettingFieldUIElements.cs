@@ -45,7 +45,7 @@ public class BettingFieldUIElements : MonoBehaviour, IListener<AbstractFieldEven
 
 
         text = TMP_3D.GetComponent<TextMeshPro>();
-
+        text.gameObject.SetActive(false);
         defaultHightText = TMP_3D.transform.position;
     }
 
@@ -55,13 +55,20 @@ public class BettingFieldUIElements : MonoBehaviour, IListener<AbstractFieldEven
         {
            
             case AbstractFieldEvents.UpdateUI:
-               
-                TMP_3D.SetActive(true);
-                currentHightByZ = (float)Convert.ToDouble(Param[0]);
-                TMP_3D.transform.position = new Vector3(defaultHightText.x, defaultHightText.y + currentHightByZ + currentHightOffsetByZ, defaultHightText.z);
+
                 sumOfPoints = Convert.ToInt32(Param[1]);
-                text.SetText(preText + sumOfPoints + afterText);
-                break;
+
+                if (sumOfPoints > 0)
+                {
+                    TMP_3D.SetActive(true);
+                    currentHightByZ = (float)Convert.ToDouble(Param[0]);
+                    TMP_3D.transform.position = new Vector3(defaultHightText.x, defaultHightText.y + currentHightByZ + currentHightOffsetByZ, defaultHightText.z);
+
+
+                    text.SetText(preText + sumOfPoints + afterText);
+                }
+                else TMP_3D.SetActive(false);
+                    break;
 
             case AbstractFieldEvents.StackAnimationStarted:
                 if(TMP_3D.activeSelf)
@@ -79,15 +86,24 @@ public class BettingFieldUIElements : MonoBehaviour, IListener<AbstractFieldEven
                 break;
             case AbstractFieldEvents.ExtractObject:
                 sumOfPoints -= Convert.ToInt32(Param[0]);
-                text.SetText(preText + sumOfPoints + afterText);
-                currentHightByZ = (float)Convert.ToDouble(Param[1]);
-                TMP_3D.transform.position = new Vector3(defaultHightText.x, defaultHightText.y + currentHightByZ + currentHightOffsetByZ, defaultHightText.z);
+                if (sumOfPoints > 0)
+                {
+                    if(!TMP_3D.activeSelf)
+                        TMP_3D.SetActive(true);
+
+                    text.SetText(preText + sumOfPoints + afterText);
+                    currentHightByZ = (float)Convert.ToDouble(Param[1]);
+                    TMP_3D.transform.position = new Vector3(defaultHightText.x, defaultHightText.y + currentHightByZ + currentHightOffsetByZ, defaultHightText.z);
+                }
+                else TMP_3D.SetActive(false);
+
                 break;
         }
     }
 
     private void Update()
     {
-        TMP_3D.transform.LookAt(Camera.main.transform.position);
+        if(TMP_3D.gameObject.activeSelf)
+            TMP_3D.transform.LookAt(Camera.main.transform.position);
     }
 }

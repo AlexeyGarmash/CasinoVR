@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using System;
+using System.Linq;
 
 namespace SlotMachine
 {
@@ -22,6 +23,14 @@ namespace SlotMachine
 
         public Color[] HaloColors;
         public Color[] MaterialColors;
+
+        public Transform[] redHalos;
+        public Transform[] yellowHalos;
+        public Transform[] blueHalos;
+
+        private List<Transform> freeRedHalos;
+        private List<Transform> freeYellowHalos;
+        private List<Transform> freeBlueHalos;
 
         EventManager<SLOT_MACHINE_EVENT> em;
         void Start()
@@ -54,6 +63,16 @@ namespace SlotMachine
             em.AddListener(SLOT_MACHINE_EVENT.JACKPOT_END, this);
         }
 
+        void ReloadFreeHalos()
+        {
+            redHalos.ToList().ForEach(h => h.gameObject.SetActive(false));
+            yellowHalos.ToList().ForEach(h => h.gameObject.SetActive(false));
+            blueHalos.ToList().ForEach(h => h.gameObject.SetActive(false));
+
+            freeYellowHalos = new List<Transform>(yellowHalos);
+            freeBlueHalos = new List<Transform>(blueHalos);
+            freeRedHalos = new List<Transform>(redHalos);
+        }
 
         private void ModChanger(SLOT_MACHINE_LAMP_MODS mod)
         {
@@ -89,6 +108,7 @@ namespace SlotMachine
                 SetSingleColor(Halo, Lamp, Lamps[i]);
             }
         }
+
         private void SetAllRandomColor()
         {
             int randC;
@@ -103,15 +123,48 @@ namespace SlotMachine
                 prevC = randC;
             }
         }
+
+        bool SetHaloPosition(Color NextHaloColor, Color HaloColor, List<Transform> freeHalos, Vector3 position)
+        {
+            if (NextHaloColor == HaloColor)
+            {
+                if (freeHalos.Count > 0)
+                {
+                    var halo = freeHalos[0];
+                    halo.gameObject.SetActive(true);
+                    halo.position = position;
+                    halo.localPosition = new Vector3(halo.localPosition.x, 0.909f, halo.localPosition.z);
+                    freeHalos.Remove(halo);
+                    return true;
+                }
+            }
+
+            return false;
+        }
         private void SetSingleColor(Color NextHaloColor, Color NextLampColor, GameObject Lamp)
         {
             var material = Lamp.GetComponent<Renderer>().materials[1];
-            SerializedObject halo = new SerializedObject(Lamp.transform.GetChild(0).gameObject.GetComponent("Halo"));
-
-            halo.FindProperty("m_Color").colorValue = NextHaloColor;
-            halo.ApplyModifiedProperties();
             material.color = NextLampColor;
+            //SerializedObject halo = new SerializedObject(Lamp.transform.GetChild(0).gameObject.GetComponent("Halo"));
+
+            //halo.FindProperty("m_Color").colorValue = NextHaloColor;
+            //halo.ApplyModifiedProperties();
+
+            //red
+
+
+            if (SetHaloPosition(NextHaloColor, HaloColors[0], freeRedHalos, Lamp.transform.position))
+                return;
+            if (SetHaloPosition(NextHaloColor, HaloColors[1], freeBlueHalos, Lamp.transform.position))
+                return;
+            if (SetHaloPosition(NextHaloColor, HaloColors[2], freeYellowHalos, Lamp.transform.position))
+                return;
+           
+            
+
+            
         }
+
 
         private IEnumerator SequenceChange(float delay)
         {
@@ -122,6 +175,7 @@ namespace SlotMachine
             while (true)
             {
 
+                ReloadFreeHalos();
 
                 for (int i = 0; i < count; i++)
                 {
@@ -154,6 +208,7 @@ namespace SlotMachine
 
         private IEnumerator _OneShotColor(float delay)
         {
+            ReloadFreeHalos();
 
             int randC = UnityEngine.Random.Range(0, HaloColors.Length);
             SetAllSingleColor(HaloColors[randC], MaterialColors[randC]);
@@ -174,6 +229,8 @@ namespace SlotMachine
             int prevC = 0;
             while (true)
             {
+                ReloadFreeHalos();
+
                 randC = UnityEngine.Random.Range(0, HaloColors.Length);
 
                 while (randC == prevC)
@@ -193,6 +250,7 @@ namespace SlotMachine
         }
         private IEnumerator _AllLampsRandomSingleColorOnce(float delay)
         {
+            ReloadFreeHalos();
             int randC;
             randC = UnityEngine.Random.Range(0, HaloColors.Length);
             SetAllSingleColor(HaloColors[randC], MaterialColors[randC]);
@@ -212,6 +270,7 @@ namespace SlotMachine
         }
         private IEnumerator _StopMode()
         {
+
             yield return new WaitForSeconds(2f);
             ModChanger(SLOT_MACHINE_LAMP_MODS.IDLE);
         }
@@ -227,6 +286,7 @@ namespace SlotMachine
 
             while (true)
             {
+                ReloadFreeHalos();
                 SetAllRandomColor();
                 yield return new WaitForSeconds(delay);
 
@@ -239,6 +299,7 @@ namespace SlotMachine
         }
         private IEnumerator _AllLampsRandomOnce(float delay)
         {
+            ReloadFreeHalos();
             SetAllRandomColor();
             yield return new WaitForSeconds(delay);
             ModChanger(prev);
@@ -252,6 +313,7 @@ namespace SlotMachine
         {
             while (true)
             {
+                ReloadFreeHalos();
                 var value = UnityEngine.Random.Range(0, 2);
                 if (value == 0)
                 {

@@ -6,7 +6,7 @@ using UnityEngine;
 public class TransparentByDistance : MonoBehaviour
 {
     [SerializeField]
-    Transform target;
+    public Transform target;
     MeshRenderer[] renderers;
 
     [SerializeField]
@@ -23,39 +23,43 @@ public class TransparentByDistance : MonoBehaviour
 
     private void Update()
     {
-        var dist = Vector3.Distance(target.position, transform.position);
-
-        if (dist > 0)
+        if (target)
         {
-            color.a = Mathf.Clamp(dist*3, 0,1);
+            var dist = Vector3.Distance(target.position, transform.position);
 
-
-            if (color.a >= 0.9f && color.a <= 1 && currentMode == StandardShaderUtils.BlendMode.Transparent)
+            if (dist > 0)
             {
-                currentMode = StandardShaderUtils.BlendMode.Opaque;
-                renderers.ToList().ForEach(r => StandardShaderUtils.ChangeRenderMode(r.material, StandardShaderUtils.BlendMode.Opaque));
+                color.a = Mathf.Clamp(dist * 3, 0, 1);
+
+
+                if (color.a >= 0.9f && color.a <= 1 && currentMode == StandardShaderUtils.BlendMode.Transparent)
+                {
+                    currentMode = StandardShaderUtils.BlendMode.Opaque;
+                    renderers.ToList().ForEach(r => StandardShaderUtils.ChangeRenderMode(r.material, StandardShaderUtils.BlendMode.Opaque));
+                }
+                else if (currentMode == StandardShaderUtils.BlendMode.Opaque && color.a <= 0.9f && color.a >= 0)
+                {
+                    currentMode = StandardShaderUtils.BlendMode.Transparent;
+                    renderers.ToList().ForEach(r => StandardShaderUtils.ChangeRenderMode(r.material, StandardShaderUtils.BlendMode.Transparent));
+                }
+
+                renderers.ToList().ForEach(r =>
+                {
+
+                    if (color.a <= 0.1f && color.a >= 0)
+                        r.gameObject.SetActive(false);
+                    else if (!r.gameObject.activeSelf)
+                        r.gameObject.SetActive(true);
+
+
+
+
+
+
+                    r.material.color = color;
+                });
+
             }
-            else if (currentMode == StandardShaderUtils.BlendMode.Opaque && color.a <= 0.9f && color.a >= 0)
-            {
-                currentMode = StandardShaderUtils.BlendMode.Transparent;
-                renderers.ToList().ForEach(r => StandardShaderUtils.ChangeRenderMode(r.material, StandardShaderUtils.BlendMode.Transparent));
-            }
-
-            renderers.ToList().ForEach(r => {
-
-                if (color.a <= 0.1f && color.a >= 0)
-                    r.gameObject.SetActive(false);
-                else if (!r.gameObject.activeSelf)
-                    r.gameObject.SetActive(true);
-
-               
-                
-                
-                
-
-                r.material.color = color;
-            });
-           
         }
     }
 }

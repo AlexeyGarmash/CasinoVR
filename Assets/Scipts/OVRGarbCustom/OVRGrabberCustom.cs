@@ -329,6 +329,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
                 outline.enabled = true;
             }
+
             DisableOutline(closestGrabbable);
         }
         
@@ -341,7 +342,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         closestGrabbableCollider = null;
     }
 
-    float MaxDistance = 0.15f;
+    float MaxDistance = 0.3f;
     void UpdateCandidates()
     {
         var removeCandidaes = new List<OVRGrabbableCustom>();
@@ -405,6 +406,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
             }
         }
     }
+
     [PunRPC]
     protected virtual void GrabBegin_RPC(int viewID, int colliderIndex)
     {

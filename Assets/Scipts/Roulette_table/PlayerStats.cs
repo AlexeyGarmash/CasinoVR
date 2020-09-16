@@ -7,7 +7,7 @@ using UnityEngine;
 [Serializable]
 public class PlayerStats : MonoBehaviour
 {
-    public PlayerPlace currcentPlace;
+    public PlayerPlace currentPlace;
 
     public string PlayerNick;
 
@@ -21,9 +21,9 @@ public class PlayerStats : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (currcentPlace != null)
+        if (currentPlace != null)
         {
-            currcentPlace.GoOutFromPlace();
+            currentPlace.GoOutFromPlace();
         }
     }
 

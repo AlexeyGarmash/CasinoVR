@@ -84,8 +84,8 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     {
         for (var i = 0; i < Stacks.Length; i++)                               
             Stacks[i].ClearData();
+        FieldEventManager.PostNotification(AbstractFieldEvents.UpdateUI, this, 0, 0);
 
-        
     }
     public void ClearStack(StackData stack)
     {

@@ -59,6 +59,11 @@ public class PlayerPlace : MonoBehaviourPun
             //actionJoinOut.Invoke();
             this.ps = ps;
 
+            var pc = ps.GetComponentInParent<OVRPlayerController>();
+            pc.enabled = false;
+           
+            pc.GetComponentInChildren<TeleportDisabler>().Disable();
+
             photonView.RequestOwnership();
             sf.photonView.RequestOwnership();
             print("Button clikced ps == null");
@@ -66,7 +71,7 @@ public class PlayerPlace : MonoBehaviourPun
             photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);
             PreparePlayerPlace();
 
-            //StartWinAnimation(1000, ps.PlayerNick);
+           
 
         }
     }
@@ -76,6 +81,9 @@ public class PlayerPlace : MonoBehaviourPun
     {
         if (ps != null && placeTaken)
         {
+            var pc = ps.GetComponentInParent<OVRPlayerController>();
+            pc.enabled = true;
+            pc.GetComponentInChildren<TeleportDisabler>().Enable();
             placeTaken = false;
             ps = GetComponent<PlayerStats>();
             print("Button clikced ps != null");

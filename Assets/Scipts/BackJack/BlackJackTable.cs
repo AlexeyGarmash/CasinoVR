@@ -76,7 +76,7 @@ namespace Assets.Scipts.BackJack
             StartCoroutine(BlackJackLoop());
 
         }
-        //bool playerSkipTurn
+
         void ResetGame()
         {
             playerReady = false;
@@ -90,7 +90,7 @@ namespace Assets.Scipts.BackJack
                 var fields = p.GetComponent<PlayerBlackJackFields>();
 
                 fields.bettingField.ClearStacks();
-                fields.bettingField.BlockField(false);
+                fields.bettingField.BlockField(true);
 
                 fields.bettingFieldForSplit.BlockField(true);
                 fields.bettingFieldForSplit.ClearStacks();
@@ -190,7 +190,7 @@ namespace Assets.Scipts.BackJack
 
                             
                             //if (blackJackLogic.CanSplit(p.ps.PlayerNick))
-                            ActivateGameButtons(false, true, true, false, p, true);
+                            //ActivateGameButtons(false, true, true, false, p, true);
 
                             var handMenu = p.handMenu;
                             //handMenu.RevokeMenu();
@@ -204,11 +204,17 @@ namespace Assets.Scipts.BackJack
                                 }, 
                                 "Give card")
                             );
-                            handMenu.AddAction(new RadialActionInfo(() => {
-                                Split(playersInGame[j].ps);
-                                
-                                animatorHolder.hand.SetPose(animatorHolder.split);
-                            }, "Split"));
+
+                            if (blackJackLogic.CanSplit(playersInGame[j].ps.PlayerNick))
+                            {
+
+                                handMenu.AddAction(new RadialActionInfo(() =>
+                                {
+                                    Split(playersInGame[j].ps);
+
+                                    animatorHolder.hand.SetPose(animatorHolder.split);
+                                }, "Split"));
+                            }
                             handMenu.AddAction(new RadialActionInfo(() => {
                                 SkipTurn(playersInGame[j].ps);
                                
@@ -278,7 +284,7 @@ namespace Assets.Scipts.BackJack
 
                             }
 
-                            ActivateGameButtons(false, false, false, false, p);
+                            //ActivateGameButtons(false, false, false, false, p);
                             yield return ClearPoseWithDilay(animatorHolder.hand, 1f);
 
                             handMenu.RevokeMenu();
@@ -635,7 +641,12 @@ namespace Assets.Scipts.BackJack
                     PhotonNetwork.SendAllOutgoingCommands();
                 }
 
+                var fields = playersInGame[j].GetComponent<PlayerBlackJackFields>();
+                fields.bettingField.BlockField(false);
+
                 var handMenu = playersInGame[j].handMenu;
+                handMenu.InvokeMenu();
+
                 var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
                 //handMenu.RevokeMenu();
                 handMenu.AddAction(new RadialActionInfo(() => {
@@ -644,9 +655,9 @@ namespace Assets.Scipts.BackJack
                     animatorHolder.hand.SetPose(animatorHolder.ready);
                 }, "Ready"));
 
-                handMenu.InvokeMenu();
+               
 
-                ActivateGameButtons(false, false, false, true, playersInGame[j]);
+               //ActivateGameButtons(false, false, false, false, playersInGame[j]);
 
                 //var voiceRecognizer = playersInGame[j].GetComponent<VoiceManager>();
                 //voiceRecognizer.AddVoiceAction(skip, PlayerReady);
@@ -673,7 +684,7 @@ namespace Assets.Scipts.BackJack
                 yield return ClearPoseWithDilay(animatorHolder.hand, 1f);
               
                 playersInGame[j].handMenu.RevokeMenu();
-                ActivateGameButtons(false, false, false, false, playersInGame[j]);
+                //ActivateGameButtons(false, false, false, false, playersInGame[j]);
 
                 var playerField = playersInGame[j].GetComponent<PlayerBlackJackFields>();
 
@@ -714,6 +725,8 @@ namespace Assets.Scipts.BackJack
                     else Debug.LogError("bjPlayers not found");
 
                 }
+
+                fields.bettingField.BlockField(true);
 
             }
 
@@ -909,7 +922,7 @@ namespace Assets.Scipts.BackJack
             private void PlayerReady_RPC(string player)
             {
                 playerReady = true;
-                ActivateGameButtons(false, false, false, false, players.Find(p => p.ps.PlayerNick == player));
+                //ActivateGameButtons(false, false, false, false, players.Find(p => p.ps.PlayerNick == player));
             }
             [PunRPC]
             private void TakeCard_RPC(string player)
@@ -924,7 +937,7 @@ namespace Assets.Scipts.BackJack
                         {
 
                             playerLose = true;
-                            ActivateGameButtons(false, false, false, false, players.Find(p => p.ps.PlayerNick == player));
+                            //ActivateGameButtons(false, false, false, false, players.Find(p => p.ps.PlayerNick == player));
                         }
 
                         playerTakeCard = true;
@@ -953,7 +966,7 @@ namespace Assets.Scipts.BackJack
                 if (blackJackLogic.SkipTruns(nick, currentBJStackIndex))
                 {
                     playerReady = true;
-                    ActivateGameButtons(false, false, false, false, players.Find(p => p.ps.PlayerNick == nick));
+                    //ActivateGameButtons(false, false, false, false, players.Find(p => p.ps.PlayerNick == nick));
                 }
             }
             [PunRPC]

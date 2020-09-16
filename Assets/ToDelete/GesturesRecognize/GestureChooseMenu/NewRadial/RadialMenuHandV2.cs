@@ -8,7 +8,7 @@ public enum RadialMenuSectors { ONE = 1, TWO = 2, THREE = 3, FOUR = 4, FIVE = 5,
 
 public class RadialMenuHandV2 : MonoBehaviour
 {
-
+    //[SerializeField]OVRInput.Controller controller;
     [SerializeField] private RadialMenuV2 radialMenu;
 
     private List<RadialActionInfo> actions;
@@ -78,7 +78,7 @@ public class RadialMenuHandV2 : MonoBehaviour
     {
         menuInvoke = false;
         ClearActions();
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     #region Selections Modes
@@ -258,10 +258,22 @@ public class RadialMenuHandV2 : MonoBehaviour
     }
     #endregion
 
+    private void ShowMenu()
+    {
+        if (transform.localScale == Vector3.zero)
+            transform.localScale = new Vector3(-1, 1, 1);
+    }
+    private void HideMenu()
+    {
+        if (transform.localScale != Vector3.zero)
+            transform.localScale = Vector3.zero;
+    }
     private void Update()
     {
-        if(menuInvoke)
+        if(menuInvoke && OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.RTouch))
         {
+
+            ShowMenu();
             transform.LookAt(Camera.main.transform.position);
 
             if (!keyPressed)
@@ -321,6 +333,7 @@ public class RadialMenuHandV2 : MonoBehaviour
                 ResolveShowMenu(false);
                 keyPressed = false;
             }
+            HideMenu();
         }
     }
 
