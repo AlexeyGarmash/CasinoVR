@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PokerBettingField : MonoBehaviourPun
+public class PokerBettingField : ChipsField
 {
-    public PokerTableGame pokerGame;
+    /*public PokerTableGame pokerGame;
     public Dictionary<string, ChipData> Bets;
 
     private List<ChipData> lastEnteredChips;
@@ -76,5 +76,5 @@ public class PokerBettingField : MonoBehaviourPun
         //}
 
         return false;
-    }
+    }*/
 }

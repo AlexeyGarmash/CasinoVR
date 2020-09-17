@@ -42,6 +42,9 @@ public class PokerPlayer
     public PokerPlayerType PokerPlayerType;
     public bool PlayerReadyPlay { get; set; }
 
+    public bool CanBet { get; set; }
+    public bool ConfirmBet { get; set; }
+
     public PokerCards CardsInPlayer;
     
     public bool LeaveCurrentGame { get; set; }

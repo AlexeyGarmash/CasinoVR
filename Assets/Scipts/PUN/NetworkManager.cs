@@ -17,6 +17,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        //ConnectToServer();
+        StartCoroutine(StartServerWithPause(8f));
+    }
+
+    private IEnumerator StartServerWithPause(float pauseTime)
+    {
+        yield return new WaitForSeconds(pauseTime);
         ConnectToServer();
     }
 
