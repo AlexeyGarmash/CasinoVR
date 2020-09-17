@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 0f70ab76-ffdd-4efe-b6f3-395dd321b211
+    AppIdRealtime: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 0.1
+    AppVersion: 
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -27,61 +27,12 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: ru
+  DevRegion: 
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
-  RpcList:
-  - AddNewBet_RPC
-  - ClickRpc
-  - DestroyBall_RPC
-  - DestroyRpc
-  - DestroySpaceship
-  - ExtranctChipOnAll_RPC
-  - FindPlayers
-  - Fire
-  - GenerateRandomDanceForRemotePlayers
-  - GoOutPlace_RPC
-  - GrabBegin_RPC
-  - GrabEnd_RPC
-  - InsertCoint_RPC
-  - InstantiateChip
-  - InstantiateRemote
-  - InstatianeChip_RPC
-  - InvokeClickIn_RPC
-  - InvokeClickOut_RPC
-  - MagnetizeObject_RPC
-  - NotReady_RPC
-  - NotReadyToPlay_RPC
-  - PlayerReady_RPC
-  - Ready_RPC
-  - ReadyPlay_RPC
-  - RemoveBetValues_RPC
-  - ResetBets_RPC
-  - ResetBetsByNickname_RPC
-  - RespawnSpaceship
-  - SetDeck
-  - SetOwner_RPC
-  - SetPlayerStatrs
-  - SetStackType_RPC
-  - SetZeroTimer_RPC
-  - SkipTurn_RPC
-  - SpawnBall_RPC
-  - SplitTurn_RPC
-  - Start
-  - StartAnimation_RPC
-  - StartSlotGame_RPC
-  - StartSpin_RPC
-  - StartSpinAnimation_RPC
-  - State_RPC
-  - SyncOff_RPC
-  - SyncOn_RPC
-  - TakeCard_RPC
-  - TakePlace_RPC
-  - TimerStep_RPC
-  - UpdateAllStacks
-  - UpdateExistBet_RPC
-  DisableAutoOpenWizard: 1
-  ShowSettings: 1
-  DevRegionSetOnce: 1
+  RpcList: []
+  DisableAutoOpenWizard: 0
+  ShowSettings: 0
+  DevRegionSetOnce: 0
