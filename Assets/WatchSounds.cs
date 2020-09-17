@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class WatchSounds : MonoBehaviour
 {
 
@@ -44,7 +45,7 @@ public class WatchSounds : MonoBehaviour
     IEnumerator Countdown(float timeToSignal)
     {
         watches.clip = tick;
-
+        watches.loop = true;
         watches.Play();
 
         yield return new WaitForSeconds(timeToSignal);
@@ -52,7 +53,7 @@ public class WatchSounds : MonoBehaviour
         watches.Stop();
 
         watches.clip = signal;
-
+        watches.loop = false;
         watches.Play();
 
     }
