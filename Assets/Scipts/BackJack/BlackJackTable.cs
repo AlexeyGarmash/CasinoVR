@@ -645,7 +645,7 @@ namespace Assets.Scipts.BackJack
                 fields.bettingField.BlockField(false);
 
                 var handMenu = playersInGame[j].handMenu;
-                handMenu.InvokeMenu();
+                
 
                 var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
                 //handMenu.RevokeMenu();
@@ -655,9 +655,9 @@ namespace Assets.Scipts.BackJack
                     animatorHolder.hand.SetPose(animatorHolder.ready);
                 }, "Ready"));
 
-               
 
-               //ActivateGameButtons(false, false, false, false, playersInGame[j]);
+                handMenu.InvokeMenu();
+                //ActivateGameButtons(false, false, false, false, playersInGame[j]);
 
                 //var voiceRecognizer = playersInGame[j].GetComponent<VoiceManager>();
                 //voiceRecognizer.AddVoiceAction(skip, PlayerReady);
