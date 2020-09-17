@@ -195,8 +195,8 @@ namespace Assets.Scipts.BackJack
                             var handMenu = p.handMenu;
                             //handMenu.RevokeMenu();
                             var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
-                            var watches = handMenu.GetComponent<WatchHolder>();
-                            watches.watchSounds.PlayTimer(waitTimeInSec);
+                            var watches = handMenu.GetComponent<WatchController>();
+                            watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
                             handMenu.AddAction(
                                 new RadialActionInfo(() => {
                                     TakeCard(playersInGame[j].ps);
@@ -285,7 +285,7 @@ namespace Assets.Scipts.BackJack
 
                             }
 
-                            watches.watchSounds.StopTimer();
+                            watches.watchIndicator.StopAnimation();
                             //ActivateGameButtons(false, false, false, false, p);
                             yield return ClearPoseWithDilay(animatorHolder.hand, 1f);
                            
@@ -650,8 +650,8 @@ namespace Assets.Scipts.BackJack
                 
 
                 var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
-                var watches = handMenu.GetComponent<WatchHolder>();
-                watches.watchSounds.PlayTimer(waitTimeInSec);
+                var watches = handMenu.GetComponent<WatchController>();
+                watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
                 //handMenu.RevokeMenu();
                 handMenu.AddAction(new RadialActionInfo(() => {
                     PlayerReady(playersInGame[j].ps);
@@ -683,7 +683,7 @@ namespace Assets.Scipts.BackJack
 
                 }
 
-                watches.watchSounds.StopTimer();
+                watches.watchIndicator.StopAnimation();
                 //voiceRecognizer.StopRecognize();
                 yield return ClearPoseWithDilay(animatorHolder.hand, 1f);
               

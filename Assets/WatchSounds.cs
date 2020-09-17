@@ -19,19 +19,29 @@ public class WatchSounds : MonoBehaviour
         watches = GetComponent<AudioSource>();
     }
 
+    public void PlaySignal()
+    {
+        if(watches.isPlaying)
+        watches.Stop();
+        watches.clip = signal;
 
-    public void PlayTimer(int timeToSignal)
+        watches.Play();
+    }
+    public void PlayTimer(float timeToSignal)
     {
         StopAllCoroutines();
         StartCoroutine(Countdown(timeToSignal));
     }
     public void StopTimer()
     {
-        if(watches.isPlaying)
+        if (watches.isPlaying)
+        {
+            StopAllCoroutines();
             watches.Stop();
+        }
     }
 
-    IEnumerator Countdown(int timeToSignal)
+    IEnumerator Countdown(float timeToSignal)
     {
         watches.clip = tick;
 
