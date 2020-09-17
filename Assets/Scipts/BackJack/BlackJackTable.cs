@@ -40,7 +40,7 @@ namespace Assets.Scipts.BackJack
         private CardCurveAnimator cardCurveAnimator;
 
 
-        const int waitTimeInSec = 10;
+        const int waitTimeInSec = 30;
         const int OneSec = 1;
 
 
@@ -195,7 +195,8 @@ namespace Assets.Scipts.BackJack
                             var handMenu = p.handMenu;
                             //handMenu.RevokeMenu();
                             var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
-
+                            var watches = handMenu.GetComponent<WatchHolder>();
+                            watches.watchSounds.PlayTimer(waitTimeInSec);
                             handMenu.AddAction(
                                 new RadialActionInfo(() => {
                                     TakeCard(playersInGame[j].ps);
@@ -284,9 +285,10 @@ namespace Assets.Scipts.BackJack
 
                             }
 
+                            watches.watchSounds.StopTimer();
                             //ActivateGameButtons(false, false, false, false, p);
                             yield return ClearPoseWithDilay(animatorHolder.hand, 1f);
-
+                           
                             handMenu.RevokeMenu();
 
                             var field = p.GetComponent<PlayerBlackJackFields>();
@@ -648,13 +650,15 @@ namespace Assets.Scipts.BackJack
                 
 
                 var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
+                var watches = handMenu.GetComponent<WatchHolder>();
+                watches.watchSounds.PlayTimer(waitTimeInSec);
                 //handMenu.RevokeMenu();
                 handMenu.AddAction(new RadialActionInfo(() => {
                     PlayerReady(playersInGame[j].ps);
                     
                     animatorHolder.hand.SetPose(animatorHolder.ready);
                 }, "Ready"));
-
+            
 
                 handMenu.InvokeMenu();
                 //ActivateGameButtons(false, false, false, false, playersInGame[j]);
@@ -679,7 +683,7 @@ namespace Assets.Scipts.BackJack
 
                 }
 
-
+                watches.watchSounds.StopTimer();
                 //voiceRecognizer.StopRecognize();
                 yield return ClearPoseWithDilay(animatorHolder.hand, 1f);
               
