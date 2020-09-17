@@ -65,6 +65,12 @@ public class MainMenuManager : MonoBehaviourPunCallbacks
         JoinOrCreateRoomPanel.SetScale(fullScale);
     }
 
+    public void PlayerGoBackToChooseAvatar()
+    {
+        JoinOrCreateRoomPanel.SetScale(removeScale);
+        CreatePlayerPanel.SetScale(fullScale);
+    }
+
     public override void OnCreatedRoom()
     {
         print("New room is created now");

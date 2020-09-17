@@ -24,10 +24,21 @@ public class CreateJoinRoomManager : BaseMenuPanel
         }
     }
 
+    public void GoBackToCreatePlayer()
+    {
+        MainMenuManager.Instance.PlayerGoBackToChooseAvatar();
+    }
+
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         print("Room list updated");
         UpdateRoomsList(roomList);
+    }
+
+
+    private void Update()
+    {
+        TextCurrentNickName.text = PhotonNetwork.LocalPlayer.NickName;
     }
 
     private void UpdateRoomsList(List<RoomInfo> roomList)
