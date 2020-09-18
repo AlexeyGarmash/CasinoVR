@@ -30,7 +30,7 @@ public class PlayerPlace : MonoBehaviourPun
     
     public int PlaceId { get => _placeId; }
     public bool PlayerOnPlace { get => ps.PlayerNick != ""; }
-    public bool PlayerReady { get => true; }
+    //public bool PlayerReady { get => true; }
 
     private void Awake()
     {
