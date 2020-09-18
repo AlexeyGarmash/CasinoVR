@@ -22,6 +22,10 @@ public class CreateJoinRoomManager : BaseMenuPanel
         {
             NetworkManager.Instance.CreateRoom(roomName);
         }
+        else
+        {
+            MainMenuInformer.Instance.ShowInfoWithExitTime("Room name empty", MainMenuMessageType.Danger);
+        }
     }
 
     public void GoBackToCreatePlayer()

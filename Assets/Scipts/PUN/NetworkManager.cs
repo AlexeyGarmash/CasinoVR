@@ -107,7 +107,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             else
             {
                 print("Not all users are ready");
+                MainMenuInformer.Instance.ShowInfoWithExitTime("Not all players are ready", MainMenuMessageType.Warning);
             }
+        }
+        else
+        {
+            MainMenuInformer.Instance.ShowInfoWithExitTime("Only master can start the game", MainMenuMessageType.Warning);
         }
     }
 
