@@ -369,11 +369,7 @@ namespace Assets.Scipts.BackJack
                                 break;
 
                             }
-
-
-                           // recognizer.StopRecognize();
-
-
+                        
                             yield return new WaitForSeconds(OneSec * 3);
 
                             if (currWaitTime == waitTimeInSec)
@@ -391,15 +387,13 @@ namespace Assets.Scipts.BackJack
                     }
                 }
             }
-
-            //yield return WaitDistributionOfCards();
-
-
+           
             if (endTurns)
             {
                 if (photonView.IsMine)
                 {
                     photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CheckResults);
+                    photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
                     PhotonNetwork.SendAllOutgoingCommands();
                 }
                 else {
@@ -413,6 +407,7 @@ namespace Assets.Scipts.BackJack
                 if (photonView.IsMine)
                 {
                     photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
+                    photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
                     PhotonNetwork.SendAllOutgoingCommands();
                 }
                 else
@@ -455,6 +450,7 @@ namespace Assets.Scipts.BackJack
         public void State_RPC(int state)
         {
             Debug.Log("to state State_RPC" + (BlackJackGameStates)state);
+            currWaitTime = 0;
             gameState = (BlackJackGameStates)state;
         }
 
@@ -508,6 +504,7 @@ namespace Assets.Scipts.BackJack
 
                         var indexesRnd = dd.GenerateDeck();
                         photonView.RPC("SetDeck", RpcTarget.All, indexesRnd);
+                        photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
                         photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.PlayersBetting);
                         PhotonNetwork.SendAllOutgoingCommands();
 
@@ -633,12 +630,7 @@ namespace Assets.Scipts.BackJack
         {
             List<PlayerPlace> toRemove = new List<PlayerPlace>();
             for (var j = 0; j < playersInGame.Count; j++)
-            {
-                if (photonView.IsMine)
-                {
-                    photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
-                    PhotonNetwork.SendAllOutgoingCommands();
-                }
+            {              
 
                 var fields = playersInGame[j].GetComponent<PlayerBlackJackFields>();
                 fields.bettingField.BlockField(false);
@@ -749,6 +741,7 @@ namespace Assets.Scipts.BackJack
             if (photonView.IsMine)
             {
                 photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CardsToPlayers);
+                photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
                 PhotonNetwork.SendAllOutgoingCommands();
             }
             else
