@@ -226,8 +226,7 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
         CardsToPlayersGObj[players].Add(instantiaterdCardObj);
 
-        instantiaterdCardObj.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
-
+       
         var rb = instantiaterdCardObj.GetComponent<Rigidbody>();
         var chip = instantiaterdCardObj.GetComponent<CardData>();
 

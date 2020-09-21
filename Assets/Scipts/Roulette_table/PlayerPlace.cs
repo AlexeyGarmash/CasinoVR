@@ -59,9 +59,7 @@ public class PlayerPlace : MonoBehaviourPun
             //actionJoinOut.Invoke();
             this.ps = ps;
 
-            var pc = ps.GetComponentInParent<OVRPlayerController>();
-            pc.enabled = false;
-           
+            var pc = ps.GetComponentInParent<OVRPlayerController>();                   
             pc.GetComponentInChildren<TeleportDisabler>().Disable();
 
             photonView.RequestOwnership();
@@ -82,7 +80,7 @@ public class PlayerPlace : MonoBehaviourPun
         if (ps != null && placeTaken)
         {
             var pc = ps.GetComponentInParent<OVRPlayerController>();
-            pc.enabled = true;
+          
             pc.GetComponentInChildren<TeleportDisabler>().Enable();
             placeTaken = false;
             ps = GetComponent<PlayerStats>();
