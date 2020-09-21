@@ -8,7 +8,7 @@ public class FortuneWheelSector : MonoBehaviour
 {
     [SerializeField] private int _cost;
 
-    [SerializeField] private Hand trigerredHand;
+    [SerializeField] private CustomHand trigerredHand;
 
     [SerializeField] private Vector3 velocityHand;
 
@@ -36,7 +36,7 @@ public class FortuneWheelSector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var hand = other.GetComponent<Hand>();
+        var hand = other.GetComponent<CustomHand>();
         if (hand != null)
         {
             trigerredHand = hand;
@@ -48,7 +48,7 @@ public class FortuneWheelSector : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        var hand = other.GetComponent<Hand>();
+        var hand = other.GetComponent<CustomHand>();
         if (hand != null && hand == trigerredHand)
         {
             trigerredHand = null;

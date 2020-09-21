@@ -29,7 +29,7 @@ public class WheelOfFortune : MonoBehaviourPun
 
     private void Start()
     {
-        PhotonNetwork.OfflineMode = OfflineMode;
+        //PhotonNetwork.OfflineMode = OfflineMode;
         wheelMotor = GetComponentInChildren<WheelMotor>();
         fortuneWheelPointer = GetComponentInChildren<FortuneWheelPointer>();
         fortuneWheelMenu = GetComponentInChildren<FortuneWheelMenu>();
