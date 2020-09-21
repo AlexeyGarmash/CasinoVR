@@ -127,15 +127,15 @@ namespace Assets.Scipts.BackJack
                     case BlackJackGameStates.PlayersBetting:
                         yield return PlayersBetting();
                         break;
-                    case BlackJackGameStates.CardsToPlayers:
-                        yield return CardsToPlyers();
-                        break;
-                    case BlackJackGameStates.PlayerTurn:
-                        yield return PlayersTurns();
-                        break;
-                    case BlackJackGameStates.CheckResults:
-                        yield return CheckResults();
-                        break;
+                    //case BlackJackGameStates.CardsToPlayers:
+                    //    yield return CardsToPlyers();
+                    //    break;
+                    //case BlackJackGameStates.PlayerTurn:
+                    //    yield return PlayersTurns();
+                    //    break;
+                    //case BlackJackGameStates.CheckResults:
+                    //    yield return CheckResults();
+                        //break;
                     case BlackJackGameStates.ResetGame:
                         
                         for (var i = 0; i < 5; i++)
@@ -472,6 +472,7 @@ namespace Assets.Scipts.BackJack
                 DebugLog("no one players waiting=" + i.ToString());
                 yield return new WaitForSeconds(OneSec);
             }
+
 
             if (currWaitTime == waitTimeInSec)
             {
