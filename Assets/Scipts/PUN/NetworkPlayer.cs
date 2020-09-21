@@ -40,12 +40,12 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
                 var controllerLeft =  ovrControllerTransform.Find("ControllerLeft").transform;
                 var controllerRight = ovrControllerTransform.Find("ControllerRight").transform;
 
-                var leftControllerHolder = transform.Find("Robot Kyle/VRConstraints/Left Arm IK/TargetLeft").transform;
+                var leftControllerHolder = transform.Find("VRConstraints/Left Arm IK/TargetLeft").transform;
                 controllerLeft.parent = leftControllerHolder;
                 controllerLeft.transform.localPosition = Vector3.zero;
                 controllerLeft.transform.localRotation = Quaternion.identity;
 
-                var rightControllerHolder = transform.Find("Robot Kyle/VRConstraints/Right Arm IK/TargetRight").transform;
+                var rightControllerHolder = transform.Find("VRConstraints/Right Arm IK/TargetRight").transform;
                 controllerRight.parent = rightControllerHolder;
                 controllerRight.transform.localPosition = Vector3.zero;
                 controllerRight.transform.localRotation = Quaternion.identity;
