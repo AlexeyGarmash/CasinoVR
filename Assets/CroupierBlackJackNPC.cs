@@ -415,6 +415,7 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
                             RightHandNPCStack.ExtractOne(card);
 
+                            card.GetComponent<OwnerData>().animator = CardCurve;
                             CardCurve.ObjectToAnimation.Add(card);
                             CardCurve.StartAnimCardToPlayer(playerPos);
 
