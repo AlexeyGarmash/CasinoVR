@@ -43,14 +43,6 @@ namespace Assets.Scipts.BackJack
         const int waitTimeInSec = 30;
         const int OneSec = 1;
 
-
-        const string giveMeCard = "give me card";
-        const string skip = "skip";
-        const string giveUp = "give up";
-        const string split = "split";
-        const string save = "save";
-        const string doubleBet = "double bet";
-
         int currWaitTime = 0;
 
 
@@ -113,8 +105,7 @@ namespace Assets.Scipts.BackJack
 
             if (photonView.IsMine)
             {
-                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CheckPlayer);
-                photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
+                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CheckPlayer);              
                 PhotonNetwork.SendAllOutgoingCommands();
                
             }
@@ -245,6 +236,8 @@ namespace Assets.Scipts.BackJack
                             playerLose = false;
                             playerTakeCard = false;
                             needSplit = false;
+
+                            //while()
                             while (currWaitTime != waitTimeInSec)
                             {
                                 DebugLog(p.ps.PlayerNick + " turn time ->" + (waitTimeInSec - currWaitTime).ToString());
@@ -317,11 +310,9 @@ namespace Assets.Scipts.BackJack
                                 }
 
                                 bjNPC.AddCardToHand(p.PlaceId, takedCard);
-
                                 yield return bjNPC.TakeCardsToPlayers(false);
 
                                 takedCard = null;
-
                                 playerTakeCard = false;
                             }
 
