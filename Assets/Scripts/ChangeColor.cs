@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ChangeColor : MonoBehaviour, IPointerClickHandler
+public class ChangeColor_ : MonoBehaviour, IPointerClickHandler
 {
 	void OnEnable ()
 	{
