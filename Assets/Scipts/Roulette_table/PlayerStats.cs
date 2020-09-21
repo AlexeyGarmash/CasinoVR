@@ -23,7 +23,7 @@ public class PlayerStats : MonoBehaviour
     {
         if (currentPlace != null)
         {
-            currentPlace.GoOutFromPlace();
+            currentPlace.GoOutFromPlace(this);
         }
     }
 

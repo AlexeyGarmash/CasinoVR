@@ -75,7 +75,7 @@ public class PlayerPlace : MonoBehaviourPun
     }
 
 
-    public void GoOutFromPlace()
+    public void GoOutFromPlace(PlayerStats player)
     {
         if (ps != null && placeTaken)
         {

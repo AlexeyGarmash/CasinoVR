@@ -32,7 +32,7 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase
     {
         photonView?.RequestOwnership();
         p_place.handMenu = null;
-        _onLongClickOut?.Invoke();
+        _onLongClickOut?.Invoke(p_place.ps);
         photonView?.RPC("InvokeClickOut_RPC", RpcTarget.All);
 
     }

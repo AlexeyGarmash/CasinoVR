@@ -14,7 +14,7 @@ public class TakePlaceUnityEvent : UnityEvent<PlayerStats> { }
 public abstract class LongClickProgerssBase : MonoBehaviourPun
 {
     [SerializeField] protected TakePlaceUnityEvent _onLongClickIn;
-    [SerializeField] protected UnityEvent _onLongClickOut;
+    [SerializeField] protected TakePlaceUnityEvent _onLongClickOut;
 
     [SerializeField] protected float _holdTime;
     [SerializeField] protected Image _progressImage;
@@ -96,7 +96,7 @@ public abstract class LongClickProgerssBase : MonoBehaviourPun
     protected virtual void InvokeClickOut()
     {
         photonView?.RequestOwnership();
-        _onLongClickOut?.Invoke();
+        _onLongClickOut?.Invoke(p_place.ps);
         photonView?.RPC("InvokeClickOut_RPC", RpcTarget.All);
 
     }
