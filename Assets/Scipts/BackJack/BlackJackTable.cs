@@ -188,47 +188,50 @@ namespace Assets.Scipts.BackJack
                         if (blackJackLogic.CanTakeCard(p.ps.PlayerNick, j))
                         {
 
-                            
+
                             //if (blackJackLogic.CanSplit(p.ps.PlayerNick))
                             //ActivateGameButtons(false, true, true, false, p, true);
-
-                            var handMenu = p.handMenu;
-                            //handMenu.RevokeMenu();
-                            var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
-                            var watches = handMenu.GetComponent<WatchController>();
-                            watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
-                            handMenu.AddAction(
-                                new RadialActionInfo(() => {
-                                    TakeCard(playersInGame[j].ps);
-                                   
-                                    animatorHolder.hand.SetPose(animatorHolder.give);
-                                }, 
-                                "Give card")
-                            );
-
-                            if (blackJackLogic.CanSplit(playersInGame[j].ps.PlayerNick))
+                            WatchController watches = null;
+                            RadialMenuHandV2 handMenu = null;
+                            AnimatorHolder animatorHolder = null;
+                            if (p.photonView.IsMine)
                             {
+                                handMenu = p.handMenu;
+                                //handMenu.RevokeMenu();
+                                animatorHolder = handMenu.GetComponent<AnimatorHolder>();
+                                watches = handMenu.GetComponent<WatchController>();
+                                watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
+                                handMenu.AddAction(
+                                    new RadialActionInfo(() =>
+                                    {
+                                        TakeCard(playersInGame[j].ps);
 
+                                        animatorHolder.hand.SetPose(animatorHolder.give);
+                                    },
+                                    "Give card")
+                                );
+
+
+                                if (blackJackLogic.CanSplit(playersInGame[j].ps.PlayerNick))
+                                {
+
+                                    handMenu.AddAction(new RadialActionInfo(() =>
+                                    {
+                                        Split(playersInGame[j].ps);
+
+                                        animatorHolder.hand.SetPose(animatorHolder.split);
+                                    }, "Split"));
+                                }
                                 handMenu.AddAction(new RadialActionInfo(() =>
                                 {
-                                    Split(playersInGame[j].ps);
+                                    SkipTurn(playersInGame[j].ps);
 
-                                    animatorHolder.hand.SetPose(animatorHolder.split);
-                                }, "Split"));
+                                    animatorHolder.hand.SetPose(animatorHolder.stop);
+                                }, "Skip"));
+
+                                handMenu.InvokeMenu();
                             }
-                            handMenu.AddAction(new RadialActionInfo(() => {
-                                SkipTurn(playersInGame[j].ps);
-                               
-                                animatorHolder.hand.SetPose(animatorHolder.stop);
-                            }, "Skip"));
-
-                            handMenu.InvokeMenu();
-                            //else ActivateGameButtons(false, true, true, false, p);
-                            var recognizer = p.GetComponent<VoiceManager>();
-
-                            //recognizer.AddVoiceAction(skip, SkipTurn);
-                            //recognizer.AddVoiceAction(giveMeCard, TakeCard);
-                            //recognizer.StartRecognize();
+                           
 
                             endTurns = false;
 
@@ -285,11 +288,14 @@ namespace Assets.Scipts.BackJack
 
                             }
 
-                            watches.watchIndicator.StopAnimation();
-                            //ActivateGameButtons(false, false, false, false, p);
-                            yield return ClearPoseWithDilay(animatorHolder.hand, 1f);
-                           
-                            handMenu.RevokeMenu();
+                            if (p.photonView.IsMine)
+                            {
+                                watches.watchIndicator.StopAnimation();
+                               
+                                StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
+
+                                handMenu.RevokeMenu();
+                            }
 
                             var field = p.GetComponent<PlayerBlackJackFields>();
 
@@ -550,21 +556,15 @@ namespace Assets.Scipts.BackJack
                 {
                     for (var j = 0; j < playersInGame.Count; j++)
                     {
-
-
-
                         id = playersInGame[j].PlaceId;
                         nick = playersInGame[j].ps.PlayerNick;
                         card = blackJackLogic.bjPlayers[j].BlackJackStaks[0].cards[i];
                        
 
                         bjNPC.AddCardToHand(id, card);
-                        //cardCurveAnimator.StartAnimCardToPlayerWithInstantiate(id, nick, card);
+                    
 
                     }
-
-                    //yield return new WaitForSeconds(3f);
-
                     id = players.Count;
                     nick = "Diler";
                     card = blackJackLogic.diler.BlackJackStaks[0].cards[i];
@@ -573,11 +573,11 @@ namespace Assets.Scipts.BackJack
                     DebugLog("card to " + nick + " card face = " + card.Face + " card sign=  " + card.Sign);
 
 
-                    // cardCurveAnimator.StartAnimCardToPlayerWithInstantiate(players.Count, nick, card);
+                    
 
                 }
 
-                //check black 
+                
                 var PlayerToRemove = new List<PlayerPlace>();
                 foreach (var p in playersInGame)
                 {
@@ -594,10 +594,7 @@ namespace Assets.Scipts.BackJack
                 playersOutFromGame.AddRange(PlayerToRemove);
                 PlayerToRemove.ForEach(p => playersInGame.Remove(p));
 
-
-
                 yield return bjNPC.TakeCardsToPlayers(true);
-
 
                 yield return WaitDistributionOfCards();
 
@@ -646,26 +643,31 @@ namespace Assets.Scipts.BackJack
                 var fields = playersInGame[j].GetComponent<PlayerBlackJackFields>();
                 fields.bettingField.BlockField(false);
 
-                var handMenu = playersInGame[j].handMenu;
-                
 
-                var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
-                var watches = handMenu.GetComponent<WatchController>();
-                watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
-                //handMenu.RevokeMenu();
-                handMenu.AddAction(new RadialActionInfo(() => {
-                    PlayerReady(playersInGame[j].ps);
-                    
-                    animatorHolder.hand.SetPose(animatorHolder.ready);
-                }, "Ready"));
-            
+                AnimatorHolder animatorHolder = null;
+                RadialMenuHandV2 handMenu = null;
+                WatchController watches = null;
 
-                handMenu.InvokeMenu();
-                //ActivateGameButtons(false, false, false, false, playersInGame[j]);
+                if (playersInGame[j].photonView.IsMine)
+                {
+                    handMenu = playersInGame[j].handMenu;
 
-                //var voiceRecognizer = playersInGame[j].GetComponent<VoiceManager>();
-                //voiceRecognizer.AddVoiceAction(skip, PlayerReady);
-                //voiceRecognizer.StartRecognize();
+
+                    animatorHolder = handMenu.GetComponent<AnimatorHolder>();
+                    watches = handMenu.GetComponent<WatchController>();
+                    watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
+                    //handMenu.RevokeMenu();
+                    handMenu.AddAction(new RadialActionInfo(() =>
+                    {
+                        PlayerReady(playersInGame[j].ps);
+
+                        animatorHolder.hand.SetPose(animatorHolder.ready);
+                    }, "Ready"));
+
+
+                    handMenu.InvokeMenu();
+                }
+             
                 while (currWaitTime != waitTimeInSec)
                 {
                     if (playerReady)
@@ -683,11 +685,14 @@ namespace Assets.Scipts.BackJack
 
                 }
 
-                watches.watchIndicator.StopAnimation();
-                //voiceRecognizer.StopRecognize();
-                yield return ClearPoseWithDilay(animatorHolder.hand, 1f);
-              
-                playersInGame[j].handMenu.RevokeMenu();
+                if (playersInGame[j].photonView.IsMine)
+                {
+                    watches.watchIndicator.StopAnimation();
+                    //voiceRecognizer.StopRecognize();
+                   StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
+
+                    playersInGame[j].handMenu.RevokeMenu();
+                }
                 //ActivateGameButtons(false, false, false, false, playersInGame[j]);
 
                 var playerField = playersInGame[j].GetComponent<PlayerBlackJackFields>();
