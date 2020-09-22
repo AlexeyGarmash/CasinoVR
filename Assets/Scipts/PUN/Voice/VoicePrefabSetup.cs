@@ -23,5 +23,23 @@ public class VoicePrefabSetup : MonoBehaviour
     {
         photonView.ViewID = photonPlayer.ActorNumber * 1000;
         photonView.TransferOwnership(photonPlayer);
+        InitializeSpeaker();
+    }
+
+    private IEnumerator InitializeSpeaker()
+    {
+        yield return new WaitForSeconds(1f);
+        if (photonVoiceView != null)
+        {
+            if(photonVoiceView.SpeakerInUse.IsLinked)
+            {
+                print("Speaker is linked");
+            }
+            else
+            {
+                print("Speaker is NOT linked");
+            }
+            photonVoiceView.Init();
+        }
     }
 }
