@@ -27,7 +27,10 @@ public class PlayerItem : MonoBehaviourPunCallbacks
         SetPLayerText(player);
         SetPlayerInfoReady(player);
         SetPlayerAvatar(player);
-        _voiceItem.SetupPhotonVoice(player);
+        if (_voiceItem != null)
+        {
+            _voiceItem.SetupPhotonVoice(player);
+        }
     }
 
     

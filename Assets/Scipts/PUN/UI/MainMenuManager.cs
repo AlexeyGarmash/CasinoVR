@@ -5,6 +5,7 @@ using Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
+using Photon.Voice.Unity.UtilityScripts;
 
 public class MainMenuManager : MonoBehaviourPunCallbacks
 {
@@ -17,6 +18,7 @@ public class MainMenuManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject JoinOrCreateRoomPanel;
     [SerializeField] private GameObject CurrentRoomPanel;
     [SerializeField] private LoadingWithProgressManager LoadingWithProgressManager;
+    [SerializeField] private ConnectAndJoin connectAndJoinVoice;
 
     private Vector3 fullScale = new Vector3(1, 1, 1);
     private Vector3 removeScale = new Vector3(0, 0, 0);
@@ -80,6 +82,8 @@ public class MainMenuManager : MonoBehaviourPunCallbacks
     {
         print("Player join room");
         OnPlayerJoinRoom();
+        connectAndJoinVoice.RoomName = PhotonNetwork.CurrentRoom.Name;
+        connectAndJoinVoice.ConnectNow();
     }
 
     public override void OnLeftRoom()

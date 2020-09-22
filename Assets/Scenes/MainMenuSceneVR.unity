@@ -7025,6 +7025,7 @@ MonoBehaviour:
   JoinOrCreateRoomPanel: {fileID: 921756759}
   CurrentRoomPanel: {fileID: 1188624800}
   LoadingWithProgressManager: {fileID: 498756367}
+  connectAndJoinVoice: {fileID: 1980534385}
 --- !u!1 &1876156070
 GameObject:
   m_ObjectHideFlags: 0
@@ -7495,8 +7496,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1980534383}
   - component: {fileID: 1980534381}
-  - component: {fileID: 1980534384}
   - component: {fileID: 1980534382}
+  - component: {fileID: 1980534384}
+  - component: {fileID: 1980534385}
   m_Layer: 0
   m_Name: PhotonVoiceNetwork
   m_TagString: Untagged
@@ -7539,7 +7541,7 @@ MonoBehaviour:
   debugEchoMode: 0
   reliableMode: 0
   encrypt: 0
-  transmitEnabled: 1
+  transmitEnabled: 0
   samplingRate: 24000
   frameDuration: 20000
   bitrate: 30000
@@ -7588,7 +7590,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1980534380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81d9debcbaf99472bb70ffc2f99cb23f, type: 3}
+  m_Script: {fileID: 11500000, guid: 697c1cda529a1419782f2a2e3afe37a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   KeepAliveInBackground: 60000
@@ -7606,8 +7608,8 @@ MonoBehaviour:
   Settings:
     AppIdRealtime: 
     AppIdChat: 
-    AppIdVoice: 
-    AppVersion: 
+    AppIdVoice: 4f33fe33-6f40-4986-855f-1ce7f615fac6
+    AppVersion: 0.1
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -7618,13 +7620,26 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  ShowSettings: 1
+  ShowSettings: 0
   MinimalTimeScaleToDispatchInFixedUpdate: -1
   AutoCreateSpeakerIfNotFound: 1
-  AutoConnectAndJoin: 1
-  AutoLeaveAndDisconnect: 1
-  WorkInOfflineMode: 1
-  usePunAppSettings: 1
+--- !u!114 &1980534385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980534380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b99afb3758e9e4689c28a18224eb8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RandomRoom: 0
+  autoConnect: 0
+  autoTransmit: 1
+  publishUserId: 0
+  RoomName: 
 --- !u!1 &1987957573
 GameObject:
   m_ObjectHideFlags: 0
