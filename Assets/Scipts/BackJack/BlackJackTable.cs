@@ -67,32 +67,28 @@ namespace Assets.Scipts.BackJack
         }
         public void AddPlayerInGame(PlayerStats PlaceID)
         {
-            var player = players.FirstOrDefault(p => p.ps == PlaceID);
+            var player = players.FirstOrDefault(p => p.ps.PlayerNick == PlaceID.PlayerNick);
 
-            photonView.RPC("AddPlayerIngame_RPC", RpcTarget.All, player.PlaceId);
+            photonView.RPC("AddPlayerIngame_RPC", RpcTarget.All, player.PlaceId);         
+           
+            var handMenu = player.handMenu;
 
-            
 
-            if (player.photonView.IsMine)
+            var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
+            var watches = handMenu.GetComponent<WatchController>();
+            watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
+            //handMenu.RevokeMenu();
+            handMenu.AddAction(new RadialActionInfo(() =>
             {
-                var handMenu = player.handMenu;
+                PlayerReadyToPlay(player.PlaceId);
+
+                animatorHolder.hand.SetPose(animatorHolder.ready);
+            }, "Ready"));
 
 
-                var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
-                var watches = handMenu.GetComponent<WatchController>();
-                watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
-                //handMenu.RevokeMenu();
-                handMenu.AddAction(new RadialActionInfo(() =>
-                {
-                    PlayerReadyToPlay(player.PlaceId);
-
-                    animatorHolder.hand.SetPose(animatorHolder.ready);
-                }, "Ready"));
-
-
-                handMenu.InvokeMenu();
+            handMenu.InvokeMenu();
              
-            }
+            
         }
 
         [PunRPC]
@@ -128,7 +124,7 @@ namespace Assets.Scipts.BackJack
             bjNPCWinLosePlayer = bjNPC.GetComponent<WinLoseAudioPlayer>();
             playersOutFromGame = new List<PlayerPlace>();
             playersInGame = new List<PlayerPlace>();
-            StartCoroutine(BlackJackLoop());
+           
 
         }
 
@@ -184,38 +180,6 @@ namespace Assets.Scipts.BackJack
 
         }
 
-
-
-        IEnumerator BlackJackLoop()
-        {
-            while (true)
-            {
-
-                i++;
-                switch (gameState)
-                {                    
-                    //case BlackJackGameStates.PlayerTurn:
-                    //    yield return PlayersTurns();
-                    //    break;
-                    case BlackJackGameStates.CheckResults:
-                        yield return CheckResults();
-                        break;
-                    case BlackJackGameStates.ResetGame:
-
-                        for (var i = 0; i < 5; i++)
-                        {
-                            DebugLog("reset game in" + ((4) - i).ToString());
-
-                            yield return new WaitForSeconds(OneSec);
-                        }
-
-                        ResetGame();
-                        break;
-                }
-
-                yield return null;
-            }
-        }
 
         IEnumerator ClearPoseWithDilay(CustomHand hand, float delay)
         {

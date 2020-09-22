@@ -57,10 +57,7 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase
         _onLongClickIn?.Invoke(p_place.ps);
 
     }
-    protected new void Start()
-    {
-        base.Start();      
-    }     
+    
 
 }
 
