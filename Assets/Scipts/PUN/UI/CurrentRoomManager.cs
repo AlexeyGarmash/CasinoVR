@@ -112,6 +112,7 @@ public class CurrentRoomManager : BaseMenuPanel
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         print("New player ENTER ROOM");
+        
         InstatiatePlayer(newPlayer);
     }
 

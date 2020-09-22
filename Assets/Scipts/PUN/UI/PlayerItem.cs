@@ -17,7 +17,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
     [SerializeField] private Texture _readySprite;
     [SerializeField] private Texture _notReadySprite;
     [SerializeField] private RawImage _imageAvatar;
-    
+    [SerializeField] private VoicePrefabSetup _voiceItem;
 
     public Player PlayerInfo { get; set; }
 
@@ -27,6 +27,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
         SetPLayerText(player);
         SetPlayerInfoReady(player);
         SetPlayerAvatar(player);
+        _voiceItem.SetupPhotonVoice(player);
     }
 
     
