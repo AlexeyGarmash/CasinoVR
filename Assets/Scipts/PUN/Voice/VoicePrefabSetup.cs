@@ -23,7 +23,7 @@ public class VoicePrefabSetup : MonoBehaviour
     {
         photonView.ViewID = photonPlayer.ActorNumber * 1000;
         photonView.TransferOwnership(photonPlayer);
-        InitializeSpeaker();
+        StartCoroutine(InitializeSpeaker());
     }
 
     private IEnumerator InitializeSpeaker()
