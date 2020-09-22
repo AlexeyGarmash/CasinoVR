@@ -22,5 +22,6 @@ public class VoicePrefabSetup : MonoBehaviour
     public void SetupPhotonVoice(Player photonPlayer)
     {
         photonView.ViewID = photonPlayer.ActorNumber * 1000;
+        photonView.TransferOwnership(photonPlayer);
     }
 }
