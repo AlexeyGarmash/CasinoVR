@@ -104,7 +104,7 @@ namespace Assets.Scipts.BackJack
         public void RemovePlayerFromGame(PlayerStats PlaceID)
         {
             var player = sittedPlayers.FirstOrDefault(p => p.ps == PlaceID);
-            photonView.RPC("AddPlayerIngame_RPC", RpcTarget.All, player.PlaceId);
+            photonView.RPC("RemovePlayerFromGame_RPC", RpcTarget.All, player.PlaceId);
           
             if (player.photonView.IsMine)
             {
