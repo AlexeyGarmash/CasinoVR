@@ -66,6 +66,13 @@ namespace Photon.Voice.Unity.UtilityScripts
             this.voiceConnection.ConnectUsingSettings();
         }
 
+        public void ConnectNowWithFixedRoom()
+        {
+            this.enterRoomParams.RoomName = this.RoomName;
+            this.voiceConnection.Client.OpJoinRoom(this.enterRoomParams);
+            this.voiceConnection.ConnectUsingSettings();
+        }
+
         #region MatchmakingCallbacks
 
         public void OnCreatedRoom()

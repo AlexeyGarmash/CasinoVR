@@ -83,7 +83,7 @@ public class MainMenuManager : MonoBehaviourPunCallbacks
         print("Player join room");
         OnPlayerJoinRoom();
         connectAndJoinVoice.RoomName = PhotonNetwork.CurrentRoom.Name;
-        connectAndJoinVoice.ConnectNow();
+        connectAndJoinVoice.ConnectNowWithFixedRoom();
     }
 
     public override void OnLeftRoom()
