@@ -47,15 +47,10 @@ namespace Assets.Scipts.BackJack
 
         int currWaitTime = 0;
         int playersReady;
-
-        bool playerTakeCard;
-        bool playerLose;
+      
         private bool needSplit;
         private bool playerSurrendered;
-        bool playerReady;
-
-        int lose;
-
+        int currentPlayerTurn = 0;
         int i = 0;
         int currentBJStackIndex;
 
@@ -137,15 +132,19 @@ namespace Assets.Scipts.BackJack
 
         }
 
+        IEnumerator ResetGameCourotine(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            ResetGame();
+
+        }
+
         void ResetGame()
         {
-            playerReady = false;
-            playerTakeCard = false;
-            playerLose = false;
+          
             bjNPC.ResetValues();
-            playersReady = 0;
-
-            if(photonView.IsMine)
+            playersReady = 0;         
+            if (photonView.IsMine)
             sittedPlayers.ForEach(sp => {
 
                 AddPlayerInGame(sp.ps);
@@ -154,7 +153,7 @@ namespace Assets.Scipts.BackJack
             
             players.ForEach(p => {
                 var buttons = p.GetComponentInChildren<ButtonsHolder>();
-                ActivateGameButtons(true, false, false, false, p);
+                ActivateTakePlaceButton(true, p);
                 var fields = p.GetComponent<PlayerBlackJackFields>();
 
                 fields.bettingField.ClearStacks();
@@ -172,10 +171,7 @@ namespace Assets.Scipts.BackJack
 
             });
 
-
-
-            lose = -99999;
-            playerLose = false;
+           
             playersInGame.Clear();
             playersOutFromGame.Clear();
 
@@ -197,14 +193,10 @@ namespace Assets.Scipts.BackJack
 
                 i++;
                 switch (gameState)
-                {
-
-                    case BlackJackGameStates.CardsToPlayers:
-                        yield return CardsToPlyers();
-                        break;
-                    case BlackJackGameStates.PlayerTurn:
-                        yield return PlayersTurns();
-                        break;
+                {                    
+                    //case BlackJackGameStates.PlayerTurn:
+                    //    yield return PlayersTurns();
+                    //    break;
                     case BlackJackGameStates.CheckResults:
                         yield return CheckResults();
                         break;
@@ -212,7 +204,6 @@ namespace Assets.Scipts.BackJack
 
                         for (var i = 0; i < 5; i++)
                         {
-
                             DebugLog("reset game in" + ((4) - i).ToString());
 
                             yield return new WaitForSeconds(OneSec);
@@ -231,271 +222,129 @@ namespace Assets.Scipts.BackJack
             yield return new WaitForSeconds(delay);
             hand.ClearPose();
         }
-        private IEnumerator PlayersTurns()
+
+        void NextPlayerTurn()
         {
-
-            var toRemove = new List<PlayerPlace>();
-            bool endTurns = true;
-
-
-            foreach (var p in playersInGame)
+            if (splited && playersInGame.Count == 1)
             {
-                currentBJStackIndex = 0;
+                splited = false;
+                return;
+            }
+            else 
+            if (blackJackLogic.PlayerSplited(playersInGame[currentPlayerTurn].ps.PlayerNick) && currentBJStackIndex == 1 ||
+                    !blackJackLogic.PlayerSplited(playersInGame[currentPlayerTurn].ps.PlayerNick))
+            {
+                if (playersInGame.Count - 1 == currentPlayerTurn)
+                {
+                    currentBJStackIndex = 0;
+                    currentPlayerTurn = 0;
+                }
+                else {
+                    currentBJStackIndex = 0;
+                    currentPlayerTurn++;
+                }
+                return;
+            }
+
+            currentBJStackIndex++;
+
+        }
+
+        bool PlayersCanTurn()
+        {
+            bool canTrun = false;
+
+            playersInGame.ForEach(p =>
+            {
+                if (blackJackLogic.CanTakeCard(p.ps.PlayerNick, 0))
+                    canTrun = true;
+            });
+
+            return canTrun;
+        }
+        
+        private void PlayersTurns()
+        {     
+            if (playersInGame.Count > 0)
+            {
+                var p = playersInGame[currentPlayerTurn];
+
+                
                 var bjPlayer = blackJackLogic.bjPlayers.Find(bjp => bjp.player.PlayerNick == p.ps.PlayerNick);
 
                 if (bjPlayer != null)
                 {
-                    for (var j = 0; j < bjPlayer.BlackJackStaks.Count; j++)
+
+                    
+                    if (blackJackLogic.CanTakeCard(p.ps.PlayerNick, currentBJStackIndex))
                     {
-                        currentBJStackIndex = j;
-                        if (blackJackLogic.CanTakeCard(p.ps.PlayerNick, j))
+
+                        WatchController watches = null;
+                        RadialMenuHandV2 handMenu = null;
+                        AnimatorHolder animatorHolder = null;
+                        if (p.photonView.IsMine)
                         {
+                            handMenu = p.handMenu;
 
+                            animatorHolder = handMenu.GetComponent<AnimatorHolder>();
+                            watches = handMenu.GetComponent<WatchController>();
+                            watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
 
-                            //if (blackJackLogic.CanSplit(p.ps.PlayerNick))
-                            //ActivateGameButtons(false, true, true, false, p, true);
-                            WatchController watches = null;
-                            RadialMenuHandV2 handMenu = null;
-                            AnimatorHolder animatorHolder = null;
-                            if (p.photonView.IsMine)
-                            {
-                                handMenu = p.handMenu;
-                                //handMenu.RevokeMenu();
-                                animatorHolder = handMenu.GetComponent<AnimatorHolder>();
-                                watches = handMenu.GetComponent<WatchController>();
-                                watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
-                                handMenu.AddAction(
-                                    new RadialActionInfo(() =>
-                                    {
-                                        TakeCard(playersInGame[j].ps);
-
-                                        animatorHolder.hand.SetPose(animatorHolder.give);
-                                    },
-                                    "Give card")
-                                );
-
-
-                                if (blackJackLogic.CanSplit(playersInGame[j].ps.PlayerNick))
+                            handMenu.AddAction(
+                                new RadialActionInfo(() =>
                                 {
+                                    TakeCard(playersInGame[currentPlayerTurn].ps);
 
-                                    handMenu.AddAction(new RadialActionInfo(() =>
-                                    {
-                                        Split(playersInGame[j].ps);
+                                    animatorHolder.hand.SetPose(animatorHolder.give);
+                                },
+                                "Give card")
+                            );
 
-                                        animatorHolder.hand.SetPose(animatorHolder.split);
-                                    }, "Split"));
-                                }
+
+                            if (blackJackLogic.CanSplit(playersInGame[currentPlayerTurn].ps.PlayerNick))
+                            {
+
                                 handMenu.AddAction(new RadialActionInfo(() =>
                                 {
-                                    SkipTurn(playersInGame[j].ps);
+                                    Split(playersInGame[currentPlayerTurn].ps);
 
-                                    animatorHolder.hand.SetPose(animatorHolder.stop);
-                                }, "Skip"));
-
-                                handMenu.InvokeMenu();
+                                    animatorHolder.hand.SetPose(animatorHolder.split);
+                                }, "Split"));
                             }
-
-
-                            endTurns = false;
-
-                            if (photonView.IsMine)
+                            handMenu.AddAction(new RadialActionInfo(() =>
                             {
-                                photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
-                                PhotonNetwork.SendAllOutgoingCommands();
-                            }
+                                SkipTurn(playersInGame[currentPlayerTurn].ps);
 
-                            playerReady = false;
-                            playerLose = false;
-                            playerTakeCard = false;
-                            needSplit = false;
+                                animatorHolder.hand.SetPose(animatorHolder.stop);
+                            }, "Skip"));
 
-                            //while()
-                            while (currWaitTime != waitTimeInSec)
-                            {
-                                DebugLog(p.ps.PlayerNick + " turn time ->" + (waitTimeInSec - currWaitTime).ToString());
-                                if (playerLose)
-                                {
-                                    //toRemove.Add(p);
-                                    DebugLog(p.ps.PlayerNick + " Lose bet " + lose + "so match points");
-
-                                    break;
-                                }
-                                else if (playerTakeCard)
-                                {
-                                    break;
-                                }
-
-                                else if (playerReady)
-                                {
-
-                                    DebugLog(p.ps.PlayerNick + " skiped turn");
-
-                                    break;
-                                }
-
-                                if (needSplit)
-                                {
-                                    DebugLog(p.ps.PlayerNick + " splited");
-                                    break;
-
-
-
-                                }
-
-
-
-                                if (photonView.IsMine)
-                                {
-                                    photonView.RPC("TimerStep_RPC", RpcTarget.All);
-                                    PhotonNetwork.SendAllOutgoingCommands();
-                                }
-                                yield return new WaitForSeconds(OneSec);
-
-                            }
-
-                            if (p.photonView.IsMine)
-                            {
-                                watches.watchIndicator.StopAnimation();
-
-                                StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
-
-                                handMenu.RevokeMenu();
-                            }
-
-                            var field = p.GetComponent<PlayerBlackJackFields>();
-
-                            if (playerTakeCard)
-                            {
-                                if (currentBJStackIndex == 0)
-                                {
-                                    field.blackJackCardFieldForSplit.BlockField(true);
-                                    field.blackJackCardField.BlockField(false);
-
-
-                                }
-                                else if (currentBJStackIndex == 1)
-                                {
-                                    field.blackJackCardFieldForSplit.BlockField(false);
-                                    field.blackJackCardField.BlockField(true);
-
-
-                                }
-
-                                bjNPC.AddCardToHand(p.PlaceId, takedCard);
-                                yield return bjNPC.TakeCardsToPlayers(false);
-
-                                takedCard = null;
-                                playerTakeCard = false;
-                            }
-
-                            else if (needSplit)
-                            {
-                                blackJackLogic.UseSplit(p.ps.PlayerNick);
-
-
-                                //добавляем ставку для сплита
-                                foreach (var chip in field.bettingField.Stacks[0].Objects)
-                                {
-                                    GameObject extractedChip;
-                                    if (p.ExtractChipByCost(chip.GetComponent<ChipData>().Cost, out extractedChip))
-                                    {
-                                        field.bettingFieldForSplit.MagnetizeObject(extractedChip, field.bettingFieldForSplit.Stacks[0]);
-                                    }
-                                }
-                                //разделяем карты
-                                var player = blackJackLogic.bjPlayers.Find(bjp => p.ps.PlayerNick == bjp.player.PlayerNick);
-                                var card = field.blackJackCardField.ExtractObject(player.BlackJackStaks[1].cards[0]);
-                                field.blackJackCardFieldForSplit.MagnetizeObject(card, field.blackJackCardFieldForSplit.Stacks[0]);
-
-                                //добавляем по 2 карыт
-
-                                for (var k = 0; k < 2; k++)
-                                {
-                                    if (k == 0)
-                                    {
-                                        field.blackJackCardFieldForSplit.BlockField(true);
-                                        field.blackJackCardField.BlockField(false);
-
-                                        bjNPC.AddCardToHand(p.PlaceId, player.BlackJackStaks[0].cards[1]);
-                                    }
-                                    else if (k == 1)
-                                    {
-                                        field.blackJackCardFieldForSplit.BlockField(false);
-                                        field.blackJackCardField.BlockField(true);
-
-                                        bjNPC.AddCardToHand(p.PlaceId, player.BlackJackStaks[1].cards[1]);
-                                    }
-
-                                    yield return bjNPC.TakeCardsToPlayers(false);
-
-                                }
-                                break;
-
-                            }
-
-                            yield return new WaitForSeconds(OneSec * 3);
-
-                            if (currWaitTime == waitTimeInSec)
-                            {
-
-                                blackJackLogic.SkipTruns(p.ps.PlayerNick, j);
-                            }
-
-
-                            yield return new WaitForSeconds(OneSec);
-
-
+                            handMenu.InvokeMenu();
                         }
-                        currentBJStackIndex = 0;
+
+                        
+                            
                     }
+
+                    
+
                 }
             }
 
-            if (endTurns)
+            if(!PlayersCanTurn())
             {
-                if (photonView.IsMine)
-                {
-                    photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CheckResults);
-                    photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
-                    PhotonNetwork.SendAllOutgoingCommands();
-                }
-                else {
-                    while (BlackJackGameStates.CheckResults != gameState)
-                        yield return null;
-                }
+                if(photonView.IsMine)
+                    photonView.StartCoroutine(CheckResults());
+                
             }
-
-            if (playersInGame.Count == 0)
-            {
-                if (photonView.IsMine)
-                {
-                    photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
-                    photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
-                    PhotonNetwork.SendAllOutgoingCommands();
-                }
-                else
-                {
-                    while (BlackJackGameStates.ResetGame != gameState)
-                        yield return null;
-                }
-            }
-            yield return null;
-            playersOutFromGame.AddRange(toRemove);
-            toRemove.ForEach(p => playersInGame.Remove(p));
+                       
         }
-        void ActivateGameButtons(bool activateTakePlaceButton, bool activateButtonTakeCard,
-            bool activateButtonSkip, bool activateButtonReady, PlayerPlace pp, bool activateSplitButton = false)
+        void ActivateTakePlaceButton(bool activateTakePlaceButton, PlayerPlace pp)
         {
             if (pp != null)
             {
                 var buttonsHolder = pp.GetComponentInChildren<ButtonsHolder>();
 
                 buttonsHolder.takePlace.gameObject.SetActive(activateTakePlaceButton);
-                buttonsHolder.takeCard.gameObject.SetActive(activateButtonTakeCard);
-                buttonsHolder.Ready.gameObject.SetActive(activateButtonReady);
-                buttonsHolder.Skip.gameObject.SetActive(activateButtonSkip);
-                buttonsHolder.Split.gameObject.SetActive(activateSplitButton);
-
             }
         }
         [PunRPC]
@@ -522,77 +371,7 @@ namespace Assets.Scipts.BackJack
         {
             playersInGame = players.FindAll(p => p.PlayerOnPlace);
         }
-        private IEnumerator WaitingForSitPlayers()
-        {
-
-
-            if (players.Exists(p => p.PlayerOnPlace))
-            {
-
-                DebugLog("Waiting players" + (waitTimeInSec - currWaitTime).ToString());
-                yield return new WaitForSeconds(OneSec);
-
-                if (photonView.IsMine)
-                {
-                    photonView.RPC("TimerStep_RPC", RpcTarget.All);
-                    PhotonNetwork.SendAllOutgoingCommands();
-                }
-
-            }
-            else
-            {
-                DebugLog("no one players waiting=" + i.ToString());
-                yield return new WaitForSeconds(OneSec);
-            }
-
-
-            if (currWaitTime == waitTimeInSec)
-            {
-                if (photonView.IsMine)
-                {
-                    photonView.RPC("FindPlayers", RpcTarget.All);
-                    PhotonNetwork.SendAllOutgoingCommands();
-                }
-
-                if (playersInGame.Count != 0)
-                {
-
-                    Debug.Log("to next state -> BlackJackGameStates.PlayersBetting | players=" + playersInGame.Count);
-
-                    //получаем стату игроков
-
-                    if (photonView.IsMine)
-                    {
-                        yield return new WaitForSeconds(0.1f);
-                        DeckData dd = new DeckData();
-
-                        var indexesRnd = dd.GenerateDeck();
-                        photonView.RPC("SetDeck", RpcTarget.All, indexesRnd);
-                        photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
-                        photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.PlayersBetting);
-                        PhotonNetwork.SendAllOutgoingCommands();
-
-                    }
-
-
-
-                    while (BlackJackGameStates.PlayersBetting != gameState)
-                    {
-
-                        yield return null;
-                    }
-
-                    players.ForEach(p => ActivateGameButtons(false, false, false, false, p));
-
-                }
-                else if (photonView.IsMine)
-                {
-                    photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
-                    PhotonNetwork.SendAllOutgoingCommands();
-                }
-            }
-            yield return null;
-        }
+     
 
         [PunRPC]
         protected void SetDeck(int[] indexes)
@@ -608,8 +387,27 @@ namespace Assets.Scipts.BackJack
             string nick;
             CardData card;
 
-            DebugLog("Players in game" + playersInGame.Count);
 
+            playersInGame.ForEach(p =>
+            {
+                if (p.photonView.IsMine)
+                {
+                    var handMenu = p.handMenu;
+
+
+                    var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
+                    var watches = handMenu.GetComponent<WatchController>();
+                    watches.watchIndicator.StopAnimation();
+
+                    StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
+
+                    handMenu.RevokeMenu();
+                }
+            });
+
+           
+
+            DebugLog("Players in game" + playersInGame.Count);
 
             if (playersInGame.Count != 0)
             {
@@ -633,11 +431,7 @@ namespace Assets.Scipts.BackJack
 
                     DebugLog("card to " + nick + " card face = " + card.Face + " card sign=  " + card.Sign);
 
-
-
-
                 }
-
 
                 var PlayerToRemove = new List<PlayerPlace>();
                 foreach (var p in playersInGame)
@@ -661,23 +455,13 @@ namespace Assets.Scipts.BackJack
 
                 if (photonView.IsMine)
                 {
-                    photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.PlayerTurn);
-                    PhotonNetwork.SendAllOutgoingCommands();
+                    PlayersTurns();
                 }
-
-                while (BlackJackGameStates.PlayerTurn != gameState)
-                    yield return null;
+             
             }
-            else
+            else if (photonView.IsMine)
             {
-                if (photonView.IsMine)
-                {
-                    photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.ResetGame);
-                    PhotonNetwork.SendAllOutgoingCommands();
-                }
-
-                while (BlackJackGameStates.ResetGame != gameState)
-                    yield return null;
+                photonView.StartCoroutine(ResetGameCourotine(3f));                                              
             }
 
 
@@ -689,9 +473,7 @@ namespace Assets.Scipts.BackJack
             Debug.Log(text);
             tms.SetText(text);
         }
-
-
-       
+      
         private void PlayersBetting()
         {
             List<PlayerPlace> toRemove = new List<PlayerPlace>();
@@ -728,22 +510,16 @@ namespace Assets.Scipts.BackJack
 
                     handMenu.InvokeMenu();
                 }
+
             }
 
         }
-
-
-
-
-
 
         IEnumerator WaitDistributionOfCards()
         {
             while (bjNPC.distributionOfCards)
                 yield return null;
         }
-
-
 
         IEnumerator GiveCardsToDealer()
         {
@@ -897,11 +673,11 @@ namespace Assets.Scipts.BackJack
             yield return null;
         }
         #region Buttons Functions
-        #region RPCs
+        #region RPCs      
         [PunRPC]
         private void PlayerReady_RPC(string player)
         {
-            playerReady = true;
+           
             playersReady++;
 
             if (playersReady == playersInGame.Count)
@@ -956,77 +732,188 @@ namespace Assets.Scipts.BackJack
                 }
 
                 playersOutFromGame.AddRange(toRemove);
+
                 toRemove.ForEach(r =>
                 {
                     playersInGame.Remove(r);
                 });
 
-                if (photonView.IsMine)
-                {
-                    photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CardsToPlayers);
-                    photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
-                    PhotonNetwork.SendAllOutgoingCommands();
-                }
+
+
+                StartCoroutine(CardsToPlyers());
+
+                
             }
-            //ActivateGameButtons(false, false, false, false, players.Find(p => p.ps.PlayerNick == player));
+           
 
         }
+       
         [PunRPC]
         private void TakeCard_RPC(string player)
         {
-            if (!playerTakeCard)
+
+            StartCoroutine(TakeCard(player));
+
+            
+
+        }
+        IEnumerator TakeCard(string player)
+        {
+            if (blackJackLogic.CanTakeCard(player, currentBJStackIndex))
             {
-                if (blackJackLogic.TakeCard(player, currentBJStackIndex))
+
+                blackJackLogic.TakeCard(player, currentBJStackIndex);
+
+                var playerPlace = playersInGame.Find(p => p.ps.PlayerNick == player);
+                var id = playerPlace.PlaceId;
+                var nick = playerPlace.ps.PlayerNick;
+
+                var bjPlayer = blackJackLogic.bjPlayers.Find(bjP => bjP.player.PlayerNick == nick);
+                takedCard = bjPlayer.BlackJackStaks[currentBJStackIndex].cards[bjPlayer.BlackJackStaks[currentBJStackIndex].cards.Count - 1];
+
+                DebugLog("Give me card button ->  card to " + player + " card face = " + takedCard.Face + " card sign=  " + takedCard.Sign);
+
+                var field = playerPlace.GetComponent<PlayerBlackJackFields>();
+
+                if (currentBJStackIndex == 0)
                 {
-
-
-                    if (blackJackLogic.IsPlunk(player, out lose, currentBJStackIndex))
-                    {
-
-                        playerLose = true;
-                        //ActivateGameButtons(false, false, false, false, players.Find(p => p.ps.PlayerNick == player));
-                    }
-
-                    playerTakeCard = true;
-
-                    var playerPlace = playersInGame.Find(p => p.ps.PlayerNick == player);
-                    var id = playerPlace.PlaceId;
-                    var nick = playerPlace.ps.PlayerNick;
-
-                    var bjPlayer = blackJackLogic.bjPlayers.Find(bjP => bjP.player.PlayerNick == nick);
-                    takedCard = bjPlayer.BlackJackStaks[currentBJStackIndex].cards[bjPlayer.BlackJackStaks[currentBJStackIndex].cards.Count - 1];
-
-                    DebugLog("Give me card button ->  card to " + player + " card face = " + takedCard.Face + " card sign=  " + takedCard.Sign);
-
-
-
-
-
-                    //if (photonView.IsMine)
-                    //    cardCurveAnimator.StartAnimCardToPlayerWithInstantiate(id, nick, card);
+                    field.blackJackCardFieldForSplit.BlockField(true);
+                    field.blackJackCardField.BlockField(false);
                 }
+                else if (currentBJStackIndex == 1)
+                {
+                    field.blackJackCardFieldForSplit.BlockField(false);
+                    field.blackJackCardField.BlockField(true);
+                }
+
+                bjNPC.AddCardToHand(playerPlace.PlaceId, takedCard);
+
+                if (playerPlace.photonView.IsMine)
+                {
+                    var handMenu = playerPlace.handMenu;
+
+
+                    var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
+                    var watches = handMenu.GetComponent<WatchController>();
+                    watches.watchIndicator.StopAnimation();
+
+                    StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
+
+                    handMenu.RevokeMenu();
+                }
+
+                yield return bjNPC.TakeCardsToPlayers(false);
+
+                takedCard = null;
+                
+
             }
+
+           
+            NextPlayerTurn();
+            PlayersTurns();
         }
         [PunRPC]
         private void SkipTurn_RPC(string nick)
         {
-            if (blackJackLogic.SkipTruns(nick, currentBJStackIndex))
+            blackJackLogic.SkipTruns(nick, currentBJStackIndex);
+
+            var playerPlace = playersInGame.Find(p => p.ps.PlayerNick == nick);
+
+            if (playerPlace.photonView.IsMine)
             {
-                playerReady = true;
-                //ActivateGameButtons(false, false, false, false, players.Find(p => p.ps.PlayerNick == nick));
+                var handMenu = playerPlace.handMenu;
+
+
+                var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
+                var watches = handMenu.GetComponent<WatchController>();
+                watches.watchIndicator.StopAnimation();
+
+                StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
+
+                handMenu.RevokeMenu();
             }
+
+            NextPlayerTurn();
+            PlayersTurns();
         }
+        bool splited = false;
         [PunRPC]
         private void SplitTurn_RPC(string nick)
         {
-            needSplit = true;
-        }
-        //[PunRPC]
-        //private void SurrenderedTurn_RPC(string nick)
-        //{
-        //    playerSurrendered = true;
-        //}
+           
+            var playerPlace = playersInGame.Find(p => p.ps.PlayerNick == nick);
 
+            var field = playerPlace.GetComponent<PlayerBlackJackFields>();
+
+            blackJackLogic.UseSplit(playerPlace.ps.PlayerNick);
+
+
+            //добавляем ставку для сплита
+            foreach (var chip in field.bettingField.Stacks[0].Objects)
+            {
+                GameObject extractedChip;
+                if (playerPlace.ExtractChipByCost(chip.GetComponent<ChipData>().Cost, out extractedChip))
+                {
+                    field.bettingFieldForSplit.MagnetizeObject(extractedChip, field.bettingFieldForSplit.Stacks[0]);
+                }
+            }
+            //разделяем карты
+            var player = blackJackLogic.bjPlayers.Find(bjp => playerPlace.ps.PlayerNick == bjp.player.PlayerNick);
+            var card = field.blackJackCardField.ExtractObject(player.BlackJackStaks[1].cards[0]);
+            field.blackJackCardFieldForSplit.MagnetizeObject(card, field.blackJackCardFieldForSplit.Stacks[0]);           
+
+            if (playerPlace.photonView.IsMine)
+            {
+                var handMenu = playerPlace.handMenu;
+
+
+                var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
+                var watches = handMenu.GetComponent<WatchController>();
+                watches.watchIndicator.StopAnimation();
+
+                StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
+
+                handMenu.RevokeMenu();
+            }
+            //добавляем по 2 карыт
+            StartCoroutine(Split(field, player, playerPlace));
+
+          
+
+        }
+
+        IEnumerator Split(PlayerBlackJackFields field, BlackJackPlayer player, PlayerPlace playerPlace)
+        {
+            for (var k = 0; k < 2; k++)
+            {
+                if (k == 0)
+                {
+                    field.blackJackCardFieldForSplit.BlockField(true);
+                    field.blackJackCardField.BlockField(false);
+
+                    bjNPC.AddCardToHand(playerPlace.PlaceId, player.BlackJackStaks[0].cards[1]);
+                }
+                else if (k == 1)
+                {
+                    field.blackJackCardFieldForSplit.BlockField(false);
+                    field.blackJackCardField.BlockField(true);
+
+                    bjNPC.AddCardToHand(playerPlace.PlaceId, player.BlackJackStaks[1].cards[1]);
+                }
+
+                yield return bjNPC.TakeCardsToPlayers(false);
+
+            }
+
+            splited = true;
+            NextPlayerTurn();
+            PlayersTurns();
+
+           
+          
+            
+        }
         [PunRPC]
         private void PlayerReadyToPlay_RPC(int PlaceID)
         {
@@ -1081,7 +968,7 @@ namespace Assets.Scipts.BackJack
 
                 playersInGame.ForEach(p =>
                 {
-                    ActivateGameButtons(false, false, false, false, p);
+                    ActivateTakePlaceButton(false, p);
                 });
                 
                 PlayersBetting();

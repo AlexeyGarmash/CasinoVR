@@ -67,7 +67,6 @@ public class WatchIndicator : MonoBehaviour
         while (time > currentTime)
         {
 
-            Debug.Log("currentTime=" + currentTime);
             if (currentTime < time / 2 && beamTick)
             {
                 beamTick = false;
