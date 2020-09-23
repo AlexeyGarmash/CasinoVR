@@ -124,7 +124,7 @@ namespace Assets.Scipts.BackJack
             bjNPCWinLosePlayer = bjNPC.GetComponent<WinLoseAudioPlayer>();
             playersOutFromGame = new List<PlayerPlace>();
             playersInGame = new List<PlayerPlace>();
-
+            ResetGame();
 
         }
 
@@ -286,13 +286,7 @@ namespace Assets.Scipts.BackJack
 
                             handMenu.InvokeMenu();
                         }
-
-
-
                     }
-
-
-
                 }
             }
 
@@ -349,12 +343,11 @@ namespace Assets.Scipts.BackJack
             playersInGame.ForEach(p => p_stats.Add(p.ps));
             blackJackLogic = new BlackJackLogic(p_stats, indexes);
 
-            DebugLog(deckSetedRemote + " <-> " +((int)PhotonNetwork.CurrentRoom.PlayerCount).ToString());
-            if(deckSetedRemote == (int)PhotonNetwork.CurrentRoom.PlayerCount)
+            DebugLog(deckSetedRemote + " <-> " + playersInGame.Count);
+            if(deckSetedRemote == playersInGame.Count)
             {
                 PlayersBetting();
-            }
-               
+            }              
         }
 
         private IEnumerator CardsToPlyers()
