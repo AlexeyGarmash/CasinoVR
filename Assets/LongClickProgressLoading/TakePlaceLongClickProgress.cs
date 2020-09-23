@@ -43,7 +43,7 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase
     protected override void InvokeClickIn()
     {
         photonView?.RequestOwnership();
-
+        p_place.photonView?.RequestOwnership();
 
         p_place.ps = lastCollider.GetComponentInParent<PlayerStats>();
         p_place.handMenu = lastCollider.GetComponentInChildren<RadialMenuHandV2>();
