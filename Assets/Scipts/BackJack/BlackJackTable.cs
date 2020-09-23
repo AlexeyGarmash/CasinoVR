@@ -69,8 +69,7 @@ namespace Assets.Scipts.BackJack
 
             photonView.RPC("AddPlayerIngame_RPC", RpcTarget.All, player.PlaceId);
 
-            if (player.photonView.IsMine)
-            {
+            
                 var handMenu = player.handMenu;
 
 
@@ -88,7 +87,7 @@ namespace Assets.Scipts.BackJack
 
                 handMenu.InvokeMenu();
 
-            }
+            
         }
 
         [PunRPC]
