@@ -413,10 +413,9 @@ namespace Assets.Scipts.BackJack
 
                 yield return WaitDistributionOfCards();
 
-                if (photonView.IsMine)
-                {
+                if (playersInGame[currentPlayerTurn].handMenu.IsNotNull())
                     PlayersTurns();
-                }
+                
 
             }
             else if (photonView.IsMine)
