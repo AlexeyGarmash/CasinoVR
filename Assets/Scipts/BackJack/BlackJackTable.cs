@@ -232,7 +232,7 @@ namespace Assets.Scipts.BackJack
 
                 var bjPlayer = blackJackLogic.bjPlayers.Find(bjp => bjp.player.PlayerNick == p.ps.PlayerNick);
 
-                if (bjPlayer != null)
+                if (bjPlayer.IsNotNull())
                 {
 
 
