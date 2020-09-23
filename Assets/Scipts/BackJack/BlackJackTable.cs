@@ -13,11 +13,9 @@ using TMPro;
 using UnityEngine;
 namespace Assets.Scipts.BackJack
 {
-    public enum BlackJackGameStates { CheckPlayer, CardsToPlayers, PlayersBetting, CheckResults, ResetGame, PlayerTurn }
 
     class BlackJackTable : MonoBehaviourPun
-    {
-        BlackJackGameStates gameState = BlackJackGameStates.ResetGame;
+    {     
 
         [SerializeField]
         CroupierBlackJackNPC bjNPC;
@@ -71,24 +69,26 @@ namespace Assets.Scipts.BackJack
 
             photonView.RPC("AddPlayerIngame_RPC", RpcTarget.All, player.PlaceId);
 
-            var handMenu = player.handMenu;
-
-
-            var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
-            var watches = handMenu.GetComponent<WatchController>();
-            watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
-            //handMenu.RevokeMenu();
-            handMenu.AddAction(new RadialActionInfo(() =>
+            if (player.photonView.IsMine)
             {
-                PlayerReadyToPlay(player.PlaceId);
-
-                animatorHolder.hand.SetPose(animatorHolder.ready);
-            }, "Ready"));
+                var handMenu = player.handMenu;
 
 
-            handMenu.InvokeMenu();
+                var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
+                var watches = handMenu.GetComponent<WatchController>();
+                watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
+                //handMenu.RevokeMenu();
+                handMenu.AddAction(new RadialActionInfo(() =>
+                {
+                    PlayerReadyToPlay(player.PlaceId);
+
+                    animatorHolder.hand.SetPose(animatorHolder.ready);
+                }, "Ready"));
 
 
+                handMenu.InvokeMenu();
+
+            }
         }
 
         [PunRPC]
@@ -171,14 +171,7 @@ namespace Assets.Scipts.BackJack
 
 
             playersInGame.Clear();
-            playersOutFromGame.Clear();
-
-            if (photonView.IsMine)
-            {
-                photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.CheckPlayer);
-                PhotonNetwork.SendAllOutgoingCommands();
-
-            }
+            playersOutFromGame.Clear();       
 
         }
 
@@ -318,13 +311,6 @@ namespace Assets.Scipts.BackJack
             currWaitTime = 0;
         }
 
-        [PunRPC]
-        public void State_RPC(int state)
-        {
-            Debug.Log("to state State_RPC" + (BlackJackGameStates)state);
-            currWaitTime = 0;
-            gameState = (BlackJackGameStates)state;
-        }
 
         [PunRPC]
         public void FindPlayers()
@@ -510,15 +496,11 @@ namespace Assets.Scipts.BackJack
             {
                 for (var i = 2; i < blackJackLogic.diler.BlackJackStaks[0].cards.Count; i++)
                 {
-
-
-                    var idCurve = players.Count;
                     var nick = "Diler";
                     var card = blackJackLogic.diler.BlackJackStaks[0].cards[i];
                     bjNPC.AddCardToHand(5, card);
 
                     DebugLog("card to " + nick + " card face = " + card.Face + " card sign=  " + card.Sign);
-
 
                 }
 
@@ -653,7 +635,7 @@ namespace Assets.Scipts.BackJack
 
             if (playersReady == playersInGame.Count)
             {
-
+               
                 List<PlayerPlace> toRemove = new List<PlayerPlace>();
                 for (var j = 0; j < playersInGame.Count; j++)
                 {
@@ -698,7 +680,7 @@ namespace Assets.Scipts.BackJack
                         else Debug.LogError("bjPlayers not found");
 
                     }
-
+                    
                     fields.bettingField.BlockField(true);
                 }
 
@@ -873,9 +855,7 @@ namespace Assets.Scipts.BackJack
 
                     var indexesRnd = dd.GenerateDeck();
 
-                    photonView.RPC("SetDeck", RpcTarget.All, indexesRnd);
-                    photonView.RPC("SetZeroTimer_RPC", RpcTarget.All);
-                    photonView.RPC("State_RPC", RpcTarget.All, (int)BlackJackGameStates.PlayersBetting);
+                    photonView.RPC("SetDeck", RpcTarget.All, indexesRnd);              
                     PhotonNetwork.SendAllOutgoingCommands();
 
                     //next state
@@ -911,13 +891,6 @@ namespace Assets.Scipts.BackJack
             ClearHandRadialMenu(player);
 
             photonView.RPC("PlayerReadyToPlay_RPC", RpcTarget.All, PlaceID);
-
-            
-
-
-
-
-
         }
 
         void ClearHandRadialMenu(PlayerPlace player)

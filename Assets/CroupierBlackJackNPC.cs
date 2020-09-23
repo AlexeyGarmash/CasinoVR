@@ -289,19 +289,11 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
                             RightHandNPCStack.StartAnim(instantiaterdCardObj);
 
                           
-                        }
-
-                        //while (instantiaterdCardObj == null)
-                        //    yield return null;
-       
+                        }                       
                     }
-
-                    
-
                 }
 
                 break;
-
             }
             yield return null;
 
