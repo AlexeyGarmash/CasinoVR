@@ -9,6 +9,7 @@ namespace CurvedUI
     public class CUI_GunMovement : MonoBehaviour
     {
 
+#pragma warning disable 0649
         [SerializeField]
         CurvedUISettings mySettings;
         [SerializeField]
@@ -16,6 +17,7 @@ namespace CurvedUI
         [SerializeField]
         float sensitivity = 0.1f;
         Vector3 lastMouse;
+#pragma warning restore 0649
 
         // Use this for initialization
         void Start()
@@ -36,7 +38,7 @@ namespace CurvedUI
             Ray myRay = new Ray(this.transform.position, this.transform.forward);
 
             CurvedUIInputModule.CustomControllerRay = myRay;
-            CurvedUIInputModule.CustomControllerButtonDown = Input.GetButton("Fire1");
+            CurvedUIInputModule.CustomControllerButtonState = Input.GetButton("Fire1");
         }
     }
 }

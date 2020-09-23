@@ -5,11 +5,12 @@ namespace CurvedUI
 {
     public class CUI_inventory_paralax : MonoBehaviour
     {
-
+#pragma warning disable 0649
         [SerializeField]
         Transform front;
         [SerializeField]
         Transform back;
+#pragma warning restore 0649
 
         Vector3 initFG;
         Vector3 initBG;

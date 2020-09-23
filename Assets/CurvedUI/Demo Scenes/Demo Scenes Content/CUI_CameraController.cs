@@ -11,7 +11,7 @@ namespace CurvedUI
 
         public static CUI_CameraController instance;
 
-
+#pragma warning disable 0649
         [SerializeField]
         Transform CameraObject;
 
@@ -20,6 +20,7 @@ namespace CurvedUI
 
         [SerializeField]
         bool runInEditorOnly = true;
+#pragma warning restore 0649
 
         // Use this for initialization
         void Awake()
