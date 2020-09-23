@@ -45,6 +45,7 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase
         photonView?.RequestOwnership();
         p_place.photonView?.RequestOwnership();
 
+        photonView.SetOwnerInternal(PhotonNetwork.LocalPlayer, PhotonNetwork.LocalPlayer.ActorNumber);
         p_place.ps = lastCollider.GetComponentInParent<PlayerStats>();
         p_place.handMenu = lastCollider.GetComponentInChildren<RadialMenuHandV2>();
        
