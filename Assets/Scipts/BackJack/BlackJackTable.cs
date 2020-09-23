@@ -68,6 +68,7 @@ namespace Assets.Scipts.BackJack
             var player = players.FirstOrDefault(p => p.ps.PlayerNick == PlaceID.PlayerNick);
 
             photonView.RPC("AddPlayerIngame_RPC", RpcTarget.All, player.PlaceId);
+            DebugLog("AddPlayerInGame clinet can controll player place-> " + player.photonView.IsMine);
 
             if (player.photonView.IsMine)
             {
@@ -496,11 +497,13 @@ namespace Assets.Scipts.BackJack
             {
                 for (var i = 2; i < blackJackLogic.diler.BlackJackStaks[0].cards.Count; i++)
                 {
+
                     var nick = "Diler";
                     var card = blackJackLogic.diler.BlackJackStaks[0].cards[i];
                     bjNPC.AddCardToHand(5, card);
 
                     DebugLog("card to " + nick + " card face = " + card.Face + " card sign=  " + card.Sign);
+
 
                 }
 
