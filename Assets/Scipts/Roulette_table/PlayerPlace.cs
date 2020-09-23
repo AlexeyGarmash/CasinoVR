@@ -63,11 +63,15 @@ public class PlayerPlace : MonoBehaviourPun
             pc.EnableRotation = false;
             pc.GetComponentInChildren<TeleportDisabler>().Disable();
 
+           
+
             photonView.RequestOwnership();
             sf.photonView.RequestOwnership();
+
+            photonView.SetOwnerInternal(PhotonNetwork.LocalPlayer, PhotonNetwork.LocalPlayer.ActorNumber);
             print("Button clikced ps == null");
           
-            photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);
+            photonView.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);
             PreparePlayerPlace();
 
            

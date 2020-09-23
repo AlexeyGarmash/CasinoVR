@@ -67,14 +67,14 @@ namespace Assets.Scipts.BackJack
         {
             var player = players.FirstOrDefault(p => p.ps.PlayerNick == PlaceID.PlayerNick);
 
+
             photonView.RPC("AddPlayerIngame_RPC", RpcTarget.All, player.PlaceId);
             DebugLog("AddPlayerInGame clinet can controll player place-> " + player.photonView.IsMine);
+            var handMenu = player.handMenu;
 
-            if (player.photonView.IsMine)
+            if (handMenu.IsNotNull())
             {
-                var handMenu = player.handMenu;
-
-
+               
                 var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
                 var watches = handMenu.GetComponent<WatchController>();
                 watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
@@ -143,9 +143,9 @@ namespace Assets.Scipts.BackJack
             playersReady = 0;
             deckSetedRemote = 0;
             currentBJStackIndex = 0;
-            if (photonView.IsMine)
+           
                 sittedPlayers.ForEach(sp => {
-
+                    if(sp.photonView.IsMine)
                     AddPlayerInGame(sp.ps);
                 });
 
@@ -242,7 +242,10 @@ namespace Assets.Scipts.BackJack
                         WatchController watches = null;
                         RadialMenuHandV2 handMenu = null;
                         AnimatorHolder animatorHolder = null;
-                        if (p.photonView.IsMine)
+
+                        handMenu = p?.handMenu;
+
+                        if (handMenu.IsNotNull())
                         {
                             handMenu = p.handMenu;
 
@@ -346,9 +349,10 @@ namespace Assets.Scipts.BackJack
 
             playersInGame.ForEach(p =>
             {
-                if (p.photonView.IsMine)
+                var handMenu = p?.handMenu;
+                if (handMenu.IsNotNull())
                 {
-                    var handMenu = p.handMenu;
+                   
 
 
                     var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
@@ -446,7 +450,9 @@ namespace Assets.Scipts.BackJack
                 RadialMenuHandV2 handMenu = null;
                 WatchController watches = null;
 
-                if (playersInGame[j].photonView.IsMine)
+                handMenu = playersInGame[j]?.handMenu;
+
+                if (handMenu.IsNotNull())
                 {
                     DebugLog(j + " Player Update events");
 
