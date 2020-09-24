@@ -263,7 +263,6 @@ namespace Assets.Scipts.BackJack
                                 "Give card")
                             );
 
-
                             if (blackJackLogic.CanSplit(playersInGame[currentPlayerTurn].ps.PlayerNick))
                             {
 
@@ -289,8 +288,8 @@ namespace Assets.Scipts.BackJack
 
             if (!PlayersCanTurn())
             {
-                if (photonView.IsMine)
-                    photonView.StartCoroutine(CheckResults());
+                
+                StartCoroutine(CheckResults());
 
             }
 
@@ -703,20 +702,13 @@ namespace Assets.Scipts.BackJack
 
                 StartCoroutine(CardsToPlyers());
 
-
             }
-
-
         }
 
         [PunRPC]
         private void TakeCard_RPC(string player)
         {
-
             StartCoroutine(TakeCard(player));
-
-
-
         }
         IEnumerator TakeCard(string player)
         {
