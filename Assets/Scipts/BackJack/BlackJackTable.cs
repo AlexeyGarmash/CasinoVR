@@ -183,15 +183,16 @@ namespace Assets.Scipts.BackJack
             if (blackJackLogic.PlayerSplited(playersInGame[currentPlayerTurn].ps.PlayerNick) && currentBJStackIndex == 1 ||
                     !blackJackLogic.PlayerSplited(playersInGame[currentPlayerTurn].ps.PlayerNick))
             {
-                if (playersInGame.Count - 1 == currentPlayerTurn+1)
+
+                currentBJStackIndex = 0;
+                currentPlayerTurn++;
+
+                if (playersInGame.Count - 1 == currentPlayerTurn)
                 {
                     currentBJStackIndex = 0;
                     currentPlayerTurn = 0;
                 }
-                else {
-                    currentBJStackIndex = 0;
-                    currentPlayerTurn++;
-                }
+
                 return;
             }
 
