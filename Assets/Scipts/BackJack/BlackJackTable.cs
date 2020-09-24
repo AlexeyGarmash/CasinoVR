@@ -78,7 +78,7 @@ namespace Assets.Scipts.BackJack
                 var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
                 var watches = handMenu.GetComponent<WatchController>();
                 watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
-                //handMenu.RevokeMenu();
+               
                 handMenu.AddAction(new RadialActionInfo(() =>
                 {
                     PlayerReadyToPlay(player.PlaceId);
@@ -100,22 +100,11 @@ namespace Assets.Scipts.BackJack
         }
         public void RemovePlayerFromGame(PlayerStats PlaceID)
         {
-            var player = sittedPlayers.FirstOrDefault(p => p.ps == PlaceID);
+            var player = sittedPlayers.FirstOrDefault(p => p.ps.PlayerNick == PlaceID.PlayerNick || p.ps.PlayerNick == "");
             photonView.RPC("RemovePlayerFromGame_RPC", RpcTarget.All, player.PlaceId);
 
-            if (player.photonView.IsMine)
-            {
-                var handMenu = player.handMenu;
-
-
-                var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
-                var watches = handMenu.GetComponent<WatchController>();
-                watches.watchIndicator.StopAnimation();
-
-                StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
-
-                player.handMenu.RevokeMenu();
-            }
+            ClearHandRadialMenu(player);
+          
         }
         #endregion
 
@@ -177,7 +166,7 @@ namespace Assets.Scipts.BackJack
         }
 
 
-        IEnumerator ClearPoseWithDilay(CustomHand hand, float delay)
+        IEnumerator ClearPoseWithDelay(CustomHand hand, float delay)
         {
             yield return new WaitForSeconds(delay);
             hand.ClearPose();
@@ -194,15 +183,16 @@ namespace Assets.Scipts.BackJack
             if (blackJackLogic.PlayerSplited(playersInGame[currentPlayerTurn].ps.PlayerNick) && currentBJStackIndex == 1 ||
                     !blackJackLogic.PlayerSplited(playersInGame[currentPlayerTurn].ps.PlayerNick))
             {
+
+                currentBJStackIndex = 0;
+                currentPlayerTurn++;
+
                 if (playersInGame.Count - 1 == currentPlayerTurn)
                 {
                     currentBJStackIndex = 0;
                     currentPlayerTurn = 0;
                 }
-                else {
-                    currentBJStackIndex = 0;
-                    currentPlayerTurn++;
-                }
+
                 return;
             }
 
@@ -287,10 +277,8 @@ namespace Assets.Scipts.BackJack
             }
 
             if (!PlayersCanTurn())
-            {
-                
+            {              
                 StartCoroutine(CheckResults());
-
             }
 
         }
@@ -320,12 +308,13 @@ namespace Assets.Scipts.BackJack
         {
             playersInGame = players.FindAll(p => p.PlayerOnPlace);
         }
-
-
         int deckSetedRemote = 0;
+       
+            
         [PunRPC]
         protected void SetDeck(int[] indexes)
-        {         
+        {
+
             deckSetedRemote++;
             DebugLog("Deck seted" + deckSetedRemote);
             List<PlayerStats> p_stats = new List<PlayerStats>();
@@ -347,21 +336,8 @@ namespace Assets.Scipts.BackJack
 
 
             playersInGame.ForEach(p =>
-            {
-                var handMenu = p?.handMenu;
-                if (handMenu.IsNotNull())
-                {
-                   
-
-
-                    var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
-                    var watches = handMenu.GetComponent<WatchController>();
-                    watches.watchIndicator.StopAnimation();
-
-                    StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
-
-                    handMenu.RevokeMenu();
-                }
+            {               
+                ClearHandRadialMenu(p);
             });
 
 
@@ -417,9 +393,9 @@ namespace Assets.Scipts.BackJack
                 
 
             }
-            else if (photonView.IsMine)
+            else 
             {
-                photonView.StartCoroutine(ResetGameCourotine(3f));
+                StartCoroutine(ResetGameCourotine(3f));
             }
 
 
@@ -637,7 +613,7 @@ namespace Assets.Scipts.BackJack
         [PunRPC]
         private void PlayerReady_RPC(string player)
         {
-
+            DebugLog("playersReady to start game ->" + playersReady);
             playersReady++;
 
             if (playersReady == playersInGame.Count)
@@ -849,23 +825,23 @@ namespace Assets.Scipts.BackJack
             if (sittedPlayers.Count == playersInGame.Count)
             {
 
-                if (photonView.IsMine)
+                
+                DeckData dd = new DeckData();
+
+                var indexesRnd = dd.GenerateDeck();
+
+                photonView.RPC("SetDeck", RpcTarget.All, indexesRnd);              
+                PhotonNetwork.SendAllOutgoingCommands();
+
+                //next state
+
+                playersInGame.ForEach(p =>
                 {
-                    DeckData dd = new DeckData();
+                    ActivateTakePlaceButton(false, p);
+                });
 
-                    var indexesRnd = dd.GenerateDeck();
+                
 
-                    photonView.RPC("SetDeck", RpcTarget.All, indexesRnd);              
-                    PhotonNetwork.SendAllOutgoingCommands();
-
-                    //next state
-
-                    playersInGame.ForEach(p =>
-                    {
-                        ActivateTakePlaceButton(false, p);
-                    });
-
-                }
 
               
 
@@ -896,7 +872,7 @@ namespace Assets.Scipts.BackJack
         void ClearHandRadialMenu(PlayerPlace player)
         {
 
-            if (player.photonView.IsMine)
+            if (player.handMenu.IsNotNull())
             {
                 AnimatorHolder animatorHolder = null;
                 RadialMenuHandV2 handMenu = null;
@@ -910,7 +886,7 @@ namespace Assets.Scipts.BackJack
                 watches = handMenu.GetComponent<WatchController>();
                 watches.watchIndicator.StopAnimation();
 
-                StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
+                StartCoroutine(ClearPoseWithDelay(animatorHolder.hand, 1f));
 
                 player.handMenu.RevokeMenu();
             }

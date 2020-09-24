@@ -35,9 +35,12 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase
       
         photonView.RPC("InvokeClickOut_RPC", RpcTarget.All);
 
-        p_place.handMenu = null;
+        
 
         _onLongClickOut.Invoke(p_place.ps);
+
+        p_place.handMenu.gameObject.SetActive(true);
+        p_place.handMenu = null;
     }
 
     protected override void InvokeClickIn()
@@ -45,7 +48,7 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase
         photonView.RequestOwnership();
         p_place.photonView.RequestOwnership();     
 
-        p_place.ps = lastCollider.GetComponentInParent<PlayerStats>();
+        p_place.ps = lastCollider.GetComponentInParent<PlayerStats>(); 
         p_place.handMenu = lastCollider.GetComponentInChildren<RadialMenuHandV2>();
        
 
