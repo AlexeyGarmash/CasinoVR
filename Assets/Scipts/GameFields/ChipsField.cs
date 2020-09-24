@@ -60,6 +60,7 @@ public class ChipsField : AbstractField
                         });
 
                         _fieldEventManager.PostNotification(AbstractFieldEvents.UpdateUI, this, maxZ, money);
+                        UpdateAllStacks(true, true);
                     }
 
                     break;
