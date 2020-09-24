@@ -131,6 +131,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         get { return m_grabbedObj; }
     }
 
+    public bool IsLocalHand { get { return photonView.IsMine; } }
     public void ForceRelease(OVRGrabbableCustom grabbable)
     {
         bool canRelease = (m_grabbedObj != null && m_grabbedObjs.Contains(grabbable));

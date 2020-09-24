@@ -14,6 +14,8 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     protected int StackAnimEndedCounter = 0;
     protected int StackAnimStartedCounter = 0;
 
+    public bool TriggerLocal = false;
+
     [SerializeField]
     public StackData[] Stacks;
    
@@ -298,8 +300,6 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
             rb.isKinematic = true;
             magnetizedObject.transform.parent = stackData.transform;
 
-            //Debug.Break();
-
             stackData.Objects.Add(magnetizedObject);
             stackData.animator.StartAnim(magnetizedObject);
         }
@@ -308,7 +308,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
             Debug.LogError("MagnetizeObject_RPC exaption");
         }
     }
-    public virtual bool MagnetizeObject(GameObject Object, StackData Stack, string StackType = "")
+    public virtual bool MagnetizeObject(GameObject Object, StackData Stack, string StackType = "", bool magnetizeLocal = false)
     {
 
         var rb = Object.GetComponent<Rigidbody>();
@@ -325,6 +325,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
             if (stackData.playerName == "")
                 stackData.playerName = chip.Owner;
 
+            if(!magnetizeLocal)
             photonView.RPC("MagnetizeObject_RPC", RpcTarget.OthersBuffered, chip.photonView.ViewID, Stacks.ToList().IndexOf(Stack), chip.transform.position);
 
             rb.isKinematic = true;

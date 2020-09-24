@@ -30,7 +30,7 @@ public class PlayerPlace : MonoBehaviourPun
     
     public int PlaceId { get => _placeId; }
     public bool PlayerOnPlace { get => ps.PlayerNick != ""; }
-    public bool PlayerReady { get => true; }
+    //public bool PlayerReady { get => true; }
 
     private void Awake()
     {
@@ -60,15 +60,18 @@ public class PlayerPlace : MonoBehaviourPun
             this.ps = ps;
 
             var pc = ps.GetComponentInParent<OVRPlayerController>();
-            pc.enabled = false;
-           
+            pc.EnableRotation = false;
             pc.GetComponentInChildren<TeleportDisabler>().Disable();
+
+           
 
             photonView.RequestOwnership();
             sf.photonView.RequestOwnership();
+
+            photonView.SetOwnerInternal(PhotonNetwork.LocalPlayer, PhotonNetwork.LocalPlayer.ActorNumber);
             print("Button clikced ps == null");
           
-            photonView?.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);
+            photonView.RPC("TakePlace_RPC", RpcTarget.Others, ps.PlayerNick, ps.AllMoney);
             PreparePlayerPlace();
 
            
@@ -77,12 +80,12 @@ public class PlayerPlace : MonoBehaviourPun
     }
 
 
-    public void GoOutFromPlace()
+    public void GoOutFromPlace(PlayerStats player)
     {
         if (ps != null && placeTaken)
         {
             var pc = ps.GetComponentInParent<OVRPlayerController>();
-            pc.enabled = true;
+            pc.EnableRotation = true;
             pc.GetComponentInChildren<TeleportDisabler>().Enable();
             placeTaken = false;
             ps = GetComponent<PlayerStats>();

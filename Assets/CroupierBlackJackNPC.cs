@@ -226,8 +226,7 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
         CardsToPlayersGObj[players].Add(instantiaterdCardObj);
 
-        instantiaterdCardObj.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
-
+       
         var rb = instantiaterdCardObj.GetComponent<Rigidbody>();
         var chip = instantiaterdCardObj.GetComponent<CardData>();
 
@@ -290,19 +289,11 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
                             RightHandNPCStack.StartAnim(instantiaterdCardObj);
 
                           
-                        }
-
-                        //while (instantiaterdCardObj == null)
-                        //    yield return null;
-       
+                        }                       
                     }
-
-                    
-
                 }
 
                 break;
-
             }
             yield return null;
 
@@ -415,6 +406,7 @@ public class CroupierBlackJackNPC : MonoBehaviourPun
 
                             RightHandNPCStack.ExtractOne(card);
 
+                            card.GetComponent<OwnerData>().animator = CardCurve;
                             CardCurve.ObjectToAnimation.Add(card);
                             CardCurve.StartAnimCardToPlayer(playerPos);
 
