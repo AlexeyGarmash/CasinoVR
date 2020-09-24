@@ -26,6 +26,8 @@ public class OVRPlayerController : MonoBehaviour
 	HandActionState lh_state;
 	HandActionState rh_state;
 
+
+
 	/// <summary>
 	/// The rate acceleration during movement.
 	/// </summary>

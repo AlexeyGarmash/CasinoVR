@@ -51,14 +51,10 @@ MonoBehaviour:
   - InstatianeChip_RPC
   - InvokeClickIn_RPC
   - InvokeClickOut_RPC
-  - JoinPokerGame_RPC
-  - LeavePokerGame_RPC
   - MagnetizeObject_RPC
   - NotReady_RPC
   - NotReadyToPlay_RPC
   - PlayerReady_RPC
-  - PlayFastAudio_RPC
-  - PlaySlowAudio_RPC
   - Ready_RPC
   - ReadyPlay_RPC
   - RemoveBetValues_RPC
@@ -71,10 +67,9 @@ MonoBehaviour:
   - SetStackType_RPC
   - SetZeroTimer_RPC
   - SkipTurn_RPC
-  - SlowRotateNow_RPC
   - SpawnBall_RPC
-  - SpinNow_RPC
   - SplitTurn_RPC
+  - Start
   - StartAnimation_RPC
   - StartSlotGame_RPC
   - StartSpin_RPC
@@ -84,11 +79,12 @@ MonoBehaviour:
   - SyncOn_RPC
   - TakeCard_RPC
   - TakePlace_RPC
-  - TextInfo_RPC
   - TimerStep_RPC
   - UpdateAllStacks
   - UpdateExistBet_RPC
-  - ChangeColour
+  - AddPlayerIngame_RPC
+  - PlayerReadyToPlay_RPC
+  - RemovePlayerFromGame_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

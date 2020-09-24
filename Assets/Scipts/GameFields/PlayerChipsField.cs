@@ -20,22 +20,7 @@ public class PlayerChipsField : ChipsField
         var list = new List<StackData>();
 
         list = FindStackByType(ChipUtils.Instance.GetStringOfType(chip.Cost));
-
-       
-
-        //if (list.Count == 0)
-        //{
-        //    maxObjectsOnField += 1;
-
-        //    for (var i = 0; i < Stacks.Length; i++)
-        //        if (Stacks[i].Objects.Count != 0 && Stacks[i].Objects[0].GetComponent<ChipData>().Cost == chip.Cost && maxObjectsOnField != Stacks[i].Objects.Count)
-        //            list.Add(Stacks[i]);
-
-        //    if (list.Count == 0)
-        //        for (var i = 0; i < Stacks.Length; i++)
-        //            if (Stacks[i].Objects.Count == 0)
-        //                list.Add(Stacks[i]);
-        //}
+        
 
         return list;
 

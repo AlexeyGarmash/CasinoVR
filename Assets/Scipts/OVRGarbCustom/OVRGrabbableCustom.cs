@@ -125,28 +125,24 @@ public class OVRGrabbableCustom : MonoBehaviourPun
     virtual public void GrabBegin(OVRGrabberCustom hand, Collider grabPoint)
     {
 
-        if(photonView != null)
+        if(photonView.IsNotNull())
         {
             photonView.RequestOwnership();
-            if (photonView.GetComponent<PhotonSyncCrontroller>() != null)
-            {
+            if (photonView.GetComponent<PhotonSyncCrontroller>().IsNotNull())
                 photonView.GetComponent<PhotonSyncCrontroller>().SyncOff_Photon();
-            }
+            
         }
 
-        if (GetComponent<OwnerData>() != null)
-        {
+        if (GetComponent<OwnerData>() != null)        
             GetComponent<OwnerData>().ExtractObject();
-        }
-        if (GetComponent<SoundsPlayer>() != null)
-        {
+        
+        if (GetComponent<SoundsPlayer>() != null)       
             GetComponent<SoundsPlayer>().PlayDefaultClip();
-        }
-        //GetComponent<Collider>().isTrigger = true;
-        if (GetComponent<Outline>() != null)
-        {
+        
+
+        if (GetComponent<Outline>().IsNotNull())       
             GetComponent<Outline>().enabled = false;
-        }
+        
         grabPoint.transform.parent = hand.grabbleObjSpawnPoint;
         m_grabbedBy = hand;
         m_grabbedCollider = grabPoint;

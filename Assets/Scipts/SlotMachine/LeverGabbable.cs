@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class LeverGabbable : OVRGrabbableCustom
 {
-
+    private Transform handParent;
     public Transform handler;
     private Rigidbody handlerRB;
   
@@ -34,6 +34,7 @@ public class LeverGabbable : OVRGrabbableCustom
         handRotation = hand.transform.rotation;
 
         base.GrabBegin(hand, grabPoint);
+
         GetComponentInParent<PhotonView>().RequestOwnership();
 
       
@@ -41,22 +42,31 @@ public class LeverGabbable : OVRGrabbableCustom
 
         hand.transform.rotation = snapOffsetRotation;
 
-        transform.parent = hand.transform.parent;
-      
+        if (hand.IsLocalHand)
+        {
+            handParent = hand.transform.parent;
+            transform.parent = hand.transform.parent;
+        }
+        else
+        {
+            handParent = hand.transform.parent;
+            transform.parent = hand.transform;
+        }
+
+
         hand.transform.parent = handlerRB.transform;
        
     }
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
-        handler.localPosition = handlePosition;
-       
+        handler.localPosition = handlePosition;       
         handler.rotation = handleRotation;
 
         var gb = grabbedBy;
 
-        
 
-        gb.transform.parent = transform.parent;
+
+        gb.transform.parent = handParent;
         transform.parent = handler.transform;
 
         gb.transform.localPosition = Vector3.zero;

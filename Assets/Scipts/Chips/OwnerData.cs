@@ -27,12 +27,13 @@ namespace Assets.Scipts.Chips
 
         public void ExtractObject()
         {
-            if (field != null)
+            if (field.IsNotNull())
             {
+                
                 field.ExtranctObject(photonView.ViewID);
                 field = null;
             }
-            if (animator)
+            if (animator.IsNotNull())
             {
                 animator.StopObjectAnimation(photonView.ViewID);
                 animator = null;

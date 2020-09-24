@@ -6,11 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(StackAnimator))]
 public class StackData : MonoBehaviourPun
 {
-
     public string playerName = "";
     public string stackType = "";
-
-
+   
     [PunRPC]
     private void SetStackType_RPC(string _stackType)
     {

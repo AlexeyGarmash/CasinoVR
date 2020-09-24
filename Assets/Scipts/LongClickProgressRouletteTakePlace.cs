@@ -70,7 +70,7 @@ class LongClickProgressRouletteTakePlace : TakePlaceLongClickProgress, IListener
     protected override void InvokeClickOut()
     {
         photonView?.RequestOwnership();
-        _onLongClickOut?.Invoke();
+        _onLongClickOut?.Invoke(p_place.ps);
         photonView?.RPC("InvokeClickOut_RPC", RpcTarget.All);
 
     }

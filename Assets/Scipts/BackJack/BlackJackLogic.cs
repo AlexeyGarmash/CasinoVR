@@ -420,5 +420,16 @@ namespace Assets.Scipts.BackJack
             }
         }
 
+        public bool PlayerSplited(string player)
+        {
+            BlackJackPlayer bjPlayer;
+
+            if (CheckPlayer(player, out bjPlayer))
+            {
+                return bjPlayer.BlackJackStaks.Count == 2 ? true : false;
+            }
+
+            return false;
+        }
     }
 }

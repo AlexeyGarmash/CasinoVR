@@ -30,32 +30,37 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase
     }
     protected override void InvokeClickOut()
     {
-        photonView?.RequestOwnership();
-        p_place.handMenu = null;
-        _onLongClickOut?.Invoke();
-        photonView?.RPC("InvokeClickOut_RPC", RpcTarget.All);
+        photonView.RequestOwnership();
+        
+      
+        photonView.RPC("InvokeClickOut_RPC", RpcTarget.All);
 
+        
+
+        _onLongClickOut.Invoke(p_place.ps);
+
+        p_place.handMenu.gameObject.SetActive(true);
+        p_place.handMenu = null;
     }
 
     protected override void InvokeClickIn()
     {
-        photonView?.RequestOwnership();
+        photonView.RequestOwnership();
+        p_place.photonView.RequestOwnership();     
 
-
-        p_place.ps = lastCollider.GetComponentInParent<PlayerStats>();
+        p_place.ps = lastCollider.GetComponentInParent<PlayerStats>(); 
         p_place.handMenu = lastCollider.GetComponentInChildren<RadialMenuHandV2>();
-        _onLongClickIn?.Invoke(p_place.ps);
+       
 
         inGame = true;
         _imageReady.texture = _readyTexture;
         _textReady.text = PhotonNetwork.LocalPlayer.NickName;
-        photonView?.RPC("InvokeClickIn_RPC", RpcTarget.Others, PhotonNetwork.LocalPlayer.NickName);
+        photonView.RPC("InvokeClickIn_RPC", RpcTarget.Others, PhotonNetwork.LocalPlayer.NickName);
+
+        _onLongClickIn.Invoke(p_place.ps);
 
     }
-    protected new void Start()
-    {
-        base.Start();      
-    }     
+    
 
 }
 

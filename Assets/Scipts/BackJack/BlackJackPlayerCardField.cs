@@ -17,19 +17,22 @@ namespace Assets.Scipts.BackJack
         {    
 
             var gameObj = other.gameObject;
-            var card = other.gameObject.GetComponent<CardData>();
-            var gc = other.gameObject.GetComponent<OVRGrabbableCustom>();
-            var rb = other.GetComponent<Rigidbody>();
+            var card = gameObj.GetComponent<CardData>();
+            var gc = gameObj.GetComponent<OVRGrabbableCustom>();
+            var rb = gameObj.GetComponent<Rigidbody>();
             var view = gameObj.GetComponent<PhotonView>();
 
-            if (card != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null && photonView.IsMine)
+            
+            if (card.IsNotNull() && gc.IsNotNull() && !gc.isGrabbed && !rb.isKinematic && view.IsNotNull())
             {
-
-                Debug.Log("MagnetizeObject viewID=" + view.ViewID);
                 var clossest = FindClossestField(card.transform, FindPossibleFields(card));
-                MagnetizeObject(gameObj, clossest, "CardField");
 
+                if (TriggerLocal)                                                  
+                    MagnetizeObject(gameObj, clossest, "CardField", true);
+                else if(photonView.IsMine)
+                    MagnetizeObject(gameObj, clossest, "CardField");               
             }
+            
 
             
         }
