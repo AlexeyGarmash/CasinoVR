@@ -53,7 +53,7 @@ public class PlayerPlace : MonoBehaviourPun
     public void TakePlace(PlayerStats ps)
     {
         print("Button clikced");
-        if (ps != null && !placeTaken)
+        if (ps.IsNotNull() && !placeTaken)
         {
             placeTaken = true;
             //actionJoinOut.Invoke();
@@ -82,7 +82,7 @@ public class PlayerPlace : MonoBehaviourPun
 
     public void GoOutFromPlace(PlayerStats player)
     {
-        if (ps != null && placeTaken)
+        if (ps.IsNotNull() && placeTaken)
         {
             var pc = ps.GetComponentInParent<OVRPlayerController>();
             pc.EnableRotation = true;

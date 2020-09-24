@@ -102,22 +102,28 @@ public class StackAnimator : MonoBehaviour
         }
 
         prevMoveLastChips = null;
+        
         StartCoroutine(WaitToEnd());
-
+       
         yield return null;
 
     }
 
+    private int numberEndedAnimations;
     private bool AnimationEnded = true;
     public int AnimationFlag { get { if (AnimationEnded) return 1; else return 0; } }
     IEnumerator WaitToEnd()
     {
-        yield return new WaitForSeconds(2f);
+        while (currentObjects.Count != numberEndedAnimations)
+        {
+            yield return null;
+        }
+      
         currentObjects.Clear();
-
         if(evenmManager != null)
          evenmManager.PostNotification(AbstractFieldEvents.StackAnimationEnded, this);
         AnimationEnded = true;
+        numberEndedAnimations = 0;
 
     }
 
@@ -152,11 +158,7 @@ public class StackAnimator : MonoBehaviour
         chip.SetActive(false);
         chip.GetComponent<Collider>().enabled = false;
 
-        if (waitToEnd != null)
-        {
-            StopCoroutine(waitToEnd);
-            waitToEnd = StartCoroutine(WaitToEnd());
-        }
+       
 
         if (prevMoveLastChips == null)
         {
@@ -201,20 +203,14 @@ public class StackAnimator : MonoBehaviour
         currentY = 0;
         currentX = 0;
         currentZ = 0;
-    }
+    }  
     IEnumerator MoveObject(float chipsDropSpeed, float chipsDropMult, GameObject chip)
     {
-        
-        //var currOffsetX = Random.Range(-xOffset, xOffset);
-        //var currOffsetZ = Random.Range(-zOffset, zOffset);
+         
 
         chip.transform.localRotation = Quaternion.Euler(objectRotation.x, objectRotation.y, objectRotation.z);
 
-            
-
         var t = chipsDropSpeed * Time.deltaTime;
-
-        
 
         var point = GetStartEndPointsForAnimation();
 
@@ -232,6 +228,7 @@ public class StackAnimator : MonoBehaviour
             chip.GetComponent<SoundsPlayer>().PlayRandomClip();
         }
 
+        numberEndedAnimations++;
         yield return null;
     }
 

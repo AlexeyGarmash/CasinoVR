@@ -78,7 +78,7 @@ namespace Assets.Scipts.BackJack
                 var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
                 var watches = handMenu.GetComponent<WatchController>();
                 watches.watchIndicator.StartIndicatorAnimation(waitTimeInSec);
-                //handMenu.RevokeMenu();
+               
                 handMenu.AddAction(new RadialActionInfo(() =>
                 {
                     PlayerReadyToPlay(player.PlaceId);
@@ -100,22 +100,23 @@ namespace Assets.Scipts.BackJack
         }
         public void RemovePlayerFromGame(PlayerStats PlaceID)
         {
-            var player = sittedPlayers.FirstOrDefault(p => p.ps == PlaceID);
+            var player = sittedPlayers.FirstOrDefault(p => p.ps.PlayerNick == PlaceID.PlayerNick || p.ps.PlayerNick == "");
             photonView.RPC("RemovePlayerFromGame_RPC", RpcTarget.All, player.PlaceId);
 
-            if (player.photonView.IsMine)
-            {
-                var handMenu = player.handMenu;
+            ClearHandRadialMenu(player);
+            //if (player.handMenu.IsNotNull())
+            //{
+            //    var handMenu = player.handMenu;
 
 
-                var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
-                var watches = handMenu.GetComponent<WatchController>();
-                watches.watchIndicator.StopAnimation();
+            //    var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
+            //    var watches = handMenu.GetComponent<WatchController>();
+            //    watches.watchIndicator.StopAnimation();
 
-                StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
+            //    StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
 
-                player.handMenu.RevokeMenu();
-            }
+            //    player.handMenu.RevokeMenu();
+            //}
         }
         #endregion
 
@@ -287,10 +288,8 @@ namespace Assets.Scipts.BackJack
             }
 
             if (!PlayersCanTurn())
-            {
-                
+            {              
                 StartCoroutine(CheckResults());
-
             }
 
         }
@@ -896,7 +895,7 @@ namespace Assets.Scipts.BackJack
         void ClearHandRadialMenu(PlayerPlace player)
         {
 
-            if (player.photonView.IsMine)
+            if (player.handMenu.IsNotNull())
             {
                 AnimatorHolder animatorHolder = null;
                 RadialMenuHandV2 handMenu = null;
