@@ -12,6 +12,7 @@ public class VibrationItem : MonoBehaviour, IPointerEnterHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         print("this object pointer enter");
-        VibrationManager.Instance.VibrateController(_iteration, _frequency, _strength, OVRInput.Controller.RTouch);
+        //VibrationManager.Instance.VibrateController(_iteration, _frequency, _strength, OVRInput.Controller.RTouch);
+        OpenVRVibrationManager.DoVibration(0.5f, 0.05f);
     }
 }
