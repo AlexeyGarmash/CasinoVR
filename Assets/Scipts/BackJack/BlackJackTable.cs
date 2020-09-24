@@ -104,19 +104,7 @@ namespace Assets.Scipts.BackJack
             photonView.RPC("RemovePlayerFromGame_RPC", RpcTarget.All, player.PlaceId);
 
             ClearHandRadialMenu(player);
-            //if (player.handMenu.IsNotNull())
-            //{
-            //    var handMenu = player.handMenu;
-
-
-            //    var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
-            //    var watches = handMenu.GetComponent<WatchController>();
-            //    watches.watchIndicator.StopAnimation();
-
-            //    StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
-
-            //    player.handMenu.RevokeMenu();
-            //}
+          
         }
         #endregion
 
@@ -178,7 +166,7 @@ namespace Assets.Scipts.BackJack
         }
 
 
-        IEnumerator ClearPoseWithDilay(CustomHand hand, float delay)
+        IEnumerator ClearPoseWithDelay(CustomHand hand, float delay)
         {
             yield return new WaitForSeconds(delay);
             hand.ClearPose();
@@ -319,12 +307,13 @@ namespace Assets.Scipts.BackJack
         {
             playersInGame = players.FindAll(p => p.PlayerOnPlace);
         }
-
-
         int deckSetedRemote = 0;
+       
+            
         [PunRPC]
         protected void SetDeck(int[] indexes)
-        {         
+        {
+
             deckSetedRemote++;
             DebugLog("Deck seted" + deckSetedRemote);
             List<PlayerStats> p_stats = new List<PlayerStats>();
@@ -357,7 +346,7 @@ namespace Assets.Scipts.BackJack
                     var watches = handMenu.GetComponent<WatchController>();
                     watches.watchIndicator.StopAnimation();
 
-                    StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
+                    StartCoroutine(ClearPoseWithDelay(animatorHolder.hand, 1f));
 
                     handMenu.RevokeMenu();
                 }
@@ -848,23 +837,23 @@ namespace Assets.Scipts.BackJack
             if (sittedPlayers.Count == playersInGame.Count)
             {
 
-                if (photonView.IsMine)
+                
+                DeckData dd = new DeckData();
+
+                var indexesRnd = dd.GenerateDeck();
+
+                photonView.RPC("SetDeck", RpcTarget.All, indexesRnd);              
+                PhotonNetwork.SendAllOutgoingCommands();
+
+                //next state
+
+                playersInGame.ForEach(p =>
                 {
-                    DeckData dd = new DeckData();
+                    ActivateTakePlaceButton(false, p);
+                });
 
-                    var indexesRnd = dd.GenerateDeck();
+                
 
-                    photonView.RPC("SetDeck", RpcTarget.All, indexesRnd);              
-                    PhotonNetwork.SendAllOutgoingCommands();
-
-                    //next state
-
-                    playersInGame.ForEach(p =>
-                    {
-                        ActivateTakePlaceButton(false, p);
-                    });
-
-                }
 
               
 
@@ -909,7 +898,7 @@ namespace Assets.Scipts.BackJack
                 watches = handMenu.GetComponent<WatchController>();
                 watches.watchIndicator.StopAnimation();
 
-                StartCoroutine(ClearPoseWithDilay(animatorHolder.hand, 1f));
+                StartCoroutine(ClearPoseWithDelay(animatorHolder.hand, 1f));
 
                 player.handMenu.RevokeMenu();
             }
