@@ -335,21 +335,8 @@ namespace Assets.Scipts.BackJack
 
 
             playersInGame.ForEach(p =>
-            {
-                var handMenu = p?.handMenu;
-                if (handMenu.IsNotNull())
-                {
-                   
-
-
-                    var animatorHolder = handMenu.GetComponent<AnimatorHolder>();
-                    var watches = handMenu.GetComponent<WatchController>();
-                    watches.watchIndicator.StopAnimation();
-
-                    StartCoroutine(ClearPoseWithDelay(animatorHolder.hand, 1f));
-
-                    handMenu.RevokeMenu();
-                }
+            {               
+                ClearHandRadialMenu(p);
             });
 
 
@@ -405,9 +392,9 @@ namespace Assets.Scipts.BackJack
                 
 
             }
-            else if (photonView.IsMine)
+            else 
             {
-                photonView.StartCoroutine(ResetGameCourotine(3f));
+                StartCoroutine(ResetGameCourotine(3f));
             }
 
 
@@ -625,7 +612,7 @@ namespace Assets.Scipts.BackJack
         [PunRPC]
         private void PlayerReady_RPC(string player)
         {
-
+            DebugLog("playersReady to start game ->" + playersReady);
             playersReady++;
 
             if (playersReady == playersInGame.Count)
