@@ -6,6 +6,7 @@ namespace CurvedUI
     public class CUI_TMPChecker : MonoBehaviour
     {
 
+#pragma warning disable 0649
         [SerializeField]
         GameObject testMsg;
 
@@ -14,6 +15,7 @@ namespace CurvedUI
 
         [SerializeField]
         GameObject disabledMsg;
+#pragma warning restore 0649
 
         // Use this for initialization
         void Start()
@@ -27,8 +29,6 @@ namespace CurvedUI
             enabledMsg.gameObject.SetActive(false);
             disabledMsg.gameObject.SetActive(true);
 #endif
-
-
         }
 
 

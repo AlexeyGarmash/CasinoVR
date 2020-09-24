@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class GameObjectExtensions
 {
-
+    
     public static void SetScale(this GameObject go, Vector3 scale)
     {
         go.transform.localScale = scale;
@@ -14,6 +14,12 @@ public static class GameObjectExtensions
     public static void SetScale(this GameObject go, float x, float y, float z)
     {
         go.transform.localScale = new Vector3(x, y, z);
+    }
+
+
+    public static void SetVisibility(this GameObject go, Vector3 pos)
+    {
+        go.transform.position = pos;
     }
 
     /*public static string GetPrefabPath(this GameObject go)

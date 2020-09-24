@@ -7,18 +7,16 @@ namespace CurvedUI
     public class CUI_WorldSpaceMouseMultipleCanvases : MonoBehaviour
     {
 
-
+        #pragma warning disable 0649 
         [SerializeField]
         List<CurvedUISettings> ControlledCanvases;
         [SerializeField]
         Transform WorldSpaceMouse;
         [SerializeField]
         CurvedUISettings MouseCanvas;
-        // Use this for initialization
-        void Start()
-        {
+        #pragma warning restore 0649
 
-        }
+
 
         // Update is called once per frame
         void Update()

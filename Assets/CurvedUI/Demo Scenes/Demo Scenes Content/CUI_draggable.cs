@@ -41,6 +41,8 @@ namespace CurvedUI
         {
             if (!isDragged) return;
 
+            Debug.Log("OnDrag");
+
             //drag the transform along the mouse. We use raycast to determine its position on curved canvas.
             Vector2 newPos = Vector2.zero;
 

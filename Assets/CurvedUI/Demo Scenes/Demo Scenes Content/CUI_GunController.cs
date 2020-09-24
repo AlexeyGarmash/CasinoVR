@@ -7,12 +7,12 @@ namespace CurvedUI
 {
     public class CUI_GunController : MonoBehaviour
     {
-
+#pragma warning disable 0649
         [SerializeField]
         CurvedUISettings ControlledCanvas;
         [SerializeField]
         Transform LaserBeamTransform;
-
+#pragma warning restore 0649
 
         // Update is called once per frame
         void Update()

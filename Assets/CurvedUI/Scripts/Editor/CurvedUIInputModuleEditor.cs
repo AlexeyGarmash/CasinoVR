@@ -19,6 +19,29 @@ namespace CurvedUI {
         bool isGVR = false;
 #endif
 
+
+        void OnEnable()
+        {
+            CurvedUIInputModule myTarget = (CurvedUIInputModule)target;
+
+
+#if CURVEDUI_OCULUSVR
+            //automatically find Oculus Rig, if possible
+            if (myTarget.OculusCameraRig == null)
+                myTarget.OculusCameraRig = Object.FindObjectOfType<OVRCameraRig>();
+
+#elif CURVEDUI_STEAMVR_LEGACY
+            //automatically find SteamVR Rig, if possible
+            if (myTarget.SteamVRControllerManager == null)
+            myTarget.SteamVRControllerManager = Object.FindObjectOfType<SteamVR_ControllerManager>();          
+#elif CURVEDUI_STEAMVR_2
+            //automatically find SteamVR Rig, if possible
+            if (myTarget.SteamVRPlayArea == null)
+                myTarget.SteamVRPlayArea = FindObjectOfType<Valve.VR.SteamVR_PlayArea>();
+#endif
+        }
+
+
         public override void OnInspectorGUI()
 		{
             EditorGUILayout.HelpBox("Use CurvedUISettings component on your Canvas to configure CurvedUI", MessageType.Info);

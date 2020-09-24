@@ -15,8 +15,11 @@ public class CurrentRoomManager : BaseMenuPanel
     [SerializeField] private Button ButtonReady;
     [SerializeField] private TMP_Text ButtonReadyText;
     [SerializeField] private RawImage _imageReady;
+    [SerializeField] private bool _useColorSwitch;
     [SerializeField] private Texture _readyTexture;
     [SerializeField] private Texture _notReadyTexture;
+    [SerializeField] private Color _readyColor;
+    [SerializeField] private Color _notReadyColor;
     [SerializeField] private Button ButtonStartGame;
 
     private List<PlayerItem> _playerItems = new List<PlayerItem>();
@@ -28,6 +31,14 @@ public class CurrentRoomManager : BaseMenuPanel
         customProps = new ExitGames.Client.Photon.Hashtable();
         ButtonReady.onClick.AddListener(OnButtonReady_Clicked);
         ButtonStartGame.onClick.AddListener(OnButtonStartGame_Clicked);
+        if(_useColorSwitch)
+        {
+            _imageReady.color = _notReadyColor;
+        }
+        else
+        {
+            _imageReady.texture = _notReadyTexture;
+        }
     }
 
     private void OnButtonReady_Clicked()
@@ -41,7 +52,14 @@ public class CurrentRoomManager : BaseMenuPanel
         customProps[PlayerItem.KEY_PLAYER_READY] = _isReady;
         PhotonNetwork.SetPlayerCustomProperties(customProps);
         ButtonReadyText.text = _isReady ? "Ready" : "Not ready";
-        _imageReady.texture = _isReady ? _readyTexture : _notReadyTexture;
+        if (!_useColorSwitch)
+        {
+            _imageReady.texture = _isReady ? _readyTexture : _notReadyTexture;
+        }
+        else
+        {
+            _imageReady.color = _isReady ? _readyColor : _notReadyColor;
+        }
     }
 
     public void LeaveRoom()

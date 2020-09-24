@@ -19,7 +19,7 @@ public class AvatarMirroring : MonoBehaviour
         transform.position += (targetPosition - transform.position);
         if (CenterEyeCamera != null)
         {
-            transform.rotation = Quaternion.Inverse(CenterEyeCamera.transform.rotation);
+            transform.rotation = CenterEyeCamera.transform.rotation;//Quaternion.Inverse(CenterEyeCamera.transform.rotation);
             //transform.LookAt(CenterEyeCamera.position);
         }
     }

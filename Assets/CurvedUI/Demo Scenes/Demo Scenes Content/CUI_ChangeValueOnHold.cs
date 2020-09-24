@@ -11,6 +11,7 @@ namespace CurvedUI
         bool pressed = false;
         bool selected = false;
 
+#pragma warning disable 0649
         [SerializeField]
         Image bg;
         [SerializeField]
@@ -22,7 +23,7 @@ namespace CurvedUI
         CanvasGroup IntroCG;
         [SerializeField]
         CanvasGroup MenuCG;
-
+#pragma warning restore 0649
 
 
         // Update is called once per frame
