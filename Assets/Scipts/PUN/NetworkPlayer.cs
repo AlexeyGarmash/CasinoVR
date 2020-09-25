@@ -37,8 +37,25 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
                 Transform ovrControllerTransform = globalVRController.transform;
                 
                 OvrCameraRigTransform = ovrControllerTransform.Find("OVRCameraRig").transform;
-                var controllerLeft =  ovrControllerTransform.Find("ControllerLeft").transform;
-                var controllerRight = ovrControllerTransform.Find("ControllerRight").transform;
+
+                Transform controllerLeft, controllerRight;
+
+                if (OVRManager.XRDevice.OpenVR == OVRManager.loadedXRDevice)
+                {
+                    Destroy(ovrControllerTransform.Find("ControllerLeftOculus"));
+                    Destroy(ovrControllerTransform.Find("ControllerRightOculus"));
+
+                    controllerLeft = ovrControllerTransform.Find("ControllerLeftVive").transform;
+                    controllerRight = ovrControllerTransform.Find("ControllerRightVive").transform;
+                }
+                else {
+
+                    Destroy(ovrControllerTransform.Find("ControllerLeftVive"));
+                    Destroy(ovrControllerTransform.Find("ControllerRightVive"));
+
+                    controllerLeft = ovrControllerTransform.Find("ControllerLeftOculus").transform;
+                    controllerRight = ovrControllerTransform.Find("ControllerRightOculus").transform;
+                }
 
                 var leftControllerHolder = transform.Find("Robot Kyle/VRConstraints/Left Arm IK/TargetLeft").transform;
                 controllerLeft.parent = leftControllerHolder;
