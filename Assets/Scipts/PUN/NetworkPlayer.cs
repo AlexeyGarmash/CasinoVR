@@ -30,6 +30,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
 
         if (photonView != null && photonView.IsMine)
         {
+            Debug.Log("playernetwork create");
             GameObject globalVRController = GameObject.Find("OVRPlayerControllerMain");
             if(globalVRController != null)
             {              
@@ -42,16 +43,17 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
 
                 if (OVRManager.XRDevice.OpenVR == OVRManager.loadedXRDevice)
                 {
-                    Destroy(ovrControllerTransform.Find("ControllerLeftOculus").gameObject);
-                    Destroy(ovrControllerTransform.Find("ControllerRightOculus").gameObject);
+                    ovrControllerTransform.Find("ControllerLeftOculus").gameObject.SetActive(false);
+                    ovrControllerTransform.Find("ControllerRightOculus").gameObject.SetActive(false);
+                    
 
                     controllerLeft = ovrControllerTransform.Find("ControllerLeftVive").transform;
                     controllerRight = ovrControllerTransform.Find("ControllerRightVive").transform;
                 }
                 else {
 
-                    Destroy(ovrControllerTransform.Find("ControllerLeftVive").gameObject);
-                    Destroy(ovrControllerTransform.Find("ControllerRightVive").gameObject);
+                    ovrControllerTransform.Find("ControllerLeftVive").gameObject.SetActive(false);
+                    ovrControllerTransform.Find("ControllerRightVive").gameObject.SetActive(false);                 
 
                     controllerLeft = ovrControllerTransform.Find("ControllerLeftOculus").transform;
                     controllerRight = ovrControllerTransform.Find("ControllerRightOculus").transform;
