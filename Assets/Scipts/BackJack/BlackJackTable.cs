@@ -187,7 +187,7 @@ namespace Assets.Scipts.BackJack
                 currentBJStackIndex = 0;
                 currentPlayerTurn++;
 
-                if (playersInGame.Count - 1 == currentPlayerTurn)
+                if (playersInGame.Count == currentPlayerTurn)
                 {
                     currentBJStackIndex = 0;
                     currentPlayerTurn = 0;
