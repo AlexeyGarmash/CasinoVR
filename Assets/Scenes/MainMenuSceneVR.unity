@@ -3329,6 +3329,7 @@ GameObject:
   - component: {fileID: 574523990}
   - component: {fileID: 574523994}
   - component: {fileID: 574523993}
+  - component: {fileID: 574523995}
   m_Layer: 5
   m_Name: InputFieldNickname
   m_TagString: Untagged
@@ -3520,6 +3521,21 @@ MonoBehaviour:
   savedColor: {r: 1, g: 1, b: 1, a: 1}
   savedTextUV0: {x: 0, y: 0}
   savedFill: 1
+--- !u!114 &574523995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574523988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8e651a9eaebb614a812dd6fa19912f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _iteration: 40
+  _frequency: 2
+  _strength: 255
 --- !u!1 &576956199
 GameObject:
   m_ObjectHideFlags: 0
@@ -4114,6 +4130,7 @@ GameObject:
   - component: {fileID: 817420014}
   - component: {fileID: 817420018}
   - component: {fileID: 817420017}
+  - component: {fileID: 817420019}
   m_Layer: 5
   m_Name: InputFieldRoomName
   m_TagString: Untagged
@@ -4305,6 +4322,21 @@ MonoBehaviour:
   savedColor: {r: 1, g: 1, b: 1, a: 1}
   savedTextUV0: {x: 0, y: 0}
   savedFill: 1
+--- !u!114 &817420019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 817420012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8e651a9eaebb614a812dd6fa19912f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _iteration: 40
+  _frequency: 2
+  _strength: 255
 --- !u!1 &829479375
 GameObject:
   m_ObjectHideFlags: 0
