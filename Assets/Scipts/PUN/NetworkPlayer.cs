@@ -42,16 +42,16 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
 
                 if (OVRManager.XRDevice.OpenVR == OVRManager.loadedXRDevice)
                 {
-                    Destroy(ovrControllerTransform.Find("ControllerLeftOculus"));
-                    Destroy(ovrControllerTransform.Find("ControllerRightOculus"));
+                    Destroy(ovrControllerTransform.Find("ControllerLeftOculus").gameObject);
+                    Destroy(ovrControllerTransform.Find("ControllerRightOculus").gameObject);
 
                     controllerLeft = ovrControllerTransform.Find("ControllerLeftVive").transform;
                     controllerRight = ovrControllerTransform.Find("ControllerRightVive").transform;
                 }
                 else {
 
-                    Destroy(ovrControllerTransform.Find("ControllerLeftVive"));
-                    Destroy(ovrControllerTransform.Find("ControllerRightVive"));
+                    Destroy(ovrControllerTransform.Find("ControllerLeftVive").gameObject);
+                    Destroy(ovrControllerTransform.Find("ControllerRightVive").gameObject);
 
                     controllerLeft = ovrControllerTransform.Find("ControllerLeftOculus").transform;
                     controllerRight = ovrControllerTransform.Find("ControllerRightOculus").transform;
