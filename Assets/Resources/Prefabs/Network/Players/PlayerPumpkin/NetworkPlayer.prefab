@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
+  m_SynchronizePosition: 2
+  m_SynchronizeRotation: 2
   m_SynchronizeScale: 0
 --- !u!114 &8995662635286676707
 MonoBehaviour:
@@ -204,6 +204,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6155308409095976432}
     m_Modifications:
+    - target: {fileID: 1554579916221907444, guid: d1dc371d0d9c47d4d811238350db5c38,
+        type: 3}
+      propertyPath: m_SynchronizePosition
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1554579916221907444, guid: d1dc371d0d9c47d4d811238350db5c38,
+        type: 3}
+      propertyPath: m_SynchronizeRotation
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789835328667437211, guid: d1dc371d0d9c47d4d811238350db5c38,
+        type: 3}
+      propertyPath: viewIdField
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2002082509082399145, guid: d1dc371d0d9c47d4d811238350db5c38,
         type: 3}
       propertyPath: m_SynchronizePosition
@@ -213,6 +228,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SynchronizeRotation
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2485072742330091462, guid: d1dc371d0d9c47d4d811238350db5c38,
+        type: 3}
+      propertyPath: viewIdField
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3266340209251765670, guid: d1dc371d0d9c47d4d811238350db5c38,
         type: 3}
@@ -224,6 +244,11 @@ PrefabInstance:
       propertyPath: m_SynchronizeRotation
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3918318491043970938, guid: d1dc371d0d9c47d4d811238350db5c38,
+        type: 3}
+      propertyPath: viewIdField
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4357551049175965994, guid: d1dc371d0d9c47d4d811238350db5c38,
         type: 3}
       propertyPath: m_SynchronizePosition
@@ -233,11 +258,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SynchronizeRotation
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5455655421143441751, guid: d1dc371d0d9c47d4d811238350db5c38,
+        type: 3}
+      propertyPath: viewIdField
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5834373974650339044, guid: d1dc371d0d9c47d4d811238350db5c38,
         type: 3}
       propertyPath: m_Name
       value: Robot Kyle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106353321394537731, guid: d1dc371d0d9c47d4d811238350db5c38,
+        type: 3}
+      propertyPath: viewIdField
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7398435550384344311, guid: d1dc371d0d9c47d4d811238350db5c38,
         type: 3}
@@ -292,6 +327,16 @@ PrefabInstance:
     - target: {fileID: 7398435550384344311, guid: d1dc371d0d9c47d4d811238350db5c38,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7944859172648419215, guid: d1dc371d0d9c47d4d811238350db5c38,
+        type: 3}
+      propertyPath: viewIdField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8063268454909468907, guid: d1dc371d0d9c47d4d811238350db5c38,
+        type: 3}
+      propertyPath: viewIdField
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9041080559907615413, guid: d1dc371d0d9c47d4d811238350db5c38,
