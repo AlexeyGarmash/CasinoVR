@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class TeleportTargetDestination : MonoBehaviour
 {
-    [SerializeField] private GameObject light;
+    [SerializeField] private AudioClip clipAbleTeleport;
 
-    
     private MeshRenderer destMeshRender;
     private AudioSource audioSrc;
 
@@ -17,42 +16,11 @@ public class TeleportTargetDestination : MonoBehaviour
         audioSrc = GetComponent<AudioSource>();
         audioSrc.loop = false;
         ActivateDestination(false);
-        
-    }
-
-    bool playerStay = false;
-    IEnumerator WaitEnd()
-    {
-        yield return new WaitForSeconds(0.2f);
-        playerStay = false;
-    }
-    private void OnTriggerStay(Collider other)
-    {     
-        
-        var teleportArrow = other.GetComponent<TeleportDestination>();
-        if (teleportArrow != null && other.tag == "TeleportTarget")
-        {
-            playerStay = true;
-            ActivateDestination(true);
-            //PlaySound();
-            StopAllCoroutines();
-            StartCoroutine(WaitEnd());
-        }
-
-    }
-
-    private void Update()
-    {
-        if (!playerStay)
-        {
-            ActivateDestination(false);
-            playerStay = true;
-        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        print("some trigger me");
         var teleportArrow = other.GetComponent<TeleportDestination>();
         if(teleportArrow != null)
         {
@@ -67,18 +35,17 @@ public class TeleportTargetDestination : MonoBehaviour
         if (teleportArrow != null)
         {
             ActivateDestination(false);
-
         }
     }
 
     private void ActivateDestination(bool activate)
     {
         destMeshRender.enabled = activate;
-        light.SetActive(activate);
     }
 
     private void PlaySound()
-    {      
+    {
+        audioSrc.clip = clipAbleTeleport;
         audioSrc.Play();
     }
 }
