@@ -34,8 +34,8 @@ namespace Photon.Pun
             EditorGUILayout.LabelField("Synchronize Options");
 
             EditorGUI.indentLevel += 2;
-            view.m_SynchronizePosition = EditorGUILayout.ToggleLeft(" Position", view.m_SynchronizePosition);
-            view.m_SynchronizeRotation = EditorGUILayout.ToggleLeft(" Rotation", view.m_SynchronizeRotation);
+            view.m_SynchronizePosition = (SyncBy)EditorGUILayout.EnumPopup(" Position", view.m_SynchronizePosition);
+            view.m_SynchronizeRotation = (SyncBy)EditorGUILayout.EnumPopup(" Rotation", view.m_SynchronizeRotation);
             view.m_SynchronizeScale = EditorGUILayout.ToggleLeft(" Scale", view.m_SynchronizeScale);
             EditorGUI.indentLevel -= 2;
 
