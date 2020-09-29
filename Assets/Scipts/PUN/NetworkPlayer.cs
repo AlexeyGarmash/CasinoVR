@@ -109,6 +109,8 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
             RightHand.transform.parent = transform;
             LeftHand.transform.parent = transform;
 
+            Avatar.layer = 0;
+
             VRRig.head.vrTarget = Avatar.transform;
             VRRig.RightHand.vrTarget = RightHand.transform;
             VRRig.leftHand.vrTarget = LeftHand.transform;
