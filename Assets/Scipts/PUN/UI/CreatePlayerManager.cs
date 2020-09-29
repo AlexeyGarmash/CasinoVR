@@ -10,8 +10,15 @@ using TalesFromTheRift;
 
 public class CreatePlayerManager : BaseMenuPanel
 {
+    const string PREF_NICKNAME_KEY = "nickname";
+
     [SerializeField] private TMP_InputField InputFieldNickName;
-    
+
+    private void Start()
+    {
+        GetNameFromPrefs();
+    }
+
     public void ChangeNickName()
     {
         if(InputFieldNickName.text.Length != 0 )
@@ -19,6 +26,7 @@ public class CreatePlayerManager : BaseMenuPanel
             if(PhotonPlayerSettings.Instance != null
             && PhotonPlayerSettings.Instance.PrefabResourceName != null)
             {
+                SaveNickNameToPrefs();
                 NetworkManager.Instance.ChangePlayerNick(InputFieldNickName.text);
                 //InputFieldNickName.text = "";
                 MainMenuManager.Instance.OnPlayerEnterNickName();
@@ -35,6 +43,17 @@ public class CreatePlayerManager : BaseMenuPanel
             print("Nick must be not empty!");
             MainMenuInformer.Instance.ShowInfoWithExitTime("Empty nickname", MainMenuMessageType.Warning);
         }
+    }
+
+    private void GetNameFromPrefs()
+    {
+        string storedNickname = PlayerPrefs.GetString(PREF_NICKNAME_KEY, "");
+        InputFieldNickName.text = storedNickname;
+    }
+
+    private void SaveNickNameToPrefs()
+    {
+        PlayerPrefs.SetString(PREF_NICKNAME_KEY, InputFieldNickName.text);
     }
 
 }

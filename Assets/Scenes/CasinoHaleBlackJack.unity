@@ -1558,7 +1558,7 @@ PrefabInstance:
     - target: {fileID: 4786743082667093774, guid: 7e2ca5b271fdc2f40babac0b477a7e0c,
         type: 3}
       propertyPath: EnableMovementDuringAim
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4786743082667093774, guid: 7e2ca5b271fdc2f40babac0b477a7e0c,
         type: 3}
@@ -49975,6 +49975,8 @@ PrefabInstance:
     - {fileID: 5330058494000385004, guid: 12662e798e93d8a43b277e18903b8246, type: 3}
     - {fileID: 6495184569133284829, guid: 12662e798e93d8a43b277e18903b8246, type: 3}
     - {fileID: 7425240779598766052, guid: 12662e798e93d8a43b277e18903b8246, type: 3}
+    - {fileID: 1086173048086741377, guid: 12662e798e93d8a43b277e18903b8246, type: 3}
+    - {fileID: 4428765409895884603, guid: 12662e798e93d8a43b277e18903b8246, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 12662e798e93d8a43b277e18903b8246, type: 3}
 --- !u!4 &1634950916 stripped
 Transform:
@@ -50766,7 +50768,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1634950918}
         m_MethodName: GoOutFromPlace
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -50839,7 +50841,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1634950925}
         m_MethodName: GoOutFromPlace
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

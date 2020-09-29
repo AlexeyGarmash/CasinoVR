@@ -8,7 +8,7 @@ using Photon.Realtime;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public static NetworkManager Instance;
-
+    [SerializeField] int MinPlayersCount = 1;
     private void Awake()
     {
         DontDestroyOnLoad(this);
@@ -100,7 +100,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            if (RoomPlayersReady())
+            if(!RoomCountPlayerAccepted(MinPlayersCount))
+            {
+                print("Not min count players");
+                MainMenuInformer.Instance.ShowInfoWithExitTime($"Minimal players count is {MinPlayersCount}", MainMenuMessageType.Danger);
+            } 
+            else if (RoomPlayersReady())
             {
                 StartGameLoading();
             }
@@ -116,6 +121,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
+    private bool RoomCountPlayerAccepted(int acceptedCount) => PhotonNetwork.CurrentRoom.Players.Count >= acceptedCount;
     
 
     private bool RoomPlayersReady()
