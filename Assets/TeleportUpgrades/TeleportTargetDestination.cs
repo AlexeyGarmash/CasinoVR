@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TeleportTargetDestination : MonoBehaviour
 {
-    [SerializeField] private GameObject light;
+    [SerializeField] private Light PlaceLight;
 
     
     private MeshRenderer destMeshRender;
@@ -13,6 +13,7 @@ public class TeleportTargetDestination : MonoBehaviour
 
     private void Start()
     {
+        if (PlaceLight == null) PlaceLight = GetComponentInChildren<Light>();
         destMeshRender = GetComponent<MeshRenderer>();
         audioSrc = GetComponent<AudioSource>();
         audioSrc.loop = false;
@@ -74,7 +75,7 @@ public class TeleportTargetDestination : MonoBehaviour
     private void ActivateDestination(bool activate)
     {
         destMeshRender.enabled = activate;
-        light.SetActive(activate);
+        PlaceLight.enabled = activate;
     }
 
     private void PlaySound()
