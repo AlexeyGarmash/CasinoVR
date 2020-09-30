@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum RadialMenuSectors { ONE = 1, TWO = 2, THREE = 3, FOUR = 4, FIVE = 5, SIX = 6 }
@@ -10,6 +11,7 @@ public class RadialMenuHandV2 : MonoBehaviour
 {
     //[SerializeField]OVRInput.Controller controller;
     [SerializeField] private RadialMenuV2 radialMenu;
+    [SerializeField] private OVRPlayerController PlayerController;
 
     private List<RadialActionInfo> actions;
 
@@ -28,7 +30,7 @@ public class RadialMenuHandV2 : MonoBehaviour
     }
     private void Start()
     {
-        
+        PlayerController = FindObjectsOfType<OVRPlayerController>().FirstOrDefault(contoller => contoller.gameObject.activeSelf == true);
         menuShown = false;
     }
 
@@ -272,7 +274,7 @@ public class RadialMenuHandV2 : MonoBehaviour
     {
         if(menuInvoke && OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.RTouch))
         {
-
+            EnablePlayerRotationAndMove(false);
             ShowMenu();
             transform.LookAt(Camera.main.transform.position);
 
@@ -334,7 +336,14 @@ public class RadialMenuHandV2 : MonoBehaviour
                 keyPressed = false;
             }
             HideMenu();
+            EnablePlayerRotationAndMove(true);
         }
+    }
+
+    private void EnablePlayerRotationAndMove(bool enable)
+    {
+        PlayerController.EnableRotation = enable;
+        PlayerController.EnableLinearMovement = enable;
     }
 
     private void ResolveShowSelect(RadialMenuSectorV2 radialMenuSectorV2Type)
