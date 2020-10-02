@@ -31,7 +31,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
     [Header("New Settings")]
     //кнопка 1 для взятия предмета (нужна для добавления нескольких предметов в руку)
     [SerializeField]
-    private OVRInput.Button GrabButton = OVRInput.Button.PrimaryThumbstick;
+    private OVRInput.Button GrabButton = OVRInput.Button.PrimaryHandTrigger;
 
     private PlayerStats playerStat;
     //кнопка 2 для взятия предмета
@@ -288,7 +288,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
     protected void CheckForGrabOrRelease(float prevFlex)
     {
 
-        if ((m_prevFlex >= grabBegin) && max_grabbed_obj > m_grabbedObjs.Count && add_chip)
+        if(add_chip)//if ((m_prevFlex >= grabBegin) && max_grabbed_obj > m_grabbedObjs.Count && add_chip)
         {
             GrabBegin();
         }

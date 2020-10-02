@@ -8,6 +8,7 @@ public class PhotonPlayerSettings : MonoBehaviour
 
 
     public string PrefabResourceName { get; set; }
+    public Material PrefabMaterial { get; set; }
 
     private void Awake()
     {

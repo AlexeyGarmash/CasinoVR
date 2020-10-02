@@ -6,7 +6,7 @@ public class AvatarMirroring : MonoBehaviour
 {
     [SerializeField] Transform CenterEyeCamera;
     [SerializeField] Transform Leader;
-
+    [SerializeField] bool useMirroring = false;
     Vector3 _followOffset;
 
     private void Start()
@@ -15,12 +15,15 @@ public class AvatarMirroring : MonoBehaviour
     }
     private void Update()
     {
-        Vector3 targetPosition = Leader.position + _followOffset;
-        transform.position += (targetPosition - transform.position);
-        if (CenterEyeCamera != null)
+        if (useMirroring)
         {
-            transform.rotation = CenterEyeCamera.transform.rotation;//Quaternion.Inverse(CenterEyeCamera.transform.rotation);
-            //transform.LookAt(CenterEyeCamera.position);
+            Vector3 targetPosition = Leader.position + _followOffset;
+            transform.position += (targetPosition - transform.position);
+            if (CenterEyeCamera != null)
+            {
+                transform.rotation = CenterEyeCamera.transform.rotation;//Quaternion.Inverse(CenterEyeCamera.transform.rotation);
+                                                                        //transform.LookAt(CenterEyeCamera.position);
+            }
         }
     }
 }

@@ -70,6 +70,12 @@ public class PlayerAvatarChoiceManager : MonoBehaviour
         if (_avatarPreviewSpawnPoint != null)
         {
             GameObject go = Instantiate(avatar.AvatarPrefab, _avatarPreviewSpawnPoint, true);
+            Renderer rend = go.GetComponent<Renderer>();
+            if(rend == null)
+            {
+                rend = go.GetComponentInChildren<Renderer>();
+            }
+            AvatarSkinChooser.Instance.SetupAvatartToChoose(rend);
             go.transform.localPosition = Vector3.zero;
         }
     }
