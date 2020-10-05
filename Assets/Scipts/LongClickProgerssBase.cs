@@ -33,11 +33,19 @@ public abstract class LongClickProgerssBase : MonoBehaviourPun
     protected int enterCount = 0;
     protected int exitCount = 0;
 
+    private MeshRenderer renderer;
+    private Color defaultCOlor;
     protected void Start()
     {
+        renderer = GetComponent<MeshRenderer>();
+        renderer.material.color = defaultCOlor;
+        p_place = GetComponentInParent<PlayerPlace>();
+
+        defaultCOlor = new Color(255,0,0,255);
+        renderer.material.color = defaultCOlor;
         _imageReady.texture = _notReadyTexture;
         _progressImage.fillAmount = 0f;
-        p_place = GetComponentInParent<PlayerPlace>();
+
     }
     protected void Update()
     {
@@ -60,9 +68,11 @@ public abstract class LongClickProgerssBase : MonoBehaviourPun
     protected void ShowProgress()
     {
         currentHoldTime += Time.deltaTime;
+        renderer.material.color = new Color(1 - currentHoldTime / _holdTime, currentHoldTime / _holdTime, 0);
         if (currentHoldTime >= _holdTime)
         {
-            //
+            
+
             if (!inGame)
             {
                 InvokeClickIn();
@@ -71,9 +81,11 @@ public abstract class LongClickProgerssBase : MonoBehaviourPun
             {
                 InvokeClickOut();
             }
+            renderer.material.color = defaultCOlor;
             ResetProgress();
         }
         FillImageProgress(currentHoldTime / _holdTime);
+        
     }
 
     [PunRPC]
@@ -119,6 +131,7 @@ public abstract class LongClickProgerssBase : MonoBehaviourPun
     {
         if (other.gameObject.GetComponent<LongClickHand>() != null && inProgress == false)
         {
+            OpenVRVibrationManager.DoVibration(0.5f, 0.05f);
             lastCollider = other;
             playerStats = other.GetComponentInParent<PlayerStats>();
             if (!p_place.PlayerOnPlace || p_place.ps.PlayerNick == playerStats.PlayerNick)
@@ -130,6 +143,7 @@ public abstract class LongClickProgerssBase : MonoBehaviourPun
     {
         if (other.gameObject.GetComponent<LongClickHand>() != null)
         {
+            OpenVRVibrationManager.DoVibration(0.5f, 0.05f);
             //if (!photonView.IsMine) return;
             ResetProgress();
         }

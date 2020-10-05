@@ -7,7 +7,7 @@ using UnityEngine;
 using Photon.Pun;
 using Assets.Scipts.Chips;
 
-public enum AbstractFieldEvents { StackAnimationEnded, StackAnimationStarted, UpdateUI, ExtractObject, FieldBloked, FieldUnbloked }
+public enum AbstractFieldEvents { StackAnimationEnded, StackAnimationStarted, FieldAnimationEnded, FieldAnimationStarted, UpdateUI, ExtractObject, FieldBloked, FieldUnbloked }
 
 public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<AbstractFieldEvents>
 {
@@ -160,6 +160,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
                     Debug.Log("StackAnimStartedCounter =" + StackAnimEndedCounter);
                     if (StackAnimStartedCounter == StackAnimEndedCounter)
                     {
+                        _fieldEventManager.PostNotification(AbstractFieldEvents.FieldAnimationEnded, this);
                         Debug.Log("UnblockAllStacks");
                         UnblockAllStacks();
                         
@@ -173,6 +174,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
                     Debug.Log("StackAnimStartedCounter =" + StackAnimStartedCounter);
                     if (StackAnimStartedCounter == 1)
                     {
+                        _fieldEventManager.PostNotification(AbstractFieldEvents.FieldAnimationStarted, this);
                         BlockAllStacks();
                         Debug.Log("BlockAllStacks");
                     }

@@ -7,14 +7,24 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class TakePlaceLongClickProgress : LongClickProgerssBase
+public class TakePlaceLongClickProgress : LongClickProgerssBase, IListener<AbstractFieldEvents>
 {
+
+    [SerializeField]
+    PlayerChipsField field;
+
     [PunRPC]
     public override void InvokeClickOut_RPC()
     {        
         inGame = false;
         _imageReady.texture = _notReadyTexture;
         _textReady.text = "Not ready";
+
+        if (field)
+        {
+            field.FieldEventManager.AddListener(AbstractFieldEvents.FieldAnimationEnded, this);
+            field.FieldEventManager.AddListener(AbstractFieldEvents.FieldAnimationStarted, this);
+        }
 
         Debug.LogWarning("player InvokeClickOut_RPC rpc");
 
@@ -60,7 +70,18 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase
         _onLongClickIn.Invoke(p_place.ps);
 
     }
-    
 
+    public void OnEvent(AbstractFieldEvents Event_type, Component Sender, params object[] Param)
+    {
+        switch (Event_type)
+        {
+            case AbstractFieldEvents.FieldAnimationEnded:
+                gameObject.SetActive(true);
+                break;
+            case AbstractFieldEvents.FieldAnimationStarted:
+                gameObject.SetActive(false);
+                break;
+        }
+    }
 }
 

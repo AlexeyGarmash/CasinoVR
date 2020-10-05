@@ -21,17 +21,18 @@ public class BettingFieldUIElements : MonoBehaviour, IListener<AbstractFieldEven
     GameObject TMP_3D;
     [SerializeField]
     GameObject FieldShader;
+    [SerializeField]
+    GameObject MoneyInFieldEffect;
 
     private TextMeshPro text;
-
     private Vector3 defaultHightText;
+    private AudioSource source;
 
-
-   
 
     EventManager<AbstractFieldEvents> _fieldEventManager;
 
     int sumOfPoints = 0;
+    bool ignoreVibration = false;
 
     void Start()
     {
@@ -45,6 +46,8 @@ public class BettingFieldUIElements : MonoBehaviour, IListener<AbstractFieldEven
 
 
         text = TMP_3D.GetComponent<TextMeshPro>();
+        source = GetComponent<AudioSource>();
+     
         text.gameObject.SetActive(false);
         defaultHightText = TMP_3D.transform.position;
     }
@@ -76,13 +79,18 @@ public class BettingFieldUIElements : MonoBehaviour, IListener<AbstractFieldEven
                 break;
 
             case AbstractFieldEvents.FieldBloked:
-                if(FieldShader)
+                if (FieldShader)
+                {
                     FieldShader.SetActive(false);
+                    MoneyInFieldEffect.SetActive(false);
+                }
                 break;
 
             case AbstractFieldEvents.FieldUnbloked:
                 if (FieldShader)
+                {
                     FieldShader.SetActive(true);
+                }
                 break;
             case AbstractFieldEvents.ExtractObject:
                 sumOfPoints -= Convert.ToInt32(Param[0]);
@@ -105,5 +113,38 @@ public class BettingFieldUIElements : MonoBehaviour, IListener<AbstractFieldEven
     {
         if(TMP_3D.gameObject.activeSelf)
             TMP_3D.transform.LookAt(Camera.main.transform.position);
+    }
+
+    IEnumerator FieldVibration()
+    {
+        OpenVRVibrationManager.DoVibration(0.5f, 0.05f);
+        ignoreVibration = true;
+        yield return new WaitForSeconds(0.2f);
+        ignoreVibration = false;
+    }
+    void ActivateBettingEffect(bool activate, Collider other)
+    {
+        if (FieldShader && FieldShader.activeSelf && MoneyInFieldEffect && other.GetComponent<ChipData>() != null)
+        {
+            MoneyInFieldEffect.SetActive(true);
+            if (source)
+                source.Play();
+
+            if (!ignoreVibration)
+            {
+                StartCoroutine(FieldVibration());
+                
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        ActivateBettingEffect(true, other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        ActivateBettingEffect(false, other);
     }
 }
