@@ -13,6 +13,7 @@ using UnityEngine;
 
 public class PlayerPlace : MonoBehaviourPun
 {
+    public GameObject playerAreaField;
     public RadialMenuHandV2 handMenu;
     public Action<bool, PlayerStats> actionReadyOrNot;
     public Action actionJoinOut;
@@ -54,7 +55,10 @@ public class PlayerPlace : MonoBehaviourPun
     {
         print("Button clikced");
         if (ps.IsNotNull() && !placeTaken)
-        {
+        {      
+            if(playerAreaField)
+                playerAreaField.SetActive(true);  
+            
             placeTaken = true;
             //actionJoinOut.Invoke();
             this.ps = ps;
@@ -84,6 +88,8 @@ public class PlayerPlace : MonoBehaviourPun
     {
         if (ps.IsNotNull() && placeTaken)
         {
+            if (playerAreaField)
+                playerAreaField.SetActive(false);
             var pc = ps.GetComponentInParent<OVRPlayerController>();
             pc.EnableRotation = true;
             pc.GetComponentInChildren<TeleportDisabler>().Enable();
@@ -93,6 +99,8 @@ public class PlayerPlace : MonoBehaviourPun
             photonView?.RPC("GoOutPlace_RPC", RpcTarget.All);
           
             sf.ClearStacks();
+
+
         }
     }
 
