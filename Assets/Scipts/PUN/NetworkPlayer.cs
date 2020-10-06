@@ -7,6 +7,7 @@ using TMPro.Examples;
 
 public class NetworkPlayer : MonoBehaviourPunCallbacks
 {
+    private Transform TrackingSpace;
     private Transform CenterEye;
     private Transform OvrCameraRigTransform;
     private Transform RightHandAnchor;
@@ -24,7 +25,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         stats.AllMoney = money;
         stats.PlayerNick = nickname;
     }
-    void Awake()
+    /*void Awake()
     {
         var VRRig = GetComponentInChildren<VRRig>();
 
@@ -115,7 +116,56 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
             VRRig.RightHand.vrTarget = RightHand.transform;
             VRRig.leftHand.vrTarget = LeftHand.transform;
         }
+    }*/
+    void Awake()
+    {
+        if (photonView != null && photonView.IsMine)
+        {
+            GameObject globalVRController = GameObject.Find("OVRPlayerControllerMain");
+            if (globalVRController != null)
+            {
+                Transform ovrControllerTransform = globalVRController.transform;
+
+                OvrCameraRigTransform = ovrControllerTransform.Find("OVRCameraRig").transform;
+
+                TrackingSpace = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace").transform;
+                CenterEye = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/CenterEyeAnchor").transform;
+                RightHandAnchor = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/RightHandAnchor").transform;
+                LeftHandAnchor = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/LeftHandAnchor").transform;
+                SetHeadAvatar();
+                SetHand(LeftHand, LeftHandAnchor, 180f, 90f);
+                SetHand(RightHand, RightHandAnchor, -180f, -90f);
+
+                OvrCameraRigTransform.parent = transform;
+                transform.parent = globalVRController.transform;
+                transform.localPosition = Vector3.zero;
+            }
+        }
+
+        if (!photonView.IsMine)
+        {
+            TextNickName.text = photonView.Owner.NickName;
+            foreach (var component in ComponentsToDisable)
+            {
+                Destroy(component);
+            }
+        }
     }
 
-  
+    private void SetHeadAvatar()
+    {
+        Avatar.transform.SetParent(TrackingSpace);//CenterEye
+        Avatar.transform.localPosition = Vector3.zero;
+        Avatar.transform.localRotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    private void SetHand(GameObject hand, Transform anchor, float yRot, float zRotation)
+    {
+        hand.transform.SetParent(anchor);
+        hand.transform.localPosition = Vector3.zero;
+        hand.transform.rotation = Quaternion.Euler(0f, yRot, zRotation);
+
+    }
+
+
 }

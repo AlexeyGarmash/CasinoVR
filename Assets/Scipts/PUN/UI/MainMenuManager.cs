@@ -111,7 +111,7 @@ public class MainMenuManager : MonoBehaviourPunCallbacks
         CreatePlayerPanel.SetScale(removeScale);
         JoinOrCreateRoomPanel.SetScale(removeScale);
         CurrentRoomPanel.SetScale(removeScale);*/
-
+        print($"Disconnected cause from server {cause}");
         LoadingServerPanel.transform.SetAsLastSibling();
         NetworkManager.Instance.ConnectToServer();
     }
