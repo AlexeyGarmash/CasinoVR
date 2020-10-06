@@ -6,7 +6,7 @@ public class FieldAreaReact : MonoBehaviour, IListener<AbstractFieldEvents>
 {
     AbstractField field;
     Animator animator;
-
+    AudioSource source;
     const string Inside = "Inside";
     public void OnEvent(AbstractFieldEvents Event_type, Component Sender, params object[] Param)
     {
@@ -17,6 +17,8 @@ public class FieldAreaReact : MonoBehaviour, IListener<AbstractFieldEvents>
                 Debug.Log("Inside");
                 animator.ResetTrigger(Inside);
                 animator.SetTrigger(Inside);
+                if (source)
+                    source.Play();
                 break;
         }
     }
@@ -24,9 +26,9 @@ public class FieldAreaReact : MonoBehaviour, IListener<AbstractFieldEvents>
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();       
-
-        field = GetComponent<AbstractField>();
+        animator = GetComponent<Animator>();
+        source = GetComponent<AudioSource>();
+        field = GetComponentInParent<AbstractField>();
        
         if (field)
         {
