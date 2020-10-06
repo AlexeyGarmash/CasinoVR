@@ -23,6 +23,7 @@ public class OculusAvatarView : MonoBehaviourPun, IPunObservable
         {
             var ovrRemoteDriver = gameObject.AddComponent<OvrAvatarRemoteDriver>();
             ovrRemoteDriver.Mode = OvrAvatarDriver.PacketMode.SDK;
+            Avatar.Driver = ovrRemoteDriver;
             Destroy(gameObject.GetComponent<OvrAvatarLocalDriver>());
         }
         if (IsLocalAvatar)
