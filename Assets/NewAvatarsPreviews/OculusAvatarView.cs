@@ -45,9 +45,13 @@ public class OculusAvatarView : MonoBehaviourPun, IPunObservable
 
             if (Avatar.UseSDKPackets)
             {
+
                 var size = CAPI.ovrAvatarPacket_GetSize(args.Packet.ovrNativePacket);
                 byte[] data = new byte[size];
                 CAPI.ovrAvatarPacket_Write(args.Packet.ovrNativePacket, size, data);
+
+                print($"PacketSequence = {PacketSequence}");
+                print($"Local avatar size = {size}");
 
                 writer.Write(PacketSequence++);
                 writer.Write(size);
@@ -67,6 +71,11 @@ public class OculusAvatarView : MonoBehaviourPun, IPunObservable
     void SendPacketData(byte[] data)
     {
         byte[] newData = new byte[data.Length];
+
+        for (int i = 0; i < data.Length; i++)
+        {
+            newData[i] = data[i];
+        }
 
         packetQueue.AddLast(newData);
     }
