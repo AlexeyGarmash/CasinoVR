@@ -7,7 +7,7 @@ using UnityEngine;
 using Photon.Pun;
 using Assets.Scipts.Chips;
 
-public enum AbstractFieldEvents { StackAnimationEnded, StackAnimationStarted, FieldAnimationEnded, FieldAnimationStarted, UpdateUI, ExtractObject, FieldBloked, FieldUnbloked }
+public enum AbstractFieldEvents { StackAnimationEnded, StackAnimationStarted, FieldAnimationEnded, FieldAnimationStarted, UpdateUI, ExtractObject, FieldBloked, FieldUnbloked, ObjectInside, ObjectOutdore }
 
 public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<AbstractFieldEvents>
 {

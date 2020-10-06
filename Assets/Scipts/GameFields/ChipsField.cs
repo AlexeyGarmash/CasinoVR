@@ -15,6 +15,9 @@ public class ChipsField : AbstractField
         var rb = other.GetComponent<Rigidbody>();
         var view = gameObj.GetComponent<PhotonView>();
 
+        if (chip)
+            FieldEventManager.PostNotification(AbstractFieldEvents.ObjectInside, this);
+
         if (chip != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null && view.IsMine)
         {
          
@@ -30,6 +33,12 @@ public class ChipsField : AbstractField
 
         }
 
+    }
+    protected void OnTriggerExit(Collider other)
+    {
+        var chip = other.gameObject.GetComponent<ChipData>();
+        if (chip)
+            FieldEventManager.PostNotification(AbstractFieldEvents.ObjectInside, this);
     }
 
     public override void OnEvent(AbstractFieldEvents Event_type, Component Sender, params object[] Param)
