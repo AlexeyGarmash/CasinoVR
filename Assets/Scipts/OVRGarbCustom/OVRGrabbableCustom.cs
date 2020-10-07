@@ -125,7 +125,7 @@ public class OVRGrabbableCustom : MonoBehaviourPun
     virtual public void GrabBegin(OVRGrabberCustom hand, Collider grabPoint)
     {
 
-        if(photonView.IsNotNull())
+        if(photonView)
         {
             photonView.RequestOwnership();
             if (photonView.GetComponent<PhotonSyncCrontroller>().IsNotNull())
