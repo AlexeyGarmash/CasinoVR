@@ -6,7 +6,7 @@ using UnityEngine;
 public class ChipsField : AbstractField
 {
 
-    protected new void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
 
         var gameObj = other.gameObject;
@@ -85,7 +85,10 @@ public class ChipsField : AbstractField
 
         float maxZ = Stacks.Max(ss => ss.animator.currentZ);
 
-        _fieldEventManager.PostNotification(AbstractFieldEvents.ExtractObject, this, (int)chip.GetComponent<ChipData>().Cost, maxZ);
+        if (_fieldEventManager != null && chip)
+        {            
+            _fieldEventManager.PostNotification(AbstractFieldEvents.ExtractObject, this, (int)chip.GetComponent<ChipData>().Cost, maxZ);
+        }
 
         return chip;
     }

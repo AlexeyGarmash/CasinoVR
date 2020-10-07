@@ -85,8 +85,10 @@ public class PlayerChipsField : ChipsField
             yield return null;
         }
 
-        if (lastChip.GetComponent<OwnerData>().field)
+        if (lastChip.GetComponent<OwnerData>().field != this)
         {
+            chekingChipsStarted = false;
+            Debug.LogError("field finded -> " + lastChip.GetComponent<OwnerData>().field.name);
             StopAllCoroutines();
             yield return null;
         }
@@ -125,7 +127,7 @@ public class PlayerChipsField : ChipsField
         triggeredChips.Clear();
 
     }
-    protected new void OnTriggerStay(Collider other)
+    protected override void OnTriggerStay(Collider other)
     {
         var chipdata = other.GetComponent<ChipData>();
         
@@ -138,10 +140,13 @@ public class PlayerChipsField : ChipsField
                 if (grabbableChip.isGrabbed)
                 {
                     Debug.Log("chip added");
-                    lastChip = grabbableChip;                   
+                    lastChip = grabbableChip;
+                    lastChip.GetComponent<ChipData>().field = this;
                     triggeredChips.Add(other.GetComponent<ChipData>());
                     if (!chekingChipsStarted)
+                    {
                         StartCoroutine(ChipInField());
+                    }
                 }               
             }
 
@@ -163,10 +168,14 @@ public class PlayerChipsField : ChipsField
                 if (grabbableChip.isGrabbed)
                 {
                     Debug.Log("chip removed");
+                    chipdata.field = null;
                     triggeredChips.Remove(chipdata);
 
                     if (triggeredChips.Count == 0)
+                    {                      
                         StopAllCoroutines();
+                        chekingChipsStarted = false;
+                    }
                 }
             }
 

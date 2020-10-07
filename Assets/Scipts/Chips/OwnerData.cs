@@ -29,14 +29,16 @@ namespace Assets.Scipts.Chips
         {
             if (field)
             {              
-                field.ExtranctObject(photonView.ViewID);
-                field = null;
+                field.ExtranctObject(photonView.ViewID);               
             }
             if (animator)
             {
                 animator.StopObjectAnimation(photonView.ViewID);
-                animator = null;
+              
             }
+
+            animator = null;
+            field = null;
         }
 
 

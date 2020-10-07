@@ -139,14 +139,13 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
         return PossibleField[distances.IndexOf(distances.Min())];
     } 
 
-    protected (GameObject chip, StackData stack) GetChipAndHisStack(int viewID)
+    protected void GetChipAndHisStack(int viewID, out GameObject chip, out StackData stack)
     {
-        var stack = Stacks.ToList().Find(s => s.Objects.Find(c => c.GetComponent<PhotonView>().ViewID == viewID));
+        chip = null;
+        stack = Stacks.ToList().Find(s => s.Objects.Find(c => c.GetComponent<PhotonView>().ViewID == viewID));
         if (stack == null)
-            return (null, null);
-        var chip = stack.Objects.Find(s => s.GetComponent<PhotonView>().ViewID == viewID);
-
-        return (chip, stack);
+            return;
+        chip = stack.Objects.Find(s => s.GetComponent<PhotonView>().ViewID == viewID);        
 
 
     }
@@ -254,31 +253,38 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     [PunRPC]
     public void ExtranctChipOnAll_RPC(int viewID)
     {
-        var data = GetChipAndHisStack(viewID);
-        if (data.chip == null)
+        StackData stack;
+        GameObject chip;
+
+        GetChipAndHisStack(viewID, out chip, out stack);
+
+        if (chip == null)
         {
             Debug.Log("chip not found! viewID = " + viewID);
             return;
         }
 
-        data.stack.Objects.Remove(data.chip);
+        stack.Objects.Remove(chip);
 
-        data.stack.UpdateStackInstantly();
+        stack.UpdateStackInstantly();
     }
     public virtual GameObject ExtranctObject(int viewID)
     {
-        var data = GetChipAndHisStack(viewID);
+        StackData stack;
+        GameObject chip;
 
-        if (data.chip == null)
+        GetChipAndHisStack(viewID, out chip, out stack);
+
+        if (chip == null)
         {
             Debug.Log("chip not found! viewID = " + viewID);
             return null;
         }
 
-        data.stack.ExtractOne(data.chip);
-        ClearObjectDataFromField(data.chip.GetComponent<OwnerData>());
+        stack.ExtractOne(chip);
+        ClearObjectDataFromField(chip.GetComponent<OwnerData>());
 
-        return data.chip;
+        return chip;
     }
 
     public void ExtractAllObjects()
