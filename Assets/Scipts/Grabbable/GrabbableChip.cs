@@ -81,7 +81,7 @@ class GrabbableChip : OVRGrabbableCustom
         }
 
 
-        grabbleObjSpawnPoint.parent = parent;   
+        grabbleObjSpawnPoint.parent = parent;  
        
     }
 

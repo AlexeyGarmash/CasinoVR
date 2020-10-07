@@ -168,22 +168,33 @@ public class PlayerPlace : MonoBehaviourPun
     [PunRPC]
     void InstatianeChip_RPC(int chipCost, string playerNick, int viewID)
     {
-        var chip = Instantiate(ChipUtils.Instance.GetPrefabByColor((Chips)chipCost), sf.SpawnPos.position, sf.SpawnPos.rotation);
+        var stack = sf.StacksByChipCost[(Chips)chipCost];
+        
+        var chip = Instantiate(ChipUtils.Instance.GetPrefabByColor((Chips)chipCost), stack.position, stack.rotation);
         chip.GetComponent<PhotonView>().ViewID = viewID;
-        chip.GetComponent<OwnerData>().Owner = playerNick;
+        var chipData = chip.GetComponent<ChipData>();
+        chipData.Owner = playerNick;
         chip.GetComponent<PhotonSyncCrontroller>().SyncOff_RPC();
+
+        sf.MagnetizeObject(chip, stack.GetComponent<StackData>(), ChipUtils.Instance.GetStringOfType(chipData.Cost));
 
     }
     public void InstantiateToStackWithColor(Chips chipsCost, ref int money, string playerNick)
     {
-        var chip = Instantiate(ChipUtils.Instance.GetPrefabByColor(chipsCost), sf.SpawnPos.position, sf.SpawnPos.rotation);
-        var owner = chip.GetComponent<OwnerData>();
-        owner.Owner = playerNick;
-        PhotonNetwork.AllocateViewID(owner.photonView);
+        var stack = sf.StacksByChipCost[chipsCost];
+
+        var chip = Instantiate(ChipUtils.Instance.GetPrefabByColor(chipsCost), stack.position, stack.rotation);
+
+        var chipData = chip.GetComponent<ChipData>();
+        chipData.Owner = playerNick;
+        PhotonNetwork.AllocateViewID(chipData.photonView);
+
         chip.GetComponent<PhotonSyncCrontroller>().SyncOff_RPC();
 
-        photonView.RPC("InstatianeChip_RPC", RpcTarget.OthersBuffered, (int)chipsCost, playerNick, owner.photonView.ViewID);
-     
+        photonView.RPC("InstatianeChip_RPC", RpcTarget.OthersBuffered, (int)chipsCost, playerNick, chipData.photonView.ViewID);
+
+        sf.MagnetizeObject(chip, stack.GetComponent<StackData>(), ChipUtils.Instance.GetStringOfType(chipData.Cost));
+
         money -= (int)chipsCost;
     }
 

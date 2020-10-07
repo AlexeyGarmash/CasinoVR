@@ -133,19 +133,22 @@ public class OVRGrabbableCustom : MonoBehaviourPun
             
         }
 
-        if (GetComponent<OwnerData>() != null)        
-            GetComponent<OwnerData>().ExtractObject();
-        
-        if (GetComponent<SoundsPlayer>() != null)       
-            GetComponent<SoundsPlayer>().PlayDefaultClip();
-        
+        var owner = GetComponent<OwnerData>();
+        if (owner)
+            owner.ExtractObject();
 
-        if (GetComponent<Outline>().IsNotNull())       
-            GetComponent<Outline>().enabled = false;
-        
+        var player = GetComponent<SoundsPlayer>();
+        if (player)
+            player.PlayDefaultClip();
+
+        var outline = GetComponent<Outline>();
+        if (outline)
+            outline.enabled = false; 
+
         grabPoint.transform.parent = hand.grabbleObjSpawnPoint;
         m_grabbedBy = hand;
         m_grabbedCollider = grabPoint;
+
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
     }
 

@@ -8,7 +8,12 @@ public class StackData : MonoBehaviourPun
 {
     public string playerName = "";
     public string stackType = "";
-   
+
+    [SerializeField]
+    public bool destoyableStack = false;
+
+    [SerializeField]
+    public AbstractField owner;
     [PunRPC]
     private void SetStackType_RPC(string _stackType)
     {
@@ -24,8 +29,9 @@ public class StackData : MonoBehaviourPun
 
     public StackAnimator animator;
 
-    private void Start()
+    private void Awake()
     {
+        owner = GetComponentInParent<AbstractField>();
         animator = GetComponent<StackAnimator>();
     }
     public void ExtractOne(GameObject obj)
@@ -34,8 +40,13 @@ public class StackData : MonoBehaviourPun
         {
             obj.transform.parent = null;
             Objects.Remove(obj);
-            UpdateStackInstantly();
+           
         }
+
+        UpdateStackInstantly();
+
+        if (Objects.Count == 0 && destoyableStack)
+            Destroy(gameObject);
     }
     public void ExtractAll()
     {
@@ -44,6 +55,9 @@ public class StackData : MonoBehaviourPun
         Objects.Clear();
         playerName = "";
         stackType = "";
+
+        if (Objects.Count == 0 && destoyableStack)
+            Destroy(gameObject);
     }
     public virtual void ClearData()
     {
@@ -68,7 +82,12 @@ public class StackData : MonoBehaviourPun
 
 
 
+    private void OnDestroy()
+    {
+        if(owner)
+            owner.Stacks.Remove(this);
 
+    }
 
 
 

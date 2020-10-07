@@ -66,17 +66,25 @@ public class StackAnimator : MonoBehaviour
     Coroutine prevMoveLastChips, waitToEnd;
 
     EventManager<AbstractFieldEvents> evenmManager;
-    private void Start()
+
+    public bool AnimationInitialized => stack != null;
+    private void Awake()
+    {
+        if(!AnimationInitialized)
+            InitStackAnimator();
+
+
+    }
+
+    void InitStackAnimator()
     {
         evenmManager = GetComponentInParent<AbstractField>().FieldEventManager;
         if (evenmManager == null)
             Debug.LogError("event manager is null");
         stack = GetComponent<StackData>();
-
-
     }
     IEnumerator MoveLastObject(float chipsDropSpeed, float chipsDropMult, float pause)
-    {
+    {      
         bool haveUnactiveObjects = true;
 
         while (haveUnactiveObjects)
@@ -148,6 +156,9 @@ public class StackAnimator : MonoBehaviour
 
     public void StartAnim(GameObject chip)
     {
+        if (!AnimationInitialized)
+            InitStackAnimator();
+
         AnimationEnded = false;
 
 
@@ -246,7 +257,6 @@ public class StackAnimator : MonoBehaviour
 
         for (var i = 0; i < stack.Objects.Count; i++)
         {
-
             //var currOffsetX = Random.Range(-xOffset, xOffset);
             //var currOffsetZ = Random.Range(-zOffset, zOffset);
 

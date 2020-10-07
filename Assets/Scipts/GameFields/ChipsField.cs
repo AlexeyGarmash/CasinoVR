@@ -6,7 +6,7 @@ using UnityEngine;
 public class ChipsField : AbstractField
 {
 
-    protected void OnTriggerEnter(Collider other)
+    protected new void OnTriggerEnter(Collider other)
     {
 
         var gameObj = other.gameObject;
@@ -27,6 +27,7 @@ public class ChipsField : AbstractField
 
             if (stacks.Exists(s => s.stackType != ""))
                 stack = stacks[0];
+
             else stack = stacks.FirstOrDefault(s => s.stackType == "");
 
             MagnetizeObject(gameObj, stack, ChipUtils.Instance.GetStringOfType(chip.Cost));
@@ -34,7 +35,7 @@ public class ChipsField : AbstractField
         }
 
     }
-    protected void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         var chip = other.gameObject.GetComponent<ChipData>();
         if (chip)
@@ -56,9 +57,7 @@ public class ChipsField : AbstractField
                     if (StackAnimStartedCounter == StackAnimEndedCounter)
                     {
                         
-
                         float maxZ = Stacks.Max(ss => ss.animator.currentZ);
-
 
                         int money = 0;
 
@@ -90,13 +89,6 @@ public class ChipsField : AbstractField
 
         return chip;
     }
-    #region Unity Callbacks
-
-
-
-    #endregion
-
-
 
 }
 

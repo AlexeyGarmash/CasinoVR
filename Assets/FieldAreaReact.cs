@@ -15,8 +15,11 @@ public class FieldAreaReact : MonoBehaviour, IListener<AbstractFieldEvents>
             case AbstractFieldEvents.ObjectInside:
 
                 Debug.Log("Inside");
-                animator.ResetTrigger(Inside);
-                animator.SetTrigger(Inside);
+                if (animator)
+                {
+                    animator.ResetTrigger(Inside);
+                    animator.SetTrigger(Inside);
+                }
                 if (source)
                     source.Play();
                 break;

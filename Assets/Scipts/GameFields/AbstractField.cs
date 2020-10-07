@@ -17,7 +17,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     public bool TriggerLocal = false;
 
     [SerializeField]
-    public StackData[] Stacks;
+    public List<StackData> Stacks;
    
     [SerializeField]
     protected int maxObjectsOnField = 20;
@@ -32,12 +32,13 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
         }
     }
 
-    protected List<StackData> FindStackByType(string type)
+    protected virtual void ClearObjectDataFromField(OwnerData data) { }
+    protected List<StackData> FindStackByType(string type, List<StackData> Stacks)
     {
-        var stacks = Stacks.ToList().FindAll(s => s.stackType == type && s.Objects.Count < maxObjectsOnField);
+        var stacks = Stacks.FindAll(s => s.stackType == type && s.Objects.Count < maxObjectsOnField);
        
         if (stacks.Count == 0)
-            return Stacks.ToList().FindAll(s => s.stackType == "");
+            return Stacks.FindAll(s => s.stackType == "");
         else return stacks;
 
     }
@@ -45,7 +46,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     {     
         var list = new List<StackData>();
      
-        for (var i = 0; i < Stacks.Length; i++)
+        for (var i = 0; i < Stacks.Count; i++)
             if (Stacks[i].Objects.Count < maxObjectsOnField)
                 list.Add(Stacks[i]);
         return list;
@@ -77,18 +78,19 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
     protected void Awake()
     {
-        Stacks = GetComponentsInChildren<StackData>();
+        Stacks = GetComponentsInChildren<StackData>().ToList();
         FieldEventManager.AddListener(AbstractFieldEvents.StackAnimationEnded, this);
         FieldEventManager.AddListener(AbstractFieldEvents.StackAnimationStarted, this);
     }
 
     public void ClearStacks()
     {
-        for (var i = 0; i < Stacks.Length; i++)                               
+        for (var i = 0; i < Stacks.Count; i++)                               
             Stacks[i].ClearData();
         FieldEventManager.PostNotification(AbstractFieldEvents.UpdateUI, this, 0, 0);
 
     }
+
     public void ClearStack(StackData stack)
     {
         
@@ -98,6 +100,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
         stack.ClearData();
 
         
+
     }
     public bool Contain(GameObject chip)
     {
@@ -109,6 +112,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
         return false;
     }
+
     protected StackData FindStackByName(Transform chip)
     {
         var list = Stacks.ToList();
@@ -121,6 +125,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
         return stack;
     }
+
     protected StackData FindClossestField(Transform chip, List<StackData> PossibleField)
     {
         if (PossibleField == null)
@@ -132,9 +137,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
         }
 
         return PossibleField[distances.IndexOf(distances.Min())];
-    }
-
-    
+    } 
 
     protected (GameObject chip, StackData stack) GetChipAndHisStack(int viewID)
     {
@@ -183,7 +186,6 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
         }
     }
 
-
     protected void BlockAllStacks()
     {       
         photonView.RPC("UpdateAllStacks", RpcTarget.All, false, false);
@@ -213,27 +215,27 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
         
     }
 
-    //protected void OnTriggerEnter(Collider other)
-    //{
+    protected virtual void OnTriggerEnter(Collider other)
+    {
 
-    //    var gameObj = other.gameObject;
-    //    var chip = other.gameObject.GetComponent<OwnerData>();
-    //    var gc = other.gameObject.GetComponent<OVRGrabbableCustom>();
-    //    var rb = other.GetComponent<Rigidbody>();
-    //    var view = gameObj.GetComponent<PhotonView>();
+        //var gameObj = other.gameObject;
+        //var chip = other.gameObject.GetComponent<OwnerData>();
+        //var gc = other.gameObject.GetComponent<OVRGrabbableCustom>();
+        //var rb = other.GetComponent<Rigidbody>();
+        //var view = gameObj.GetComponent<PhotonView>();
 
-    //    if (chip != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null)
-    //    {
+        //if (chip != null && gc != null && !gc.isGrabbed && !rb.isKinematic && view != null)
+        //{
 
-    //        Debug.Log("MagnetizeObject viewID=" + view.ViewID);
-    //        var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
-    //        MagnetizeObject(gameObj, clossest, );
+        //    Debug.Log("MagnetizeObject viewID=" + view.ViewID);
+        //    var clossest = FindClossestField(chip.transform, FindPossibleFields(chip));
+        //    MagnetizeObject(gameObj, clossest, );
 
-    //    }
+        //}
 
-    //}
+    }
 
-    protected void OnTriggerStay(Collider other)
+    protected virtual void OnTriggerStay(Collider other)
     {
 
         var gameObj = other.gameObject;
@@ -244,7 +246,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
         if (chip != null && gc != null && gc.isGrabbed && rb.isKinematic && view != null && Contain(gameObj))
         {
-            ExtranctObject(view.ViewID);
+            //ExtranctObject(view.ViewID);
             //SyncStacks();
         }
 
@@ -273,9 +275,8 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
             return null;
         }
 
-        data.stack.Objects.Remove(data.chip);
-
-        data.stack.animator.UpdateStackInstantly();
+        data.stack.ExtractOne(data.chip);
+        ClearObjectDataFromField(data.chip.GetComponent<OwnerData>());
 
         return data.chip;
     }
@@ -312,10 +313,12 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     }
     public virtual bool MagnetizeObject(GameObject Object, StackData Stack, string StackType = "", bool magnetizeLocal = false)
     {
+        if (!Stack)
+            return false;
 
         var rb = Object.GetComponent<Rigidbody>();
         var chip = Object.GetComponent<OwnerData>();
-
+        chip.field = this;
 
         if (Stack.stackType == "")
             Stack.stackType = StackType;
@@ -338,10 +341,6 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
             stackData.Objects.Add(Object);
             stackData.animator.StartAnim(Object);
-
-         
-
-
 
             return true;
 
