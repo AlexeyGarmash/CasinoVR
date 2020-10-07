@@ -238,17 +238,17 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     protected virtual void OnTriggerStay(Collider other)
     {
 
-        var gameObj = other.gameObject;
-        var chip = other.gameObject.GetComponent<OwnerData>();
-        var gc = other.gameObject.GetComponent<OVRGrabbableCustom>();
-        var rb = other.GetComponent<Rigidbody>();
-        var view = gameObj.GetComponent<PhotonView>();
+        //var gameObj = other.gameObject;
+        //var chip = other.gameObject.GetComponent<OwnerData>();
+        //var gc = other.gameObject.GetComponent<OVRGrabbableCustom>();
+        //var rb = other.GetComponent<Rigidbody>();
+        //var view = gameObj.GetComponent<PhotonView>();
 
-        if (chip != null && gc != null && gc.isGrabbed && rb.isKinematic && view != null && Contain(gameObj))
-        {
-            //ExtranctObject(view.ViewID);
-            //SyncStacks();
-        }
+        //if (chip != null && gc != null && gc.isGrabbed && rb.isKinematic && view != null && Contain(gameObj))
+        //{
+        //    //ExtranctObject(view.ViewID);
+        //    //SyncStacks();
+        //}
 
     }
     [PunRPC]
@@ -293,12 +293,17 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
     {
         try
         {
+           
+
             var magnetizedObject = Physics.OverlapSphere(ObjPosition, 10f).FirstOrDefault(g => g.GetComponent<PhotonView>()?.ViewID == viewId).gameObject;
             var rb = magnetizedObject.GetComponent<Rigidbody>();
             var stackData = Stacks[stackIndex];
 
+            var ownerdata = GetComponent<OwnerData>();
             if (stackData.playerName == "")
-                stackData.playerName = magnetizedObject.GetComponent<OwnerData>().Owner;
+                stackData.playerName = ownerdata.Owner;
+
+            ownerdata.field = this;
 
             rb.isKinematic = true;
             magnetizedObject.transform.parent = stackData.transform;

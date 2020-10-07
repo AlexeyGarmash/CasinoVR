@@ -85,6 +85,11 @@ public class PlayerChipsField : ChipsField
             yield return null;
         }
 
+        if (lastChip.GetComponent<OwnerData>().field)
+        {
+            StopAllCoroutines();
+            yield return null;
+        }
 
         lastChip.transform.parent = transform;
         var newStack = Instantiate(stackPrefab, transform);
@@ -133,8 +138,7 @@ public class PlayerChipsField : ChipsField
                 if (grabbableChip.isGrabbed)
                 {
                     Debug.Log("chip added");
-                    lastChip = grabbableChip;
-                    chipdata.field = this;
+                    lastChip = grabbableChip;                   
                     triggeredChips.Add(other.GetComponent<ChipData>());
                     if (!chekingChipsStarted)
                         StartCoroutine(ChipInField());
@@ -149,25 +153,25 @@ public class PlayerChipsField : ChipsField
     protected override void OnTriggerExit(Collider other)
     {
         //base.OnTriggerExit(other);
-        //var chipdata = other.GetComponent<ChipData>();
+        var chipdata = other.GetComponent<ChipData>();
 
-        //if (chipdata && triggeredChips.Contains(chipdata))
-        //{
-        //    var grabbableChip = other.GetComponent<GrabbableChip>();
-        //    if (grabbableChip)
-        //    {
-        //        if (grabbableChip.isGrabbed)
-        //        {
-        //            Debug.Log("chip removed");
-        //            triggeredChips.Remove(chipdata);
-        //            chipdata.field = null;
-        //            if (triggeredChips.Count == 0)
-        //                StopCoroutine(ChipInField());
-        //        }
-        //    }
+        if (chipdata && triggeredChips.Contains(chipdata))
+        {
+            var grabbableChip = other.GetComponent<GrabbableChip>();
+            if (grabbableChip)
+            {
+                if (grabbableChip.isGrabbed)
+                {
+                    Debug.Log("chip removed");
+                    triggeredChips.Remove(chipdata);
+
+                    if (triggeredChips.Count == 0)
+                        StopAllCoroutines();
+                }
+            }
 
 
-        //}
+        }
 
     }
 
