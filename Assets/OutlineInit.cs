@@ -10,9 +10,4 @@ public class OutlineInit : MonoBehaviour
         GetComponent<Outline>().enabled = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 8406787179591387773}
   - component: {fileID: 8406787179591387772}
   - component: {fileID: 8406787179591387715}
+  - component: {fileID: 8874753880759057976}
   m_Layer: 0
   m_Name: Bottle_1
   m_TagString: Untagged
@@ -264,6 +265,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
+  observableSearch: 0
   Synchronization: 0
   OwnershipTransfer: 0
   ObservedComponents:
@@ -271,6 +273,18 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &8874753880759057976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8406787179591291402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d90a4c86828f2014c9b6b289d9b681a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8406787179832144070
 GameObject:
   m_ObjectHideFlags: 0

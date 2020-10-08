@@ -46,18 +46,24 @@ public class StackData : MonoBehaviourPun
         UpdateStackInstantly();
 
         if (Objects.Count == 0 && destoyableStack)
-            Destroy(gameObject);
+            StartCoroutine(DestroySalfInEndOfFrame());
     }
-    public void ExtractAll()
+    public List<GameObject> ExtractAll()
     {
         animator.Clear();
         Objects.ForEach(o => o.GetComponent<Rigidbody>().isKinematic = false);
+
+        var tempObject = new List<GameObject>();
+        tempObject.AddRange(Objects);
         Objects.Clear();
         playerName = "";
         stackType = "";
 
+
         if (Objects.Count == 0 && destoyableStack)
-            Destroy(gameObject);
+            StartCoroutine(DestroySalfInEndOfFrame());
+
+        return tempObject;
     }
     public virtual void ClearData()
     {
@@ -70,6 +76,13 @@ public class StackData : MonoBehaviourPun
         playerName = "";
         stackType = "";
 
+    }
+
+    IEnumerator DestroySalfInEndOfFrame()
+    {
+        yield return new WaitForEndOfFrame();
+
+        Destroy(this);
     }
     public void StartAnim(GameObject chip)
     {        

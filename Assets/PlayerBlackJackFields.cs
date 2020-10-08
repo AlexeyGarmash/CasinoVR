@@ -7,7 +7,7 @@ public class PlayerBlackJackFields : MonoBehaviour
 {
 
     [SerializeField]
-    public ChipsField bettingField;
+    public BlackJackBettingField bettingField;
     [SerializeField]
     public BlackJackPlayerCardField blackJackCardField;
 

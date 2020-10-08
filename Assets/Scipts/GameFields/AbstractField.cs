@@ -294,6 +294,7 @@ public abstract class AbstractField : MonoBehaviourPun, IMagnetize, IListener<Ab
 
     }
 
+
     [PunRPC]
     public void MagnetizeObject_RPC(int viewId,int stackIndex, Vector3 ObjPosition)
     {

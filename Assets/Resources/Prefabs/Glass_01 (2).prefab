@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8315402911616315305}
   - component: {fileID: 8315402911616315306}
   - component: {fileID: 8315402911616315307}
+  - component: {fileID: -5955761500152187992}
   m_Layer: 0
   m_Name: Glass_01 (2)
   m_TagString: Untagged
@@ -130,6 +131,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
+  observableSearch: 0
   Synchronization: 0
   OwnershipTransfer: 0
   ObservedComponents:
@@ -190,6 +192,18 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &-5955761500152187992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8315402911616153555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d90a4c86828f2014c9b6b289d9b681a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8315402913047341328
 GameObject:
   m_ObjectHideFlags: 0

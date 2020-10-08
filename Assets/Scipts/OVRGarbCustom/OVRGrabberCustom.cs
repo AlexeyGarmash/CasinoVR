@@ -274,8 +274,8 @@ public class OVRGrabberCustom : MonoBehaviourPun
         {
             
             m_grabCandidates.Remove(grabbable);
-            if (grabbable.GetComponent<Outline>() != null)
-                grabbable.GetComponent<Outline>().enabled = false;
+            if (grabbable.GetComponent<OutlineController>() != null)
+                grabbable.GetComponent<OutlineController>().DisableOutlines();
 
             ResetClosestObj();
         }
@@ -305,16 +305,16 @@ public class OVRGrabberCustom : MonoBehaviourPun
             if(closest == obj) 
                 continue;
 
-            if (obj.GetComponent<Outline>() != null) 
-                obj.GetComponent<Outline>().enabled = false;
+            if (obj.GetComponent<OutlineController>() != null) 
+                obj.GetComponent<OutlineController>().DisableOutlines();
         }
 
         foreach (var obj in m_grabCandidates.Keys)
         {
             if (closest == obj)
                 continue;
-            if (obj.GetComponent<Outline>() != null)
-                obj.GetComponent<Outline>().enabled = false;
+            if (obj.GetComponent<OutlineController>() != null)
+                obj.GetComponent<OutlineController>().DisableOutlines();
         }
     }
     private void SetOutlineForClosest()
@@ -324,11 +324,11 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
         if (photonView.IsMine)
         {
-            if (closestGrabbable != null && closestGrabbable.GetComponent<Outline>() != null && photonView.IsMine)
+            if (closestGrabbable != null && closestGrabbable.GetComponent<OutlineController>() != null && photonView.IsMine)
             {
-                var outline = closestGrabbable.GetComponent<Outline>();
+                var outline = closestGrabbable.GetComponent<OutlineController>();
 
-                outline.enabled = true;
+                outline.EnableOutlines();
             }
 
             DisableOutline(closestGrabbable);
@@ -366,8 +366,8 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
         for (var i = 0; i < removeCandidaes.Count; i++)
         {
-            if (removeCandidaes[i].GetComponent<Outline>() != null)
-                removeCandidaes[i].GetComponent<Outline>().enabled = false;
+            if (removeCandidaes[i].GetComponent<OutlineController>() != null)
+                removeCandidaes[i].GetComponent<OutlineController>().DisableOutlines();
             m_grabCandidates.Remove(removeCandidaes[i]);
         }
     }

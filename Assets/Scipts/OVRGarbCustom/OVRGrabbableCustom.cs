@@ -141,9 +141,9 @@ public class OVRGrabbableCustom : MonoBehaviourPun
         if (player)
             player.PlayDefaultClip();
 
-        var outline = GetComponent<Outline>();
+        var outline = GetComponent<OutlineController>();
         if (outline)
-            outline.enabled = false; 
+            outline.DisableOutlines();
 
         grabPoint.transform.parent = hand.grabbleObjSpawnPoint;
         m_grabbedBy = hand;
@@ -159,6 +159,9 @@ public class OVRGrabbableCustom : MonoBehaviourPun
     
     virtual public void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
+        if (!gameObject)
+            return;
+
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
 
         rb.isKinematic = m_grabbedKinematic;
