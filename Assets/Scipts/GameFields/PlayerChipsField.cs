@@ -40,6 +40,8 @@ public class PlayerChipsField : ChipsField
 
     bool chekingChipsStarted = false;
 
+    public Vector3 lastPlayerHandPosition;
+
     private void Start()
     {
         StacksByChipCost.Add(Chips.BLACK, blackChipSpawnpoint);
@@ -151,6 +153,11 @@ public class PlayerChipsField : ChipsField
             }
 
 
+        }
+
+        if (other.GetComponent<LongClickHand>())
+        {
+            lastPlayerHandPosition = other.GetComponentInParent<OVRGrabberCustom>().transform.position;
         }
 
     }

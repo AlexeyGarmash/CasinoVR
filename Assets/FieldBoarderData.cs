@@ -1,43 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FieldBoarderData : MonoBehaviour
 {
+    [SerializeField]
     private CurvedLinePoint[] points;
     private Vector2[] polygon;
-    void Start()
+
+    Vector2 cenerMass;
+
+    public Vector2 CenerMass => cenerMass;
+
+    void Awake()
     {
         points = GetComponentsInChildren<CurvedLinePoint>();
         polygon = new Vector2[points.Length];
         for (var i = 0; i < points.Length; i++)
             polygon[i] = new Vector2(points[i].transform.position.x, points[i].transform.position.z);
+
+        CenterMass();
     }
 
-    //Для ограничения передвижения только по игровому полю
-    //public bool IsPointInPolygon(Vector2 point)
-    //{
-    //    int polygonLength = polygon.Length, i = 0;
-    //    bool inside = false;
-    //    // x, y for tested point.
-    //    float pointX = point.x, pointY = point.y;
-    //    // start / end point for the current polygon segment.
-    //    float startX, startY, endX, endY;
-    //    Vector2 endPoint = polygon[polygonLength - 1];
-    //    endX = endPoint.x;
-    //    endY = endPoint.y;
-    //    while (i < polygonLength)
-    //    {
-    //        startX = endX; startY = endY;
-    //        endPoint = polygon[i++];
-    //        endX = endPoint.x; endY = endPoint.y;
-    //        //
-    //        inside ^= (endY > pointY ^ startY > pointY) /* ? pointY inside [startY;endY] segment ? */
-    //                  && /* if so, test if it is under the segment */
-    //                  ((pointX - endX) < (pointY - endY) * (startX - endX) / (startY - endY));
-    //    }
-    //    return inside;
-    //}
+    private void CenterMass()
+    {
+
+        if (polygon.Length > 2)
+        {
+            float centerX = polygon.Select(x => x.x * 1).Sum() / polygon.Length;
+            float centerY = polygon.Select(x => x.y * 1).Sum() / polygon.Length;
+
+            cenerMass = new Vector2(centerX, centerY);
+        }
+    }
     public bool ContainsPoint(Vector2 p)
     {
         var j = polygon.Length - 1;
