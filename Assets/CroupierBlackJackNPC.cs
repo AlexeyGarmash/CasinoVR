@@ -11,7 +11,9 @@ using Assets.Scipts.BackJack;
 public class CroupierBlackJackNPC : MonoBehaviourPun
 {
     Animator animator;
-  
+
+
+    public Transform NpcCenter;
     const int numberOfDancingsForWin = 8;
 
     [SerializeField]

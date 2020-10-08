@@ -34,7 +34,7 @@ public class GrabbableStack : OVRGrabbableCustom
 
         field = GetComponentInParent<PlayerChipsField>();
         boarderData = GetComponentInParent<FieldBoarderData>();
-        npc = GetComponentInParent<CroupierBlackJackNPC>().transform;
+        npc = GetComponentInParent<CroupierBlackJackNPC>().NpcCenter;
         stackYPos = transform.position.y;
        
     }
@@ -108,9 +108,6 @@ public class GrabbableStack : OVRGrabbableCustom
             Vector3 vect1 = Vector3.ProjectOnPlane(grabbedBy.transform.position, Vector3.up);
             Vector3 vect2 = Vector3.ProjectOnPlane(handParent.transform.position, Vector3.up);
 
-
-            
-
             if (Vector3.Distance(vect1, vect2) > leverDistanceMax)
             {
                 grabbedBy.ForceRelease(this);
@@ -119,8 +116,9 @@ public class GrabbableStack : OVRGrabbableCustom
 
             if (boarderData.ContainsPoint(new Vector2(transform.position.x, transform.position.z)))
             {
+                grabbedBy.transform.LookAt(npc);
                 grabbedBy.transform.position = new Vector3(handParent.transform.position.x, stackYPos, handParent.transform.position.z);
-                grabbedBy.transform.rotation = Quaternion.identity;
+               
                 
 
                 transform.localRotation = snapOffset.localRotation;
