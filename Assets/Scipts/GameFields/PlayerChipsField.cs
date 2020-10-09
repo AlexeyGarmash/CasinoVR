@@ -135,13 +135,14 @@ public class PlayerChipsField : ChipsField
     {
         var chipdata = other.GetComponent<ChipData>();
 
-        if (chipdata && !chipdata.field)
+        if (chipdata)
         {
+            
             var grabbableChip = other.GetComponent<GrabbableChip>();
 
-            if (grabbableChip)
+            if (grabbableChip && !triggeredChips.Contains(chipdata))
             {
-                if (grabbableChip.isGrabbed && !triggeredChips.Contains(chipdata))
+                if (grabbableChip.isGrabbed)
                 {
                     Debug.Log("chip added");
                     lastChip = grabbableChip;
@@ -153,20 +154,18 @@ public class PlayerChipsField : ChipsField
                         StartCoroutine(ChipInField());
                     }
                 }
-                //else if(!chipdata.animator && !chipdata.GetComponent<Rigidbody>().isKinematic)
-                //{                   
+                else if (!chipdata.animator && !chipdata.GetComponent<Rigidbody>().isKinematic)
+                {
 
-                //    var stacks = FindStackByType(ChipUtils.Instance.GetStringOfType(chipdata.Cost), Stacks);
+                    var stacks = FindStackByType(ChipUtils.Instance.GetStringOfType(chipdata.Cost), Stacks);
 
-                //    if (stacks.Count == 0)
-                //        MagnetizeObject(chipdata.gameObject, Stacks[0]);
+                    if (stacks.Count == 0)
+                        MagnetizeObject(chipdata.gameObject, Stacks[0]);
 
-                //    else MagnetizeObject(chipdata.gameObject, stacks[0]);
-                //}
-            }
+                    else MagnetizeObject(chipdata.gameObject, stacks[0]);
+                }
+            }                           
            
-
-
         }
        
 

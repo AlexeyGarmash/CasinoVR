@@ -67,10 +67,16 @@ public class StackAnimator : MonoBehaviour
 
     EventManager<AbstractFieldEvents> evenmManager;
 
+    protected BoxCollider BoxCollider;
+    float startedColliderZPos;
     public bool AnimationInitialized => stack != null;
     private void Awake()
     {
-        if(!AnimationInitialized)
+        BoxCollider = GetComponent<BoxCollider>();
+        if (BoxCollider)
+            startedColliderZPos = BoxCollider.center.z;
+
+        if (!AnimationInitialized)
             InitStackAnimator();
 
 
@@ -109,8 +115,17 @@ public class StackAnimator : MonoBehaviour
 
         }
 
+        currentZ -= zOffset;
+
+        if (BoxCollider)
+        {
+            BoxCollider.center = new Vector3(BoxCollider.center.x, BoxCollider.center.y, startedColliderZPos + currentZ);
+            BoxCollider.enabled = true;
+        }
         prevMoveLastChips = null;
-        
+
+       
+
         StartCoroutine(WaitToEnd());
        
         yield return null;
@@ -156,8 +171,12 @@ public class StackAnimator : MonoBehaviour
 
     public void StartAnim(GameObject chip)
     {
+
         if (!AnimationInitialized)
             InitStackAnimator();
+
+        if (BoxCollider)
+            BoxCollider.enabled = false;
 
         AnimationEnded = false;
 
@@ -266,8 +285,12 @@ public class StackAnimator : MonoBehaviour
             stack.Objects[i].transform.localPosition = pos;           
 
         }
-        currentY -= yOffset;
-        //lastY = currentY;
+
+        currentZ -= zOffset;
+
+        if(BoxCollider)
+            BoxCollider.center = new Vector3(BoxCollider.center.x, BoxCollider.center.y, startedColliderZPos + currentZ);
+       
 
     }
 

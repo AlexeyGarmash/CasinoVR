@@ -347,8 +347,15 @@ public class OVRGrabberCustom : MonoBehaviourPun
     void UpdateCandidates()
     {
         var removeCandidaes = new List<OVRGrabbableCustom>();
+        var deletedCandidates = new List<OVRGrabbableCustom>();
+
         foreach (OVRGrabbableCustom grabbable in m_grabCandidates.Keys)
         {
+            if (!grabbable)
+            {
+                deletedCandidates.Add(grabbable);
+                continue;
+            }
             if (m_grabCandidates == null)
                 continue;
             var itemNetInfo = grabbable.gameObject.GetComponent<OwnerData>();
@@ -363,6 +370,8 @@ public class OVRGrabberCustom : MonoBehaviourPun
                     removeCandidaes.Add(grabbable);
             }
         }
+        deletedCandidates.ForEach(dc => m_grabCandidates.Remove(dc));
+        
 
         for (var i = 0; i < removeCandidaes.Count; i++)
         {
