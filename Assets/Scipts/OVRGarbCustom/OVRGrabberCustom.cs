@@ -459,7 +459,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
             m_grabbedObj.GrabBegin(this, closestGrabbableCollider);
 
 
-            
+
             m_lastPos = transform.position;
             m_lastRot = transform.rotation;
 
@@ -502,20 +502,23 @@ public class OVRGrabberCustom : MonoBehaviourPun
             // speed and sends them flying. The grabbed object may still teleport inside of other objects, but fixing that
             // is beyond the scope of this demo.
 
-            if(m_grabbedObj.snapOffset)
-                MoveGrabbedObject(grabbleObjSpawnPoint.position, grabbleObjSpawnPoint.rotation, true);
+            if (m_grabbedObj)
+            {
+                if (m_grabbedObj.snapOffset)
+                    MoveGrabbedObject(grabbleObjSpawnPoint.position, grabbleObjSpawnPoint.rotation, true);
 
 
 
-            SetPlayerIgnoreCollision(m_grabbedObj.gameObject, true);
+                SetPlayerIgnoreCollision(m_grabbedObj.gameObject, true);
 
-            if (m_grabbedObjs.Count == max_grabbed_obj || closestGrabbable.tag == "Untagged")
-                GrabVolumeEnable(false);
+                if (m_grabbedObjs.Count == max_grabbed_obj || closestGrabbable.tag == "Untagged")
+                    GrabVolumeEnable(false);
 
-            //if (m_parentHeldObject)
-            //{
-            //    m_grabbedObj.transform.parent = transform;
-            //}
+                //if (m_parentHeldObject)
+                //{
+                //    m_grabbedObj.transform.parent = transform;
+                //}
+            }
         }
         else
         {
@@ -525,6 +528,12 @@ public class OVRGrabberCustom : MonoBehaviourPun
     /// <summary>
     /// Главная функция при взятии предмета 
     /// </summary>
+    /// 
+    public void ForceGrabBegin(OVRGrabbableCustom obj)
+    {
+        closestGrabbable = obj;
+        GrabBegin();
+    }
     protected virtual void GrabBegin()
     {
         if (photonView.IsMine && closestGrabbable != null)

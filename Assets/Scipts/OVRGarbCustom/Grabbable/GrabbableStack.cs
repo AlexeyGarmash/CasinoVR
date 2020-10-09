@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//[RequireComponent(typeof(StackData))]
 public class GrabbableStack : OVRGrabbableCustom
 {
+    
     private PlayerChipsField field;
     private Transform handParent;
     private Transform stackParent;
@@ -21,20 +23,24 @@ public class GrabbableStack : OVRGrabbableCustom
     Quaternion lastRotationHand;
     Vector3 lastPositionStack;
 
-    Transform npc;
-    List<Vector3> lastPositions = new List<Vector3>();
+    [SerializeField]
+    Transform npcCenter;
+    List<Vector3> lastHandPositions = new List<Vector3>();
+    List<Vector3> lastStackPositions = new List<Vector3>();
 
     float maxSevedPositions = 5f;
     [SerializeField]
     float leverDistanceMax = 0.5f;
 
-    protected override void Start()
+    private StackData stack;
+    protected void Awake()
     {
-        base.Start();
+        //base.Start();
 
         field = GetComponentInParent<PlayerChipsField>();
         boarderData = GetComponentInParent<FieldBoarderData>();
-        npc = GetComponentInParent<CroupierBlackJackNPC>().NpcCenter;
+        stack = GetComponent<StackData>();
+        npcCenter = GetComponentInParent<PlayerChipsField>().npcCenter;
         stackYPos = transform.position.y;
        
     }
@@ -42,27 +48,35 @@ public class GrabbableStack : OVRGrabbableCustom
 
     public override void GrabBegin(OVRGrabberCustom hand, Collider grabPoint)
     {
-        firstFrame = true;
+
+       
+
         handleRotation = transform.rotation;
         handRotation = hand.transform.rotation;
+
         stackParent = transform.parent;
+
         base.GrabBegin(hand, grabPoint);
 
         photonView.RequestOwnership();
 
-
         handRotation = hand.transform.localRotation;
+        handParent = hand.transform.parent;
 
         hand.transform.rotation = snapOffsetRotation;
-
-        
-        handParent = hand.transform.parent;
         
         transform.parent = hand.grabbleObjSpawnPoint;
-    
+
+        //if (stack.Objects.Count <= 4)
+        //{
+        //    hand.ForceRelease(this);
+
+        //    stack.Objects.ForEach(chip => hand.ForceGrabBegin(chip.GetComponent<OVRGrabbableCustom>()));
+
+        //    return;
+        //}
 
 
-    
 
     }
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
@@ -85,18 +99,16 @@ public class GrabbableStack : OVRGrabbableCustom
         transform.parent = stackParent;
         transform.rotation = handleRotation;
 
-        for (var i = lastPositions.Count - 1; i >= 0; i--)
-            if (boarderData.ContainsPoint(new Vector2(lastPositions[i].x, lastPositions[i].z)))
+        for (var i = lastStackPositions.Count - 1; i >= 0; i--)
+            if (boarderData.ContainsPoint(new Vector2(lastStackPositions[i].x, lastStackPositions[i].z)))
             {
-                transform.position = lastPositions[i];
+                transform.position = lastStackPositions[i];
                 break;
             }
 
         
     }
 
-
-    bool firstFrame = true;
 
     
     private void LateUpdate()
@@ -116,7 +128,7 @@ public class GrabbableStack : OVRGrabbableCustom
 
             if (boarderData.ContainsPoint(new Vector2(transform.position.x, transform.position.z)))
             {
-                grabbedBy.transform.LookAt(npc);
+                grabbedBy.transform.LookAt(npcCenter);
                 grabbedBy.transform.position = new Vector3(handParent.transform.position.x, stackYPos, handParent.transform.position.z);
                
                 
@@ -125,21 +137,26 @@ public class GrabbableStack : OVRGrabbableCustom
 
                 if (!boarderData.ContainsPoint(new Vector2(transform.position.x, transform.position.z)))
                 {
-                    if (lastPositions.Count != 0)
+                    if (lastHandPositions.Count != 0)
                     {
-
-                        grabbedBy.transform.position = lastPositions[lastPositions.Count - 1];
-
+                        grabbedBy.transform.position = lastHandPositions[lastHandPositions.Count - 1];
                     }
-                    else {
+                    else
+                    {
                         grabbedBy.transform.position = new Vector3(boarderData.CenerMass.x, stackYPos, boarderData.CenerMass.y);
                     }
                 }
-                else lastPositions.Add(grabbedBy.transform.position);
+                else
+                {
+                    lastHandPositions.Add(new Vector3(grabbedBy.transform.position.x, stackYPos, grabbedBy.transform.position.z));
+                    lastStackPositions.Add(new Vector3(transform.position.x, stackYPos, transform.position.z));
+                }
 
-
-                if (maxSevedPositions <= lastPositions.Count)
-                    lastPositions.Remove(lastPositions[0]);
+                if (maxSevedPositions <= lastHandPositions.Count)
+                {
+                    lastHandPositions.Remove(lastHandPositions[0]);
+                    lastStackPositions.Remove(lastStackPositions[0]);
+                }
 
                 lastPositionHand = grabbedBy.transform.position;
                 lastRotationHand = grabbedBy.transform.rotation;

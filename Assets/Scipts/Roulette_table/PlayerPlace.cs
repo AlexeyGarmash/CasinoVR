@@ -14,6 +14,7 @@ using UnityEngine;
 public class PlayerPlace : MonoBehaviourPun
 {
     public GameObject playerAreaField;
+   
     public RadialMenuHandV2 handMenu;
     public Action<bool, PlayerStats> actionReadyOrNot;
     public Action actionJoinOut;
@@ -49,6 +50,7 @@ public class PlayerPlace : MonoBehaviourPun
       
         playerWinAnim = GetComponentInChildren<PlayerWinAnimation>();
         sf = GetComponentInChildren<PlayerChipsField>();
+        //sf.gameObject.SetActive(false);
     }
 
     public void TakePlace(PlayerStats ps)
@@ -67,8 +69,8 @@ public class PlayerPlace : MonoBehaviourPun
             pc.EnableRotation = false;
             pc.GetComponentInChildren<TeleportDisabler>().Disable();
 
-           
 
+            sf.gameObject.SetActive(true);
             photonView.RequestOwnership();
             sf.photonView.RequestOwnership();
 
@@ -88,6 +90,7 @@ public class PlayerPlace : MonoBehaviourPun
     {
         if (ps.IsNotNull() && placeTaken)
         {
+            sf.gameObject.SetActive(false);
             if (playerAreaField)
                 playerAreaField.SetActive(false);
             var pc = ps.GetComponentInParent<OVRPlayerController>();
@@ -135,7 +138,7 @@ public class PlayerPlace : MonoBehaviourPun
     [PunRPC]
     public void TakePlace_RPC(string nickname, int money)
     {
-
+        sf.gameObject.SetActive(true);
         placeTaken = true;
         ps.PlayerNick = nickname;
         ps.AllMoney = money;
@@ -145,7 +148,7 @@ public class PlayerPlace : MonoBehaviourPun
     [PunRPC]
     public void GoOutPlace_RPC()
     {
-
+        sf.gameObject.SetActive(false);
         ps.PlayerNick = "";
         ps.AllMoney = 0;
 

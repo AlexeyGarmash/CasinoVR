@@ -138,7 +138,7 @@ namespace Assets.Scipts
 
             chip.GetComponent<Collider>().enabled = true;
             chip.GetComponent<Rigidbody>().isKinematic = false;
-
+            chip.GetComponent<OwnerData>().animator = null;
             yield return null;
 
            

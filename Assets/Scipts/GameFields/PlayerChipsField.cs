@@ -22,7 +22,9 @@ public class PlayerChipsField : ChipsField
     private Transform blackChipSpawnpoint;
     [SerializeField]
     private Transform purpleChipSpawnpoint;
-   
+    
+    public Transform npcCenter;
+
     public Dictionary<Chips, Transform> StacksByChipCost = new Dictionary<Chips, Transform>();
 
     [SerializeField]
@@ -37,7 +39,7 @@ public class PlayerChipsField : ChipsField
     GrabbableChip lastChip;
 
     List<ChipData> triggeredChips = new List<ChipData>();
-
+  
     bool chekingChipsStarted = false;
 
     public Vector3 lastPlayerHandPosition;
@@ -132,33 +134,41 @@ public class PlayerChipsField : ChipsField
     protected override void OnTriggerStay(Collider other)
     {
         var chipdata = other.GetComponent<ChipData>();
-        
-        if (chipdata && !triggeredChips.Contains(chipdata) && !chipdata.field)
+
+        if (chipdata && !chipdata.field)
         {
             var grabbableChip = other.GetComponent<GrabbableChip>();
 
             if (grabbableChip)
             {
-                if (grabbableChip.isGrabbed)
+                if (grabbableChip.isGrabbed && !triggeredChips.Contains(chipdata))
                 {
                     Debug.Log("chip added");
                     lastChip = grabbableChip;
                     lastChip.GetComponent<ChipData>().field = this;
                     triggeredChips.Add(other.GetComponent<ChipData>());
+
                     if (!chekingChipsStarted)
                     {
                         StartCoroutine(ChipInField());
                     }
-                }               
+                }
+                //else if(!chipdata.animator && !chipdata.GetComponent<Rigidbody>().isKinematic)
+                //{                   
+
+                //    var stacks = FindStackByType(ChipUtils.Instance.GetStringOfType(chipdata.Cost), Stacks);
+
+                //    if (stacks.Count == 0)
+                //        MagnetizeObject(chipdata.gameObject, Stacks[0]);
+
+                //    else MagnetizeObject(chipdata.gameObject, stacks[0]);
+                //}
             }
+           
 
 
         }
-
-        if (other.GetComponent<LongClickHand>())
-        {
-            lastPlayerHandPosition = other.GetComponentInParent<OVRGrabberCustom>().transform.position;
-        }
+       
 
     }
 
