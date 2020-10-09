@@ -16,6 +16,8 @@ public class FieldBoarderData : MonoBehaviour
     void Awake()
     {
         points = GetComponentsInChildren<CurvedLinePoint>();
+       
+
         polygon = new Vector2[points.Length];
         for (var i = 0; i < points.Length; i++)
             polygon[i] = new Vector2(points[i].transform.position.x, points[i].transform.position.z);

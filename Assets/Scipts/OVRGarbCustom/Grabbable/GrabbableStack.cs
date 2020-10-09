@@ -117,14 +117,14 @@ public class GrabbableStack : OVRGrabbableCustom
         if (isGrabbed)
         {
 
-            Vector3 vect1 = Vector3.ProjectOnPlane(grabbedBy.transform.position, Vector3.up);
-            Vector3 vect2 = Vector3.ProjectOnPlane(handParent.transform.position, Vector3.up);
+            //Vector3 vect1 = Vector3.ProjectOnPlane(grabbedBy.transform.position, Vector3.up);
+            //Vector3 vect2 = Vector3.ProjectOnPlane(handParent.transform.position, Vector3.up);
 
-            if (Vector3.Distance(vect1, vect2) > leverDistanceMax)
-            {
-                grabbedBy.ForceRelease(this);
-                return;
-            }
+            //if (Vector3.Distance(vect1, vect2) > leverDistanceMax)
+            //{
+            //    grabbedBy.ForceRelease(this);
+            //    return;
+            //}
 
             if (boarderData.ContainsPoint(new Vector2(transform.position.x, transform.position.z)))
             {
