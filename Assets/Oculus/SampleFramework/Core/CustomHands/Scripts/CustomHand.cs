@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using OVRTouchSample;
+using Photon.Pun;
 #if UNITY_EDITOR
 using UnityEngine.SceneManagement;
 #endif
@@ -21,7 +22,7 @@ namespace OVRTouchSample
 {
     // Animated hand visuals for a user of a Touch controller.
     [RequireComponent(typeof(OVRGrabberCustom))]
-    public class CustomHand : MonoBehaviour
+    public class CustomHand : MonoBehaviourPun
     {
         public const string ANIM_LAYER_NAME_POINT = "Point Layer";
         public const string ANIM_LAYER_NAME_THUMB = "Thumb Layer";
@@ -65,7 +66,7 @@ namespace OVRTouchSample
         private float m_thumbsUpBlend = 0.0f;
 
         private bool m_restoreOnInputAcquired = false;
-
+ 
         private void Awake()
         {
             m_grabber = GetComponent<OVRGrabberCustom>();
@@ -187,12 +188,19 @@ namespace OVRTouchSample
 
         public void SetPose(HandPoseId pose)
         {
-            m_defaultGrabPose.PoseId = pose;
+            photonView.RPC("SetPose", RpcTarget.All, (int)pose);          
         }
 
         public void ClearPose()
         {
-            m_defaultGrabPose.PoseId = HandPoseId.Default;
+            photonView.RPC("SetPose", RpcTarget.All, (int)HandPoseId.Default);
+        }
+
+        [PunRPC]
+        private void SetPose(int pose)
+        {
+            m_defaultGrabPose.PoseId = (HandPoseId)pose;
+            
         }
         private void UpdateAnimStates()
         {

@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Assets.Scipts.Chips;
+using OVRTouchSample;
 /// <summary>
 /// Allows grabbing and throwing of objects with the OVRGrabbable component on them.
 /// </summary>
@@ -53,12 +54,15 @@ public class OVRGrabberCustom : MonoBehaviourPun
     // нажатие кнопки GrabButton
     private bool add_chip;
 
-
-    [SerializeField, Header("Closes object outline color")]
-    private Color color;
-    [SerializeField]
-    private int Width = 6;
     #endregion
+
+    public enum GrabberState { Default, SelectionChips }
+
+    protected GrabberState state = GrabberState.Default;
+    public GrabberState State => state;
+
+    protected CustomHand HandPose;
+    protected IndexFingerChipSelection intexFingerSelector;
     [Header("Other Settings")]
     // Grip trigger thresholds for picking up objects, with some hysteresis.
     public float grabBegin = 0.55f;
@@ -132,34 +136,20 @@ public class OVRGrabberCustom : MonoBehaviourPun
     }
 
     public bool IsLocalHand { get { return photonView.IsMine; } }
-    public void ForceRelease(OVRGrabbableCustom grabbable)
-    {
-        bool canRelease = (m_grabbedObj != null && m_grabbedObjs.Contains(grabbable));
-        if (canRelease)
-        {
-            GrabEnd();
-            
-        }
-
-        int value;
-        if (m_grabCandidates.TryGetValue(grabbable, out value))
-        {
-            m_grabCandidates.Remove(grabbable);
-
-        }
-    }
+    
 
     protected virtual void Awake()
     {
         m_anchorOffsetPosition = transform.localPosition;
         m_anchorOffsetRotation = transform.localRotation;
-
-       
+     
     }
 
 
     protected virtual void Start()
     {
+        HandPose = GetComponent<CustomHand>();
+        intexFingerSelector = GetComponentInChildren<IndexFingerChipSelection>();
         playerStat = GetComponentInParent<PlayerStats>();
 
         m_lastPos = transform.position;
@@ -183,11 +173,82 @@ public class OVRGrabberCustom : MonoBehaviourPun
     virtual public void FixedUpdate()
     {
         if (m_operatingWithoutOVRCameraRig)
-        {
-            OnUpdatedAnchors();
+        {          
+            OnUpdatedAnchors();          
         }
     }
+    public void ForceRelease(OVRGrabbableCustom grabbable)
+    {
+        bool canRelease = (m_grabbedObj != null && m_grabbedObjs.Contains(grabbable));
+        if (canRelease)
+        {
+            GrabEnd();
 
+        }
+
+        int value;
+        if (m_grabCandidates.TryGetValue(grabbable, out value))
+        {
+            m_grabCandidates.Remove(grabbable);
+
+        }
+    }
+    public List<GrabbableChip> selectedChips = new List<GrabbableChip>();
+    void SelectionChips(float prevFlex)
+    {
+        if (m_prevFlex >= grabBegin && prevFlex < grabBegin && !changeStateInProcess)
+        {
+            if (!intexFingerSelector.IsFingerActivated)
+                intexFingerSelector.ActivateFinger(true);
+
+            HandPose.SetPose(HandPoseId.BJ_DoubleBet);         
+
+            Debug.Log("StartChipSelection");
+
+        }
+        else if ((m_prevFlex <= grabEnd) && (prevFlex > grabEnd))
+        {
+            
+
+            intexFingerSelector.ActivateFinger(false);
+
+            selectedChips.ForEach(selected =>
+            {
+                closestGrabbableCollider = FindClossestGrabPoint(selected);
+                closestGrabbable = selected;
+                GrabBegin();
+            });
+
+            if (selectedChips.Count != 0)
+                HandPose.SetPose(HandPoseId.ChipPose);
+            else HandPose.ClearPose();
+
+            selectedChips.Clear();
+            state = GrabberState.Default;
+            //StopAllCoroutines();
+            //StartCoroutine(SetStateWithDelay(2f, GrabberState.Default));
+
+            Debug.Log("EndChipSelection");
+
+            
+
+        }
+    }
+    bool changeStateInProcess = false;
+    IEnumerator SetStateWithDelay(float delay, GrabberState state)
+    {
+        changeStateInProcess = true;
+        yield return new WaitForSeconds(delay);
+        photonView.RPC("SetState", RpcTarget.All, (int)state);
+        changeStateInProcess = false;
+    }
+
+   
+    [PunRPC]
+    private void SetState(int State)
+    {
+        state = (GrabberState)State;       
+    }
     // Hands follow the touch anchors by calling MovePosition each frame to reach the anchor.
     // This is done instead of parenting to achieve workable physics. If you don't require physics on
     // your hands or held objects, you may wish to switch to parenting.
@@ -223,63 +284,75 @@ public class OVRGrabberCustom : MonoBehaviourPun
             m_prevFlex = OVRInput.Get(GrabAxis, m_controller);
             add_chip = OVRInput.GetDown(GrabButton, m_controller);
 
-       
-            if (m_grabCandidates.Count != 0)
-                SetOutlineForClosest();
-            CheckForGrabOrRelease(prevFlex);
+            if (m_grabCandidates.Count == 0 && m_grabbedObjs.Count == 0 && !changeStateInProcess)
+                state = GrabberState.SelectionChips;
+
+            if (state == GrabberState.Default)
+            {
+                if (m_grabCandidates.Count != 0)
+                    SetOutlineForClosest();
+                CheckForGrabOrRelease(prevFlex);
+            }
+            else
+            {
+                SelectionChips(prevFlex);
+            }
         }
+
     }
 
-    void OnDestroy()
-    {
-        if (m_grabbedObj != null)
-        {
-            GrabEnd();
-        }
-    }
+   
 
     void OnTriggerEnter(Collider otherCollider)
     {
-        // Get the grab trigger
-        var netInfo = otherCollider.gameObject.GetComponent<ChipData>();
-        OVRGrabbableCustom grabbable = otherCollider.GetComponent<OVRGrabbableCustom>() ?? otherCollider.GetComponentInParent<OVRGrabbableCustom>();
-        if (grabbable == null) return;
-      
+        if (state == GrabberState.Default)
+        {
+            // Get the grab trigger
+            var netInfo = otherCollider.gameObject.GetComponent<ChipData>();
+            OVRGrabbableCustom grabbable = otherCollider.GetComponent<OVRGrabbableCustom>() ?? otherCollider.GetComponentInParent<OVRGrabbableCustom>();
+            if (grabbable == null) return;
 
-        // Add the grabbable
-        int refCount = 0;     
-        m_grabCandidates.TryGetValue(grabbable, out refCount);
-        m_grabCandidates[grabbable] = refCount + 1;
+
+            // Add the grabbable
+            int refCount = 0;
+            m_grabCandidates.TryGetValue(grabbable, out refCount);
+            m_grabCandidates[grabbable] = refCount + 1;
+        }
 
     }
 
     void OnTriggerExit(Collider otherCollider)
     {
-        OVRGrabbableCustom grabbable = otherCollider.GetComponent<OVRGrabbableCustom>() ?? otherCollider.GetComponentInParent<OVRGrabbableCustom>();
-        if (grabbable == null) return;
-
-        // Remove the grabbable
-        int refCount = 0;
-        bool found = m_grabCandidates.TryGetValue(grabbable, out refCount);
-        if (!found)
+        if (state == GrabberState.Default)
         {
-            return;
-        }
+            OVRGrabbableCustom grabbable = otherCollider.GetComponent<OVRGrabbableCustom>() ?? otherCollider.GetComponentInParent<OVRGrabbableCustom>();
+            if (grabbable == null) return;
 
-        if (refCount > 1)
-        {
-            m_grabCandidates[grabbable] = refCount - 1;
-        }
-        else
-        {
-            
-            m_grabCandidates.Remove(grabbable);
-            if (grabbable.GetComponent<OutlineController>() != null)
-                grabbable.GetComponent<OutlineController>().DisableOutlines();
+            // Remove the grabbable
+            int refCount = 0;
+            bool found = m_grabCandidates.TryGetValue(grabbable, out refCount);
+            if (!found)
+            {
+                return;
+            }
 
-            ResetClosestObj();
+            if (refCount > 1)
+            {
+                m_grabCandidates[grabbable] = refCount - 1;
+            }
+            else
+            {
+
+                m_grabCandidates.Remove(grabbable);
+                if (grabbable.GetComponent<OutlineController>() != null)
+                    grabbable.GetComponent<OutlineController>().DisableOutlines();
+
+                ResetClosestObj();
+            }
         }
     }
+
+
 
     /// <summary>
     /// функция для которая проверяет мы берем предмет, бросаем или ничего не делаем
@@ -288,11 +361,11 @@ public class OVRGrabberCustom : MonoBehaviourPun
     protected void CheckForGrabOrRelease(float prevFlex)
     {
 
-        if(add_chip)//if ((m_prevFlex >= grabBegin) && max_grabbed_obj > m_grabbedObjs.Count && add_chip)
+        if((m_prevFlex >= grabBegin) && prevFlex < grabBegin)
         {
             GrabBegin();
         }
-        else if ((m_prevFlex <= grabEnd) && (prevFlex > grabEnd))
+        else if ((m_prevFlex <= grabEnd) && prevFlex > grabEnd)
         {
             GrabEnd();
         }
@@ -380,6 +453,8 @@ public class OVRGrabberCustom : MonoBehaviourPun
             m_grabCandidates.Remove(removeCandidaes[i]);
         }
     }
+
+
     private void FindClosestGrabbableCandidate()
     {
         ResetClosestObj();
@@ -417,6 +492,30 @@ public class OVRGrabberCustom : MonoBehaviourPun
         }
     }
 
+    Collider FindClossestGrabPoint(OVRGrabbableCustom grabbable)
+    {
+        Collider collider = null;
+        float closestMagSq = 9999999999;
+        for (int j = 0; j < grabbable.grabPoints.Length; ++j)
+        {
+            Collider grabbableCollider = grabbable.grabPoints[j];
+            // Store the closest grabbable
+            if (grabbableCollider != null)
+            {
+                Vector3 closestPointOnBounds = grabbableCollider.ClosestPointOnBounds(m_gripTransform.position);
+                float grabbableMagSq = (m_gripTransform.position - closestPointOnBounds).sqrMagnitude;
+                if (grabbableMagSq < closestMagSq)
+                {
+
+                    closestMagSq = grabbableMagSq;
+                    collider = grabbableCollider;
+                }
+            }
+        }
+
+        return collider;
+    }
+
     [PunRPC]
     protected virtual void GrabBegin_RPC(int viewID, int colliderIndex)
     {
@@ -436,9 +535,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
             closestMagSq = grabbableMagSq;
             closestGrabbableCollider = grabbableCollider;
         }
-        
-        
-       
+              
 
         DisableOutline(closestGrabbable);
         m_grabCandidates.Clear();
@@ -450,7 +547,6 @@ public class OVRGrabberCustom : MonoBehaviourPun
             if (m_grabbedObjs.Count != 0 && m_grabbedObjs.Exists(go => go.tag != closestGrabbable.tag))
                 return;
 
-            
 
             //если мы взяли наш же предмет
             if (closestGrabbable.isGrabbed && closestGrabbable.grabbedBy != this)
@@ -458,9 +554,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
                 closestGrabbable.grabbedBy.OffhandGrabbed(closestGrabbable);
             }
 
-
-            m_grabbedObj = closestGrabbable;
-            
+            m_grabbedObj = closestGrabbable;          
             m_grabbedObjs.Add(m_grabbedObj);
 
             //в GrabBegin класса OVRGrabbableCustom и его наследника мы можем протисывать
@@ -471,45 +565,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
             m_lastPos = transform.position;
             m_lastRot = transform.rotation;
-
-            // Set up offsets for grabbed object desired position relative to hand.
-
-
-
-            //if (m_grabbedObj.snapPosition)
-            //{
-            //    m_grabbedObjectPosOff = m_gripTransform.localPosition;
-            //    if (m_grabbedObj.snapOffset)
-            //    {
-            //        Vector3 snapOffset = m_grabbedObj.snapOffset.position;
-            //        if (m_controller == OVRInput.Controller.LTouch) snapOffset.x = -snapOffset.x;
-            //        m_grabbedObjectPosOff += snapOffset;
-            //    }
-            //}
-            //else
-            //{
-            //    Vector3 relPos = m_grabbedObj.transform.position - transform.position;
-            //    relPos = Quaternion.Inverse(transform.rotation) * relPos;
-            //    m_grabbedObjectPosOff = relPos;
-            //}
-
-            //if (m_grabbedObj.snapOrientation)
-            //{
-            //    m_grabbedObjectRotOff = m_gripTransform.localRotation;
-            //    if (m_grabbedObj.snapOffset)
-            //    {
-            //        m_grabbedObjectRotOff = m_grabbedObj.snapOffset.rotation * m_grabbedObjectRotOff;
-            //    }
-            //}
-            //else
-            //{
-            //    Quaternion relOri = Quaternion.Inverse(transform.rotation) * m_grabbedObj.transform.rotation;
-            //    m_grabbedObjectRotOff = relOri;
-            //}
-
-            // Note: force teleport on grab, to avoid high-speed travel to dest which hits a lot of other objects at high
-            // speed and sends them flying. The grabbed object may still teleport inside of other objects, but fixing that
-            // is beyond the scope of this demo.
+          
 
             if (m_grabbedObj)
             {
@@ -523,10 +579,6 @@ public class OVRGrabberCustom : MonoBehaviourPun
                 if (m_grabbedObjs.Count == max_grabbed_obj || closestGrabbable.tag == "Untagged")
                     GrabVolumeEnable(false);
 
-                //if (m_parentHeldObject)
-                //{
-                //    m_grabbedObj.transform.parent = transform;
-                //}
             }
         }
         else
@@ -534,20 +586,17 @@ public class OVRGrabberCustom : MonoBehaviourPun
             print("Grabbable collider not found!");
         }
     }
-    /// <summary>
-    /// Главная функция при взятии предмета 
-    /// </summary>
-    /// 
+    
     public void ForceGrabBegin(OVRGrabbableCustom obj)
     {
         closestGrabbable = obj;
         GrabBegin();
     }
+
     protected virtual void GrabBegin()
     {
         if (photonView.IsMine && closestGrabbable != null)
         {
-
             var colliderIndex = closestGrabbable.grabPoints.ToList().IndexOf(closestGrabbableCollider);
             photonView.RPC("GrabBegin_RPC", RpcTarget.All, closestGrabbable.GetComponent<PhotonView>().ViewID, colliderIndex);
         }
@@ -570,16 +619,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         grabbedRigidbody.transform.localPosition = m_grabbedObj.snapOffset.localPosition;
         grabbedRigidbody.transform.localRotation = m_grabbedObj.snapOffset.localRotation;
 
-        //if (forceTeleport)
-        //{
-        //    grabbedRigidbody.transform.position = grabbablePosition;
-        //    grabbedRigidbody.transform.rotation = grabbableRotation;
-        //}
-        //else
-        //{
-        //    grabbedRigidbody.MovePosition(grabbablePosition);
-        //    grabbedRigidbody.MoveRotation(grabbableRotation);
-        //}
+      
     }
 
     [PunRPC]
@@ -587,6 +627,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
     {
         if (m_grabbedObjs.Count != 0)
         {
+            HandPose.ClearPose();
             OVRPose localPose = new OVRPose { position = OVRInput.GetLocalControllerPosition(m_controller), orientation = OVRInput.GetLocalControllerRotation(m_controller) };
             OVRPose offsetPose = new OVRPose { position = m_anchorOffsetPosition, orientation = m_anchorOffsetRotation };
             localPose = localPose * offsetPose;
@@ -608,6 +649,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         // Re-enable grab volumes to allow overlap events
         GrabVolumeEnable(true);
     }
+
     protected void GrabEnd()
     {
         if (photonView.IsMine)
@@ -625,6 +667,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         m_grabbedObjs.Remove(m_grabbedObj);
         m_grabbedObj = null;
     }
+
     protected void GrabbableReleaseAll(Vector3 linearVelocity, Vector3 angularVelocity)
     {
         for (var i = 0; i < m_grabbedObjs.Count; i++)
@@ -635,11 +678,9 @@ public class OVRGrabberCustom : MonoBehaviourPun
             SetPlayerIgnoreCollision(m_grabbedObjs[i].gameObject, false);
             
         }
-
-      
+     
         m_grabbedObjs.Clear();
         m_grabbedObj = null;
-
 
     }
 
@@ -661,8 +702,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         {
             foreach (OVRGrabbableCustom cand in m_grabCandidates.Keys)
                 DisableOutline(cand);
-          
-           
+             
         }
     }
 
@@ -687,11 +727,16 @@ public class OVRGrabberCustom : MonoBehaviourPun
                     Physics.IgnoreCollision(c, pc, ignore);
                 }
             }
-        }
+        }  
+       
+    }
 
-       
-       
-       
+    void OnDestroy()
+    {
+        if (m_grabbedObj != null)
+        {
+            GrabEnd();
+        }
     }
 }
 

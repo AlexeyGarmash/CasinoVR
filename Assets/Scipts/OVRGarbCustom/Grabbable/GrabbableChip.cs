@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-class GrabbableChip : OVRGrabbableCustom
+public class GrabbableChip : OVRGrabbableCustom
 {
     
 

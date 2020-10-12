@@ -27,7 +27,7 @@ namespace OVRTouchSample
         BJ_Surrender,        
         BJ_Ready,
         BJ_Stop,
-        StackPose
+        StackPose     
     }
 
 	// Stores pose-specific data such as the animation id and allowing gestures.

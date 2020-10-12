@@ -82,7 +82,7 @@ public class StackData : MonoBehaviourPun
     {
         yield return new WaitForEndOfFrame();
 
-        Destroy(this);
+        Destroy(this.gameObject);
     }
     public void StartAnim(GameObject chip)
     {        
