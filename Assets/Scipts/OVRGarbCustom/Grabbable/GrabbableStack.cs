@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//[RequireComponent(typeof(StackData))]
 public class GrabbableStack : OVRGrabbableCustom
 {
     
@@ -49,23 +48,27 @@ public class GrabbableStack : OVRGrabbableCustom
     public override void GrabBegin(OVRGrabberCustom hand, Collider grabPoint)
     {
 
-       
+        if (hand.photonView.IsMine)
+        {
+            handleRotation = transform.rotation;
+            handRotation = hand.transform.rotation;
 
-        handleRotation = transform.rotation;
-        handRotation = hand.transform.rotation;
-
-        stackParent = transform.parent;
+            stackParent = transform.parent;
+        }
 
         base.GrabBegin(hand, grabPoint);
 
-        photonView.RequestOwnership();
+        if (hand.photonView.IsMine)
+        {
+            photonView.RequestOwnership();
 
-        handRotation = hand.transform.localRotation;
-        handParent = hand.transform.parent;
+            handRotation = hand.transform.localRotation;
+            handParent = hand.transform.parent;
 
-        hand.transform.rotation = snapOffsetRotation;
-        
-        transform.parent = hand.grabbleObjSpawnPoint;
+            hand.transform.rotation = snapOffsetRotation;
+
+            transform.parent = hand.grabbleObjSpawnPoint;
+        }
 
         //if (stack.Objects.Count <= 4)
         //{
@@ -81,31 +84,41 @@ public class GrabbableStack : OVRGrabbableCustom
     }
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
+
+        if (grabbedBy.photonView.IsMine)
+        {
+            var gb = grabbedBy;
+
+            gb.transform.parent = handParent;
+
+
+            gb.transform.localPosition = Vector3.zero;
+            gb.transform.localRotation = handRotation;
+           
         
+            Rigidbody rb = gameObject.GetComponent<Rigidbody>();
 
-        var gb = grabbedBy;
+            rb.isKinematic = m_grabbedKinematic;
+            rb.velocity = linearVelocity;
+            rb.angularVelocity = angularVelocity;
 
-        gb.transform.parent = handParent;
-      
+            m_grabbedBy = null;
+            m_grabbedCollider = null;
 
-        gb.transform.localPosition = Vector3.zero;
-        gb.transform.localRotation = handRotation;
+            GetComponent<Collider>().isTrigger = false;
 
-        base.GrabEnd(Vector3.zero, Vector3.zero);
+            GetComponent<Rigidbody>().isKinematic = true;
 
+            transform.parent = stackParent;
+            transform.rotation = handleRotation;
 
-        GetComponent<Rigidbody>().isKinematic = true;
-
-        transform.parent = stackParent;
-        transform.rotation = handleRotation;
-
-        for (var i = lastStackPositions.Count - 1; i >= 0; i--)
-            if (boarderData.ContainsPoint(new Vector2(lastStackPositions[i].x, lastStackPositions[i].z)))
-            {
-                transform.position = lastStackPositions[i];
-                break;
-            }
-
+            for (var i = lastStackPositions.Count - 1; i >= 0; i--)
+                if (boarderData.ContainsPoint(new Vector2(lastStackPositions[i].x, lastStackPositions[i].z)))
+                {
+                    transform.position = lastStackPositions[i];
+                    break;
+                }
+        }
         
     }
 
@@ -113,9 +126,9 @@ public class GrabbableStack : OVRGrabbableCustom
     
     private void LateUpdate()
     {
-
-        if (isGrabbed)
+        if (grabbedBy && grabbedBy.photonView.IsMine && isGrabbed)
         {
+           
 
             //Vector3 vect1 = Vector3.ProjectOnPlane(grabbedBy.transform.position, Vector3.up);
             //Vector3 vect2 = Vector3.ProjectOnPlane(handParent.transform.position, Vector3.up);
@@ -130,8 +143,8 @@ public class GrabbableStack : OVRGrabbableCustom
             {
                 grabbedBy.transform.LookAt(npcCenter);
                 grabbedBy.transform.position = new Vector3(handParent.transform.position.x, stackYPos, handParent.transform.position.z);
-               
-                
+
+
 
                 transform.localRotation = snapOffset.localRotation;
 
@@ -162,16 +175,16 @@ public class GrabbableStack : OVRGrabbableCustom
                 lastRotationHand = grabbedBy.transform.rotation;
                 lastPositionStack = transform.position;
 
-                
-            }          
+
+            }
             else
             {
                 grabbedBy.transform.position = lastPositionHand;
                 grabbedBy.transform.rotation = lastRotationHand;
             }
 
+            
         }
-
     }
 
 
