@@ -51,9 +51,6 @@ public class OVRGrabberCustom : MonoBehaviourPun
     //число предметов для взятия в руку
     public int max_grabbed_obj = 5;
 
-    // нажатие кнопки GrabButton
-    private bool add_chip;
-
     #endregion
 
     public enum GrabberState { Default, SelectionChips }
@@ -282,7 +279,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         {
             // Update values from inputs
             m_prevFlex = OVRInput.Get(GrabAxis, m_controller);
-            add_chip = OVRInput.GetDown(GrabButton, m_controller);
+            
 
             if (m_grabCandidates.Count == 0 && m_grabbedObjs.Count == 0 && !changeStateInProcess)
                 state = GrabberState.SelectionChips;
