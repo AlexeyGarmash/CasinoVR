@@ -94,8 +94,8 @@ public class GrabbableStack : OVRGrabbableCustom
 
             gb.transform.localPosition = Vector3.zero;
             gb.transform.localRotation = handRotation;
-           
-        
+
+
             Rigidbody rb = gameObject.GetComponent<Rigidbody>();
 
             rb.isKinematic = m_grabbedKinematic;
@@ -118,6 +118,9 @@ public class GrabbableStack : OVRGrabbableCustom
                     transform.position = lastStackPositions[i];
                     break;
                 }
+        }
+        else {
+            base.GrabEnd(Vector3.zero, Vector3.zero);
         }
         
     }

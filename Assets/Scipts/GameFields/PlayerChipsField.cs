@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class PlayerChipsField : ChipsField
 {
-  
+
 
     [SerializeField]
     private Transform redChipSpawnpoint;
@@ -22,7 +22,7 @@ public class PlayerChipsField : ChipsField
     private Transform blackChipSpawnpoint;
     [SerializeField]
     private Transform purpleChipSpawnpoint;
-    
+
     public Transform npcCenter;
 
     public Dictionary<Chips, Transform> StacksByChipCost = new Dictionary<Chips, Transform>();
@@ -39,7 +39,7 @@ public class PlayerChipsField : ChipsField
     GrabbableChip lastChip;
 
     List<ChipData> triggeredChips = new List<ChipData>();
-  
+
     bool chekingChipsStarted = false;
 
     public Vector3 lastPlayerHandPosition;
@@ -58,7 +58,7 @@ public class PlayerChipsField : ChipsField
         var chip = data as ChipData;
         var list = new List<StackData>();
 
-     
+
 
         foreach (var stack in base.FindPossibleFields(chip))
         {
@@ -75,11 +75,59 @@ public class PlayerChipsField : ChipsField
 
     }
 
-    protected override void ClearObjectDataFromField(OwnerData data) 
+    protected override void ClearObjectDataFromField(OwnerData data)
     {
-        if(triggeredChips.Contains(data as ChipData))
+        if (triggeredChips.Contains(data as ChipData))
             triggeredChips.Remove(data as ChipData);
     }
+
+
+    [PunRPC]
+    private void CreateStack_RPC(Vector3 position, int[] chipsViewId, int stackViewID)
+    {
+        var grabbableCollidrs = Physics.OverlapSphere(transform.position, 1f).ToList().FindAll(c => c.GetComponent<ChipData>());       
+
+        grabbableCollidrs.ForEach(collider =>
+        {
+            if (chipsViewId.ToList().Exists(id => collider.GetComponent<ChipData>().photonView.ViewID == id))
+            {
+                triggeredChips.Add(collider.GetComponent<ChipData>());
+            }
+
+        });
+
+        var newStack = Instantiate(stackPrefab, transform);
+
+        newStack.transform.localPosition = position;
+        newStack.transform.localRotation = Quaternion.Euler(Vector3.zero);
+
+        var stackData = newStack.GetComponent<StackData>();
+    
+        stackData.owner = this;
+        stackData.playerName = triggeredChips[0].GetComponent<ChipData>().Owner;
+        stackData.destoyableStack = true;
+        stackData.photonView.ViewID = stackViewID;
+
+        Stacks.Add(stackData);
+
+        foreach (var chip in triggeredChips)
+        {
+            var possibleFiedls = FindPossibleFields(chip);
+            if (possibleFiedls.Count == 0)
+                MagnetizeObject(chip.gameObject, stackData, ChipUtils.Instance.GetStringOfType(chip.Cost));
+            else MagnetizeObject(chip.gameObject, possibleFiedls[0], ChipUtils.Instance.GetStringOfType(chip.Cost));
+
+        }
+
+        if (stackData.Objects.Count == 0)
+            Destroy(stackData.gameObject);
+
+        chekingChipsStarted = false;
+        lastChip = null;
+
+        triggeredChips.Clear();
+
+    } 
     IEnumerator ChipInField()
     {
         chekingChipsStarted = true;
@@ -91,8 +139,7 @@ public class PlayerChipsField : ChipsField
 
         if (lastChip.GetComponent<OwnerData>().field != this)
         {
-            chekingChipsStarted = false;
-            Debug.LogError("field finded -> " + lastChip.GetComponent<OwnerData>().field.name);
+            chekingChipsStarted = false;       
             StopAllCoroutines();
             yield return null;
         }
@@ -103,10 +150,20 @@ public class PlayerChipsField : ChipsField
         newStack.transform.localPosition = new Vector3(lastChip.transform.localPosition.x, lastChip.transform.localPosition.y, StackSpawnPoint.localPosition.z);
         newStack.transform.localRotation = Quaternion.Euler(Vector3.zero);
 
+        var view = newStack.GetComponent<PhotonView>();
+        PhotonNetwork.AllocateViewID(view);
+
         var stackData = newStack.GetComponent<StackData>();
         stackData.destoyableStack = true;
 
         Debug.Log("Stack created");
+
+        int[] chipIds = new int[triggeredChips.Count];
+
+        for (var i = 0; i < triggeredChips.Count; i++)
+            chipIds[i] = triggeredChips[i].photonView.ViewID;
+
+        photonView.RPC("CreateStack_RPC", RpcTarget.Others, newStack.transform.localPosition, chipIds, view.ViewID);
 
         Stacks.Add(stackData);
         stackData.owner = this;
@@ -130,42 +187,46 @@ public class PlayerChipsField : ChipsField
 
         triggeredChips.Clear();
 
+
     }
     protected override void OnTriggerStay(Collider other)
     {
-        var chipdata = other.GetComponent<ChipData>();
-
-        if (chipdata)
+        if (photonView.IsMine)
         {
-            
-            var grabbableChip = other.GetComponent<GrabbableChip>();
+            var chipdata = other.GetComponent<ChipData>();
 
-            if (grabbableChip && !triggeredChips.Contains(chipdata))
+            if (chipdata)
             {
-                if (grabbableChip.isGrabbed)
-                {
-                    Debug.Log("chip added");
-                    lastChip = grabbableChip;
-                    lastChip.GetComponent<ChipData>().field = this;
-                    triggeredChips.Add(other.GetComponent<ChipData>());
 
-                    if (!chekingChipsStarted)
+                var grabbableChip = other.GetComponent<GrabbableChip>();
+
+                if (grabbableChip && !triggeredChips.Contains(chipdata))
+                {
+                    if (grabbableChip.isGrabbed)
                     {
-                        StartCoroutine(ChipInField());
+                        Debug.Log("chip added");
+                        lastChip = grabbableChip;
+                        lastChip.GetComponent<ChipData>().field = this;
+                        triggeredChips.Add(other.GetComponent<ChipData>());
+
+                        if (!chekingChipsStarted)
+                        {
+                            StartCoroutine(ChipInField());
+                        }
+                    }
+                    else if (!chipdata.animator && !chipdata.GetComponent<Rigidbody>().isKinematic)
+                    {
+
+                        var stacks = FindStackByType(ChipUtils.Instance.GetStringOfType(chipdata.Cost), Stacks);
+
+                        if (stacks.Count == 0)
+                            MagnetizeObject(chipdata.gameObject, Stacks[0]);
+
+                        else MagnetizeObject(chipdata.gameObject, stacks[0]);
                     }
                 }
-                else if (!chipdata.animator && !chipdata.GetComponent<Rigidbody>().isKinematic)
-                {
 
-                    var stacks = FindStackByType(ChipUtils.Instance.GetStringOfType(chipdata.Cost), Stacks);
-
-                    if (stacks.Count == 0)
-                        MagnetizeObject(chipdata.gameObject, Stacks[0]);
-
-                    else MagnetizeObject(chipdata.gameObject, stacks[0]);
-                }
-            }                           
-           
+            }
         }
        
 
@@ -173,29 +234,31 @@ public class PlayerChipsField : ChipsField
 
     protected override void OnTriggerExit(Collider other)
     {
-        //base.OnTriggerExit(other);
-        var chipdata = other.GetComponent<ChipData>();
-
-        if (chipdata && triggeredChips.Contains(chipdata))
+        if (photonView.IsMine)
         {
-            var grabbableChip = other.GetComponent<GrabbableChip>();
-            if (grabbableChip)
-            {
-                if (grabbableChip.isGrabbed)
-                {
-                    Debug.Log("chip removed");
-                    chipdata.field = null;
-                    triggeredChips.Remove(chipdata);
+            //base.OnTriggerExit(other);
+            var chipdata = other.GetComponent<ChipData>();
 
-                    if (triggeredChips.Count == 0)
-                    {                      
-                        StopAllCoroutines();
-                        chekingChipsStarted = false;
+            if (chipdata && triggeredChips.Contains(chipdata))
+            {
+                var grabbableChip = other.GetComponent<GrabbableChip>();
+                if (grabbableChip)
+                {
+                    if (grabbableChip.isGrabbed)
+                    {
+                        Debug.Log("chip removed");
+                        chipdata.field = null;
+                        triggeredChips.Remove(chipdata);
+
+                        if (triggeredChips.Count == 0)
+                        {
+                            StopAllCoroutines();
+                            chekingChipsStarted = false;
+                        }
                     }
                 }
+
             }
-
-
         }
 
     }
