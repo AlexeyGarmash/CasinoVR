@@ -9,6 +9,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public static NetworkManager Instance;
     [SerializeField] int MinPlayersCount = 1;
+    [SerializeField] float fakeServerLoadTime = 1f;
     private void Awake()
     {
         DontDestroyOnLoad(this);
@@ -18,7 +19,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         //ConnectToServer();
-        StartCoroutine(StartServerWithPause(8f));
+        StartCoroutine(StartServerWithPause(fakeServerLoadTime));
     }
 
     private IEnumerator StartServerWithPause(float pauseTime)

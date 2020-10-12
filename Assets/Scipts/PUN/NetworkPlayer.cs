@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using TMPro.Examples;
+using System;
 
 public class NetworkPlayer : MonoBehaviourPunCallbacks
 {
@@ -17,6 +18,19 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject LeftHand;
     [SerializeField] private TextMeshPro TextNickName;
     [SerializeField] private Component[] ComponentsToDisable;
+
+
+
+
+
+    //New
+    public OvrAvatarBody CurrentBody;
+    public Material skinMaterial;
+    public Material hairMaterial;
+    public Material dressMaterial;
+
+
+
 
     [PunRPC]
     private void SetPlayerStatrs(int money, string nickname)
@@ -117,6 +131,14 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
             VRRig.leftHand.vrTarget = LeftHand.transform;
         }
     }*/
+
+    private void Start()
+    {
+        if(photonView != null && photonView.IsMine)
+        {
+            RestoreMaterialData();
+        }
+    }
     void Awake()
     {
         if (photonView != null && photonView.IsMine)
@@ -139,6 +161,8 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
                 OvrCameraRigTransform.parent = transform;
                 transform.parent = globalVRController.transform;
                 transform.localPosition = Vector3.zero;
+
+                
             }
         }
 
@@ -150,6 +174,26 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
                 Destroy(component);
             }
         }
+    }
+
+    private void RestoreMaterialData()
+    {
+        StartCoroutine(WaitUntilLoadAvatar());
+    }
+
+    private IEnumerator WaitUntilLoadAvatar()
+    {
+        yield return new WaitUntil(() => Avatar.GetComponentInChildren<OvrAvatarBody>() != null);
+        yield return null;
+        CurrentBody = GetComponentInChildren<OvrAvatarBody>();
+        skinMaterial = CurrentBody.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material;
+        dressMaterial = CurrentBody.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().material;
+        hairMaterial = CurrentBody.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material;
+        skinMaterial.SetColor("_BaseColor", PhotonPlayerSettings.Instance.SkinColor);
+        dressMaterial.SetColor("_BaseColor", PhotonPlayerSettings.Instance.DressColor);
+        hairMaterial.SetColor("_BaseColor", PhotonPlayerSettings.Instance.HairColor);
+        skinMaterial.SetColor("_MaskColorIris", PhotonPlayerSettings.Instance.IrisColor);
+        dressMaterial.SetTexture("_MainTex", PhotonPlayerSettings.Instance.DressTexture);
     }
 
     private void SetHeadAvatar()

@@ -27,6 +27,7 @@ public class PlayerAvatarChoiceManager : MonoBehaviour
         SpawnPreviewAvatar(avatar);
         SetPlayerAvatarResourcePath(avatar);
         SetPlayerCustomPropsAvatar(avatar);
+        
     }
 
     private void SetPlayerCustomPropsAvatar(PlayerAvatar avatar)
@@ -76,6 +77,7 @@ public class PlayerAvatarChoiceManager : MonoBehaviour
                 rend = go.GetComponentInChildren<Renderer>();
             }
             AvatarSkinChooser.Instance.SetupAvatartToChoose(rend);
+            CustomizeAvatarManager.Instance.SetAvatarGameObject(avatar, go.GetComponent<OvrAvatar>());
             go.transform.localPosition = Vector3.zero;
         }
     }

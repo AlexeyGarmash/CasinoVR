@@ -50,8 +50,8 @@ public class OculusAvatarView : MonoBehaviourPun, IPunObservable
                 byte[] data = new byte[size];
                 CAPI.ovrAvatarPacket_Write(args.Packet.ovrNativePacket, size, data);
 
-                print($"PacketSequence = {PacketSequence}");
-                print($"Local avatar size = {size}");
+                /*print($"PacketSequence = {PacketSequence}");
+                print($"Local avatar size = {size}");*/
 
                 writer.Write(PacketSequence++);
                 writer.Write(size);
@@ -65,7 +65,7 @@ public class OculusAvatarView : MonoBehaviourPun, IPunObservable
 
             SendPacketData(outputStream.ToArray());
         }
-        print("local avatar packed recorded");
+        //print("local avatar packed recorded");
     }
 
     void SendPacketData(byte[] data)
@@ -86,7 +86,7 @@ public class OculusAvatarView : MonoBehaviourPun, IPunObservable
         {
             if (packetQueue.Count > 0)
             {
-                print("im write packet now");
+                //print("im write packet now");
                 stream.SendNext(packetQueue.Last.Value);
             }
         }
@@ -106,15 +106,15 @@ public class OculusAvatarView : MonoBehaviourPun, IPunObservable
         {
             BinaryReader reader = new BinaryReader(inputStream);
             int sequence = reader.ReadInt32();
-            print($"Readed sequence {sequence}");
+            //print($"Readed sequence {sequence}");
             OvrAvatarPacket avatarPacket;
             if (Avatar.UseSDKPackets)
             {
                 int size = reader.ReadInt32();
                 byte[] sdkData = reader.ReadBytes(size);
 
-                print($"Size of packet = {size}");
-                print($"Bytes = {sdkData}");
+                /*print($"Size of packet = {size}");
+                print($"Bytes = {sdkData}");*/
 
                 IntPtr packet = CAPI.ovrAvatarPacket_Read((UInt32)data.Length, sdkData);
                 avatarPacket = new OvrAvatarPacket { ovrNativePacket = packet };

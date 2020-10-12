@@ -43,6 +43,7 @@ public class PacketRecordSettings
 
 public class OvrAvatar : MonoBehaviour
 {
+    public Action OnAvatarLoaded;
     [Header("Avatar")]
     public IntPtr sdkAvatar = IntPtr.Zero;
     public string oculusUserID;
@@ -246,6 +247,10 @@ public class OvrAvatar : MonoBehaviour
     public void AssetLoadedCallback(OvrAvatarAsset asset)
     {
         assetLoadingIds.Remove(asset.assetID);
+        if (OnAvatarLoaded != null)
+        {
+            OnAvatarLoaded.Invoke();
+        }
     }
 
     public void CombinedMeshLoadedCallback(IntPtr assetPtr)
@@ -264,6 +269,10 @@ public class OvrAvatar : MonoBehaviour
         CAPI.ovrAvatar_GetCombinedMeshAlphaData(sdkAvatar, ref clothingAlphaTexture, ref clothingAlphaOffset);
 
         waitingForCombinedMesh = false;
+        //if (OnAvatarLoaded != null)
+        //{
+            
+        //}
     }
 
     private OvrAvatarSkinnedMeshRenderComponent AddSkinnedMeshRenderComponent(GameObject gameObject, ovrAvatarRenderPart_SkinnedMeshRender skinnedMeshRender)
