@@ -169,10 +169,111 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
     virtual public void FixedUpdate()
     {
-        if (m_operatingWithoutOVRCameraRig)
+        if (m_operatingWithoutOVRCameraRig && photonView.IsMine)
         {          
             OnUpdatedAnchors();          
         }
+    }
+    void OnTriggerEnter(Collider otherCollider)
+    {
+       
+        // Get the grab trigger
+        var netInfo = otherCollider.gameObject.GetComponent<ChipData>();
+        OVRGrabbableCustom grabbable = otherCollider.GetComponent<OVRGrabbableCustom>() ?? otherCollider.GetComponentInParent<OVRGrabbableCustom>();
+        if (grabbable == null) return;
+
+
+        // Add the grabbable
+        int refCount = 0;
+        m_grabCandidates.TryGetValue(grabbable, out refCount);
+        m_grabCandidates[grabbable] = refCount + 1;
+        
+
+    }
+
+    void OnTriggerExit(Collider otherCollider)
+    {       
+        
+        OVRGrabbableCustom grabbable = otherCollider.GetComponent<OVRGrabbableCustom>() ?? otherCollider.GetComponentInParent<OVRGrabbableCustom>();
+        if (grabbable == null) return;
+
+        // Remove the grabbable
+        int refCount = 0;
+        bool found = m_grabCandidates.TryGetValue(grabbable, out refCount);
+        if (!found)
+        {
+            return;
+        }
+
+        if (refCount > 1)
+        {
+            m_grabCandidates[grabbable] = refCount - 1;
+        }
+        else
+        {
+            var outline = grabbable.GetComponent<OutlineController>();
+
+            m_grabCandidates.Remove(grabbable);
+
+            if (outline)
+                outline.DisableOutlines();
+
+            ResetClosestObj();
+        }
+        
+    }
+    // Hands follow the touch anchors by calling MovePosition each frame to reach the anchor.
+    // This is done instead of parenting to achieve workable physics. If you don't require physics on
+    // your hands or held objects, you may wish to switch to parenting.
+    void OnUpdatedAnchors()
+    {
+        // Don't want to MovePosition multiple times in a frame, as it causes high judder in conjunction
+        // with the hand position prediction in the runtime.
+        if (alreadyUpdated) return;
+        alreadyUpdated = true;
+
+        Vector3 destPos = m_parentTransform.TransformPoint(m_anchorOffsetPosition);
+        Quaternion destRot = m_parentTransform.rotation * m_anchorOffsetRotation;
+
+        if (m_moveHandPosition)
+        {
+            GetComponent<Rigidbody>().MovePosition(destPos);
+            GetComponent<Rigidbody>().MoveRotation(destRot);
+        }
+
+        if (!m_parentHeldObject)
+        {
+            //MoveGrabbedObject(destPos, destRot);
+        }
+
+        m_lastPos = transform.position;
+        m_lastRot = transform.rotation;
+
+        float prevFlex = m_prevFlex;
+
+        if (photonView.IsMine)
+        {
+            // Update values from inputs
+            m_prevFlex = OVRInput.Get(GrabAxis, m_controller);
+
+            ResetClosestObj();
+
+            if (m_grabCandidates.Count == 0 || selectedChips.Count != 0)
+                state = GrabberState.SelectionChips;
+            else state = GrabberState.Default;
+
+            if (state == GrabberState.Default)
+            {
+                if (m_grabCandidates.Count != 0)
+                    SetOutlineForClosest();
+                CheckForGrabOrRelease(prevFlex);
+            }
+            else
+            {
+                SelectionChips(prevFlex);
+            }
+        }
+
     }
     public void ForceRelease(OVRGrabbableCustom grabbable)
     {
@@ -193,7 +294,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
     public List<GrabbableChip> selectedChips = new List<GrabbableChip>();
     void SelectionChips(float prevFlex)
     {
-        if (m_prevFlex >= grabBegin && prevFlex < grabBegin && !changeStateInProcess)
+        if (m_prevFlex >= grabBegin && prevFlex < grabBegin)
         {
             if (!intexFingerSelector.IsFingerActivated)
                 intexFingerSelector.ActivateFinger(true);
@@ -246,108 +347,9 @@ public class OVRGrabberCustom : MonoBehaviourPun
     {
         state = (GrabberState)State;       
     }
-    // Hands follow the touch anchors by calling MovePosition each frame to reach the anchor.
-    // This is done instead of parenting to achieve workable physics. If you don't require physics on
-    // your hands or held objects, you may wish to switch to parenting.
-    void OnUpdatedAnchors()
-    {
-        // Don't want to MovePosition multiple times in a frame, as it causes high judder in conjunction
-        // with the hand position prediction in the runtime.
-        if (alreadyUpdated) return;
-        alreadyUpdated = true;
-
-        Vector3 destPos = m_parentTransform.TransformPoint(m_anchorOffsetPosition);
-        Quaternion destRot = m_parentTransform.rotation * m_anchorOffsetRotation;
-
-        if (m_moveHandPosition)
-        {
-            GetComponent<Rigidbody>().MovePosition(destPos);
-            GetComponent<Rigidbody>().MoveRotation(destRot);
-        }
-
-        if (!m_parentHeldObject)
-        {
-            //MoveGrabbedObject(destPos, destRot);
-        }
-
-        m_lastPos = transform.position;
-        m_lastRot = transform.rotation;
-
-        float prevFlex = m_prevFlex;
-
-        if (photonView.IsMine)
-        {
-            // Update values from inputs
-            m_prevFlex = OVRInput.Get(GrabAxis, m_controller);
-            
-
-            if (m_grabCandidates.Count == 0 && m_grabbedObjs.Count == 0 && !changeStateInProcess)
-                state = GrabberState.SelectionChips;
-
-            if (state == GrabberState.Default)
-            {
-                if (m_grabCandidates.Count != 0)
-                    SetOutlineForClosest();
-                CheckForGrabOrRelease(prevFlex);
-            }
-            else
-            {
-                SelectionChips(prevFlex);
-            }
-        }
-
-    }
+    
 
    
-
-    void OnTriggerEnter(Collider otherCollider)
-    {
-        if (state == GrabberState.Default)
-        {
-            // Get the grab trigger
-            var netInfo = otherCollider.gameObject.GetComponent<ChipData>();
-            OVRGrabbableCustom grabbable = otherCollider.GetComponent<OVRGrabbableCustom>() ?? otherCollider.GetComponentInParent<OVRGrabbableCustom>();
-            if (grabbable == null) return;
-
-
-            // Add the grabbable
-            int refCount = 0;
-            m_grabCandidates.TryGetValue(grabbable, out refCount);
-            m_grabCandidates[grabbable] = refCount + 1;
-        }
-
-    }
-
-    void OnTriggerExit(Collider otherCollider)
-    {
-        if (state == GrabberState.Default)
-        {
-            OVRGrabbableCustom grabbable = otherCollider.GetComponent<OVRGrabbableCustom>() ?? otherCollider.GetComponentInParent<OVRGrabbableCustom>();
-            if (grabbable == null) return;
-
-            // Remove the grabbable
-            int refCount = 0;
-            bool found = m_grabCandidates.TryGetValue(grabbable, out refCount);
-            if (!found)
-            {
-                return;
-            }
-
-            if (refCount > 1)
-            {
-                m_grabCandidates[grabbable] = refCount - 1;
-            }
-            else
-            {
-
-                m_grabCandidates.Remove(grabbable);
-                if (grabbable.GetComponent<OutlineController>() != null)
-                    grabbable.GetComponent<OutlineController>().DisableOutlines();
-
-                ResetClosestObj();
-            }
-        }
-    }
 
 
 
@@ -357,10 +359,12 @@ public class OVRGrabberCustom : MonoBehaviourPun
     /// <param name="prevFlex"></param>
     protected void CheckForGrabOrRelease(float prevFlex)
     {
-
         if((m_prevFlex >= grabBegin) && prevFlex < grabBegin)
         {
+            
             GrabBegin();
+
+           
         }
         else if ((m_prevFlex <= grabEnd) && prevFlex > grabEnd)
         {
@@ -370,37 +374,43 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
     void DisableOutline(OVRGrabbableCustom closest)
     {
+        OutlineController outline = null;
         foreach (var obj in m_grabbedObjs)
         {
             if(closest == obj) 
                 continue;
 
-            if (obj.GetComponent<OutlineController>() != null) 
-                obj.GetComponent<OutlineController>().DisableOutlines();
+            outline = obj.GetComponent<OutlineController>();
+
+            if (outline)
+                outline.DisableOutlines();
         }
 
         foreach (var obj in m_grabCandidates.Keys)
         {
             if (closest == obj)
                 continue;
-            if (obj.GetComponent<OutlineController>() != null)
-                obj.GetComponent<OutlineController>().DisableOutlines();
+
+            outline = obj.GetComponent<OutlineController>();
+
+            if (outline)
+                outline.DisableOutlines();
         }
     }
+
     private void SetOutlineForClosest()
     {
         UpdateCandidates();
         FindClosestGrabbableCandidate();
 
-        if (photonView.IsMine)
+        if (closestGrabbable)
         {
-            if (closestGrabbable != null && closestGrabbable.GetComponent<OutlineController>() != null && photonView.IsMine)
-            {
-                var outline = closestGrabbable.GetComponent<OutlineController>();
 
+            var outline = closestGrabbable.GetComponent<OutlineController>();
+
+            if (outline)
                 outline.EnableOutlines();
-            }
-
+            
             DisableOutline(closestGrabbable);
         }
         
@@ -426,27 +436,30 @@ public class OVRGrabberCustom : MonoBehaviourPun
                 deletedCandidates.Add(grabbable);
                 continue;
             }
-            if (m_grabCandidates == null)
-                continue;
+            
+
             var itemNetInfo = grabbable.gameObject.GetComponent<OwnerData>();
-            if (itemNetInfo != null)
+            if (itemNetInfo)
                 if (itemNetInfo.Owner != playerStat.PlayerNick)
                     removeCandidaes.Add(grabbable);
 
             //Debug.Log(Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position));
             if (Vector3.Distance(grabbable.transform.position, grabbleObjSpawnPoint.position) > MaxDistance)
-            {
-                if (grabbable.gameObject.GetComponent<OVRGrabbableCustom>() != null)
-                    removeCandidaes.Add(grabbable);
+            {                
+                removeCandidaes.Add(grabbable);
             }
         }
+
         deletedCandidates.ForEach(dc => m_grabCandidates.Remove(dc));
         
 
         for (var i = 0; i < removeCandidaes.Count; i++)
         {
-            if (removeCandidaes[i].GetComponent<OutlineController>() != null)
-                removeCandidaes[i].GetComponent<OutlineController>().DisableOutlines();
+            var outline = removeCandidaes[i].GetComponent<OutlineController>();
+
+            if (outline)
+                outline.DisableOutlines();
+
             m_grabCandidates.Remove(removeCandidaes[i]);
         }
     }
@@ -454,8 +467,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
     private void FindClosestGrabbableCandidate()
     {
-        ResetClosestObj();
-
+        
         // Iterate grab candidates and find the closest grabbable candidate
         foreach (OVRGrabbableCustom grabbable in m_grabCandidates.Keys)
         {
@@ -592,7 +604,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
     protected virtual void GrabBegin()
     {
-        if (photonView.IsMine && closestGrabbable != null)
+        if (closestGrabbable != null)
         {
             var colliderIndex = closestGrabbable.grabPoints.ToList().IndexOf(closestGrabbableCollider);
             photonView.RPC("GrabBegin_RPC", RpcTarget.All, closestGrabbable.GetComponent<PhotonView>().ViewID, colliderIndex);
@@ -649,10 +661,9 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
     protected void GrabEnd()
     {
-        if (photonView.IsMine)
-        {
-            photonView.RPC("GrabEnd_RPC", RpcTarget.All);
-        }
+        
+        photonView.RPC("GrabEnd_RPC", RpcTarget.All);
+        
     }
 
     protected void GrabbableRelease(Vector3 linearVelocity, Vector3 angularVelocity)

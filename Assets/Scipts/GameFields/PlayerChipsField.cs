@@ -11,7 +11,6 @@ using UnityEngine;
 public class PlayerChipsField : ChipsField
 {
 
-
     [SerializeField]
     private Transform redChipSpawnpoint;
     [SerializeField]
@@ -77,8 +76,10 @@ public class PlayerChipsField : ChipsField
 
     protected override void ClearObjectDataFromField(OwnerData data)
     {
-        if (triggeredChips.Contains(data as ChipData))
-            triggeredChips.Remove(data as ChipData);
+        var chip = data as ChipData;
+
+        if (triggeredChips.Contains(chip))
+            triggeredChips.Remove(chip);
     }
 
 
@@ -128,7 +129,7 @@ public class PlayerChipsField : ChipsField
         triggeredChips.Clear();
 
     } 
-    IEnumerator ChipInField()
+    private IEnumerator ChipInField()
     {
         chekingChipsStarted = true;
 

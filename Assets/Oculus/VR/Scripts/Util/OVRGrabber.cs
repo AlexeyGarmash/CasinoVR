@@ -386,7 +386,7 @@ public class OVRGrabber : MonoBehaviour
 
             GrabbableRelease(linearVelocity, angularVelocity);
         }
-
+        
         // Re-enable grab volumes to allow overlap events
         GrabVolumeEnable(true);
     }
