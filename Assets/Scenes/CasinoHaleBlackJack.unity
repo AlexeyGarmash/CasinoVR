@@ -2304,6 +2304,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df9f338034892c44ebb62d97894772f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &110952225 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4786743082412548752, guid: 7e2ca5b271fdc2f40babac0b477a7e0c,
+    type: 3}
+  m_PrefabInstance: {fileID: 110952220}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &110952226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110952225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf162022e230bb745ab2ec48cd357f9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraRig: {fileID: 110952224}
+  EnableCollision: 0
+  CollideLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  MaxFade: 1
+  FadeMinDistance: 0.25
+  PreferredHeight: 1
+  FadeMaxDistance: 0.35
 --- !u!114 &110952247
 MonoBehaviour:
   m_ObjectHideFlags: 0
