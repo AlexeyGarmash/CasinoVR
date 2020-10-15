@@ -187,6 +187,9 @@ public class OVRGrabberCustom : MonoBehaviourPun
         int refCount = 0;
         m_grabCandidates.TryGetValue(grabbable, out refCount);
         m_grabCandidates[grabbable] = refCount + 1;
+
+        if(selectedChips.Count == 0)
+            state = GrabberState.Default;
         
 
     }
@@ -219,6 +222,9 @@ public class OVRGrabberCustom : MonoBehaviourPun
                 outline.DisableOutlines();
 
             ResetClosestObj();
+
+            if(m_grabCandidates.Count == 0)
+                state = GrabberState.SelectionChips;
         }
         
     }
@@ -258,10 +264,9 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
             ResetClosestObj();
 
-            if (m_grabCandidates.Count == 0 || selectedChips.Count != 0)
-                state = GrabberState.SelectionChips;
-            else state = GrabberState.Default;
+            
 
+            //Debug.Log(state + " candidates " + m_grabCandidates.Count + "SelectionChips " + selectedChips.Count + "Grabberd " + m_grabbedObjs.Count);
             if (state == GrabberState.Default)
             {
                 if (m_grabCandidates.Count != 0)
@@ -318,14 +323,14 @@ public class OVRGrabberCustom : MonoBehaviourPun
             });
 
             if (selectedChips.Count != 0)
+            {
                 HandPose.SetPose(HandPoseId.ChipPose);
+                state = GrabberState.Default;
+                selectedChips.Clear();
+            }
             else HandPose.ClearPose();
 
-            selectedChips.Clear();
-            state = GrabberState.Default;
-            //StopAllCoroutines();
-            //StartCoroutine(SetStateWithDelay(2f, GrabberState.Default));
-
+          
             Debug.Log("EndChipSelection");
 
             
@@ -363,6 +368,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
         {
             
             GrabBegin();
+
 
            
         }
@@ -450,7 +456,11 @@ public class OVRGrabberCustom : MonoBehaviourPun
             }
         }
 
-        deletedCandidates.ForEach(dc => m_grabCandidates.Remove(dc));
+        deletedCandidates.ForEach(dc => {
+            if (m_grabCandidates[dc] > 1)
+                m_grabCandidates[dc]--;
+            else m_grabCandidates.Remove(dc);
+            });
         
 
         for (var i = 0; i < removeCandidaes.Count; i++)
@@ -460,8 +470,14 @@ public class OVRGrabberCustom : MonoBehaviourPun
             if (outline)
                 outline.DisableOutlines();
 
-            m_grabCandidates.Remove(removeCandidaes[i]);
+          
+            if (m_grabCandidates[removeCandidaes[i]] > 1)
+                m_grabCandidates[removeCandidaes[i]]--;
+            else m_grabCandidates.Remove(removeCandidaes[i]);
         }
+
+        if (m_grabCandidates.Count == 0)
+            state = GrabberState.SelectionChips;
     }
 
 
@@ -547,8 +563,7 @@ public class OVRGrabberCustom : MonoBehaviourPun
               
 
         DisableOutline(closestGrabbable);
-        m_grabCandidates.Clear();
-
+        m_grabCandidates.Clear();     
         if (closestGrabbable != null)
         {
             
@@ -653,8 +668,8 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
         }
         DisableOutline(null);
-        m_grabCandidates.Clear();
-       
+        m_grabCandidates.Clear();        
+        state = GrabberState.SelectionChips;
         // Re-enable grab volumes to allow overlap events
         GrabVolumeEnable(true);
     }

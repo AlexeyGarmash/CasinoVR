@@ -159,6 +159,8 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
                 SetHand(RightHand, RightHandAnchor, -180f, -90f);
 
                 OvrCameraRigTransform.parent = transform;
+                OvrCameraRigTransform.localPosition = Vector3.zero;
+
                 transform.parent = globalVRController.transform;
                 transform.localPosition = Vector3.zero;
 

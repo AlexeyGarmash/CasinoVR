@@ -893,6 +893,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
+  observableSearch: 0
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
@@ -907,7 +908,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4733524287838794613}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 902c013b7253fcd43aa068887f14785e, type: 3}
   m_Name: 
@@ -917,8 +918,6 @@ MonoBehaviour:
   m_grabbedObjs: []
   grabbleObjSpawnPoint: {fileID: 7357867711779941156}
   max_grabbed_obj: 5
-  color: {r: 0, g: 0, b: 0, a: 0}
-  Width: 6
   grabBegin: 0.55
   grabEnd: 0.35
   throwForce: 1
@@ -931,6 +930,7 @@ MonoBehaviour:
   m_controller: 1
   m_parentTransform: {fileID: 0}
   m_player: {fileID: 0}
+  selectedChips: []
 --- !u!114 &7275258099490945036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1635,6 +1635,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
+  observableSearch: 0
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
