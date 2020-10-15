@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,19 +18,18 @@ public class CustomizeAvatarManager : MonoBehaviour
         Hair,
         Iris,
         Lips,
+        Brows,
+        Lashes,
+        Sclera,
         Other
     }
     public static CustomizeAvatarManager Instance;
 
+    [SerializeField] TMP_Text TextCurrentItem; 
     [SerializeField] GameObject SettingField;
     [SerializeField] ColorPicker colorPicker;
     [SerializeField] Color currentColor;
-    [SerializeField] Button BtnChangeSkin;
-    [SerializeField] Button BtnChangeDress;
-    [SerializeField] Button BtnChangeHair;
-    [SerializeField] Button BtnChangeIris;
-    [SerializeField] Button BtnChangeOther;
-    [SerializeField] Button BtnChangeLips;
+    [SerializeField] ChoosePartToCustomeItem[] BtnsChoosePart;
 
     [SerializeField] TshirtTextureItem[] ListToChangeTshirt;
     [Header("Man1")]
@@ -44,6 +44,7 @@ public class CustomizeAvatarManager : MonoBehaviour
     public OvrAvatar CurrentAvatar;
     public OvrAvatarBody AvatarBody;
     public Material CurrentMaterial;
+    public string CurrentShaderProp;
     public Material DressMaterial;
 
     private void Awake()
@@ -60,12 +61,17 @@ public class CustomizeAvatarManager : MonoBehaviour
         {
             item.OnTextureChanged += OnChooseTexture;
         }
-        BtnChangeSkin.onClick.AddListener(() => OnButtonChange_Clicked(CustomizePart.Skin));
+        /*BtnChangeSkin.onClick.AddListener(() => OnButtonChange_Clicked(CustomizePart.Skin));
         BtnChangeDress.onClick.AddListener(() => OnButtonChange_Clicked(CustomizePart.Dress));
         BtnChangeHair.onClick.AddListener(() => OnButtonChange_Clicked(CustomizePart.Hair));
         BtnChangeIris.onClick.AddListener(() => OnButtonChange_Clicked(CustomizePart.Iris));
         BtnChangeLips.onClick.AddListener(() => OnButtonChange_Clicked(CustomizePart.Lips));
-        BtnChangeOther.onClick.AddListener(() => OnButtonChange_Clicked(CustomizePart.Other));
+        BtnChangeOther.onClick.AddListener(() => OnButtonChange_Clicked(CustomizePart.Other));*/
+
+        foreach (var btn in BtnsChoosePart)
+        {
+            btn.OnCustomizePartChanged += OnButtonChange_Clicked;
+        }
 
         colorPicker.onValueChanged.AddListener(OnColorPickerChangedColor);
         colorPicker.gameObject.SetActive(false);
@@ -74,37 +80,56 @@ public class CustomizeAvatarManager : MonoBehaviour
 
     private void OnChooseTexture(Texture texture)
     {
-        DressMaterial.SetTexture("_MainTex", texture);
+        DressMaterial.SetTexture(OvrAvatarMaterialManager.AVATAR_SHADER_MAINTEX, texture);
     }
 
-    private void OnButtonChange_Clicked(CustomizePart customizePart)
+    private void OnButtonChange_Clicked(BodyPart bodyPart)
     {
-        CurrentCustomizePart = customizePart;
+        CurrentCustomizePart = bodyPart.PartToCustomize;
+        TextCurrentItem.text = bodyPart.PartNameToCustomize;
         switch (CurrentCustomizePart)
         {
             case CustomizePart.Skin:
                 CurrentMaterial = AvatarBody.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material;
-                SaveMaterialTexture(CurrentMaterial, "m_face_");
+                //SaveMaterialTexture(CurrentMaterial, "m_face_");
+                CurrentShaderProp = OvrAvatarMaterialManager.AVATAR_SHADER_COLOR;
                 break;
+
             case CustomizePart.Dress:
                 CurrentMaterial = AvatarBody.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().material;
-                SaveMaterialTexture(CurrentMaterial, "t_shirt_");
-
+                //SaveMaterialTexture(CurrentMaterial, "t_shirt_");
+                CurrentShaderProp = OvrAvatarMaterialManager.AVATAR_SHADER_COLOR;
                 break;
+
             case CustomizePart.Hair:
                 CurrentMaterial = AvatarBody.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material;
+                CurrentShaderProp = OvrAvatarMaterialManager.AVATAR_SHADER_COLOR;
                 break;
+
             case CustomizePart.Iris:
                 CurrentMaterial = AvatarBody.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material;
+                CurrentShaderProp = OvrAvatarMaterialManager.AVATAR_SHADER_IRIS_COLOR;
                 break;
+
             case CustomizePart.Lips:
                 CurrentMaterial = AvatarBody.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material;
+                CurrentShaderProp = OvrAvatarMaterialManager.AVATAR_SHADER_LIP_COLOR;
+                break;
+
+            case CustomizePart.Brows:
+                CurrentMaterial = AvatarBody.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material;
+                CurrentShaderProp = OvrAvatarMaterialManager.AVATAR_SHADER_BROW_COLOR;
+                break;
+
+            case CustomizePart.Lashes:
+                CurrentMaterial = AvatarBody.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material;
+                CurrentShaderProp = OvrAvatarMaterialManager.AVATAR_SHADER_LASH_COLOR;
                 break;
             case CustomizePart.Other:
                 CurrentMaterial = AvatarBody.transform.GetChild(3).GetComponent<SkinnedMeshRenderer>().material;
                 break;
-
         }
+        SetColorToColorPicker(CurrentMaterial.GetColor(CurrentShaderProp));
     }
 
     private void OnColorPickerChangedColor(Color color)
@@ -136,15 +161,15 @@ public class CustomizeAvatarManager : MonoBehaviour
 
         if (CurrentCustomizePart == CustomizePart.Iris)
         {
-            CurrentMaterial.SetColor("_MaskColorIris", color);
+            CurrentMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_IRIS_COLOR, color);
         }
         else if(CurrentCustomizePart == CustomizePart.Lips)
         {
-            CurrentMaterial.SetColor("_MaskColorLips", color);
+            CurrentMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_LIP_COLOR, color);
         }
         else
         {
-            CurrentMaterial.SetColor("_BaseColor", color);
+            CurrentMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_COLOR, color);
         }
 
         
@@ -173,6 +198,12 @@ public class CustomizeAvatarManager : MonoBehaviour
         CurrentAvatar.OnAvatarLoaded -= OnAvatarLoaded;
         CurrentMaterial = AvatarBody.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material;
         DressMaterial = AvatarBody.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().material;
+        SetColorToColorPicker(CurrentMaterial.GetColor(OvrAvatarMaterialManager.AVATAR_SHADER_COLOR));
+    }
+
+    private void SetColorToColorPicker(Color color)
+    {
+        colorPicker.CurrentColor = color;
     }
 
     private void ChangeTexturesForAvatar()

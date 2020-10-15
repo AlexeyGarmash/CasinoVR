@@ -138,6 +138,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         if(photonView != null && photonView.IsMine)
         {
             RestoreMaterialData();
+            OvrCameraRigTransform.localPosition = Vector3.zero;
         }
     }
 
@@ -239,11 +240,12 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         skinMaterial = CurrentBody.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material;
         dressMaterial = CurrentBody.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().material;
         hairMaterial = CurrentBody.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material;
-        skinMaterial.SetColor("_BaseColor", PhotonPlayerSettings.Instance.SkinColor);
-        dressMaterial.SetColor("_BaseColor", PhotonPlayerSettings.Instance.DressColor);
-        hairMaterial.SetColor("_BaseColor", PhotonPlayerSettings.Instance.HairColor);
-        skinMaterial.SetColor("_MaskColorIris", PhotonPlayerSettings.Instance.IrisColor);
-        dressMaterial.SetTexture("_MainTex", PhotonPlayerSettings.Instance.DressTexture);
+        skinMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_COLOR, PhotonPlayerSettings.Instance.SkinColor);//_BaseColor
+        dressMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_COLOR, PhotonPlayerSettings.Instance.DressColor);//_BaseColor
+        hairMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_COLOR, PhotonPlayerSettings.Instance.HairColor);//_BaseColor
+        skinMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_IRIS_COLOR, PhotonPlayerSettings.Instance.IrisColor);//_MaskColorIris
+        skinMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_LIP_COLOR, PhotonPlayerSettings.Instance.LipsColor);//_MaskColorIris
+        dressMaterial.SetTexture(OvrAvatarMaterialManager.AVATAR_SHADER_MAINTEX, PhotonPlayerSettings.Instance.DressTexture);//_MainTex t-shirt
     }
 
     private void SetHeadAvatar()
