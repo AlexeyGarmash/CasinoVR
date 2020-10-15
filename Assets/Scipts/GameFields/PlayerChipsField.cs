@@ -215,7 +215,7 @@ public class PlayerChipsField : ChipsField
                             StartCoroutine(ChipInField());
                         }
                     }
-                    else if (!chipdata.animator && !chipdata.GetComponent<Rigidbody>().isKinematic)
+                    else if (!chipdata.GetComponent<Rigidbody>().isKinematic)
                     {
 
                         var stacks = FindStackByType(ChipUtils.Instance.GetStringOfType(chipdata.Cost), Stacks);

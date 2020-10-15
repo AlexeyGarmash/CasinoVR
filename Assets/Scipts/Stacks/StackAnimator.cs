@@ -269,7 +269,7 @@ public class StackAnimator : MonoBehaviour
         StopAllCoroutines();
 
 
-        currentZ -= zOffset;
+        //currentZ -= zOffset;
         ZeroCurrentXYZ();
 
         for (var i = 0; i < stack.Objects.Count; i++)
@@ -283,7 +283,7 @@ public class StackAnimator : MonoBehaviour
             stack.Objects[i].transform.localPosition = pos;           
 
         }
-        currentZ += zOffset;
+        //currentZ = zOffset;
 
 
         if (BoxCollider)

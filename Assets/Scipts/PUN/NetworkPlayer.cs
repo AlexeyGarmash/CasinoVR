@@ -173,6 +173,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
                 Debug.LogError("PhotonNetwork.LocalPlayer.NickName-> " + PhotonNetwork.LocalPlayer.NickName);
                 photonView.RPC("SetPlayerStatrs", RpcTarget.All, 1000, PhotonNetwork.LocalPlayer.NickName);
 
+                TextNickName.gameObject.SetActive(false);
                 //SetParentForControllers(ovrControllerTransform);
 
 
