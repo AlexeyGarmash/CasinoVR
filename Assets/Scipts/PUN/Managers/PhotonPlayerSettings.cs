@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,24 @@ public enum PlayerAvatarType
 public class PhotonPlayerSettings : MonoBehaviour
 {
     public static PhotonPlayerSettings Instance;
+    [Serializable]
+    public class SkinData
+    {
+        public string skinColor;
+        public string hairColor;
+        public string irisColor;
+        public string dressColor;
+        public string lipsColor;
 
+        public SkinData(Color _skinColor, Color _hairColor, Color _irisColor, Color _dressColor, Color _lipsColor)
+        {
+            skinColor = _skinColor.ToStringColor();
+            hairColor = _hairColor.ToStringColor();
+            irisColor = _irisColor.ToStringColor();
+            dressColor = _dressColor.ToStringColor();
+            lipsColor = _lipsColor.ToStringColor();
+        }
+    }
 
     public string PrefabResourceName { get; set; }
     public Material PrefabMaterial { get; set; }
@@ -29,5 +47,18 @@ public class PhotonPlayerSettings : MonoBehaviour
         DontDestroyOnLoad(this);
         if(Instance == null)
             Instance = this;
+    }
+
+    public string GetJsonSkinData()
+    {
+        SkinData skinData = new SkinData(SkinColor, HairColor, IrisColor, DressColor, LipsColor);
+        string jsonSkinData = JsonUtility.ToJson(skinData);
+        return jsonSkinData;
+    }
+
+    public SkinData GetSkinData(string jsonSkinData)
+    {
+        SkinData skinData = JsonUtility.FromJson<SkinData>(jsonSkinData);
+        return skinData;
     }
 }

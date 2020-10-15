@@ -5,6 +5,7 @@ using Photon.Pun;
 using TMPro;
 using TMPro.Examples;
 using System;
+using static PhotonPlayerSettings;
 
 public class NetworkPlayer : MonoBehaviourPunCallbacks
 {
@@ -135,10 +136,14 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        if(photonView != null && photonView.IsMine)
+        if (photonView != null && photonView.IsMine)
         {
             RestoreMaterialData();
             OvrCameraRigTransform.localPosition = Vector3.zero;
+        }
+        if (photonView != null && !photonView.IsMine)
+        {
+
         }
     }
 
@@ -246,6 +251,22 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         skinMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_IRIS_COLOR, PhotonPlayerSettings.Instance.IrisColor);//_MaskColorIris
         skinMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_LIP_COLOR, PhotonPlayerSettings.Instance.LipsColor);//_MaskColorIris
         dressMaterial.SetTexture(OvrAvatarMaterialManager.AVATAR_SHADER_MAINTEX, PhotonPlayerSettings.Instance.DressTexture);//_MainTex t-shirt
+
+        string jsonSkinData = PhotonPlayerSettings.Instance.GetJsonSkinData();
+        print($"SKIN DATA {jsonSkinData}");
+        photonView.RPC("SendSkinsToOther_RPC", RpcTarget.OthersBuffered, jsonSkinData);
+        
+    }
+
+    [PunRPC]
+    public void SendSkinsToOther_RPC(string jsonSkinData)
+    {
+        SkinData skinData = PhotonPlayerSettings.Instance.GetSkinData(jsonSkinData);
+        PhotonPlayerSettings.Instance.SkinColor = ColorExtensions.FromStringColor(skinData.skinColor);
+        PhotonPlayerSettings.Instance.HairColor = ColorExtensions.FromStringColor(skinData.hairColor);
+        PhotonPlayerSettings.Instance.IrisColor = ColorExtensions.FromStringColor(skinData.irisColor);
+        PhotonPlayerSettings.Instance.DressColor = ColorExtensions.FromStringColor(skinData.dressColor);
+        PhotonPlayerSettings.Instance.LipsColor = ColorExtensions.FromStringColor(skinData.lipsColor);
     }
 
     private void SetHeadAvatar()
