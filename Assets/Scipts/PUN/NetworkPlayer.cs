@@ -263,12 +263,34 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
     {
         print($"RECIEVED DATA TO SEND {jsonSkinData}");
         SkinData skinData = PhotonPlayerSettings.Instance.GetSkinData(jsonSkinData);
-        PhotonPlayerSettings.Instance.SkinColor = ColorExtensions.FromStringColor(skinData.skinColor);
-        PhotonPlayerSettings.Instance.HairColor = ColorExtensions.FromStringColor(skinData.hairColor);
-        PhotonPlayerSettings.Instance.IrisColor = ColorExtensions.FromStringColor(skinData.irisColor);
-        PhotonPlayerSettings.Instance.DressColor = ColorExtensions.FromStringColor(skinData.dressColor);
-        PhotonPlayerSettings.Instance.LipsColor = ColorExtensions.FromStringColor(skinData.lipsColor);
-        RestoreMaterialData(false);
+        var SkinColor = ColorExtensions.FromStringColor(skinData.skinColor);
+        var HairColor = ColorExtensions.FromStringColor(skinData.hairColor);
+        var IrisColor = ColorExtensions.FromStringColor(skinData.irisColor);
+        var DressColor = ColorExtensions.FromStringColor(skinData.dressColor);
+        var LipsColor = ColorExtensions.FromStringColor(skinData.lipsColor);
+        RestoreRemoteMatarialData(SkinColor, HairColor, IrisColor, DressColor, LipsColor);
+    }
+
+
+    private void RestoreRemoteMatarialData(Color skinColor, Color hairColor, Color irisColor, Color dressColor, Color lipsColor)
+    {
+        StartCoroutine(WaitUntilLoadAvatarRemote(skinColor, hairColor, irisColor, dressColor, lipsColor));
+    }
+
+    private IEnumerator WaitUntilLoadAvatarRemote(Color skinColor, Color hairColor, Color irisColor, Color dressColor, Color lipsColor)
+    {
+        yield return new WaitUntil(() => Avatar.GetComponentInChildren<OvrAvatarBody>() != null);
+        yield return null;
+        CurrentBody = GetComponentInChildren<OvrAvatarBody>();
+        skinMaterial = CurrentBody.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().material;
+        dressMaterial = CurrentBody.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().material;
+        hairMaterial = CurrentBody.transform.GetChild(2).GetComponent<SkinnedMeshRenderer>().material;
+        skinMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_COLOR, skinColor);//_BaseColor
+        dressMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_COLOR, dressColor);//_BaseColor
+        hairMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_COLOR, hairColor);//_BaseColor
+        skinMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_IRIS_COLOR, irisColor);//_MaskColorIris
+        skinMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_LIP_COLOR, lipsColor);//_MaskColorIris
+        dressMaterial.SetTexture(OvrAvatarMaterialManager.AVATAR_SHADER_MAINTEX, PhotonPlayerSettings.Instance.DressTexture);//_MainTex t-shirt
     }
 
     private void SetHeadAvatar()
