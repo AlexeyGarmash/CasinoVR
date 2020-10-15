@@ -252,8 +252,8 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         if (sendToOthers)
         {
             string jsonSkinData = PhotonPlayerSettings.Instance.GetJsonSkinData();
-            print($"SKIN DATA {jsonSkinData}");
-            photonView.RPC("SendSkinsToOther_RPC", RpcTarget.OthersBuffered, jsonSkinData);
+            print($"SKIN DATA TO SEND {jsonSkinData}");
+            photonView.RPC("SendSkinsToOther_RPC", RpcTarget.Others, jsonSkinData);
         }
         
     }
@@ -261,6 +261,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SendSkinsToOther_RPC(string jsonSkinData)
     {
+        print($"RECIEVED DATA TO SEND {jsonSkinData}");
         SkinData skinData = PhotonPlayerSettings.Instance.GetSkinData(jsonSkinData);
         PhotonPlayerSettings.Instance.SkinColor = ColorExtensions.FromStringColor(skinData.skinColor);
         PhotonPlayerSettings.Instance.HairColor = ColorExtensions.FromStringColor(skinData.hairColor);
