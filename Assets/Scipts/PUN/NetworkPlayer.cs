@@ -268,16 +268,17 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         var IrisColor = ColorExtensions.FromStringColor(skinData.irisColor);
         var DressColor = ColorExtensions.FromStringColor(skinData.dressColor);
         var LipsColor = ColorExtensions.FromStringColor(skinData.lipsColor);
-        RestoreRemoteMatarialData(SkinColor, HairColor, IrisColor, DressColor, LipsColor);
+        var textureName = skinData.textureName;
+        RestoreRemoteMatarialData(SkinColor, HairColor, IrisColor, DressColor, LipsColor, textureName);
     }
 
 
-    private void RestoreRemoteMatarialData(Color skinColor, Color hairColor, Color irisColor, Color dressColor, Color lipsColor)
+    private void RestoreRemoteMatarialData(Color skinColor, Color hairColor, Color irisColor, Color dressColor, Color lipsColor, string dressTextureName)
     {
-        StartCoroutine(WaitUntilLoadAvatarRemote(skinColor, hairColor, irisColor, dressColor, lipsColor));
+        StartCoroutine(WaitUntilLoadAvatarRemote(skinColor, hairColor, irisColor, dressColor, lipsColor, dressTextureName));
     }
 
-    private IEnumerator WaitUntilLoadAvatarRemote(Color skinColor, Color hairColor, Color irisColor, Color dressColor, Color lipsColor)
+    private IEnumerator WaitUntilLoadAvatarRemote(Color skinColor, Color hairColor, Color irisColor, Color dressColor, Color lipsColor, string dressTextureName)
     {
         yield return new WaitUntil(() => Avatar.GetComponentInChildren<OvrAvatarBody>() != null);
         yield return null;
@@ -290,7 +291,12 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         hairMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_COLOR, hairColor);//_BaseColor
         skinMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_IRIS_COLOR, irisColor);//_MaskColorIris
         skinMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_LIP_COLOR, lipsColor);//_MaskColorIris
-        dressMaterial.SetTexture(OvrAvatarMaterialManager.AVATAR_SHADER_MAINTEX, PhotonPlayerSettings.Instance.DressTexture);//_MainTex t-shirt
+        if (dressTextureName.Length > 0)
+        {
+            Texture dressTexture = Resources.Load<Texture>(PhotonPlayerSettings.BaseTexturesResPath + dressTextureName);
+            dressMaterial.SetTexture(OvrAvatarMaterialManager.AVATAR_SHADER_MAINTEX, dressTexture);
+        }
+        //_MainTex t-shirt
     }
 
     private void SetHeadAvatar()

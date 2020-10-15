@@ -12,6 +12,7 @@ public enum PlayerAvatarType
 }
 public class PhotonPlayerSettings : MonoBehaviour
 {
+    public const string BaseTexturesResPath = "Textures/";
     public static PhotonPlayerSettings Instance;
     [Serializable]
     public class SkinData
@@ -21,14 +22,16 @@ public class PhotonPlayerSettings : MonoBehaviour
         public string irisColor;
         public string dressColor;
         public string lipsColor;
+        public string textureName;
 
-        public SkinData(Color _skinColor, Color _hairColor, Color _irisColor, Color _dressColor, Color _lipsColor)
+        public SkinData(Color _skinColor, Color _hairColor, Color _irisColor, Color _dressColor, Color _lipsColor, string textureName)
         {
             skinColor = _skinColor.ToStringColor();
             hairColor = _hairColor.ToStringColor();
             irisColor = _irisColor.ToStringColor();
             dressColor = _dressColor.ToStringColor();
             lipsColor = _lipsColor.ToStringColor();
+            this.textureName = textureName;
         }
     }
 
@@ -51,7 +54,7 @@ public class PhotonPlayerSettings : MonoBehaviour
 
     public string GetJsonSkinData()
     {
-        SkinData skinData = new SkinData(SkinColor, HairColor, IrisColor, DressColor, LipsColor);
+        SkinData skinData = new SkinData(SkinColor, HairColor, IrisColor, DressColor, LipsColor, DressTexture == null ? "" : DressTexture.name);
         string jsonSkinData = JsonUtility.ToJson(skinData);
         return jsonSkinData;
     }
