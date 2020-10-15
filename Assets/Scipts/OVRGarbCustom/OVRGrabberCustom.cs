@@ -266,7 +266,8 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
             
 
-            //Debug.Log(state + " candidates " + m_grabCandidates.Count + "SelectionChips " + selectedChips.Count + "Grabberd " + m_grabbedObjs.Count);
+            Debug.Log(state + " candidates " + m_grabCandidates.Count + "SelectionChips " + selectedChips.Count + "Grabberd " + m_grabbedObjs.Count);
+
             if (state == GrabberState.Default)
             {
                 if (m_grabCandidates.Count != 0)
@@ -299,6 +300,10 @@ public class OVRGrabberCustom : MonoBehaviourPun
     public List<GrabbableChip> selectedChips = new List<GrabbableChip>();
     void SelectionChips(float prevFlex)
     {
+
+        if (m_grabbedObjs.Count != 0)
+            state = GrabberState.Default;
+
         if (m_prevFlex >= grabBegin && prevFlex < grabBegin)
         {
             if (!intexFingerSelector.IsFingerActivated)
@@ -416,8 +421,13 @@ public class OVRGrabberCustom : MonoBehaviourPun
 
             if (outline)
                 outline.EnableOutlines();
-            
+
             DisableOutline(closestGrabbable);
+
+            
+        }
+        else if(m_grabbedObjs.Count == 0){
+            state = GrabberState.SelectionChips;
         }
         
     }
@@ -476,8 +486,6 @@ public class OVRGrabberCustom : MonoBehaviourPun
             else m_grabCandidates.Remove(removeCandidaes[i]);
         }
 
-        if (m_grabCandidates.Count == 0)
-            state = GrabberState.SelectionChips;
     }
 
 
