@@ -188,20 +188,17 @@ namespace OVRTouchSample
 
         public void SetPose(HandPoseId pose)
         {
-            photonView.RPC("SetPose", RpcTarget.All, (int)pose);          
+            m_defaultGrabPose.PoseId = pose;
+          
         }
 
         public void ClearPose()
         {
-            photonView.RPC("SetPose", RpcTarget.All, (int)HandPoseId.Default);
+            m_defaultGrabPose.PoseId = HandPoseId.Default;
+           
         }
 
-        [PunRPC]
-        private void SetPose(int pose)
-        {
-            m_defaultGrabPose.PoseId = (HandPoseId)pose;
-            
-        }
+       
         private void UpdateAnimStates()
         {
             bool grabbing = m_grabber.grabbedObject != null;
