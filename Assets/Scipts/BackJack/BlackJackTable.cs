@@ -68,11 +68,13 @@ namespace Assets.Scipts.BackJack
             var player = players.FirstOrDefault(p => p.ps.PlayerNick == PlaceID.PlayerNick);
 
 
+            
             photonView.RPC("AddPlayerIngame_RPC", RpcTarget.All, player.PlaceId);
             DebugLog("AddPlayerInGame clinet can controll player place-> " + player.photonView.IsMine);
+
             var handMenu = player.handMenu;
 
-            if (handMenu.IsNotNull())
+            if (handMenu)
             {
                
                 var animatorHolder = handMenu.GetComponent<AnimatorHolder>();

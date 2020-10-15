@@ -60,7 +60,8 @@ public class TakePlaceLongClickProgress : LongClickProgerssBase, IListener<Abstr
 
         p_place.ps = lastCollider.GetComponentInParent<PlayerStats>(); 
         p_place.handMenu = lastCollider.GetComponentInChildren<RadialMenuHandV2>();
-       
+
+        Debug.Log("TakePlaceInvoked");
 
         inGame = true;
         _imageReady.texture = _readyTexture;

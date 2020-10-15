@@ -70,8 +70,9 @@ public class RadialMenuHandV2 : MonoBehaviour
 
     public void InvokeMenu()
     {
-        ShowSectors();
         gameObject.SetActive(true);
+        ShowSectors();
+        
         menuInvoke = true;
         
     }
@@ -274,6 +275,7 @@ public class RadialMenuHandV2 : MonoBehaviour
     {
         if(menuInvoke && OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger, OVRInput.Controller.RTouch))
         {
+            Debug.Log("Menu invoked");
             EnablePlayerRotationAndMove(false);
             ShowMenu();
             transform.LookAt(Camera.main.transform.position);

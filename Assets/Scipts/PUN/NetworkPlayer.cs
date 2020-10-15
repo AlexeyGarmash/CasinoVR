@@ -34,11 +34,12 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
 
     [PunRPC]
     private void SetPlayerStatrs(int money, string nickname)
-    {      
-        var stats = GetComponent<PlayerStats>();
+    {
+        var stats = GetComponent<PlayerStats>();        
         stats.AllMoney = money;
         stats.PlayerNick = nickname;
     }
+
     /*void Awake()
     {
         var VRRig = GetComponentInChildren<VRRig>();
@@ -139,12 +140,14 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
             RestoreMaterialData();
         }
     }
+    GameObject globalVRController;
     void Awake()
     {
-        if (photonView != null && photonView.IsMine)
+        if (photonView && photonView.IsMine)
         {
             GameObject globalVRController = GameObject.Find("OVRPlayerControllerMain");
-            if (globalVRController != null)
+
+            if (globalVRController)
             {
                 Transform ovrControllerTransform = globalVRController.transform;
 
@@ -164,7 +167,9 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
                 transform.parent = globalVRController.transform;
                 transform.localPosition = Vector3.zero;
 
-                
+                photonView.RPC("SetPlayerStatrs", RpcTarget.All, 1000, PhotonNetwork.LocalPlayer.NickName);
+
+                SetParentForControllers();
             }
         }
 
@@ -176,6 +181,47 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
                 Destroy(component);
             }
         }
+    }
+
+    private void SetParentForControllers()
+    {
+        Transform controllerLeft, controllerRight;
+
+        Transform ovrControllerTransform = globalVRController.transform;
+
+
+        OvrCameraRigTransform = ovrControllerTransform.Find("OVRCameraRig").transform;
+        if (OVRManager.XRDevice.OpenVR == OVRManager.loadedXRDevice)
+        {
+            ovrControllerTransform.Find("ControllerLeftOculus").gameObject.SetActive(false);
+            ovrControllerTransform.Find("ControllerRightOculus").gameObject.SetActive(false);
+
+
+            controllerLeft = ovrControllerTransform.Find("ControllerLeftVive").transform;
+            controllerRight = ovrControllerTransform.Find("ControllerRightVive").transform;
+        }
+        else
+        {
+
+            ovrControllerTransform.Find("ControllerLeftVive").gameObject.SetActive(false);
+            ovrControllerTransform.Find("ControllerRightVive").gameObject.SetActive(false);
+
+            controllerLeft = ovrControllerTransform.Find("ControllerLeftOculus").transform;
+            controllerRight = ovrControllerTransform.Find("ControllerRightOculus").transform;
+        }
+
+        var leftControllerHolder = LeftHandAnchor;
+        controllerLeft.parent = leftControllerHolder;
+        controllerLeft.transform.localPosition = Vector3.zero;
+        controllerLeft.transform.localRotation = Quaternion.identity;
+
+        var rightControllerHolder = RightHandAnchor;
+        controllerRight.parent = rightControllerHolder;
+        controllerRight.transform.localPosition = Vector3.zero;
+        controllerRight.transform.localRotation = Quaternion.identity;
+
+        controllerLeft.GetComponent<TransparentByDistance>().target = LeftHand.transform;
+        controllerRight.GetComponent<TransparentByDistance>().target = RightHand.transform;
     }
 
     private void RestoreMaterialData()

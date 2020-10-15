@@ -129,7 +129,8 @@ public abstract class LongClickProgerssBase : MonoBehaviourPun
     protected Collider lastCollider;
     protected void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<LongClickHand>() != null && inProgress == false)
+        var graber = other.gameObject.GetComponentInParent<OVRGrabberCustom>(); ;
+        if (other.gameObject.GetComponent<LongClickHand>() && graber && graber.m_grabbedObjs.Count == 0 && inProgress == false)
         {
             OpenVRVibrationManager.DoVibration(0.5f, 0.05f);
             lastCollider = other;
