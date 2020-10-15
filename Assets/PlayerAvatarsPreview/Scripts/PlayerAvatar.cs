@@ -9,6 +9,9 @@ public class PlayerAvatar : MonoBehaviour
 {
     public Action<PlayerAvatar> OnAvatarChosen;
 
+    [Header("Avatar info")]
+    public PlayerAvatarType AvatarType;
+
     [Header("Prefab info")]
     [SerializeField] private string _avatarResoucePathName;
     [SerializeField] private GameObject _avatarPrefab;

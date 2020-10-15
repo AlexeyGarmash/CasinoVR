@@ -1,0 +1,12 @@
+﻿using UnityEngine;
+using System;
+using UnityEngine.Events;
+
+[Serializable]
+public class ColorChangedEvent : UnityEvent<Color>
+{
+    public void AddListener()
+    {
+        throw new NotImplementedException();
+    }
+}
