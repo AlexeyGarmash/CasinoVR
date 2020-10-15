@@ -74,6 +74,7 @@ namespace Assets.Scipts.BackJack
 
             var handMenu = player.handMenu;
 
+ 
             if (handMenu)
             {
                

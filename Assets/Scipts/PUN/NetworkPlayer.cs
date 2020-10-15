@@ -140,7 +140,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
             RestoreMaterialData();
         }
     }
-    GameObject globalVRController;
+
     void Awake()
     {
         if (photonView && photonView.IsMine)
@@ -157,6 +157,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
                 CenterEye = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/CenterEyeAnchor").transform;
                 RightHandAnchor = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/RightHandAnchor").transform;
                 LeftHandAnchor = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/LeftHandAnchor").transform;
+
                 SetHeadAvatar();
                 SetHand(LeftHand, LeftHandAnchor, 180f, 90f);
                 SetHand(RightHand, RightHandAnchor, -180f, -90f);
@@ -167,9 +168,12 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
                 transform.parent = globalVRController.transform;
                 transform.localPosition = Vector3.zero;
 
+                Debug.LogError("PhotonNetwork.LocalPlayer.NickName-> " + PhotonNetwork.LocalPlayer.NickName);
                 photonView.RPC("SetPlayerStatrs", RpcTarget.All, 1000, PhotonNetwork.LocalPlayer.NickName);
 
-                SetParentForControllers();
+                SetParentForControllers(ovrControllerTransform);
+
+
             }
         }
 
@@ -183,14 +187,12 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         }
     }
 
-    private void SetParentForControllers()
+    private void SetParentForControllers(Transform ovrControllerTransform)
     {
         Transform controllerLeft, controllerRight;
 
-        Transform ovrControllerTransform = globalVRController.transform;
-
-
-        OvrCameraRigTransform = ovrControllerTransform.Find("OVRCameraRig").transform;
+        
+        
         if (OVRManager.XRDevice.OpenVR == OVRManager.loadedXRDevice)
         {
             ovrControllerTransform.Find("ControllerLeftOculus").gameObject.SetActive(false);
@@ -210,13 +212,13 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
             controllerRight = ovrControllerTransform.Find("ControllerRightOculus").transform;
         }
 
-        var leftControllerHolder = LeftHandAnchor;
-        controllerLeft.parent = leftControllerHolder;
+      
+        controllerLeft.parent = LeftHandAnchor;
         controllerLeft.transform.localPosition = Vector3.zero;
         controllerLeft.transform.localRotation = Quaternion.identity;
 
-        var rightControllerHolder = RightHandAnchor;
-        controllerRight.parent = rightControllerHolder;
+       
+        controllerRight.parent = RightHandAnchor;
         controllerRight.transform.localPosition = Vector3.zero;
         controllerRight.transform.localRotation = Quaternion.identity;
 
