@@ -13,7 +13,7 @@ namespace Photon.Pun
 {
     using UnityEngine;
 
-    public enum SyncBy { None, Local, Global }
+    
    
     [AddComponentMenu("Photon Networking/Photon Transform View")]
     [HelpURL("https://doc.photonengine.com/en-us/pun/v2/gameplay/synchronization-and-state")]
@@ -26,10 +26,10 @@ namespace Photon.Pun
         private Vector3 m_NetworkPosition;
         private Vector3 m_StoredPosition;
 
-        private Quaternion m_NetworkRotation;     
+        private Quaternion m_NetworkRotation;
 
-        public SyncBy m_SynchronizePosition = SyncBy.Global;
-        public SyncBy m_SynchronizeRotation = SyncBy.Global;
+        public bool m_SynchronizeGlobalPosition = true;
+        public bool m_SynchronizeGlobalRotation = true;
         public bool m_SynchronizeScale = false;
 
         bool m_firstTake = false;
@@ -50,14 +50,14 @@ namespace Photon.Pun
         {
             if (!this.photonView.IsMine)
             {
-                if(m_SynchronizePosition == SyncBy.Local)
+                if(!m_SynchronizeGlobalPosition)
                     transform.localPosition = Vector3.MoveTowards(transform.localPosition, this.m_NetworkPosition, this.m_Distance * (1.0f / PhotonNetwork.SerializationRate));
-                else if (m_SynchronizePosition == SyncBy.Global)
+                else if (m_SynchronizeGlobalPosition)
                     transform.position = Vector3.MoveTowards(transform.position, this.m_NetworkPosition, this.m_Distance * (1.0f / PhotonNetwork.SerializationRate));
 
-                if (m_SynchronizeRotation == SyncBy.Local)
+                if (!m_SynchronizeGlobalRotation)
                     transform.localRotation = Quaternion.RotateTowards(transform.localRotation, this.m_NetworkRotation, this.m_Angle * (1.0f / PhotonNetwork.SerializationRate));
-                if (m_SynchronizeRotation == SyncBy.Global)
+                if (m_SynchronizeGlobalRotation)
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, this.m_NetworkRotation, this.m_Angle * (1.0f / PhotonNetwork.SerializationRate));
             }
         }
@@ -65,7 +65,7 @@ namespace Photon.Pun
 
         void WritingPosition(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (this.m_SynchronizePosition == SyncBy.Local)
+            if (!this.m_SynchronizeGlobalPosition)
             {
                 this.m_Direction = transform.localPosition - this.m_StoredPosition;
                 this.m_StoredPosition = transform.localPosition;
@@ -73,7 +73,7 @@ namespace Photon.Pun
                 stream.SendNext(transform.localPosition);
                 stream.SendNext(this.m_Direction);
             }
-            else if (this.m_SynchronizePosition == SyncBy.Global)
+            else if (this.m_SynchronizeGlobalPosition )
             {
                 this.m_Direction = transform.position - this.m_StoredPosition;
                 this.m_StoredPosition = transform.position;
@@ -84,11 +84,11 @@ namespace Photon.Pun
         }
         void WritingRotation(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (this.m_SynchronizeRotation == SyncBy.Local)
+            if (!this.m_SynchronizeGlobalRotation)
             {
                 stream.SendNext(transform.localRotation);
             }
-            else if (this.m_SynchronizeRotation == SyncBy.Global)
+            else if (this.m_SynchronizeGlobalRotation)
             {
                 stream.SendNext(transform.rotation);
             }
@@ -103,7 +103,7 @@ namespace Photon.Pun
 
         void ReadingPosition(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (this.m_SynchronizePosition == SyncBy.Local)
+            if (!this.m_SynchronizeGlobalPosition)
             {
                 this.m_NetworkPosition = (Vector3)stream.ReceiveNext();
                 this.m_Direction = (Vector3)stream.ReceiveNext();
@@ -121,7 +121,7 @@ namespace Photon.Pun
                 }
 
             }
-            else if (this.m_SynchronizePosition == SyncBy.Global)
+            else if (this.m_SynchronizeGlobalPosition)
             {
                 this.m_NetworkPosition = (Vector3)stream.ReceiveNext();
                 this.m_Direction = (Vector3)stream.ReceiveNext();
@@ -142,7 +142,7 @@ namespace Photon.Pun
         }
         void ReadingRotation(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (this.m_SynchronizeRotation == SyncBy.Local)
+            if (!this.m_SynchronizeGlobalRotation )
             {
                 this.m_NetworkRotation = (Quaternion)stream.ReceiveNext();
 
@@ -156,7 +156,7 @@ namespace Photon.Pun
                     this.m_Angle = Quaternion.Angle(transform.localRotation, this.m_NetworkRotation);
                 }
             }
-            else if (this.m_SynchronizeRotation == SyncBy.Global)
+            else if (this.m_SynchronizeGlobalRotation)
             {
                 this.m_NetworkRotation = (Quaternion)stream.ReceiveNext();
 
