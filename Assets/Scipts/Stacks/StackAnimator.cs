@@ -113,9 +113,7 @@ public class StackAnimator : MonoBehaviour
                 }
             }
 
-        }
-
-        currentZ -= zOffset;
+        }        
 
         if (BoxCollider)
         {
@@ -271,7 +269,7 @@ public class StackAnimator : MonoBehaviour
         StopAllCoroutines();
 
 
-       
+        currentZ -= zOffset;
         ZeroCurrentXYZ();
 
         for (var i = 0; i < stack.Objects.Count; i++)
@@ -285,10 +283,10 @@ public class StackAnimator : MonoBehaviour
             stack.Objects[i].transform.localPosition = pos;           
 
         }
+        currentZ += zOffset;
 
-        currentZ -= zOffset;
 
-        if(BoxCollider)
+        if (BoxCollider)
             BoxCollider.center = new Vector3(BoxCollider.center.x, BoxCollider.center.y, startedColliderZPos + currentZ);
        
 
