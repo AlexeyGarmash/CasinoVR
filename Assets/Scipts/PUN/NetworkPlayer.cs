@@ -138,12 +138,8 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
     {
         if (photonView != null && photonView.IsMine)
         {
-            RestoreMaterialData();
+            RestoreMaterialData(true);
             OvrCameraRigTransform.localPosition = Vector3.zero;
-        }
-        if (photonView != null && !photonView.IsMine)
-        {
-
         }
     }
 
@@ -232,12 +228,12 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         controllerRight.GetComponent<TransparentByDistance>().target = RightHand.transform;
     }
 
-    private void RestoreMaterialData()
+    private void RestoreMaterialData(bool sendToOthers)
     {
-        StartCoroutine(WaitUntilLoadAvatar());
+        StartCoroutine(WaitUntilLoadAvatar(sendToOthers));
     }
 
-    private IEnumerator WaitUntilLoadAvatar()
+    private IEnumerator WaitUntilLoadAvatar(bool sendToOthers)
     {
         yield return new WaitUntil(() => Avatar.GetComponentInChildren<OvrAvatarBody>() != null);
         yield return null;
@@ -252,9 +248,12 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         skinMaterial.SetColor(OvrAvatarMaterialManager.AVATAR_SHADER_LIP_COLOR, PhotonPlayerSettings.Instance.LipsColor);//_MaskColorIris
         dressMaterial.SetTexture(OvrAvatarMaterialManager.AVATAR_SHADER_MAINTEX, PhotonPlayerSettings.Instance.DressTexture);//_MainTex t-shirt
 
-        string jsonSkinData = PhotonPlayerSettings.Instance.GetJsonSkinData();
-        print($"SKIN DATA {jsonSkinData}");
-        photonView.RPC("SendSkinsToOther_RPC", RpcTarget.OthersBuffered, jsonSkinData);
+        if (sendToOthers)
+        {
+            string jsonSkinData = PhotonPlayerSettings.Instance.GetJsonSkinData();
+            print($"SKIN DATA {jsonSkinData}");
+            photonView.RPC("SendSkinsToOther_RPC", RpcTarget.OthersBuffered, jsonSkinData);
+        }
         
     }
 
@@ -267,6 +266,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         PhotonPlayerSettings.Instance.IrisColor = ColorExtensions.FromStringColor(skinData.irisColor);
         PhotonPlayerSettings.Instance.DressColor = ColorExtensions.FromStringColor(skinData.dressColor);
         PhotonPlayerSettings.Instance.LipsColor = ColorExtensions.FromStringColor(skinData.lipsColor);
+        RestoreMaterialData(false);
     }
 
     private void SetHeadAvatar()
