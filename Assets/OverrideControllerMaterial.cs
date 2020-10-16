@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using UnityEngine;
-using Valve.VR;
-
 /// <summary>
 /// Override the material and texture of the HTC Vive controllers, with your own material after SteamVR has loaded and
 /// applied the original material. This is useful to help preserve interactions in the model itself.

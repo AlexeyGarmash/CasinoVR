@@ -4,11 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Windows.Speech;
+
 
 public class VoiceManager : MonoBehaviourPun
 {
-    private PlayerPlace pp;
+    /*private PlayerPlace pp;
     private KeywordRecognizer keywordRecognizer;
     private Dictionary<string, Action<PlayerStats>> actions = new Dictionary<string, Action<PlayerStats>>();
 
@@ -63,7 +63,7 @@ public class VoiceManager : MonoBehaviourPun
     {
         Debug.Log(speech.text);
         actions[speech.text].Invoke(pp.ps);
-    }
+    }*/
 
     
 }
