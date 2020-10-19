@@ -35,6 +35,7 @@ public class PhotonPlayerSettings : MonoBehaviour
         }
     }
 
+    public NetworkManager.CasinoGameTypes CurrentGameType { get; set; } = NetworkManager.CasinoGameTypes.Slots;
     public string PrefabResourceName { get; set; }
     public Material PrefabMaterial { get; set; }
 
@@ -50,6 +51,7 @@ public class PhotonPlayerSettings : MonoBehaviour
         DontDestroyOnLoad(this);
         if(Instance == null)
             Instance = this;
+        CurrentGameType = NetworkManager.CasinoGameTypes.Slots;
     }
 
     public string GetJsonSkinData()

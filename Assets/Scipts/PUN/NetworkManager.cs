@@ -7,9 +7,20 @@ using Photon.Realtime;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    public const string TYPE_GAME = "type_game";
+    public enum CasinoGameTypes
+    {
+        Slots,
+        Roulette,
+        Blackjack
+    }
+    public const string GAME_SLOTS = "Slots";
+    public const string GAME_ROULETTE = "Roulette";
+    public const string GAME_BLACKJACK = "Blackjack";
     public static NetworkManager Instance;
     [SerializeField] int MinPlayersCount = 1;
     [SerializeField] float fakeServerLoadTime = 1f;
+
     private void Awake()
     {
         DontDestroyOnLoad(this);
@@ -67,11 +78,30 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         print("Disconnect from master " + cause);
     }
 
-    public void CreateRoom(string roomName)
+    public void CreateRoom(string roomName, CasinoGameTypes gameType)
     {
         if (PhotonNetwork.IsConnected && !PhotonNetwork.InRoom)
         {
-            PhotonNetwork.CreateRoom(roomName, DefaultRoomOptions, TypedLobby.Default);
+            var roomSettings = new RoomOptions();
+            roomSettings.MaxPlayers = 4;
+            roomSettings.IsOpen = true;
+            roomSettings.IsVisible = true;
+            roomSettings.BroadcastPropsChangeToAll = true;
+            roomSettings.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable();
+            switch (gameType)
+            {
+                case CasinoGameTypes.Slots:
+                    roomSettings.CustomRoomProperties.Add(TYPE_GAME, GAME_SLOTS);
+                    break;
+                case CasinoGameTypes.Roulette:
+                    roomSettings.CustomRoomProperties.Add(TYPE_GAME, GAME_ROULETTE);
+                    break;
+                case CasinoGameTypes.Blackjack:
+                    roomSettings.CustomRoomProperties.Add(TYPE_GAME, GAME_BLACKJACK);
+                    break;
+            }
+            
+            PhotonNetwork.CreateRoom(roomName, roomSettings, TypedLobby.Default);
         }
         else
         {
