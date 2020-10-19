@@ -51,6 +51,7 @@ public class PhotonPlayerSettings : MonoBehaviour
         DontDestroyOnLoad(this);
         if(Instance == null)
             Instance = this;
+        CurrentGameType = NetworkManager.CasinoGameTypes.Slots;
     }
 
     public string GetJsonSkinData()

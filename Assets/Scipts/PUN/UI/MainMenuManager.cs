@@ -125,7 +125,21 @@ public class MainMenuManager : MonoBehaviourPunCallbacks
 
     private IEnumerator _startGame()
     {
-        PhotonNetwork.LoadLevel(1);
+        string sceneName = "";
+        var gameType = PhotonNetwork.CurrentRoom.CustomProperties[NetworkManager.TYPE_GAME] as string;
+        if(gameType == NetworkManager.GAME_SLOTS)
+        {
+            sceneName = "CasinoSlotsMini";
+        } 
+        else if(gameType == NetworkManager.GAME_ROULETTE)
+        {
+            sceneName = "CasinoRouletterMini";
+        } 
+        else if(gameType == NetworkManager.GAME_BLACKJACK)
+        {
+            sceneName = "BlackJackMini";
+        }
+        PhotonNetwork.LoadLevel(sceneName);
         while(PhotonNetwork.LevelLoadingProgress < 1)
         {
             LoadingWithProgressManager.SetProgress(PhotonNetwork.LevelLoadingProgress);
