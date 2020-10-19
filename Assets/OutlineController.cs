@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityFx.Outline;
 
 [RequireComponent(typeof(Outline))]
 public class OutlineController : MonoBehaviour
@@ -9,12 +10,27 @@ public class OutlineController : MonoBehaviour
 
     public void EnableOutlines()
     {
-        GetComponentsInChildren<Outline>().ToList().ForEach(o => o.enabled = true);        
+        var outlineEffect = Camera.main.GetComponent<OutlineBuilder>();
+
+        // This adds layer 0 (if it is not there) and then adds myGo.     
+        // Now setup the layer.
+        var layer = outlineEffect.OutlineLayers[0];
+
+        layer.OutlineColor = Color.red;
+        layer.OutlineWidth = 7;
+        layer.OutlineRenderMode = OutlineRenderFlags.Blurred;
+        layer.Add(gameObject);
     }
 
     public void DisableOutlines()
     {
-        GetComponentsInChildren<Outline>().ToList().ForEach(o => o.enabled = false);
+        var outlineEffect = Camera.main.GetComponent<OutlineBuilder>();
+
+        // This adds layer 0 (if it is not there) and then adds myGo.
+      
+        var layer = outlineEffect.OutlineLayers[0];
+        if (layer.Contains(gameObject))
+            layer.Remove(gameObject);
     }
 
 
