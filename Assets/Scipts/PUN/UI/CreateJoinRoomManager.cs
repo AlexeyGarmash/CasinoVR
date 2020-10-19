@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 
 public class CreateJoinRoomManager : BaseMenuPanel
 {
@@ -14,13 +15,39 @@ public class CreateJoinRoomManager : BaseMenuPanel
     [SerializeField] private RoomItem RoomItem;
 
     private List<RoomItem> _roomsList = new List<RoomItem>();
+    public List<ChooseGameTypeItem> GameTypesItems;
+
+
+
+    private void Start()
+    {
+        foreach (var gTypeItem in GameTypesItems)
+        {
+            gTypeItem.OnGameTypeChoosen += OnGameTypeChoosen;
+        }
+    }
+
+    private void OnGameTypeChoosen(ChooseGameTypeItem item)
+    {
+        foreach (var gTypeItem in GameTypesItems)
+        {
+            if (gTypeItem.GameType == item.GameType)
+            {
+                gTypeItem.ChooseGameType(true);
+            }
+            else
+            {
+                gTypeItem.ChooseGameType(false);
+            }
+        }
+    }
 
     public void CreateNewRoom()
     {
         string roomName = InputFieldRoomName.text;
         if (roomName.Length != 0)
         {
-            NetworkManager.Instance.CreateRoom(roomName);
+            NetworkManager.Instance.CreateRoom(roomName, PhotonPlayerSettings.Instance.CurrentGameType);
         }
         else
         {

@@ -9,6 +9,7 @@ using System;
 public class RoomItem : MonoBehaviour
 {
     [SerializeField] private TMP_Text TextRoomName;
+    [SerializeField] private TMP_Text TextGameType;
     [SerializeField] private Button ButtonJoinRoom;
 
     public RoomInfo RoomInfo { get; set; }
@@ -21,6 +22,8 @@ public class RoomItem : MonoBehaviour
     {
         RoomInfo = roomInfo;
         TextRoomName.text = roomInfo.Name;
+        string gameTypeName = RoomInfo.CustomProperties[NetworkManager.TYPE_GAME] as string;
+        TextGameType.text = gameTypeName;
     }
 
     private void OnButtonJoinRoom_Clicked()
