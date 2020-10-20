@@ -45,6 +45,7 @@ Shader "OvrAvatar/Avatar_PC_SingleComponentExpressive"
 
     SubShader
     {
+
         Blend [_SrcBlend] [_DstBlend]
         Cull Back
         CGPROGRAM

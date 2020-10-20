@@ -84,7 +84,7 @@ public class OvrAvatar : MonoBehaviour
     [Tooltip(
         "Enable to use combined meshes to reduce draw calls. Currently only available on mobile devices. " +
         "Will be forced to false on PC.")]
-    private bool CombineMeshes = true;
+    private bool CombineMeshes = false;
 #else
     private bool CombineMeshes = false;
 #endif
