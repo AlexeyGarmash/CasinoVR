@@ -10,6 +10,8 @@ using static CustomizeAvatarPartV2;
 
 public class NetworkPlayer : MonoBehaviourPunCallbacks
 {
+    public float avoff_y = 1.3f;
+    public float avoff_z = 0.2f;
     private Transform TrackingSpace;
     private Transform CenterEye;
     private Transform OvrCameraRigTransform;
@@ -417,13 +419,13 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
     private void SetHeadAvatar()
     {
         SetLayer();
-        Avatar.transform.SetParent(TrackingSpace);//CenterEye
-        Avatar.transform.localPosition = Vector3.zero;
-        var avLocPos = Avatar.transform.localPosition;
+        //Avatar.transform.SetParent(CenterEye);//TrackingSpace
+        //Avatar.transform.localPosition = Vector3.zero;
+        /*var avLocPos = Avatar.transform.localPosition;
         avLocPos.z = -0.2f;
         avLocPos.y = -1.3f;
-        Avatar.transform.localPosition = avLocPos;
-        Avatar.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        Avatar.transform.localPosition = avLocPos;*/
+        Avatar.transform.localRotation = Quaternion.Euler(0, 180, 0);
     }
 
     private void SetLayer()
@@ -441,6 +443,17 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         hand.transform.localPosition = Vector3.zero;
         hand.transform.rotation = Quaternion.Euler(0f, yRot, zRotation);
 
+    }
+
+    private void Update()
+    {
+        if (CenterEye != null && Avatar != null)
+        {
+            var centerEyePos = CenterEye.position;
+            centerEyePos.z = centerEyePos.z - avoff_z;
+            centerEyePos.y = centerEyePos.y - avoff_y;
+            Avatar.transform.position = centerEyePos;
+        }
     }
 
 
