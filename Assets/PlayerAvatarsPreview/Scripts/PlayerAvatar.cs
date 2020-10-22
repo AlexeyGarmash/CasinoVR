@@ -9,6 +9,8 @@ public class PlayerAvatar : MonoBehaviour
 {
     public Action<PlayerAvatar> OnAvatarChosen;
 
+    public bool AvatarMale = true;
+
     [Header("Avatar info")]
     public PlayerAvatarType AvatarType;
 

@@ -6,6 +6,7 @@ using TMPro;
 using TMPro.Examples;
 using System;
 using static PhotonPlayerSettings;
+using static CustomizeAvatarPartV2;
 
 public class NetworkPlayer : MonoBehaviourPunCallbacks
 {
@@ -138,8 +139,47 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
     {
         if (photonView != null && photonView.IsMine)
         {
-            RestoreMaterialData(true);
+            //RestoreMaterialData(true);
+            RestoreMaterialDataV2(true);
             OvrCameraRigTransform.localPosition = Vector3.zero;
+        }
+    }
+
+    private void RestoreMaterialDataV2(bool sendToOthers)
+    {
+        var avatarBodyHolder = Avatar.GetComponent<AvatarBodyHolder>();
+        var beard = PhotonPlayerSettings.Instance.Beard;
+        var hair = PhotonPlayerSettings.Instance.Hair;
+        var glasses = PhotonPlayerSettings.Instance.Glasses;
+        var head = PhotonPlayerSettings.Instance.Head;
+        var shirt = PhotonPlayerSettings.Instance.Shirt;
+
+        if (head.IsChanged)
+        {
+            avatarBodyHolder.ChangeHead(head.Mat, head.Mesh);
+        }
+        if (beard.IsChanged)
+        {
+            avatarBodyHolder.ChangeBeard(beard.Mat, beard.Mesh);
+        }
+        if (hair.IsChanged)
+        {
+            avatarBodyHolder.ChangeHair(hair.Mat, hair.Mesh);
+        }
+        if (glasses.IsChanged)
+        {
+            avatarBodyHolder.ChangeGlasses(glasses.Mat, glasses.Mesh);
+        }
+        if (shirt.IsChanged)
+        {
+            avatarBodyHolder.ChangeShirt(shirt.Mat, shirt.Mesh);
+        }
+
+        if (sendToOthers)
+        {
+            string jsonCustAvatarData = PhotonPlayerSettings.Instance.GetCustomizeAvatarJsonData();
+            print($"CUSTOMIZE DATA DATA TO SEND {jsonCustAvatarData}");
+            photonView.RPC("SendSkinsToOther_RPC", RpcTarget.Others, jsonCustAvatarData);
         }
     }
 
@@ -262,14 +302,88 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
     public void SendSkinsToOther_RPC(string jsonSkinData)
     {
         print($"RECIEVED DATA TO SEND {jsonSkinData}");
-        SkinData skinData = PhotonPlayerSettings.Instance.GetSkinData(jsonSkinData);
+        CustomizeJsonData customize = PhotonPlayerSettings.Instance.RestoreCustomizeDataFromJson(jsonSkinData);
+
+        var avatarBodyHolder = Avatar.GetComponent<AvatarBodyHolder>();
+        var beard = customize.Beard;
+        var hair = customize.Hair;
+        var glasses = customize.Glasses;
+        var head = customize.Head;
+        var shirt = customize.Shirt;
+
+        if (head.IsChanged)
+        {
+            var matMesh = LoadMaterialMesh(head, CA_Part.Head);
+            avatarBodyHolder.ChangeHead(matMesh.Item1, matMesh.Item2);
+        }
+        if (beard.IsChanged)
+        {
+            var matMesh = LoadMaterialMesh(beard, CA_Part.Beard);
+            avatarBodyHolder.ChangeBeard(matMesh.Item1, matMesh.Item2);
+        }
+        if (hair.IsChanged)
+        {
+            var matMesh = LoadMaterialMesh(hair, CA_Part.Hair);
+            avatarBodyHolder.ChangeHair(matMesh.Item1, matMesh.Item2);
+        }
+        if (glasses.IsChanged)
+        {
+            var matMesh = LoadMaterialMesh(glasses, CA_Part.Glasses);
+            avatarBodyHolder.ChangeGlasses(matMesh.Item1, matMesh.Item2);
+        }
+        if (shirt.IsChanged)
+        {
+            var matMesh = LoadMaterialMesh(shirt, CA_Part.Shirt);
+            avatarBodyHolder.ChangeShirt(matMesh.Item1, matMesh.Item2);
+        }
+
+        /*SkinData skinData = PhotonPlayerSettings.Instance.GetSkinData(jsonSkinData);
         var SkinColor = ColorExtensions.FromStringColor(skinData.skinColor);
         var HairColor = ColorExtensions.FromStringColor(skinData.hairColor);
         var IrisColor = ColorExtensions.FromStringColor(skinData.irisColor);
         var DressColor = ColorExtensions.FromStringColor(skinData.dressColor);
         var LipsColor = ColorExtensions.FromStringColor(skinData.lipsColor);
-        var textureName = skinData.textureName;
-        RestoreRemoteMatarialData(SkinColor, HairColor, IrisColor, DressColor, LipsColor, textureName);
+        var textureName = skinData.textureName;*/
+
+        //RestoreRemoteMatarialData(SkinColor, HairColor, IrisColor, DressColor, LipsColor, textureName);
+    }
+
+    private (Material, Mesh) LoadMaterialMesh(C_BodyPart c_BodyPart, CA_Part bodyPartType)
+    {
+        Material mat = null;
+        Mesh mesh = null;
+        string gender = c_BodyPart.Gender;
+        string matName = c_BodyPart.MaterialName;
+        string meshName = c_BodyPart.MeshName;
+        switch (bodyPartType)
+        {
+            case CA_Part.Beard:
+                mat = Resources.Load<Material>(string.Format(BaseBeardMaterialsResourcePath, gender, matName));
+                mesh = Resources.Load<Mesh>(string.Format(BaseBeardMeshesResourcePath, gender, meshName));
+                return (mat, mesh);
+
+            case CA_Part.Glasses:
+                mat = Resources.Load<Material>(string.Format(BaseGlassesMaterialsResourcePath, gender, matName));
+                mesh = Resources.Load<Mesh>(string.Format(BaseGlassesMeshesResourcePath, gender, meshName));
+                return (mat, mesh);
+
+            case CA_Part.Hair:
+                mat = Resources.Load<Material>(string.Format(BaseHairMaterialsResourcePath, gender, matName));
+                mesh = Resources.Load<Mesh>(string.Format(BaseHairMeshesResourcePath, gender, meshName));
+                return (mat, mesh);
+
+            case CA_Part.Head:
+                mat = Resources.Load<Material>(string.Format(BaseFaceMaterialsResourcePath, gender, matName));
+                mesh = Resources.Load<Mesh>(string.Format(BaseFaceMeshesResourcePath, gender, meshName));
+                return (mat, mesh);
+
+            case CA_Part.Shirt:
+                mat = Resources.Load<Material>(string.Format(BaseShirtMaterialsResourcePath, gender, matName));
+                mesh = Resources.Load<Mesh>(string.Format(BaseShirtMeshesResourcePath, gender, meshName));
+                return (mat, mesh);
+        }
+
+        return (null, null);
     }
 
 
@@ -301,8 +415,13 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
 
     private void SetHeadAvatar()
     {
+        Avatar.layer = 17;
         Avatar.transform.SetParent(TrackingSpace);//CenterEye
         Avatar.transform.localPosition = Vector3.zero;
+        var avLocPos = Avatar.transform.localPosition;
+        avLocPos.z = -0.2f;
+        avLocPos.y = -1.3f;
+        Avatar.transform.localPosition = avLocPos;
         Avatar.transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
 
