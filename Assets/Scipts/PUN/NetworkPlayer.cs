@@ -415,7 +415,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
 
     private void SetHeadAvatar()
     {
-        Avatar.layer = 17;
+        SetLayer();
         Avatar.transform.SetParent(TrackingSpace);//CenterEye
         Avatar.transform.localPosition = Vector3.zero;
         var avLocPos = Avatar.transform.localPosition;
@@ -423,6 +423,15 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         avLocPos.y = -1.3f;
         Avatar.transform.localPosition = avLocPos;
         Avatar.transform.localRotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    private void SetLayer()
+    {
+        Avatar.layer = 17;
+        for (int i = 0; i < Avatar.transform.childCount; i++)
+        {
+            Avatar.transform.GetChild(i).gameObject.layer = 17;
+        }
     }
 
     private void SetHand(GameObject hand, Transform anchor, float yRot, float zRotation)
