@@ -197,6 +197,7 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
 
                 TrackingSpace = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace").transform;
                 CenterEye = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/CenterEyeAnchor").transform;
+                GetComponent<HeadFollowRotation>().CenterEye = CenterEye;
                 RightHandAnchor = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/RightHandAnchor").transform;
                 LeftHandAnchor = ovrControllerTransform.Find("OVRCameraRig/TrackingSpace/LeftHandAnchor").transform;
 
