@@ -13,7 +13,7 @@ public class HeadFollowRotation : MonoBehaviour
     {
         if (CenterEye != null)
         {
-            HeadBone.localRotation = CenterEye.localRotation;
+            HeadBone.rotation = CenterEye.rotation;
         }
     }
 }
