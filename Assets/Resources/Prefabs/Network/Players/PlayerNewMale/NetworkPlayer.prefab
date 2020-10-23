@@ -293,8 +293,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f64fe1e39982c74f91ad9ed192db616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avoff_y: 1.3
-  avoff_z: 0.2
+  avoff_y: 0.9
+  avoff_z: 0.1
   Avatar: {fileID: 8343053890502296813}
   RightHand: {fileID: 388174849048980830}
   LeftHand: {fileID: 2488377682678355745}
@@ -354,25 +354,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 8029226143981672299}
+  - {fileID: 0}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &8029226143981672299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7259904830954186004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeGlobalPosition: 1
-  m_SynchronizeGlobalRotation: 1
-  m_SynchronizeScale: 0
 --- !u!114 &5663649459801613297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -766,17 +751,17 @@ PrefabInstance:
     - target: {fileID: 8045736975253057438, guid: a98a57cb7f2d9a0418e89e351a0b6979,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 8045736975253057438, guid: a98a57cb7f2d9a0418e89e351a0b6979,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 8045736975253057438, guid: a98a57cb7f2d9a0418e89e351a0b6979,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 8300890866077766680, guid: a98a57cb7f2d9a0418e89e351a0b6979,
         type: 3}

@@ -1,20 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &1487782862146847547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840161198621313879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeGlobalPosition: 1
-  m_SynchronizeGlobalRotation: 1
-  m_SynchronizeScale: 0
 --- !u!114 &3713072937123589201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34,7 +19,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 1487782862146847547}
+  - {fileID: 0}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -164,6 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f64fe1e39982c74f91ad9ed192db616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  avoff_y: 0.9
+  avoff_z: 0.1
   Avatar: {fileID: 2062927481439906478}
   RightHand: {fileID: 388174849048980830}
   LeftHand: {fileID: 2488377682678355745}
@@ -1177,17 +1164,17 @@ PrefabInstance:
     - target: {fileID: 5753871068865015690, guid: 27748069b036fef44b964b8e203ff3de,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 5753871068865015690, guid: 27748069b036fef44b964b8e203ff3de,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 5753871068865015690, guid: 27748069b036fef44b964b8e203ff3de,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 5999736048130593804, guid: 27748069b036fef44b964b8e203ff3de,
         type: 3}
