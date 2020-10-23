@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 440894537890287825}
   - component: {fileID: 6691566842453151078}
   - component: {fileID: 8624657440283362297}
+  - component: {fileID: 8949134810661258324}
   m_Layer: 0
   m_Name: Game_coin
   m_TagString: game_coin
@@ -130,6 +131,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
+  observableSearch: 0
   Synchronization: 0
   OwnershipTransfer: 2
   ObservedComponents:
@@ -205,3 +207,15 @@ MonoBehaviour:
   m_allowPointing: 0
   m_allowThumbsUp: 0
   m_poseId: 4
+--- !u!114 &8949134810661258324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2154112866265684877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d90a4c86828f2014c9b6b289d9b681a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

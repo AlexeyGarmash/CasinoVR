@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityFx.Outline;
 
 [RequireComponent(typeof(Outline))]
 public class OutlineController : MonoBehaviour
@@ -9,12 +10,19 @@ public class OutlineController : MonoBehaviour
 
     public void EnableOutlines()
     {
-        GetComponentsInChildren<Outline>().ToList().ForEach(o => o.enabled = true);        
+        var outlineEffect = Camera.main.GetComponent<OutlineBuilder>();  
+
+        foreach(var renderes in GetComponentsInChildren<MeshRenderer>())
+            outlineEffect.OutlineLayers[0].Add(renderes.gameObject);
+
     }
 
     public void DisableOutlines()
     {
-        GetComponentsInChildren<Outline>().ToList().ForEach(o => o.enabled = false);
+        var outlineEffect = Camera.main.GetComponent<OutlineBuilder>();
+
+        foreach (var renderes in GetComponentsInChildren<MeshRenderer>())
+            outlineEffect.OutlineLayers[0].Remove(renderes.gameObject);
     }
 
 
