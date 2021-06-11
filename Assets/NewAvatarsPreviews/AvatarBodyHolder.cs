@@ -40,4 +40,16 @@ public class AvatarBodyHolder : MonoBehaviour
         Head.GetComponent<SkinnedMeshRenderer>().sharedMesh = mesh;
         Head.GetComponent<SkinnedMeshRenderer>().material = mat;
     }
+
+    internal void ChangeHairColor(Color customColor)
+    {
+        print($"[Avatar Body Holder] Request to change hair color {customColor}");
+        Hair.GetComponent<SkinnedMeshRenderer>().sharedMaterial.SetColor("_BaseColor", customColor);
+    }
+
+    internal void ChangeBeardColor(Color customColor)
+    {
+        print("[Avatar Body Holder] Request to change beard color");
+        Beard.GetComponent<SkinnedMeshRenderer>().sharedMaterial.SetColor("_BaseColor", customColor);
+    }
 }

@@ -77,12 +77,14 @@ public class PlayerAvatarChoiceManager : MonoBehaviour
                 rend = go.GetComponentInChildren<Renderer>();
             }
             CustomizeAvatarV2.Instance.SetupAvataraPreviewGameObject(go, avatar);
+            go.GetComponent<HeadFollowRotation>().CenterEye = VRComponents.Instance.CenterEye;
             //AvatarSkinChooser.Instance.SetupAvatartToChoose(rend);
             //CustomizeAvatarManager.Instance.SetAvatarGameObject(avatar, go.GetComponent<OvrAvatar>());
             go.transform.localPosition = Vector3.zero;
             var localSpawnderAvatar = go.transform.localPosition;
             localSpawnderAvatar.y -= 1.5f;
             go.transform.localPosition = localSpawnderAvatar;
+            go.transform.localRotation = Quaternion.identity;
         }
     }
 

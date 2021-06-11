@@ -5,12 +5,14 @@ using static CustomizeAvatarPartV2;
 [Serializable]
 public class C_BodyPart
 {
+    public bool IsColored = false;
     public bool IsChanged = false;
     public string Gender;
     public Material Mat;
     public Mesh Mesh;
     public string MaterialName;
     public string MeshName;
+    public string ColorName;
 }
 
 

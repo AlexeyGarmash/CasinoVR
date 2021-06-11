@@ -15,7 +15,15 @@ public class KeyboardHandler : MonoBehaviour
 
     private void Awake()
     {
-        Input.onSelect.AddListener(OnSelect);
+        if(Input == null)
+        {
+            Input = GetComponent<TMP_InputField>();
+        }
+
+        if (Input != null)
+        {
+            Input.onSelect.AddListener(OnSelect);
+        }
         //Input.onDeselect.AddListener(OnDeselect);
     }
 

@@ -12,12 +12,18 @@ public enum WIN_STATUS
 
 public class PlayerInformer : MonoBehaviour
 {
+    [SerializeField] private GameObject PlayerController;
     [SerializeField] private TMP_Text _textMessage;
     [SerializeField] private Transform _confettiSpawnPoint;
     [SerializeField] private GameObject _confettiPrefab;
     private void Start()
     {
         gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        transform.LookAt(2 * transform.position - Camera.main.transform.position);
     }
 
     public void SetMessage(string message, WIN_STATUS win)
@@ -30,9 +36,12 @@ public class PlayerInformer : MonoBehaviour
             }
             _textMessage.text = message;
 
-            if(win == WIN_STATUS.WIN)
+            if(win == WIN_STATUS.WIN || win == WIN_STATUS.LOSE)
             {
-                GameObject confettiGo = Instantiate(_confettiPrefab, _confettiSpawnPoint.position, Quaternion.identity);
+                /*var rotation = transform.rotation;
+                var eulerRoatation = rotation.eulerAngles;
+                eulerRoatation.y += 90;*/
+                GameObject confettiGo = Instantiate(_confettiPrefab, _confettiSpawnPoint.position, _confettiPrefab.transform.rotation);
                 Destroy(confettiGo, 2f);
             }
         }

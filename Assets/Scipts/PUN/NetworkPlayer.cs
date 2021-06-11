@@ -7,6 +7,7 @@ using TMPro.Examples;
 using System;
 using static PhotonPlayerSettings;
 using static CustomizeAvatarPartV2;
+using UnityEngine.Rendering;
 
 public class NetworkPlayer : MonoBehaviourPunCallbacks
 {
@@ -318,16 +319,24 @@ public class NetworkPlayer : MonoBehaviourPunCallbacks
         {
             var matMesh = LoadMaterialMesh(head, CA_Part.Head);
             avatarBodyHolder.ChangeHead(matMesh.Item1, matMesh.Item2);
-        }
+        } 
         if (beard.IsChanged)
         {
             var matMesh = LoadMaterialMesh(beard, CA_Part.Beard);
             avatarBodyHolder.ChangeBeard(matMesh.Item1, matMesh.Item2);
         }
+        else if (beard.IsColored)
+        {
+            avatarBodyHolder.ChangeBeardColor(ColorExtensions.FromStringColor(beard.ColorName));
+        }
         if (hair.IsChanged)
         {
             var matMesh = LoadMaterialMesh(hair, CA_Part.Hair);
             avatarBodyHolder.ChangeHair(matMesh.Item1, matMesh.Item2);
+        }
+        else if (hair.IsColored)
+        {
+            avatarBodyHolder.ChangeHairColor(ColorExtensions.FromStringColor(hair.ColorName));
         }
         if (glasses.IsChanged)
         {

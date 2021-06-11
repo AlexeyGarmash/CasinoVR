@@ -11,12 +11,13 @@ public class MainMenuManager : MonoBehaviourPunCallbacks
     public static MainMenuManager Instance;
 
 
-
+    [SerializeField] private bool _useWebLogin;
     [SerializeField] private GameObject LoadingServerPanel;
     [SerializeField] private GameObject CreatePlayerPanel;
     [SerializeField] private GameObject JoinOrCreateRoomPanel;
     [SerializeField] private GameObject CurrentRoomPanel;
     [SerializeField] private LoadingWithProgressManager LoadingWithProgressManager;
+    [SerializeField] private GameObject _webLoginPanel;
 
     
 
@@ -48,6 +49,18 @@ public class MainMenuManager : MonoBehaviourPunCallbacks
     {
         /*LoadingServerPanel.SetScale(removeScale);
         CreatePlayerPanel.SetScale(fullScale);*/
+        if (_useWebLogin)
+        {
+            _webLoginPanel.transform.SetAsLastSibling();
+        }
+        else
+        {
+            CreatePlayerPanel.transform.SetAsLastSibling();
+        }
+    }
+
+    public void OnPlayerWebLoginSuccess()
+    {
         CreatePlayerPanel.transform.SetAsLastSibling();
     }
 
@@ -129,15 +142,15 @@ public class MainMenuManager : MonoBehaviourPunCallbacks
         var gameType = PhotonNetwork.CurrentRoom.CustomProperties[NetworkManager.TYPE_GAME] as string;
         if(gameType == NetworkManager.GAME_SLOTS)
         {
-            sceneName = "CasinoSlotsMini";
+            sceneName = "RouletteGameNewEnvironment";//CasinoSlotsMini
         } 
         else if(gameType == NetworkManager.GAME_ROULETTE)
         {
-            sceneName = "CasinoRouletterMini";
+            sceneName = "RouletteGameNewEnvironment";//RouletteGameNewEnvironment //CasinoRouletterMini
         } 
         else if(gameType == NetworkManager.GAME_BLACKJACK)
         {
-            sceneName = "BlackJackMini";
+            sceneName = "RouletteGameNewEnvironment";//BlackJackMini
         }
         PhotonNetwork.LoadLevel(sceneName);
         while(PhotonNetwork.LevelLoadingProgress < 1)

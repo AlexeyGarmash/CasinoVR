@@ -9,6 +9,8 @@ public class CustomizePartsChooser : MonoBehaviour
 {
     public CA_Part BodyPartType;
     public PlayerAvatarType PlayerAvatarType;
+    public CustomizeColorChooser CustomizeColorChooser;
+
 
     public List<CustomizeAvatarPartV2> CustomParts;
 

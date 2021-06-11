@@ -907,6 +907,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3144845182656468019}
   - component: {fileID: 6799546802154136138}
+  - component: {fileID: 1950992580628547138}
   m_Layer: 0
   m_Name: FemaleFull
   m_TagString: Untagged
@@ -954,6 +955,22 @@ MonoBehaviour:
   Beard: {fileID: 0}
   Shirt: {fileID: 2038501404804877582}
   Glasses: {fileID: 7006273798120564232}
+--- !u!114 &1950992580628547138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2373234982616698505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c0dc8b193f29b140a55c0bd2495fef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CenterEye: {fileID: 0}
+  HeadBone: {fileID: 343561681853200374}
+  Inverse: 1
+  RotationOffset: {x: 0, y: 180, z: 0}
 --- !u!1 &2391597248222126359
 GameObject:
   m_ObjectHideFlags: 0

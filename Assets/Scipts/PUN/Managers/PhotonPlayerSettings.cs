@@ -102,6 +102,22 @@ public class PhotonPlayerSettings : MonoBehaviour
         }
     }
 
+    public void SetupBodyPartColor(CA_Part bodyPart, Color customColor)
+    {
+        switch(bodyPart)
+        {
+            case CA_Part.Hair:
+                Hair.IsColored = true;
+                Hair.ColorName = customColor.ToStringColor();
+                break;
+
+            case CA_Part.Beard:
+                Beard.IsColored = true;
+                Beard.ColorName = customColor.ToStringColor();
+                break;
+        }
+    }
+
     public void ResetBodyParts()
     {
         Hair = null;
@@ -114,7 +130,7 @@ public class PhotonPlayerSettings : MonoBehaviour
     public string GetCustomizeAvatarJsonData()
     {
         CustomizeJsonData customizeJsonData = new CustomizeJsonData(Hair, Head, Glasses, Shirt, Beard);
-        string jsonString = JsonUtility.ToJson(customizeJsonData);
+        string jsonString = JsonUtility.ToJson(customizeJsonData, true);
         return jsonString;
     }
 

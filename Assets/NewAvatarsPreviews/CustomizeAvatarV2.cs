@@ -8,6 +8,7 @@ public class CustomizeAvatarV2 : MonoBehaviour
     public static CustomizeAvatarV2 Instance;
 
     public List<CustomizeAvatarPartV2> BodyPartsToCustomize;
+    public List<CustomizeColorItem> AcceptedPartColors;
     [SerializeField] private CustomizePanelUI UIPanel_Male;
     [SerializeField] private CustomizePanelUI UIPanel_Female;
     [SerializeField] private GameObject _avatarPreview;
@@ -52,15 +53,50 @@ public class CustomizeAvatarV2 : MonoBehaviour
             part.OnBodyPartChanged -= OnBodyPartChanged;
         }
 
+        foreach (var colorItem in AcceptedPartColors)
+        {
+            colorItem.OnColorChanged -= OnColorPartChanged;
+        }
+
         _customizePartsChooser = customizeParts;
         BodyPartsToCustomize = _customizePartsChooser.CustomParts;
-
+        
         foreach (var part in BodyPartsToCustomize)
         {
             part.OnBodyPartChanged += OnBodyPartChanged;
         }
+        if (_customizePartsChooser.CustomizeColorChooser != null)
+        {
+            AcceptedPartColors = _customizePartsChooser.CustomizeColorChooser.ColorItems;
+            foreach (var colorItem in AcceptedPartColors)
+            {
+                colorItem.OnColorChanged += OnColorPartChanged;
+            }
+        }
+
 
     }
+
+    private void OnColorPartChanged(CustomizeColorItem colorItem)
+    {
+        
+        if (_customizePartsChooser != null)
+        {
+            print("COLOR CHANGED!!!");
+            switch (_customizePartsChooser.BodyPartType)
+            {
+                case CustomizeAvatarPartV2.CA_Part.Hair:
+                    ChangeHairColor(colorItem.CustomColor);
+                    break;
+
+                case CustomizeAvatarPartV2.CA_Part.Beard:
+                    ChangeBeardColor(colorItem.CustomColor);
+                    break;
+            }
+        }
+    }
+
+    
 
     private void OnBodyPartChanged(CustomizeAvatarPartV2 avatarPart)
     {
@@ -85,6 +121,16 @@ public class CustomizeAvatarV2 : MonoBehaviour
                 ChangeGlasses(avatarPart);
                 break;
         }
+    }
+
+    private void ChangeBeardColor(Color customColor)
+    {
+        _currentAvatarBody.ChangeBeardColor(customColor);
+    }
+
+    private void ChangeHairColor(Color customColor)
+    {
+        _currentAvatarBody.ChangeHairColor(customColor);
     }
 
     private void ChangeHair(CustomizeAvatarPartV2 avatarPart)
