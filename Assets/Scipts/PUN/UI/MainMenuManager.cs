@@ -142,15 +142,15 @@ public class MainMenuManager : MonoBehaviourPunCallbacks
         var gameType = PhotonNetwork.CurrentRoom.CustomProperties[NetworkManager.TYPE_GAME] as string;
         if(gameType == NetworkManager.GAME_SLOTS)
         {
-            sceneName = "RouletteGameNewEnvironment";//CasinoSlotsMini
+            sceneName = "CasinoSlotsMini";//CasinoSlotsMini
         } 
         else if(gameType == NetworkManager.GAME_ROULETTE)
         {
-            sceneName = "RouletteGameNewEnvironment";//RouletteGameNewEnvironment //CasinoRouletterMini
+            sceneName = "CasinoRouletterMini";//RouletteGameNewEnvironment //CasinoRouletterMini
         } 
         else if(gameType == NetworkManager.GAME_BLACKJACK)
         {
-            sceneName = "RouletteGameNewEnvironment";//BlackJackMini
+            sceneName = "BlackJackMini";//BlackJackMini
         }
         PhotonNetwork.LoadLevel(sceneName);
         while(PhotonNetwork.LevelLoadingProgress < 1)

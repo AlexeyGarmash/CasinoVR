@@ -94,6 +94,11 @@ public class LongClickReadyPlay : MonoBehaviourPun, IListener<ROULETTE_EVENT>
         FillImageProgress(currentHoldTime);
     }
 
+    public void ResetProgress_()
+    {
+        ResetProgress();
+    }
+
     private void FillImageProgress(float progress)
     {
         _progressImage.fillAmount = progress;
@@ -104,11 +109,15 @@ public class LongClickReadyPlay : MonoBehaviourPun, IListener<ROULETTE_EVENT>
         if (other.gameObject.GetComponent<LongClickHand>() != null && inProgress == false)
         {
             playerStats = other.GetComponentInParent<PlayerStats>();
-            if(p_place.ps != null || p_place.ps == playerStats) 
-            {
-                inProgress = true;
-            }
+            TriggerPlayButton();
+        }
+    }
 
+    public void TriggerPlayButton()
+    {
+        if (p_place.ps != null || p_place.ps == playerStats)
+        {
+            inProgress = true;
         }
     }
 

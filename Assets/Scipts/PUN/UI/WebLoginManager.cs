@@ -113,35 +113,44 @@ public class WebLoginManager : MonoBehaviour
 
     private void ProceedLogin(string inpEmail, string inpPass)
     {
-        StartCoroutine(PostLoginRequest(_webLoginEndPoint, inpEmail, inpPass));
+        StartCoroutine(PostLoginRequest(_webLoginEndPoint, inpEmail, inpPass, true));
     }
 
-    IEnumerator PostLoginRequest(string loginUri, string email, string password)
+    IEnumerator PostLoginRequest(string loginUri, string email, string password, bool test)
     {
-        WWWForm form = new WWWForm();
-        form.AddField(WEB_EMAIL_FIELD, email);
-        form.AddField(WEB_PASSWORD_FIELD, password);
+        if (!test)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField(WEB_EMAIL_FIELD, email);
+            form.AddField(WEB_PASSWORD_FIELD, password);
 
-        using (UnityWebRequest www = UnityWebRequest.Post(loginUri, form))
+            using (UnityWebRequest www = UnityWebRequest.Post(loginUri, form))
+            {
+                EnableLoadingPanel(true);
+                yield return new WaitForSeconds(2f);
+                yield return www.SendWebRequest();
+                EnableLoadingPanel(false);
+                if (www.isNetworkError || www.isHttpError)
+                {
+                    Debug.Log(www.error);
+                    OnLoginError(www.error);
+                }
+                else
+                {
+                    //Debug.Log("Auth SUCCESS");
+                    //print(www.downloadHandler.text);
+                    //var jsonSuccess = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(www.downloadHandler.text);
+                    /*dynamic jsonSuccess = JsonUtility.FromJson<dynamic>(www.downloadHandler.text);*/
+                    //print(jsonSuccess["token"]);
+                    MainMenuManager.Instance.OnPlayerWebLoginSuccess();
+                }
+            }
+        } else
         {
             EnableLoadingPanel(true);
-            yield return new WaitForSeconds(2f);
-            yield return www.SendWebRequest();
+            yield return new WaitForSeconds(3f);
             EnableLoadingPanel(false);
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-                OnLoginError(www.error);
-            }
-            else
-            {
-                Debug.Log("Auth SUCCESS");
-                //print(www.downloadHandler.text);
-                var jsonSuccess = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(www.downloadHandler.text);
-                /*dynamic jsonSuccess = JsonUtility.FromJson<dynamic>(www.downloadHandler.text);*/
-                print(jsonSuccess["token"]);
-                MainMenuManager.Instance.OnPlayerWebLoginSuccess();
-            }
+            MainMenuManager.Instance.OnPlayerWebLoginSuccess();
         }
     }
 
